@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindJobSolution.WebApp", "FindJobSolution.WebApp\FindJobSolution.WebApp.csproj", "{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.WebApp", "FindJobSolution.WebApp\FindJobSolution.WebApp.csproj", "{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindJobSolution.Data", "FindJobSolution.Data\FindJobSolution.Data.csproj", "{EA57104E-0611-482E-9A15-8802EC7CECEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindJobSolution.Application", "FindJobSolution.Application\FindJobSolution.Application.csproj", "{59C58378-8CB2-4D1A-9593-ADEE5507B198}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA57104E-0611-482E-9A15-8802EC7CECEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA57104E-0611-482E-9A15-8802EC7CECEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA57104E-0611-482E-9A15-8802EC7CECEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA57104E-0611-482E-9A15-8802EC7CECEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59C58378-8CB2-4D1A-9593-ADEE5507B198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59C58378-8CB2-4D1A-9593-ADEE5507B198}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59C58378-8CB2-4D1A-9593-ADEE5507B198}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59C58378-8CB2-4D1A-9593-ADEE5507B198}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
