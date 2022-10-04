@@ -1,5 +1,5 @@
 # Find_Job_Solution
-##Technologies
+## Technologies
 - ASP.NET 6
 - Entity Framework
 ## Install packages 
