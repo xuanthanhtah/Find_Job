@@ -9,16 +9,11 @@ using System.Threading.Tasks;
 
 namespace FindJobSolution.Data.Configurations
 {
-    public class SaveJobConfiguration : IEntityTypeConfiguration<SaveJob>
+    public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<SaveJob> builder)
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.ToTable("SaveJobs");
-
-            builder.HasKey(x => x.SaveJobId);
-
-            builder.Property(x => x.SaveJobId).UseIdentityColumn();
-
+            builder.ToTable("Roles");
         }
     }
 }

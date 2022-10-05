@@ -21,8 +21,6 @@ namespace FindJobSolution.Data.Configurations
             builder.Property(x => x.ApplyJobsId).UseIdentityColumn();
 
             builder.Property(x => x.Status).HasDefaultValue(Status.Active);
-
-            builder.HasOne(x => x.JobInformation).WithOne(x => x.ApplyJob).HasForeignKey<JobInformation>(x => x.ApplyJobsId);
         }
     }
 }

@@ -17,9 +17,9 @@ namespace FindJobSolution.Data.Configurations
 
             builder.ToTable("JobSeekerInApplyJobs");
 
-            builder.HasOne(x => x.JobSeeker).WithMany(ja => ja.jobSeekerInApplyJobs).HasForeignKey(x=>x.JobSeekerId);
+            builder.HasOne(x => x.JobSeeker).WithMany(ja => ja.jobSeekerInApplyJobs).HasForeignKey(x=>x.JobSeekerId).OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(x => x.ApplyJob).WithMany(ja => ja.jobSeekerInApplyJobs).HasForeignKey(x=>x.ApplyJobsId);
+            builder.HasOne(x => x.ApplyJob).WithMany(ja => ja.jobSeekerInApplyJobs).HasForeignKey(x=>x.ApplyJobsId).OnDelete(DeleteBehavior.Restrict);
 
             builder.Property(x => x.ApplyJobsTime).HasDefaultValue(DateTime.Now);
         }
