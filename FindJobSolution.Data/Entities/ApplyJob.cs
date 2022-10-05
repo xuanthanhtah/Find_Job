@@ -11,7 +11,7 @@ namespace FindJobSolution.Data.Entities
     {
         public int ApplyJobsId { get; set; }
         public int JobSeekerID { get; set; }
-        public int JobInformationID { get; set; }
+        public int JobInformationId { get; set; }
         public JobInformation JobInformation { get; set; }
         public Status Status { get; set; }
         public List<JobSeekerInApplyJob> jobSeekerInApplyJobs { get; set; }

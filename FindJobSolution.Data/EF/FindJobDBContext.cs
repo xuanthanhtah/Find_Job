@@ -1,5 +1,8 @@
 ﻿using FindJobSolution.Data.Configurations;
 using FindJobSolution.Data.Entities;
+using FindJobSolution.Data.Extensions;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FindJobSolution.Data.EF
 {
-    public class FindJobDBContext : DbContext
+    public class FindJobDBContext : IdentityDbContext<User, Role, Guid>
     {
         public FindJobDBContext(DbContextOptions options) : base(options)
         {
@@ -17,6 +20,7 @@ namespace FindJobSolution.Data.EF
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //configure using fluent API
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new ApplyJobConfiguration());
             modelBuilder.ApplyConfiguration(new JobConfiguration());
@@ -30,6 +34,21 @@ namespace FindJobSolution.Data.EF
             modelBuilder.ApplyConfiguration(new JobSeekerInApplyJobConfiguration());
             modelBuilder.ApplyConfiguration(new JobSeekerInSaveJobConfiguration());
             modelBuilder.ApplyConfiguration(new JobSeekerSkillConfiguration());
+
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+
+
+            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("UserClaims");
+            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("UserRoles").HasKey(x=> new {x.RoleId, x.UserId});
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins").HasKey(x=>x.UserId);
+
+            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("RoleClaims");
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens").HasKey(x=>x.UserId);
+
+            //sedding
+            modelBuilder.Seed();
+
             //base.OnModelCreating(modelBuilder);
         }
         public DbSet<Job> Jobs { get; set; }
@@ -45,5 +64,7 @@ namespace FindJobSolution.Data.EF
         public DbSet<JobSeekerInApplyJob> JobSeekerInApplyJobs { get; set; }
         public DbSet<JobSeekerInSaveJob> JobSeekerInSaveJobs { get; set; }
         public DbSet<JobSeekerSkill> JobSeekerSkills { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }

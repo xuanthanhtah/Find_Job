@@ -16,6 +16,7 @@ namespace FindJobSolution.Data.Entities
         public string Image { get; set; }
         public decimal DesiredSalary { get; set; }
         public Guid UserId { get; set; }
+        public User Users { get; set; }
         public Job Job { get; set; }
         public List<JobSeekerInApplyJob> jobSeekerInApplyJobs { get; set; }
         public List<JobSeekerInSaveJob> JobSeekerInSaveJobs { get; set; }

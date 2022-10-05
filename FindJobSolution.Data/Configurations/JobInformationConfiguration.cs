@@ -14,7 +14,7 @@ namespace FindJobSolution.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<JobInformation> builder)
         {
-           // builder.ToTable("JobInformations");
+            builder.ToTable("JobInformations");
 
             builder.HasKey(x=> x.JobInformationId);
 
@@ -48,7 +48,11 @@ namespace FindJobSolution.Data.Configurations
 
             builder.HasOne(x=> x.Recruiter).WithMany(x=>x.JobInformation).HasForeignKey(x=>x.RecruiterId);
 
-            builder.HasOne(x=> x.Job).WithMany(x=>x.JobInformation).HasForeignKey(x=>x.JobInformationId);
+            builder.HasOne(x=> x.Job).WithMany(x=>x.JobInformation).HasForeignKey(x=>x.JobId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.SaveJob).WithOne(x => x.JobInformation).HasForeignKey<SaveJob>(x => x.JobInformationId);
+
+            builder.HasOne(x => x.ApplyJob).WithOne(x => x.JobInformation).HasForeignKey<ApplyJob>(x => x.JobInformationId);
         }
     }
 }
