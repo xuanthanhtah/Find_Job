@@ -123,12 +123,12 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<DateTime>("JobInformationTimeEnd")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 5, 22, 55, 40, 903, DateTimeKind.Local).AddTicks(9324));
+                        .HasDefaultValue(new DateTime(2022, 10, 12, 20, 37, 13, 872, DateTimeKind.Local).AddTicks(7319));
 
                     b.Property<DateTime>("JobInformationTimeStart")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 5, 22, 55, 40, 903, DateTimeKind.Local).AddTicks(9162));
+                        .HasDefaultValue(new DateTime(2022, 10, 12, 20, 37, 13, 872, DateTimeKind.Local).AddTicks(7153));
 
                     b.Property<string>("JobLevel")
                         .IsRequired()
@@ -240,7 +240,7 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<DateTime>("ApplyJobsTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 5, 22, 55, 40, 905, DateTimeKind.Local).AddTicks(4466));
+                        .HasDefaultValue(new DateTime(2022, 10, 12, 20, 37, 13, 874, DateTimeKind.Local).AddTicks(1197));
 
                     b.HasKey("ApplyJobsId", "JobSeekerId");
 
@@ -260,7 +260,7 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<DateTime>("TimeSaveJob")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 5, 22, 55, 40, 905, DateTimeKind.Local).AddTicks(7514));
+                        .HasDefaultValue(new DateTime(2022, 10, 12, 20, 37, 13, 874, DateTimeKind.Local).AddTicks(4164));
 
                     b.HasKey("JobSeekerId", "SaveJobId");
 
@@ -398,7 +398,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "62f4f500-6bc5-4c8e-9f51-ceb6db786a55",
+                            ConcurrencyStamp = "7ee309ed-8162-4867-ad27-b3193217f1b5",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -530,7 +530,7 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "781f691b-902d-4ae4-a0b1-92edeefbdd97",
+                            ConcurrencyStamp = "fb18415c-701c-4acc-be50-4ef5a8a0be74",
                             Dob = new DateTime(2000, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
@@ -539,7 +539,7 @@ namespace FindJobSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGCnOgV2uhwMezWvf7ggKu9npqo8c1X82aJgMXaygtGdSMxSyF4s0kagTEooFu4g8g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECCc86r0XQgcRfMF1EsJ2bZ4AEt6slSiT0sYVVOvqdg0M0uxGXmeKSTVhx1m+Xma6g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
