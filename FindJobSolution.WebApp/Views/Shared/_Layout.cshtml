@@ -64,9 +64,10 @@
                                     </nav>
                                 </div>
                                 <!-- Header-btn -->
-                                @if (HttpContextAccessor.HttpContext.Session.GetString("Email") != null)
+
+                                @if (true)
                                 {
-                                    var email = HttpContextAccessor.HttpContext.Session.GetString("Email");
+                                    @*var email = HttpContextAccessor.HttpContext.Session.GetString("Email");*@
                                     @*QLTDContext context = new QLTDContext();
                                     TaiKhoanNguoiTimViec tkntv = context.TaiKhoanNguoiTimViecs.SingleOrDefault(p => p.Email == email);*@
                                     <div class="nice-select">
@@ -80,10 +81,10 @@
                                 }
                                 else
                                 {
-                                    <div class="header-btn d-none f-right d-lg-block">
+                                    @*<div class="header-btn d-none f-right d-lg-block">
                                         <a href="~/Home/RegisterJobSeeker" class="btn head-btn1">Đăng ký</a>
                                         <a href="~/Home/LoginJobSeeker" class="btn head-btn2">Đăng nhập</a>
-                                    </div>
+                                    </div>*@
                                 }
                             </div>
                         </div>
