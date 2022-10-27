@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FindJobSolution.Data.Migrations
 {
-    public partial class adddata : Migration
+    public partial class createdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -282,8 +282,8 @@ namespace FindJobSolution.Data.Migrations
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m),
                     Benefits = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    JobInformationTimeStart = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 5, 22, 55, 40, 903, DateTimeKind.Local).AddTicks(9162)),
-                    JobInformationTimeEnd = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 5, 22, 55, 40, 903, DateTimeKind.Local).AddTicks(9324)),
+                    JobInformationTimeStart = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 12, 20, 37, 13, 872, DateTimeKind.Local).AddTicks(7153)),
+                    JobInformationTimeEnd = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 12, 20, 37, 13, 872, DateTimeKind.Local).AddTicks(7319)),
                     RecruiterId = table.Column<int>(type: "int", nullable: false),
                     JobId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -370,7 +370,7 @@ namespace FindJobSolution.Data.Migrations
                 {
                     JobSeekerId = table.Column<int>(type: "int", nullable: false),
                     ApplyJobsId = table.Column<int>(type: "int", nullable: false),
-                    ApplyJobsTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 5, 22, 55, 40, 905, DateTimeKind.Local).AddTicks(4466))
+                    ApplyJobsTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 12, 20, 37, 13, 874, DateTimeKind.Local).AddTicks(1197))
                 },
                 constraints: table =>
                 {
@@ -395,7 +395,7 @@ namespace FindJobSolution.Data.Migrations
                 {
                     JobSeekerId = table.Column<int>(type: "int", nullable: false),
                     SaveJobId = table.Column<int>(type: "int", nullable: false),
-                    TimeSaveJob = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 5, 22, 55, 40, 905, DateTimeKind.Local).AddTicks(7514))
+                    TimeSaveJob = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 12, 20, 37, 13, 874, DateTimeKind.Local).AddTicks(4164))
                 },
                 constraints: table =>
                 {
@@ -435,7 +435,7 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "62f4f500-6bc5-4c8e-9f51-ceb6db786a55", "admin", "admin" });
+                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "7ee309ed-8162-4867-ad27-b3193217f1b5", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -445,7 +445,7 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "781f691b-902d-4ae4-a0b1-92edeefbdd97", new DateTime(2000, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "thanh26092000@gmail.com", true, "Thanh", "Xuan", false, null, "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEGCnOgV2uhwMezWvf7ggKu9npqo8c1X82aJgMXaygtGdSMxSyF4s0kagTEooFu4g8g==", null, false, "", false, "Lxthanh" });
+                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "fb18415c-701c-4acc-be50-4ef5a8a0be74", new DateTime(2000, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "thanh26092000@gmail.com", true, "Thanh", "Xuan", false, null, "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAECCc86r0XQgcRfMF1EsJ2bZ4AEt6slSiT0sYVVOvqdg0M0uxGXmeKSTVhx1m+Xma6g==", null, false, "", false, "Lxthanh" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplyJobs_JobInformationId",
