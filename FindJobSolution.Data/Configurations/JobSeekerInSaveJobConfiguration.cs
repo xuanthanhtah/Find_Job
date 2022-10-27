@@ -21,7 +21,7 @@ namespace FindJobSolution.Data.Configurations
 
             builder.HasOne(x => x.SaveJob).WithMany(x=> x.JobSeekerInSaveJobs).HasForeignKey(x=>x.SaveJobId).OnDelete(DeleteBehavior.Restrict);
 
-            builder.Property(x => x.TimeSaveJob).HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.TimeSaveJob);
         }
     }
 }

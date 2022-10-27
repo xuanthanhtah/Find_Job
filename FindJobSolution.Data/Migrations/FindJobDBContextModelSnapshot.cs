@@ -121,14 +121,10 @@ namespace FindJobSolution.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("JobInformationTimeEnd")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 12, 20, 37, 13, 872, DateTimeKind.Local).AddTicks(7319));
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("JobInformationTimeStart")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 12, 20, 37, 13, 872, DateTimeKind.Local).AddTicks(7153));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("JobLevel")
                         .IsRequired()
@@ -238,9 +234,7 @@ namespace FindJobSolution.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ApplyJobsTime")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 12, 20, 37, 13, 874, DateTimeKind.Local).AddTicks(1197));
+                        .HasColumnType("datetime2");
 
                     b.HasKey("ApplyJobsId", "JobSeekerId");
 
@@ -258,9 +252,7 @@ namespace FindJobSolution.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("TimeSaveJob")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2022, 10, 12, 20, 37, 13, 874, DateTimeKind.Local).AddTicks(4164));
+                        .HasColumnType("datetime2");
 
                     b.HasKey("JobSeekerId", "SaveJobId");
 
@@ -361,6 +353,16 @@ namespace FindJobSolution.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecruiterGalleriesId"), 1L, 1);
 
+                    b.Property<string>("Caption")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("FileSize")
+                        .HasColumnType("int");
+
                     b.Property<int>("RecruiterId")
                         .HasColumnType("int");
 
@@ -372,7 +374,7 @@ namespace FindJobSolution.Data.Migrations
 
                     b.HasIndex("RecruiterId");
 
-                    b.ToTable("RecruiterGalleries");
+                    b.ToTable("RecruiterGalleries", (string)null);
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Role", b =>
@@ -398,7 +400,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "7ee309ed-8162-4867-ad27-b3193217f1b5",
+                            ConcurrencyStamp = "19e88952-ee53-48aa-94d2-cde72fbc7c66",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -530,7 +532,7 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fb18415c-701c-4acc-be50-4ef5a8a0be74",
+                            ConcurrencyStamp = "20ae934e-c1b5-42b8-a553-4cbb671bb889",
                             Dob = new DateTime(2000, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
@@ -539,7 +541,7 @@ namespace FindJobSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAECCc86r0XQgcRfMF1EsJ2bZ4AEt6slSiT0sYVVOvqdg0M0uxGXmeKSTVhx1m+Xma6g==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM1EZdlHZFbJpN5MHZhGPrnmvM7JL/JbGxBgWkFZAxDbpC4FWoY9u0nMbf4l8gYpsQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
