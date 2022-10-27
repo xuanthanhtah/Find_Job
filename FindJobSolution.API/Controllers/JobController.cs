@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.API.Controllers
 {
-    [Route("job")]
+    [Route("[controller]")]
     [ApiController]
     public class JobController : ControllerBase
     {

@@ -31,7 +31,8 @@ namespace FindJobSolution.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger FindJob Solution", Version = "v1" });
 
             });
-         }
+            services.AddControllers();
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -49,7 +50,6 @@ namespace FindJobSolution.API
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
