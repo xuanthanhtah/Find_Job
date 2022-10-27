@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindJobSolution.ViewModels.Catalog.Jobs.Manage
+namespace FindJobSolution.ViewModels.Catalog.Jobs
 {
     public class JobUpdateRequest
     {

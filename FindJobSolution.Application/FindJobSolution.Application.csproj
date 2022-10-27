@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\FindJobSolution.Data\FindJobSolution.Data.csproj" />
     <ProjectReference Include="..\FindJobSolution.Utilities\FindJobSolution.Utilities.csproj" />
+    <ProjectReference Include="..\FindJobSolution.ViewModels\FindJobSolution.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
