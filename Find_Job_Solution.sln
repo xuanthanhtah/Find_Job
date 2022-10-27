@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{6E892D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{3C43FF97-A9CA-490A-90FD-80A4E0C55A34}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindJobSolution.ViewModels", "FindJobSolution.ViewModels\FindJobSolution.ViewModels.csproj", "{1C489556-9CB1-45EF-9DF7-92088FB37715}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{01D9D2D0-EA30-4A1A-8068-E48F48FF0678}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01D9D2D0-EA30-4A1A-8068-E48F48FF0678}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01D9D2D0-EA30-4A1A-8068-E48F48FF0678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C489556-9CB1-45EF-9DF7-92088FB37715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C489556-9CB1-45EF-9DF7-92088FB37715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C489556-9CB1-45EF-9DF7-92088FB37715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C489556-9CB1-45EF-9DF7-92088FB37715}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +61,7 @@ Global
 		{59C58378-8CB2-4D1A-9593-ADEE5507B198} = {6E892D7A-EB05-485B-8633-4E00F5648C99}
 		{10CD0758-6D0D-4D22-863D-25DCC413FDFC} = {BF9F32CA-8C06-44BD-A089-BEADC7F6EC71}
 		{01D9D2D0-EA30-4A1A-8068-E48F48FF0678} = {3C43FF97-A9CA-490A-90FD-80A4E0C55A34}
+		{1C489556-9CB1-45EF-9DF7-92088FB37715} = {BF9F32CA-8C06-44BD-A089-BEADC7F6EC71}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {770B2018-0EB6-4025-A602-DC841C85379A}

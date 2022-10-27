@@ -1,5 +1,5 @@
 ﻿using FindJobSolution.Application.Catalog.Jobs;
-using FindJobSolution.Application.Catalog.Jobs.Dtos;
+using FindJobSolution.ViewModels.Catalog.Jobs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.API.Controllers
@@ -41,7 +41,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] JobCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] JobCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +59,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] JobUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] JobUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
