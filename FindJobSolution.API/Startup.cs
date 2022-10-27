@@ -1,7 +1,10 @@
 ﻿using FindJobSolution.Application.Catalog.Jobs;
 using FindJobSolution.Application.Common;
+using FindJobSolution.Application.System.Users;
 using FindJobSolution.Data.EF;
+using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Constants;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -21,11 +24,19 @@ namespace FindJobSolution.API
         {
             services.AddDbContext<FindJobDBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
+            services.AddIdentity<User,Role>()
+                .AddEntityFrameworkStores<FindJobDBContext>()
+                .AddDefaultTokenProviders();    
 
             //Declare DI
             services.AddTransient<IStorageService, FileStorageService>();
 
             services.AddTransient<IJobService, JobService>();
+            
+            services.AddTransient<UserManager<User>, UserManager<User>>();
+            services.AddTransient<SignInManager<User>, SignInManager<User>>();
+            services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
+            services.AddTransient<IUserService, UserService>();
 
             services.AddControllersWithViews();
 
