@@ -3,16 +3,17 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:22239",
-      "sslPort": 44332
+      "applicationUrl": "http://localhost:4106",
+      "sslPort": 44387
     }
   },
   "profiles": {
-    "FindJobSolution.WebApp": {
+    "FindJobSolution.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:2001;http://localhost:2000",
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

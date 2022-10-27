@@ -42,9 +42,9 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.Status).HasDefaultValue(Status.Active);
 
-            builder.Property(x => x.JobInformationTimeStart).HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.JobInformationTimeStart);
 
-            builder.Property(x => x.JobInformationTimeEnd).HasDefaultValue(DateTime.Now);
+            builder.Property(x => x.JobInformationTimeEnd);
 
             builder.HasOne(x=> x.Recruiter).WithMany(x=>x.JobInformation).HasForeignKey(x=>x.RecruiterId);
 
