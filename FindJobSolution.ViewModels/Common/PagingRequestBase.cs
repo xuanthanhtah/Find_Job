@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindJobSolution.Application.Dtos
+namespace FindJobSolution.ViewModels.Common
 {
     public class PagingRequestBase
     {

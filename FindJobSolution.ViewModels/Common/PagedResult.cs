@@ -1,4 +1,4 @@
-﻿namespace FindJobSolution.Application.Dtos
+﻿namespace FindJobSolution.ViewModels.Common
 {
     public class PagedResult<T>
     {
