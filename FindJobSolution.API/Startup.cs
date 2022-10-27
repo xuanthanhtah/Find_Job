@@ -1,4 +1,5 @@
 ﻿using FindJobSolution.Application.Catalog.Jobs;
+using FindJobSolution.Application.Common;
 using FindJobSolution.Data.EF;
 using FindJobSolution.Utilities.Constants;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ namespace FindJobSolution.API
                 options.UseSqlServer(Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
 
             //Declare DI
+            services.AddTransient<IStorageService, FileStorageService>();
+
             services.AddTransient<IJobService, JobService>();
 
             services.AddControllersWithViews();

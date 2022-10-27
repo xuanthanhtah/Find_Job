@@ -14,6 +14,7 @@ public interface IJobService
     Task<int> Detele(int JobId);
     Task<PagedResult<JobViewModel>> GetAllPaging(GetJobPagingRequest request);
     Task<List<JobViewModel>> GetAll();
+    Task<JobViewModel> GetbyId(int JobId);
 }
 
 public class JobService : IJobService
@@ -37,7 +38,8 @@ public class JobService : IJobService
         };
 
         _context.Jobs.Add(job);
-        return await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
+        return job.JobId;
     }
 
     public async Task<int> Detele(int JobId)
@@ -58,14 +60,14 @@ public class JobService : IJobService
            {
                JobName = p.j.JobName,
            }).ToListAsync();
-        
+
     }
 
     public async Task<PagedResult<JobViewModel>> GetAllPaging(GetJobPagingRequest request)
     {
         //lấy job ra
         var query = from j in _context.Jobs select new { j };
-        
+
         //Kiểm tra có nhập vào không
         if (!string.IsNullOrEmpty(request.keyword))
             query = query.Where(x => x.j.JobName.Contains(request.keyword));
@@ -95,6 +97,17 @@ public class JobService : IJobService
         };
 
         return pagedResult;
+    }
+
+    public async Task<JobViewModel> GetbyId(int JobId)
+    {
+        var job = await _context.Jobs.FindAsync(JobId);
+        if (job == null) { throw new FindJobException($"cannot find a job: {JobId}"); }
+        var jobItem = new JobViewModel()
+        {
+            JobName = job.JobName,
+        };
+        return jobItem;
     }
 
     public async Task<int> Update(JobUpdateRequest request)

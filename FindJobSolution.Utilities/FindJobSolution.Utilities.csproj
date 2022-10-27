@@ -10,4 +10,8 @@
     <PackageReference Include="System.Runtime" Version="4.3.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FindJobSolution.WebApp\FindJobSolution.WebApp.csproj" />
+  </ItemGroup>
+
 </Project>
