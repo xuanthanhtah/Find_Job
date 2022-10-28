@@ -22,5 +22,6 @@ namespace FindJobSolution.Data.Entities
         public List<JobSeekerInSaveJob> JobSeekerInSaveJobs { get; set; }
         public List<JobSeekerOldCompany> JobSeekerOldCompanies { get; set; }
         public List<JobSeekerSkill> JobSeekerSkills { get; set; }
+        public List<Cv> Cvs { get; set; }
     }
 }

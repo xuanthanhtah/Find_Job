@@ -4,6 +4,7 @@ using FindJobSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    partial class FindJobDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221028035621_addviewcount")]
+    partial class addviewcount
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,8 +85,8 @@ namespace FindJobSolution.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CvId"), 1L, 1);
 
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
+                    b.Property<int>("FileSize")
+                        .HasColumnType("int");
 
                     b.Property<int>("JobSeekerId")
                         .HasColumnType("int");
@@ -97,9 +99,7 @@ namespace FindJobSolution.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("ViewCount")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("int");
 
                     b.Property<string>("fileType")
                         .IsRequired()
@@ -109,7 +109,7 @@ namespace FindJobSolution.Data.Migrations
 
                     b.HasIndex("JobSeekerId");
 
-                    b.ToTable("Cv", (string)null);
+                    b.ToTable("Cv");
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Job", b =>
@@ -442,7 +442,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "aabcd09e-9d88-4ebd-8d79-692dab492c27",
+                            ConcurrencyStamp = "a109a9e7-290d-4e3c-96f4-c2c426bf6e0c",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -574,7 +574,7 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "98b0ce3a-0000-4c01-91db-4b5b8e6657be",
+                            ConcurrencyStamp = "aaaabee0-36f5-46df-b503-58b98843fb8d",
                             Dob = new DateTime(2000, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
@@ -583,7 +583,7 @@ namespace FindJobSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEACbx8USC7X4qiWLrZaW0HRAN0o8QS1FvlhsUyJy9GBCRDGi5M+KcbZr7Mt/sS3F0Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAED5FGJJxVG61+abbfKfmi34N2H7vGiN56fdgNuwgBeuSNCSVbYN5vNM4FouV+qY3Kg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

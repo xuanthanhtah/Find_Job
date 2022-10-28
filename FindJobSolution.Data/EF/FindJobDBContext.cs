@@ -34,6 +34,7 @@ namespace FindJobSolution.Data.EF
             modelBuilder.ApplyConfiguration(new JobSeekerInApplyJobConfiguration());
             modelBuilder.ApplyConfiguration(new JobSeekerInSaveJobConfiguration());
             modelBuilder.ApplyConfiguration(new JobSeekerSkillConfiguration());
+            modelBuilder.ApplyConfiguration(new CvConfiguration());
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
@@ -66,5 +67,6 @@ namespace FindJobSolution.Data.EF
         public DbSet<JobSeekerSkill> JobSeekerSkills { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Cv> Cvs { get; set; }
     }
 }

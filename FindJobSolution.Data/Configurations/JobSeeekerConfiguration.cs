@@ -19,15 +19,15 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.JobSeekerId).UseIdentityColumn();
 
-            builder.Property(x=> x.Address).IsRequired();
+            builder.Property(x=> x.Address);
 
-            builder.Property(x=> x.Gender).IsRequired().HasMaxLength(6);
+            builder.Property(x=> x.Gender).HasMaxLength(6);
 
-            builder.Property(x => x.National).IsRequired();
+            builder.Property(x => x.National);
 
             builder.Property(x => x.DesiredSalary);
 
-            builder.Property(x => x.Image).IsRequired();
+            builder.Property(x => x.Image);
 
             builder.HasOne(x => x.Job).WithMany(x=>x.JobSeekers).HasForeignKey(x=>x.JobId);
         }
