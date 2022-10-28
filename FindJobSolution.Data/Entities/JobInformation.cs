@@ -20,6 +20,7 @@ namespace FindJobSolution.Data.Entities
         public decimal MinSalary { get; set; }
         public decimal MaxSalary { get; set; }
         public decimal Salary { get; set; }
+        public int ViewCount { set; get; }
         public string Benefits { get; set; }
         public Status Status { get; set; }
         public DateTime JobInformationTimeStart { get; set; }

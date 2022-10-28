@@ -46,6 +46,8 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.JobInformationTimeEnd);
 
+            builder.Property(x => x.ViewCount).IsRequired().HasDefaultValue(0);
+
             builder.HasOne(x=> x.Recruiter).WithMany(x=>x.JobInformation).HasForeignKey(x=>x.RecruiterId);
 
             builder.HasOne(x=> x.Job).WithMany(x=>x.JobInformation).HasForeignKey(x=>x.JobId).OnDelete(DeleteBehavior.Restrict);

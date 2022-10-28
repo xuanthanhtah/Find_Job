@@ -1,4 +1,5 @@
-﻿using FindJobSolution.Application.Catalog.Jobs;
+﻿using FindJobSolution.Application.Catalog.Cvs;
+using FindJobSolution.Application.Catalog.Jobs;
 using FindJobSolution.Application.Common;
 using FindJobSolution.Application.System.Users;
 using FindJobSolution.Data.EF;
@@ -32,7 +33,8 @@ namespace FindJobSolution.API
             services.AddTransient<IStorageService, FileStorageService>();
 
             services.AddTransient<IJobService, JobService>();
-            
+            services.AddTransient<ICvService, CvService>();
+
             services.AddTransient<UserManager<User>, UserManager<User>>();
             services.AddTransient<SignInManager<User>, SignInManager<User>>();
             services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
