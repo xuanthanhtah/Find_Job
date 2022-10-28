@@ -19,13 +19,13 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.RecruiterId).UseIdentityColumn();
 
-            builder.Property(x => x.CompanyName);
+            builder.Property(x => x.CompanyName).IsRequired(false);
 
-            builder.Property(x => x.CompanyLogo);
+            builder.Property(x => x.CompanyLogo).IsRequired(false);
+
+            builder.Property(x => x.Address).IsRequired(false);
             
-            builder.Property(x => x.Address);
-
-            builder.Property(x => x.CompanyIntroduction);
+            builder.Property(x => x.CompanyIntroduction).IsRequired(false);
         }
     }
 }
