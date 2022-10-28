@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{6E892D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{3C43FF97-A9CA-490A-90FD-80A4E0C55A34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindJobSolution.ViewModels", "FindJobSolution.ViewModels\FindJobSolution.ViewModels.csproj", "{1C489556-9CB1-45EF-9DF7-92088FB37715}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.ViewModels", "FindJobSolution.ViewModels\FindJobSolution.ViewModels.csproj", "{1C489556-9CB1-45EF-9DF7-92088FB37715}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
