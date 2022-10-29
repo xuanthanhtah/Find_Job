@@ -1,19 +1,14 @@
-﻿using FindJobSolution.Data.Entities;
-using FindJobSolution.Utilities.Exceptions;
-using FindJobSolution.ViewModels.System.Users;
+﻿using FindJobSolution.Data.EF;
+using FindJobSolution.Data.Entities;
+using FindJobSolution.ViewModels.System.UsersRecruiter;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using FindJobSolution.Data.EF;
 
-namespace FindJobSolution.Application.System.Users
+namespace FindJobSolution.Application.System.UsersRecuiter
 {
     public class UserRecuiterService : IUserRecuiterService
     {
@@ -33,7 +28,7 @@ namespace FindJobSolution.Application.System.Users
             _context = context; 
         }
 
-        public async Task<string> Authenticate(LoginRequest request)
+        public async Task<string> Authenticate(LoginRecruiterRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return null;
@@ -47,7 +42,7 @@ namespace FindJobSolution.Application.System.Users
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
+                new Claim(ClaimTypes.GivenName, user.Name),
                 new Claim(ClaimTypes.Role, string.Join(";",roles))
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -62,16 +57,13 @@ namespace FindJobSolution.Application.System.Users
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public async Task<bool> Register(RegisterRequest request)
+        public async Task<bool> Register(RegisterRecuiterRequest request)
         {
             var user = new User()
             {
                 UserName = request.UserName,
                 Email = request.Email,
-                Dob = request.Dob,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                PhoneNumber = request.PhoneNumber,
+                Name = request.Name,
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);

@@ -20,14 +20,16 @@ namespace FindJobSolution.Data.Configurations
             builder.Property(x => x.CvId).UseIdentityColumn();
 
             builder.Property(x => x.Caption);
-            
-            builder.Property(x => x.FileType);
 
             builder.Property(x => x.FileSize);
 
             builder.Property(x => x.Timespan);
             
             builder.Property(x => x.SortOrder);
+
+            builder.Property(x => x.IsDefault);
+
+            builder.Property(x => x.ImagePath);
 
             builder.HasOne(x => x.JobSeeker).WithMany(x=>x.Cvs).HasForeignKey(x=>x.JobSeekerId);
         }

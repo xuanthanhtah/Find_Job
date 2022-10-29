@@ -1,6 +1,6 @@
-﻿using FindJobSolution.Application.System.Users;
-using FindJobSolution.Data.EF;
+﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
+using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.System.UsersJobSeeker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -45,7 +45,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
+                new Claim(ClaimTypes.GivenName, user.Name),
                 new Claim(ClaimTypes.Role, string.Join(";",roles))
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -62,29 +62,21 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
 
         public async Task<bool> Register(RegisterRequest request)
         {
+
             var user = new User()
             {
                 UserName = request.UserName,
                 Email = request.Email,
-                Dob = request.Dob,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                PhoneNumber = request.PhoneNumber,
+                Name = request.Name,
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
-            //await _roleManager.CreateAsync()
 
             var jobseeker = new JobSeeker()
             {
                 UserId = user.Id,
+                JobId = 1,
             };
-
-            //add cv
-            //if(request.ThumbnailCv != null)
-            //{
-                
-            //}
 
             await _context.AddAsync(jobseeker);
             await _context.SaveChangesAsync();
@@ -95,13 +87,6 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             }
             return false;
         }
-
-        //private async Task<string> SaveFile(IFormFile file)
-        //{
-        //    var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-        //    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
-        //    await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
-        //    return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
-        //}
+        
     }
 }

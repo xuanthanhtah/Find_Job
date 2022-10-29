@@ -1,16 +1,12 @@
-﻿using FindJobSolution.ViewModels.System.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using FindJobSolution.ViewModels.System.UsersRecruiter;
 
-namespace FindJobSolution.Application.System.Users
+namespace FindJobSolution.Application.System.UsersRecuiter
 {
     public interface IUserRecuiterService
     {
-        Task<string> Authenticate(LoginRequest request);
+        Task<string> Authenticate(LoginRecruiterRequest request);
 
-        Task<bool> Register(RegisterRequest request);
+        Task<bool> Register(RegisterRecuiterRequest request);
     }
 }

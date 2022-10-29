@@ -1,7 +1,6 @@
-﻿using FindJobSolution.Application.System.Users;
-using FindJobSolution.ViewModels.System.Users;
+﻿using FindJobSolution.Application.System.UsersRecuiter;
+using FindJobSolution.ViewModels.System.UsersRecruiter;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.API.Controllers
@@ -19,7 +18,7 @@ namespace FindJobSolution.API.Controllers
 
         [HttpPost("authenticate")]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromForm] LoginRequest request)
+        public async Task<IActionResult> Authenticate([FromForm] LoginRecruiterRequest request)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -34,7 +33,7 @@ namespace FindJobSolution.API.Controllers
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromForm] RegisterRequest request)
+        public async Task<IActionResult> Register([FromForm] RegisterRecuiterRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

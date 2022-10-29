@@ -1,7 +1,6 @@
-﻿using FindJobSolution.Application.System.Users;
-using FindJobSolution.ViewModels.System.Users;
+﻿using FindJobSolution.Application.System.UsersJobSeeker;
+using FindJobSolution.ViewModels.System.UsersJobSeeker;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.API.Controllers
@@ -10,11 +9,11 @@ namespace FindJobSolution.API.Controllers
     [ApiController]
     public class UsersJobSeekerController : ControllerBase
     {
-        private readonly IUserRecuiterService _userService;
+        private readonly IUserJobSeekerService _UserJobSeekerService;
 
-        public UsersJobSeekerController(IUserRecuiterService userService)
+        public UsersJobSeekerController(IUserJobSeekerService userJobSeekerService)
         {
-            _userService = userService;
+            _UserJobSeekerService = userJobSeekerService;
         }
 
         [HttpPost("authenticate")]
@@ -24,7 +23,7 @@ namespace FindJobSolution.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var resultToken = await _userService.Authenticate(request);
+            var resultToken = await _UserJobSeekerService.Authenticate(request);
             if (string.IsNullOrEmpty(resultToken))
             {
                 return BadRequest("Username or password is incorrect.");
@@ -39,7 +38,7 @@ namespace FindJobSolution.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _userService.Register(request);
+            var result = await _UserJobSeekerService.Register(request);
             if (!result)
             {
                 return BadRequest("Register is unsuccessful.");
