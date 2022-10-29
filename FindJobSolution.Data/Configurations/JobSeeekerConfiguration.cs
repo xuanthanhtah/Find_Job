@@ -26,6 +26,8 @@ namespace FindJobSolution.Data.Configurations
             builder.Property(x => x.National).IsRequired(false);
 
             builder.Property(x => x.DesiredSalary);
+            
+            builder.Property(x => x.Dob);
 
             builder.Property(x => x.Image).IsRequired(false);
 

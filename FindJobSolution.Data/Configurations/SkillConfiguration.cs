@@ -19,15 +19,9 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.SkillId).UseIdentityColumn();
 
-            builder.Property(x => x.SchoolName);
+            builder.Property(x => x.Name).IsRequired();
 
-            builder.Property(x => x.Degree);
-
-            builder.Property(x => x.Certificate);
-
-            builder.Property(x => x.Language);
-
-            builder.Property(x => x.level);
+            builder.Property(x => x.Experience);
 
         }
     }

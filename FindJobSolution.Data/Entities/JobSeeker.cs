@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace FindJobSolution.Data.Entities
         public string Gender { get; set; }
         public string National { get; set; }
         public string Image { get; set; }
+        public DateTime Dob { get; set; }
         public decimal DesiredSalary { get; set; }
         public Guid UserId { get; set; }
         public User Users { get; set; }

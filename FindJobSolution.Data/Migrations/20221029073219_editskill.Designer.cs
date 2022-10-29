@@ -4,6 +4,7 @@ using FindJobSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    partial class FindJobDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221029073219_editskill")]
+    partial class editskill
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,12 +92,8 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<long>("FileSize")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
+                    b.Property<int>("FileType")
+                        .HasColumnType("int");
 
                     b.Property<int>("JobSeekerId")
                         .HasColumnType("int");
@@ -237,9 +235,6 @@ namespace FindJobSolution.Data.Migrations
 
                     b.Property<decimal>("DesiredSalary")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("Dob")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Gender")
                         .HasMaxLength(6)
@@ -438,7 +433,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "d6afbe08-bbd0-4c7d-8c1b-653e42a2d974",
+                            ConcurrencyStamp = "df47d76f-b6a1-45da-86e3-bbeae5003895",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -496,22 +491,30 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Dob")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
@@ -546,14 +549,16 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "61baf82a-a4b7-4378-9e65-2230d65d3930",
+                            ConcurrencyStamp = "62c6602d-ccf4-4a5a-a930-4cf176fb57f0",
+                            Dob = new DateTime(2000, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
+                            FirstName = "Thanh",
+                            LastName = "Xuan",
                             LockoutEnabled = false,
-                            Name = "Xuan Thanh",
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJiDUBtfKvWjIF6mWHxxNIdVB0E9QV8lyaDDgZu9Y7yBcTW96ro1pX7hwjJ8+7xhMg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ4v+1ZUQgIYDZfzqONdXMSpFfPS2OeNTaeDUo6adL2LY9H2nLnOsMHLSfmZ2Npqug==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -710,9 +715,7 @@ namespace FindJobSolution.Data.Migrations
                 {
                     b.HasOne("FindJobSolution.Data.Entities.Job", "Job")
                         .WithMany("JobSeekers")
-                        .HasForeignKey("JobId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JobId");
 
                     b.HasOne("FindJobSolution.Data.Entities.User", "Users")
                         .WithOne("JobSeeker")
