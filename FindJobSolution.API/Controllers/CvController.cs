@@ -1,8 +1,5 @@
 ﻿using FindJobSolution.Application.Catalog.Cvs;
-using FindJobSolution.ViewModels.Catalog.Cvs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
 
 namespace FindJobSolution.API.Controllers
 {

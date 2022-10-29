@@ -28,21 +28,7 @@ namespace FindJobSolution.Application.Catalog.Cvs
         }
         public async Task<int> Create(CvCreateRequest request)
         {
-            var cv = await _context.Cvs.FindAsync(request.Name);
-            if (cv != null)
-            {
-                throw new FindJobException($"Cv already exists: {request.Name}");
-            }
-            var item = new Cv()
-            {
-                Name = request.Name,
-                fileType = request.fileType,
-                FileSize = request.FileSize,
-                Timespan = DateTime.Now,
-            };
-            _context.Cvs.Add(item);
-            await _context.SaveChangesAsync();
-            return item.CvId;
+            throw new NotImplementedException();
         }
 
         public Task<int> Delete(int CvId)

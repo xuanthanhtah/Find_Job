@@ -13,21 +13,21 @@ namespace FindJobSolution.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Cv> builder)
         {
-            builder.ToTable("Cv");
+            builder.ToTable("CVs");
 
             builder.HasKey(x => x.CvId);
 
             builder.Property(x => x.CvId).UseIdentityColumn();
 
-            builder.Property(x => x.Name);
-
-            builder.Property(x => x.fileType);
+            builder.Property(x => x.Caption);
+            
+            builder.Property(x => x.FileType);
 
             builder.Property(x => x.FileSize);
 
             builder.Property(x => x.Timespan);
             
-            builder.Property(x => x.ViewCount).IsRequired().HasDefaultValue(0);
+            builder.Property(x => x.SortOrder);
 
             builder.HasOne(x => x.JobSeeker).WithMany(x=>x.Cvs).HasForeignKey(x=>x.JobSeekerId);
         }
