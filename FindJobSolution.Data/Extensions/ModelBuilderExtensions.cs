@@ -33,9 +33,7 @@ namespace FindJobSolution.Data.Extensions
                 EmailConfirmed = true,
                 PasswordHash = hasher.HashPassword(null, "Thanh@123"),
                 SecurityStamp = string.Empty,
-                FirstName = "Thanh",
-                LastName = "Xuan",
-                Dob = new DateTime(2000,09,26)
+                Name = "Xuan Thanh",
             });
 
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(new IdentityUserRole<Guid>

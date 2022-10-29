@@ -1,5 +1,4 @@
-﻿
-using FindJobSolution.Application.Catalog.Jobs.Dtos;
+﻿using FindJobSolution.Application.Catalog.Jobs.Dtos;
 using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
@@ -7,7 +6,7 @@ using FindJobSolution.ViewModels.Catalog.Jobs;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace FindJobSolution.Application.Catalog.Jobs;
+namespace FindJobSolution.Application.Catalog;
 
 public interface IJobService
 {
