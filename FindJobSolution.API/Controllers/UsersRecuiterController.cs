@@ -8,11 +8,11 @@ namespace FindJobSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersRecuiterController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserRecuiterService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersRecuiterController(IUserRecuiterService userService)
         {
             _userService = userService;
         }

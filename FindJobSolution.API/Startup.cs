@@ -38,7 +38,7 @@ namespace FindJobSolution.API
             services.AddTransient<UserManager<User>, UserManager<User>>();
             services.AddTransient<SignInManager<User>, SignInManager<User>>();
             services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserRecuiterService, UserRecuiterService>();
 
             services.AddControllersWithViews();
 
