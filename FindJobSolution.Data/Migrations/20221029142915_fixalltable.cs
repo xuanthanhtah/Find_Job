@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FindJobSolution.Data.Migrations
 {
-    public partial class createdatabase : Migration
+    public partial class fixalltable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,12 +69,8 @@ namespace FindJobSolution.Data.Migrations
                 {
                     SkillId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Major = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SchoolName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Degree = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Certificate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    level = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Experience = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -127,9 +123,7 @@ namespace FindJobSolution.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Dob = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -171,11 +165,12 @@ namespace FindJobSolution.Data.Migrations
                     JobSeekerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     JobId = table.Column<int>(type: "int", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Gender = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
-                    National = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DesiredSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
+                    National = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Dob = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DesiredSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -201,10 +196,10 @@ namespace FindJobSolution.Data.Migrations
                 {
                     RecruiterId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CompanyLogo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CompanyIntroduction = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyIntroduction = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -215,6 +210,31 @@ namespace FindJobSolution.Data.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CVs",
+                columns: table => new
+                {
+                    CvId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Caption = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: false),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    Timespan = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    JobSeekerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CVs", x => x.CvId);
+                    table.ForeignKey(
+                        name: "FK_CVs_JobSeekers_JobSeekerId",
+                        column: x => x.JobSeekerId,
+                        principalTable: "JobSeekers",
+                        principalColumn: "JobSeekerId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -269,8 +289,8 @@ namespace FindJobSolution.Data.Migrations
                 name: "JobInformations",
                 columns: table => new
                 {
-                    JobInformationId = table.Column<int>(type: "int", nullable: false),
-                    JobSeekerID = table.Column<int>(type: "int", nullable: false),
+                    JobInformationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     JobTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JobLevel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     JobType = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -280,10 +300,11 @@ namespace FindJobSolution.Data.Migrations
                     MinSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m),
                     MaxSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m),
                     Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false, defaultValue: 0m),
+                    ViewCount = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     Benefits = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    JobInformationTimeStart = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 12, 20, 37, 13, 872, DateTimeKind.Local).AddTicks(7153)),
-                    JobInformationTimeEnd = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 12, 20, 37, 13, 872, DateTimeKind.Local).AddTicks(7319)),
+                    JobInformationTimeStart = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    JobInformationTimeEnd = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RecruiterId = table.Column<int>(type: "int", nullable: false),
                     JobId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -311,7 +332,10 @@ namespace FindJobSolution.Data.Migrations
                     RecruiterGalleriesId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RecruiterId = table.Column<int>(type: "int", nullable: false),
-                    src = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    src = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Caption = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FileSize = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -370,7 +394,7 @@ namespace FindJobSolution.Data.Migrations
                 {
                     JobSeekerId = table.Column<int>(type: "int", nullable: false),
                     ApplyJobsId = table.Column<int>(type: "int", nullable: false),
-                    ApplyJobsTime = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 12, 20, 37, 13, 874, DateTimeKind.Local).AddTicks(1197))
+                    ApplyJobsTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -395,7 +419,7 @@ namespace FindJobSolution.Data.Migrations
                 {
                     JobSeekerId = table.Column<int>(type: "int", nullable: false),
                     SaveJobId = table.Column<int>(type: "int", nullable: false),
-                    TimeSaveJob = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(2022, 10, 12, 20, 37, 13, 874, DateTimeKind.Local).AddTicks(4164))
+                    TimeSaveJob = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -435,7 +459,7 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "7ee309ed-8162-4867-ad27-b3193217f1b5", "admin", "admin" });
+                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "a39e8b43-1530-4e23-9046-f5df6dabe304", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -444,14 +468,19 @@ namespace FindJobSolution.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Dob", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "fb18415c-701c-4acc-be50-4ef5a8a0be74", new DateTime(2000, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "thanh26092000@gmail.com", true, "Thanh", "Xuan", false, null, "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAECCc86r0XQgcRfMF1EsJ2bZ4AEt6slSiT0sYVVOvqdg0M0uxGXmeKSTVhx1m+Xma6g==", null, false, "", false, "Lxthanh" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "0bc47f8a-84fc-4635-9a8a-d1a275f08b4a", "thanh26092000@gmail.com", true, false, null, "Xuan Thanh", "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEHfm3X4DX07DzBkbI8po+W7L4lgQoinOTQymF6CklCDoPeXOdv6+jBk9MzZahsO0qQ==", null, false, "", false, "Lxthanh" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplyJobs_JobInformationId",
                 table: "ApplyJobs",
                 column: "JobInformationId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CVs_JobSeekerId",
+                table: "CVs",
+                column: "JobSeekerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobInformations_JobId",
@@ -516,6 +545,9 @@ namespace FindJobSolution.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AppConfigs");
+
+            migrationBuilder.DropTable(
+                name: "CVs");
 
             migrationBuilder.DropTable(
                 name: "JobSeekerInApplyJobs");

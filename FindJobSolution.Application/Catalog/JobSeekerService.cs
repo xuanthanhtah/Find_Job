@@ -12,7 +12,6 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface IJobSeekerService
     {
-        Task<int> Create(JobSeekerCreateRequest request);
         Task<int> Update(JobSeekerUpdateRequest request);
         Task<int> Detele(int JobSeekerId);
         Task<PagedResult<JobSeekerViewModel>> GetAllPaging(GetJobSeekerPagingRequest request);
@@ -28,45 +27,7 @@ namespace FindJobSolution.Application.Catalog
             _context = context;
             _storageService = storageService;
         }
-
-        public async Task<int> Create(JobSeekerCreateRequest request)
-        {
-            var userId = _context.JobSeekers.FirstOrDefaultAsync(x => x.UserId == request.UserId);
-            if (userId == null)
-            {
-                throw new FindJobException($"cannot find user with id: {request.UserId}");
-            }
-
-            var jobSeeker = new JobSeeker()
-            {
-                JobId = request.JobId,
-                Address = request.Address,
-                Gender = request.Gender,
-                National = request.National,
-                DesiredSalary = request.DesiredSalary,
-            };
-
-            //save cv
-            if(request.ThumbnailCv != null)
-            {
-                jobSeeker.Cvs = new List<Cv>()
-                {
-                    new Cv()
-                    {
-                        Caption = "Thumbnail cv",
-                        Timespan = DateTime.Now,
-                        FileSize = request.ThumbnailCv.Length,
-                        ImagePath = await this.SaveFile(request.ThumbnailCv),
-                        IsDefault = true,
-                        SortOrder = 1,
-                    }
-                };
-            }
-            
-            _context.JobSeekers.Add(jobSeeker);
-            await _context.SaveChangesAsync();
-            return jobSeeker.JobSeekerId;
-        }
+        
 
         public Task<int> Detele(int JobSeekerId)
         {
