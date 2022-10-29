@@ -1,9 +1,4 @@
-﻿using FindJobSolution.ViewModels.System.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FindJobSolution.ViewModels.System.UsersJobSeeker;
 
 namespace FindJobSolution.Application.System.UsersJobSeeker
 {
