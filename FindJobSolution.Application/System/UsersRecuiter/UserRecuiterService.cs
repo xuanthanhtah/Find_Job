@@ -11,23 +11,26 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using FindJobSolution.Data.EF;
 
 namespace FindJobSolution.Application.System.Users
 {
-    public class UserService : IUserService
+    public class UserRecuiterService : IUserRecuiterService
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IConfiguration _config;
+        private readonly FindJobDBContext _context;
 
-        public UserService(UserManager<User> userManager, SignInManager<User> signInManager,
-            RoleManager<Role> roleManager, IConfiguration config)
+        public UserRecuiterService(UserManager<User> userManager, SignInManager<User> signInManager,
+            RoleManager<Role> roleManager, IConfiguration config, FindJobDBContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
+            _context = context; 
         }
 
         public async Task<string> Authenticate(LoginRequest request)
@@ -70,12 +73,24 @@ namespace FindJobSolution.Application.System.Users
                 LastName = request.LastName,
                 PhoneNumber = request.PhoneNumber,
             };
+
             var result = await _userManager.CreateAsync(user, request.Password);
+
+            var recruiter = new Recruiter()
+            {
+                UserId = user.Id,
+            };
+
+            await _context.AddAsync(recruiter);
+            await _context.SaveChangesAsync();
+
             if (result.Succeeded)
             {
                 return true;
             }
             return false;
+
+            
         }
     }
 }

@@ -4,6 +4,7 @@ using FindJobSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    partial class FindJobDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221029042140_addallownull")]
+    partial class addallownull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,30 +85,33 @@ namespace FindJobSolution.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CvId"), 1L, 1);
 
-                    b.Property<string>("Caption")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<long>("FileSize")
                         .HasColumnType("bigint");
-
-                    b.Property<int>("FileType")
-                        .HasColumnType("int");
 
                     b.Property<int>("JobSeekerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Timespan")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ViewCount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
+
+                    b.Property<string>("fileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CvId");
 
                     b.HasIndex("JobSeekerId");
 
-                    b.ToTable("CVs", (string)null);
+                    b.ToTable("Cv", (string)null);
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Job", b =>
@@ -432,7 +437,6 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
                             ConcurrencyStamp = "dc1badc3-ef62-4516-8ced-c65bc552e323",
-
                             Name = "admin",
                             NormalizedName = "admin"
                         });
