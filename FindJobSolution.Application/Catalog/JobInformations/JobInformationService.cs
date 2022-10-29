@@ -132,7 +132,6 @@ namespace FindJobSolution.Application.Catalog.JobInformations
             jobInformation.Benefits = request.Benefits;
             jobInformation.Description = request.Description;
             jobInformation.WorkingLocation = request.WorkingLocation;
-            jobInformation.Status = request.Status;
             jobInformation.MaxSalary = request.MaxSalary;
             jobInformation.MinSalary = request.MinSalary;
             jobInformation.Salary = request.Salary;
