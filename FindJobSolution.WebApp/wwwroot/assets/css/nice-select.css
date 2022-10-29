@@ -2,7 +2,7 @@
   -webkit-tap-highlight-color: transparent;
   background-color: #fff;
   border-radius: 5px;
-  border: solid 1px #979797;
+  border: solid 1px #e8e8e8;
   box-sizing: border-box;
   clear: both;
   cursor: pointer;
@@ -25,7 +25,7 @@
       -ms-user-select: none;
           user-select: none;
   white-space: nowrap;
-  width: inherit; }
+  width: auto; }
   .nice-select:hover {
     border-color: #dbdbdb; }
   .nice-select:active, .nice-select.open, .nice-select:focus {

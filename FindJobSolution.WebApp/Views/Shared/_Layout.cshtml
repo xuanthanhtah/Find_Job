@@ -13,7 +13,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/favicon.ico">
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
+   @* <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="~/assets/css/flaticon.css">
     <link rel="stylesheet" href="~/assets/css/price_rangs.css">
@@ -24,7 +24,21 @@
     <link rel="stylesheet" href="~/assets/css/themify-icons.css">
     <link rel="stylesheet" href="~/assets/css/slick.css">
     <link rel="stylesheet" href="~/assets/css/nice-select.css">
-    <link rel="stylesheet" href="~/assets/css/style.css">
+    <link rel="stylesheet" href="~/assets/css/style.css">*@
+    <link href="~/assets/css/animate.min.css" rel="stylesheet" />
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/css/flaticon.css" rel="stylesheet" />
+    <link href="~/assets/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link href="~/assets/css/magnific-popup.css" rel="stylesheet" />
+    <link href="~/assets/css/nice-select.css" rel="stylesheet" />
+    <link href="~/assets/css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/assets/css/price_rangs.css" rel="stylesheet" />
+    <link href="~/assets/css/responsive.css" rel="stylesheet" />
+    <link href="~/assets/css/slick.css" rel="stylesheet" />
+    <link href="~/assets/css/slicknav.css" rel="stylesheet" />
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+    <link href="~/assets/css/themify-icons.css" rel="stylesheet" />
+
 </head>
 <body>
     <!-- Preloader Start -->
@@ -33,7 +47,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="~/assets/img/logo/logo2.png" alt="">
+                    <img src="~/assets/img/logo/logo.png" alt="">
                 </div>
             </div>
         </div>
@@ -48,7 +62,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="~/Home/Index"><img src="~/assets/img/logo/logo2.png" alt=""></a>
+                                <a href="~/Home/Index"><img src="~/assets/img/logo/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -64,15 +78,18 @@
                                     </nav>
                                 </div>
                                 <!-- Header-btn -->
-
-                                @if (true)
+                                <div class="header-btn d-none f-right d-lg-block">
+                                    <a href="#" class="btn head-btn1">Register</a>
+                                    <a href="#" class="btn head-btn2">Login</a>
+                                </div>
+                              @*  @if (true)
                                 {
-                                    @*var email = HttpContextAccessor.HttpContext.Session.GetString("Email");*@
+                                    @*var email = HttpContextAccessor.HttpContext.Session.GetString("Email");
                                     @*QLTDContext context = new QLTDContext();
-                                    TaiKhoanNguoiTimViec tkntv = context.TaiKhoanNguoiTimViecs.SingleOrDefault(p => p.Email == email);*@
+                                    TaiKhoanNguoiTimViec tkntv = context.TaiKhoanNguoiTimViecs.SingleOrDefault(p => p.Email == email);
                                     <div class="nice-select">
                                         Hello
-                                        @*@tkntv.HoTen*@
+                                        tkntv.HoTen
                                         <ul class="list">
                                             <li data-value class="option"><img src="~/assets/img/icon/menu-user-2.png"><a href="@Url.Action("UserProfile", "UserJS")" style="color:black">Thông tin</a></li>
                                             <li data-value class="option"><img src="~/assets/img/icon/menu-user-3.png"><a href="@Url.Action("Logout", "Home")" style="color:black">Đăng xuất</a></li>
@@ -81,11 +98,11 @@
                                 }
                                 else
                                 {
-                                    @*<div class="header-btn d-none f-right d-lg-block">
+                                    <div class="header-btn d-none f-right d-lg-block">
                                         <a href="~/Home/RegisterJobSeeker" class="btn head-btn1">Đăng ký</a>
                                         <a href="~/Home/LoginJobSeeker" class="btn head-btn2">Đăng nhập</a>
-                                    </div>*@
-                                }
+                                    </div>
+                                }*@
                             </div>
                         </div>
                     </div>
@@ -94,11 +111,536 @@
         </div>
         <!-- Header End -->
     </header>
-    <div class="container body-container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <main>
+
+        <!-- slider Area Start-->
+        <div class="slider-area ">
+            <!-- Mobile Menu -->
+            <div class="slider-active slick-initialized slick-slider">
+                <div class="slick-list draggable">
+                    <div class="slick-track" style="opacity: 1; width: 1026px;">
+                        <div class="single-slider slider-height d-flex align-items-center slick-slide slick-current slick-active" data-background="assets/img/hero/h1_hero.jpg" data-slick-index="0" aria-hidden="false" tabindex="0" style="width: 1026px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1; background-image: url(&quot;assets/img/hero/h1_hero.jpg&quot;);">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-9 col-md-10">
+                                        <div class="hero__caption">
+                                            <h1>Find the most exciting startup jobs</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Search Box -->
+                                <div class="row">
+                                    <div class="col-xl-8">
+                                        <!-- form -->
+                                        <form action="#" class="search-box">
+                                            <div class="input-form">
+                                                <input type="text" placeholder="Job Tittle or keyword" tabindex="0">
+                                            </div>
+                                            <div class="select-form">
+                                                <div class="select-itms">
+                                                    <select name="select" id="select1" tabindex="0" style="display: none;">
+                                                        <option value="">Location BD</option>
+                                                        <option value="">Location PK</option>
+                                                        <option value="">Location US</option>
+                                                        <option value="">Location UK</option>
+                                                    </select><div class="nice-select" tabindex="0"><span class="current">Location BD</span><ul class="list"><li data-value="" class="option selected">Location BD</li><li data-value="" class="option">Location PK</li><li data-value="" class="option">Location US</li><li data-value="" class="option">Location UK</li></ul></div>
+                                                </div>
+                                            </div>
+                                            <div class="search-form">
+                                                <a href="#" tabindex="0">Find job</a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- slider Area End-->
+        <!-- Our Services Start -->
+        <div class="our-services section-pad-t30">
+            <div class="container">
+                <!-- Section Tittle -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-tittle text-center">
+                            <span>FEATURED TOURS Packages</span>
+                            <h2>Browse Top Categories </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex justify-contnet-center">
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-tour"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="job_listing.html">Design &amp; Creative</a></h5>
+                                <span>(653)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-cms"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="job_listing.html">Design &amp; Development</a></h5>
+                                <span>(658)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-report"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="job_listing.html">Sales &amp; Marketing</a></h5>
+                                <span>(658)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-app"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="job_listing.html">Mobile Application</a></h5>
+                                <span>(658)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-helmet"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="job_listing.html">Construction</a></h5>
+                                <span>(658)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-high-tech"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="job_listing.html">Information Technology</a></h5>
+                                <span>(658)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-real-estate"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="job_listing.html">Real Estate</a></h5>
+                                <span>(658)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                        <div class="single-services text-center mb-30">
+                            <div class="services-ion">
+                                <span class="flaticon-content"></span>
+                            </div>
+                            <div class="services-cap">
+                                <h5><a href="job_listing.html">Content Writer</a></h5>
+                                <span>(658)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- More Btn -->
+                <!-- Section Button -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="browse-btn2 text-center mt-50">
+                            <a href="job_listing.html" class="border-btn2">Browse All Sectors</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Our Services End -->
+       
+        <!-- Featured_job_start -->
+        <section class="featured-job-area feature-padding">
+            <div class="container">
+                <!-- Section Tittle -->
+                @RenderBody()
+@*                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-tittle text-center">
+                            <span>Recent Job</span>
+                            <h2>Featured Jobs</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-xl-10">
+                        <!-- single-job-content -->
+                        <div class="single-job-items mb-30">
+                            <div class="job-items">
+                                <div class="company-img">
+                                    <a href="job_details.html"><img src="assets/img/icon/job-list1.png" alt=""></a>
+                                </div>
+                                <div class="job-tittle">
+                                    <a href="job_details.html"><h4>Digital Marketer</h4></a>
+                                    <ul>
+                                        <li>Creative Agency</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
+                                        <li>$3500 - $4000</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items-link f-right">
+                                <a href="job_details.html">Full Time</a>
+                                <span>7 hours ago</span>
+                            </div>
+                        </div>
+                        <!-- single-job-content -->
+                        <div class="single-job-items mb-30">
+                            <div class="job-items">
+                                <div class="company-img">
+                                    <a href="job_details.html"><img src="assets/img/icon/job-list2.png" alt=""></a>
+                                </div>
+                                <div class="job-tittle">
+                                    <a href="job_details.html"><h4>Digital Marketer</h4></a>
+                                    <ul>
+                                        <li>Creative Agency</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
+                                        <li>$3500 - $4000</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items-link f-right">
+                                <a href="job_details.html">Full Time</a>
+                                <span>7 hours ago</span>
+                            </div>
+                        </div>
+                        <!-- single-job-content -->
+                        <div class="single-job-items mb-30">
+                            <div class="job-items">
+                                <div class="company-img">
+                                    <a href="job_details.html"><img src="assets/img/icon/job-list3.png" alt=""></a>
+                                </div>
+                                <div class="job-tittle">
+                                    <a href="job_details.html"><h4>Digital Marketer</h4></a>
+                                    <ul>
+                                        <li>Creative Agency</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
+                                        <li>$3500 - $4000</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items-link f-right">
+                                <a href="job_details.html">Full Time</a>
+                                <span>7 hours ago</span>
+                            </div>
+                        </div>
+                        <!-- single-job-content -->
+                        <div class="single-job-items mb-30">
+                            <div class="job-items">
+                                <div class="company-img">
+                                    <a href="job_details.html"><img src="assets/img/icon/job-list4.png" alt=""></a>
+                                </div>
+                                <div class="job-tittle">
+                                    <a href="job_details.html"><h4>Digital Marketer</h4></a>
+                                    <ul>
+                                        <li>Creative Agency</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>Athens, Greece</li>
+                                        <li>$3500 - $4000</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="items-link f-right">
+                                <a href="job_details.html">Full Time</a>
+                                <span>7 hours ago</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>*@
+            </div>
+        </section>
+        <!-- Featured_job_end -->
+        <!-- How  Apply Process Start-->
+        <div class="apply-process-area apply-bg pt-150 pb-150" data-background="assets/img/gallery/how-applybg.png" style="background-image: url(&quot;assets/img/gallery/how-applybg.png&quot;);">
+            <div class="container">
+                <!-- Section Tittle -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-tittle white-text text-center">
+                            <span>Apply process</span>
+                            <h2> How it works</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Apply Process Caption -->
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-process text-center mb-30">
+                            <div class="process-ion">
+                                <span class="flaticon-search"></span>
+                            </div>
+                            <div class="process-cap">
+                                <h5>1. Search a job</h5>
+                                <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-process text-center mb-30">
+                            <div class="process-ion">
+                                <span class="flaticon-curriculum-vitae"></span>
+                            </div>
+                            <div class="process-cap">
+                                <h5>2. Apply for job</h5>
+                                <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-process text-center mb-30">
+                            <div class="process-ion">
+                                <span class="flaticon-tour"></span>
+                            </div>
+                            <div class="process-cap">
+                                <h5>3. Get your job</h5>
+                                <p>Sorem spsum dolor sit amsectetur adipisclit, seddo eiusmod tempor incididunt ut laborea.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- How  Apply Process End-->
+        <!-- Testimonial Start -->
+        <div class="testimonial-area testimonial-padding">
+            <div class="container">
+                <!-- Testimonial contents -->
+                <div class="row d-flex justify-content-center">
+                    <div class="col-xl-8 col-lg-8 col-md-10">
+                        <div class="h1-testimonial-active dot-style slick-initialized slick-slider slick-dotted">
+                            <!-- Single Testimonial -->
+                            <!-- Single Testimonial -->
+                            <!-- Single Testimonial -->
+
+                            <div class="slick-list draggable">
+                                <div class="slick-track" style="opacity: 1; width: 4270px; transform: translate3d(-1830px, 0px, 0px); transition: transform 500ms ease 0s;">
+                                    <div class="single-testimonial text-center slick-slide slick-cloned" tabindex="-1" role="tabpanel" aria-describedby="slick-slide-control12" style="width: 610px;" data-slick-index="-1" aria-hidden="true">
+                                        <!-- Testimonial Content -->
+                                        <div class="testimonial-caption ">
+                                            <!-- founder -->
+                                            <div class="testimonial-founder  ">
+                                                <div class="founder-img mb-30">
+                                                    <img src="assets/img/testmonial/testimonial-founder.png" alt="">
+                                                    <span>Margaret Lawson</span>
+                                                    <p>Creative Director</p>
+                                                </div>
+                                            </div>
+                                            <div class="testimonial-top-cap">
+                                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                            </div>
+                                        </div>
+                                    </div><div class="single-testimonial text-center slick-slide" tabindex="-1" role="tabpanel" id="slick-slide10" aria-describedby="slick-slide-control10" style="width: 610px;" data-slick-index="0" aria-hidden="true">
+                                        <!-- Testimonial Content -->
+                                        <div class="testimonial-caption ">
+                                            <!-- founder -->
+                                            <div class="testimonial-founder  ">
+                                                <div class="founder-img mb-30">
+                                                    <img src="assets/img/testmonial/testimonial-founder.png" alt="">
+                                                    <span>Margaret Lawson</span>
+                                                    <p>Creative Director</p>
+                                                </div>
+                                            </div>
+                                            <div class="testimonial-top-cap">
+                                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                            </div>
+                                        </div>
+                                    </div><div class="single-testimonial text-center slick-slide" tabindex="0" role="tabpanel" id="slick-slide11" aria-describedby="slick-slide-control11" style="width: 610px;" data-slick-index="1" aria-hidden="true">
+                                        <!-- Testimonial Content -->
+                                        <div class="testimonial-caption ">
+                                            <!-- founder -->
+                                            <div class="testimonial-founder  ">
+                                                <div class="founder-img mb-30">
+                                                    <img src="assets/img/testmonial/testimonial-founder.png" alt="">
+                                                    <span>Margaret Lawson</span>
+                                                    <p>Creative Director</p>
+                                                </div>
+                                            </div>
+                                            <div class="testimonial-top-cap">
+                                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                            </div>
+                                        </div>
+                                    </div><div class="single-testimonial text-center slick-slide slick-current slick-active" tabindex="-1" role="tabpanel" id="slick-slide12" aria-describedby="slick-slide-control12" style="width: 610px;" data-slick-index="2" aria-hidden="false">
+                                        <!-- Testimonial Content -->
+                                        <div class="testimonial-caption ">
+                                            <!-- founder -->
+                                            <div class="testimonial-founder  ">
+                                                <div class="founder-img mb-30">
+                                                    <img src="assets/img/testmonial/testimonial-founder.png" alt="">
+                                                    <span>Margaret Lawson</span>
+                                                    <p>Creative Director</p>
+                                                </div>
+                                            </div>
+                                            <div class="testimonial-top-cap">
+                                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                            </div>
+                                        </div>
+                                    </div><div class="single-testimonial text-center slick-slide slick-cloned" tabindex="-1" role="tabpanel" aria-describedby="slick-slide-control10" style="width: 610px;" data-slick-index="3" aria-hidden="true">
+                                        <!-- Testimonial Content -->
+                                        <div class="testimonial-caption ">
+                                            <!-- founder -->
+                                            <div class="testimonial-founder  ">
+                                                <div class="founder-img mb-30">
+                                                    <img src="assets/img/testmonial/testimonial-founder.png" alt="">
+                                                    <span>Margaret Lawson</span>
+                                                    <p>Creative Director</p>
+                                                </div>
+                                            </div>
+                                            <div class="testimonial-top-cap">
+                                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                            </div>
+                                        </div>
+                                    </div><div class="single-testimonial text-center slick-slide slick-cloned" tabindex="-1" role="tabpanel" aria-describedby="slick-slide-control11" style="width: 610px;" data-slick-index="4" aria-hidden="true">
+                                        <!-- Testimonial Content -->
+                                        <div class="testimonial-caption ">
+                                            <!-- founder -->
+                                            <div class="testimonial-founder  ">
+                                                <div class="founder-img mb-30">
+                                                    <img src="assets/img/testmonial/testimonial-founder.png" alt="">
+                                                    <span>Margaret Lawson</span>
+                                                    <p>Creative Director</p>
+                                                </div>
+                                            </div>
+                                            <div class="testimonial-top-cap">
+                                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                            </div>
+                                        </div>
+                                    </div><div class="single-testimonial text-center slick-slide slick-cloned" tabindex="-1" role="tabpanel" aria-describedby="slick-slide-control12" style="width: 610px;" data-slick-index="5" aria-hidden="true">
+                                        <!-- Testimonial Content -->
+                                        <div class="testimonial-caption ">
+                                            <!-- founder -->
+                                            <div class="testimonial-founder  ">
+                                                <div class="founder-img mb-30">
+                                                    <img src="assets/img/testmonial/testimonial-founder.png" alt="">
+                                                    <span>Margaret Lawson</span>
+                                                    <p>Creative Director</p>
+                                                </div>
+                                            </div>
+                                            <div class="testimonial-top-cap">
+                                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><ul class="slick-dots" style="display: block;" role="tablist"><li class="" role="presentation"><button type="button" role="tab" id="slick-slide-control10" aria-controls="slick-slide10" aria-label="1 of 3" tabindex="-1">1</button></li><li role="presentation" class=""><button type="button" role="tab" id="slick-slide-control11" aria-controls="slick-slide11" aria-label="2 of 3" tabindex="0" aria-selected="true">2</button></li><li class="slick-active" role="presentation"><button type="button" role="tab" id="slick-slide-control12" aria-controls="slick-slide12" aria-label="3 of 3" tabindex="-1">3</button></li></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial End -->
+        <!-- Support Company Start-->
+        <div class="support-company-area support-padding fix">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="right-caption">
+                            <!-- Section Tittle -->
+                            <div class="section-tittle section-tittle2">
+                                <span>What we are doing</span>
+                                <h2>24k Talented people are getting Jobs</h2>
+                            </div>
+                            <div class="support-caption">
+                                <p class="pera-top">Mollit anim laborum duis au dolor in voluptate velit ess cillum dolore eu lore dsu quality mollit anim laborumuis au dolor in voluptate velit cillum.</p>
+                                <p>Mollit anim laborum.Duis aute irufg dhjkolohr in re voluptate velit esscillumlore eu quife nrulla parihatur. Excghcepteur signjnt occa cupidatat non inulpadeserunt mollit aboru. temnthp incididbnt ut labore mollit anim laborum suis aute.</p>
+                                <a href="about.html" class="btn post-btn">Post a job</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="support-location-img">
+                            <img src="assets/img/service/support-img.jpg" alt="">
+                            <div class="support-img-cap text-center">
+                                <p>Since</p>
+                                <span>1994</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Support Company End-->
+        <!-- Blog Area Start -->
+        <div class="home-blog-area blog-h-padding">
+            <div class="container">
+                <!-- Section Tittle -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-tittle text-center">
+                            <span>Our latest blog</span>
+                            <h2>Our recent news</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="home-blog-single mb-30">
+                            <div class="blog-img-cap">
+                                <div class="blog-img">
+                                    <img src="assets/img/blog/home-blog1.jpg" alt="">
+                                    <!-- Blog date -->
+                                    <div class="blog-date text-center">
+                                        <span>24</span>
+                                        <p>Now</p>
+                                    </div>
+                                </div>
+                                <div class="blog-cap">
+                                    <p>|   Properties</p>
+                                    <h3><a href="single-blog.html">Footprints in Time is perfect House in Kurashiki</a></h3>
+                                    <a href="#" class="more-btn">Read more »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6 col-md-6">
+                        <div class="home-blog-single mb-30">
+                            <div class="blog-img-cap">
+                                <div class="blog-img">
+                                    <img src="assets/img/blog/home-blog2.jpg" alt="">
+                                    <!-- Blog date -->
+                                    <div class="blog-date text-center">
+                                        <span>24</span>
+                                        <p>Now</p>
+                                    </div>
+                                </div>
+                                <div class="blog-cap">
+                                    <p>|   Properties</p>
+                                    <h3><a href="single-blog.html">Footprints in Time is perfect House in Kurashiki</a></h3>
+                                    <a href="#" class="more-btn">Read more »</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Blog Area End -->
+
+    </main>
+   
 
     <footer>
         <!-- Footer Start-->
@@ -184,7 +726,7 @@
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                         <!-- logo -->
                         <div class="footer-logo mb-20">
-                            <a href="index.html"><img src="~/assets/img/logo/logo_footer.png" alt=""></a>
+                            <a href="index.html"><img src="~/assets/img/logo/logo2_footer.png" alt=""></a>
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-5">
@@ -241,6 +783,7 @@
     <!-- JS here -->
     <!-- All JS Custom Plugins Link Here here -->
     <script src="~/assets/js/vendor/modernizr-3.5.0.min.js"></script>
+   
     <!-- Jquery, Popper, Bootstrap -->
     <script src="~/assets/js/vendor/jquery-1.12.4.min.js"></script>
     <script src="~/assets/js/popper.min.js"></script>
