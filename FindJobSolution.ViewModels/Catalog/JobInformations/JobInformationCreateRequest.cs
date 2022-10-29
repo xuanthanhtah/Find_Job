@@ -18,7 +18,6 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
         public decimal MinSalary { get; set; }
         public decimal MaxSalary { get; set; }
         public decimal Salary { get; set; }
-        public int ViewCount { set; get; }
         public string Benefits { get; set; }
         public int RecruiterId { get; set; }
         public int JobId { get; set; }
