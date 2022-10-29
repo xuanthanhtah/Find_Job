@@ -1,21 +1,19 @@
 ﻿using FindJobSolution.Application.System.Users;
 using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
-using FindJobSolution.ViewModels.System.Users;
+using FindJobSolution.ViewModels.System.UsersJobSeeker;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FindJobSolution.Application.System.UsersJobSeeker
 {
-    public class UserJobSeekerService : IUserRecuiterService
+    public class UserJobSeekerService : IUserJobSeekerService
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
@@ -82,6 +80,12 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
                 UserId = user.Id,
             };
 
+            //add cv
+            //if(request.ThumbnailCv != null)
+            //{
+                
+            //}
+
             await _context.AddAsync(jobseeker);
             await _context.SaveChangesAsync();
 
@@ -91,5 +95,13 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             }
             return false;
         }
+
+        //private async Task<string> SaveFile(IFormFile file)
+        //{
+        //    var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+        //    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+        //    await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+        //    return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
+        //}
     }
 }
