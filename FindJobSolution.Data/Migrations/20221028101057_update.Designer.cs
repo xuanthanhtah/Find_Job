@@ -4,6 +4,7 @@ using FindJobSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    partial class FindJobDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221028101057_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,22 +234,26 @@ namespace FindJobSolution.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobSeekerId"), 1L, 1);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("DesiredSalary")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Gender")
+                        .IsRequired()
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("Image")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("JobId")
                         .HasColumnType("int");
 
                     b.Property<string>("National")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
@@ -357,15 +363,19 @@ namespace FindJobSolution.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecruiterId"), 1L, 1);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyIntroduction")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyLogo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
@@ -434,7 +444,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "dc1badc3-ef62-4516-8ced-c65bc552e323",
+                            ConcurrencyStamp = "2ff4d0f0-4b6b-4421-81ef-0afaa5712505",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -566,7 +576,7 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "daa86ae1-75a9-4318-995d-9524c21ec56a",
+                            ConcurrencyStamp = "02abdcdc-4aa2-4b9a-8660-44ec164dc67a",
                             Dob = new DateTime(2000, 9, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
@@ -575,7 +585,7 @@ namespace FindJobSolution.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBuyV8HEu5DOgArRmEtAbUFNjs5bCGcb/gC2W+t7JqCttAUaUg0NYN+bTI4curydiw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELr3UzdiFGakRGajEkMd2U6bb14Jt62vA/uZVc6gCNiu/8V1TnvifiwOItxcOcwr3Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -732,7 +742,9 @@ namespace FindJobSolution.Data.Migrations
                 {
                     b.HasOne("FindJobSolution.Data.Entities.Job", "Job")
                         .WithMany("JobSeekers")
-                        .HasForeignKey("JobId");
+                        .HasForeignKey("JobId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FindJobSolution.Data.Entities.User", "Users")
                         .WithOne("JobSeeker")

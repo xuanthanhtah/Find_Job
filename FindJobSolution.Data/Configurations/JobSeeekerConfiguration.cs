@@ -29,7 +29,7 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.Image).IsRequired(false);
 
-            builder.HasOne(x => x.Job).WithMany(x=>x.JobSeekers).HasForeignKey(x=>x.JobId);
+            builder.HasOne(x => x.Job).WithMany(x=>x.JobSeekers).HasForeignKey(x=>x.JobId).IsRequired(false);
         }
     }
 }

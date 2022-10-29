@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FindJobSolution.Application.System.Users
 {
-    public interface IUserService
+    public interface IUserRecuiterService
     {
         Task<string> Authenticate(LoginRequest request);
 
