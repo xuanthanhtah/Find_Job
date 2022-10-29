@@ -145,7 +145,10 @@ namespace FindJobSolution.Data.Migrations
             modelBuilder.Entity("FindJobSolution.Data.Entities.JobInformation", b =>
                 {
                     b.Property<int>("JobInformationId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobInformationId"), 1L, 1);
 
                     b.Property<string>("Benefits")
                         .IsRequired()
@@ -167,9 +170,6 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<string>("JobLevel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("JobSeekerID")
-                        .HasColumnType("int");
 
                     b.Property<string>("JobTitle")
                         .IsRequired()
@@ -438,7 +438,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "d6afbe08-bbd0-4c7d-8c1b-653e42a2d974",
+                            ConcurrencyStamp = "a39e8b43-1530-4e23-9046-f5df6dabe304",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -546,14 +546,14 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "61baf82a-a4b7-4378-9e65-2230d65d3930",
+                            ConcurrencyStamp = "0bc47f8a-84fc-4635-9a8a-d1a275f08b4a",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             Name = "Xuan Thanh",
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJiDUBtfKvWjIF6mWHxxNIdVB0E9QV8lyaDDgZu9Y7yBcTW96ro1pX7hwjJ8+7xhMg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHfm3X4DX07DzBkbI8po+W7L4lgQoinOTQymF6CklCDoPeXOdv6+jBk9MzZahsO0qQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

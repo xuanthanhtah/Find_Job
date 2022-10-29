@@ -2,27 +2,22 @@
 using FindJobSolution.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindJobSolution.Data.Configurations
 {
-    public class JobInformationConfiguration : IEntityTypeConfiguration<JobInformation>
+    public class JobInfomationConfiguration : IEntityTypeConfiguration<JobInformation>
     {
         public void Configure(EntityTypeBuilder<JobInformation> builder)
         {
             builder.ToTable("JobInformations");
 
-            builder.HasKey(x=> x.JobInformationId);
+            builder.HasKey(x => x.JobInformationId);
 
-            builder.Property(x=> x.JobInformationId).ValueGeneratedNever();
-
+            builder.Property(x => x.JobInformationId).UseIdentityColumn();
+            
             builder.Property(x => x.JobTitle).IsRequired();
 
-            builder.Property(x=> x.JobLevel).IsRequired();
+            builder.Property(x => x.JobLevel).IsRequired();
 
             builder.Property(x => x.JobType).IsRequired();
 
@@ -48,9 +43,9 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.ViewCount).IsRequired().HasDefaultValue(0);
 
-            builder.HasOne(x=> x.Recruiter).WithMany(x=>x.JobInformation).HasForeignKey(x=>x.RecruiterId);
+            builder.HasOne(x => x.Recruiter).WithMany(x => x.JobInformation).HasForeignKey(x => x.RecruiterId);
 
-            builder.HasOne(x=> x.Job).WithMany(x=>x.JobInformation).HasForeignKey(x=>x.JobId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(x => x.Job).WithMany(x => x.JobInformation).HasForeignKey(x => x.JobId).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.SaveJob).WithOne(x => x.JobInformation).HasForeignKey<SaveJob>(x => x.JobInformationId);
 
