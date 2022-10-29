@@ -24,7 +24,8 @@ namespace FindJobSolution.Data.EF
             modelBuilder.ApplyConfiguration(new AppConfigConfiguration());
             modelBuilder.ApplyConfiguration(new ApplyJobConfiguration());
             modelBuilder.ApplyConfiguration(new JobConfiguration());
-            modelBuilder.ApplyConfiguration(new JobInformationConfiguration());
+            modelBuilder.ApplyConfiguration(new JobInfomationConfiguration());
+            //modelBuilder.ApplyConfiguration(new JobInfomationConfig());
             modelBuilder.ApplyConfiguration(new JobSeeekerConfiguration());
             modelBuilder.ApplyConfiguration(new JobSeekerOldCompanyConfiguration());
             modelBuilder.ApplyConfiguration(new RecruiterConfiguration());

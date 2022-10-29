@@ -11,8 +11,9 @@ namespace FindJobSolution.Data.Entities
     {
         public int CvId { get; set; }
         public string Caption { get; set; }
-        public MediaType FileType { get; set; }
+        public string ImagePath { get; set; }
         public long FileSize { get; set; }
+        public bool IsDefault { get; set; }
         public int SortOrder { get; set; }
         public DateTime Timespan { get; set; }
         public int JobSeekerId { get; set; }

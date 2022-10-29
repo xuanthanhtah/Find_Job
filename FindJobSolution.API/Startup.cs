@@ -1,7 +1,9 @@
-﻿using FindJobSolution.Application.Catalog.Cvs;
-using FindJobSolution.Application.Catalog.Jobs;
+
+using FindJobSolution.Application.Catalog;
+using FindJobSolution.Application.Catalog.JobInformations;
 using FindJobSolution.Application.Common;
-using FindJobSolution.Application.System.Users;
+using FindJobSolution.Application.System.UsersJobSeeker;
+using FindJobSolution.Application.System.UsersRecuiter;
 using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Constants;
@@ -33,12 +35,22 @@ namespace FindJobSolution.API
             services.AddTransient<IStorageService, FileStorageService>();
 
             services.AddTransient<IJobService, JobService>();
-            services.AddTransient<ICvService, CvService>();
+            services.AddTransient<IJobSeekerService, JobSeekerService>();
+
+
+            services.AddTransient<IJobInformationService, JobInformationService>();
 
             services.AddTransient<UserManager<User>, UserManager<User>>();
             services.AddTransient<SignInManager<User>, SignInManager<User>>();
             services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
+
+            
+            
+
             services.AddTransient<IUserRecuiterService, UserRecuiterService>();
+            services.AddTransient<IUserJobSeekerService, UserJobSeekerService>();
+
+
 
             services.AddControllersWithViews();
 

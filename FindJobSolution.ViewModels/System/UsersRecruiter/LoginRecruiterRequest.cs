@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindJobSolution.ViewModels.System.Users
+namespace FindJobSolution.ViewModels.System.UsersRecruiter
 {
-    public class LoginRequest
+    public class LoginRecruiterRequest
     {
-        public string UserName { get; set; }    
+        public string UserName { get; set; }
 
         public string Password { get; set; }
 

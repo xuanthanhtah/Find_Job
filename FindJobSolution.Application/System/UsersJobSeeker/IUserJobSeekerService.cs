@@ -2,7 +2,7 @@
 
 namespace FindJobSolution.Application.System.UsersJobSeeker
 {
-    internal interface IUserJobSeekerService
+    public interface IUserJobSeekerService
     {
         Task<string> Authenticate(LoginRequest request);
 
