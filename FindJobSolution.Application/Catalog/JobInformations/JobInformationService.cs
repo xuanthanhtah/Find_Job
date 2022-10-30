@@ -75,7 +75,6 @@ namespace FindJobSolution.Application.Catalog.JobInformations
                {
                    JobInformationId = p.j.JobInformationId,
                    JobLevel = p.j.JobLevel,
-                   JobSeekerID = p.j.JobSeekerID,
                    JobTitle = p.j.JobTitle,
                    JobType = p.j.JobType,
                    Description = p.j.Description,

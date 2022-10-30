@@ -45,7 +45,6 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.Name),
                 new Claim(ClaimTypes.Role, string.Join(";",roles))
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -67,18 +66,17 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             {
                 UserName = request.UserName,
                 Email = request.Email,
-                Name = request.Name,
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
 
-            var jobseeker = new JobSeeker()
+            var JobSeeker = new JobSeeker()
             {
                 UserId = user.Id,
                 JobId = 1,
             };
 
-            await _context.AddAsync(jobseeker);
+            await _context.AddAsync(JobSeeker);
             await _context.SaveChangesAsync();
 
             if (result.Succeeded)
