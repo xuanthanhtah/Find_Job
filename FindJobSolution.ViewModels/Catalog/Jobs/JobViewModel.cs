@@ -8,6 +8,7 @@ namespace FindJobSolution.Application.Catalog.Jobs.Dtos
 {
     public class JobViewModel
     {
+        public int JobId { get; set; }
         public string JobName { get; set; }
     }
 }

@@ -36,17 +36,12 @@ namespace FindJobSolution.API
 
             services.AddTransient<IJobService, JobService>();
             services.AddTransient<IJobSeekerService, JobSeekerService>();
-
-
             services.AddTransient<IJobInformationService, JobInformationService>();
 
             services.AddTransient<UserManager<User>, UserManager<User>>();
             services.AddTransient<SignInManager<User>, SignInManager<User>>();
             services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
-
             
-            
-
             services.AddTransient<IUserRecuiterService, UserRecuiterService>();
             services.AddTransient<IUserJobSeekerService, UserJobSeekerService>();
 
