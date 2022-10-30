@@ -2,7 +2,11 @@
 using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
+using FindJobSolution.ViewModels.Catalog.Cvs;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
+
+using FindJobSolution.ViewModels.Catalog.Cvs;
+
 using FindJobSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -13,28 +17,57 @@ namespace FindJobSolution.Application.Catalog
     public interface IJobSeekerService
     {
         Task<int> Update(JobSeekerUpdateRequest request);
+
         Task<int> Delete(int JobSeekerId);
+
         Task<PagedResult<JobSeekerViewModel>> GetAllPaging(GetJobSeekerPagingRequest request);
+
         Task<List<JobSeekerViewModel>> GetAll();
+
         Task<JobSeekerViewModel> GetbyId(int JobSeekerId);
-        Task<int> AddImages(int JobSeekerId, List<IFormFile> request);
-        Task<int> RemoveImages(int CvId);
-        Task<int> UpdateImages(int CvId, string caption, bool isDefault);
-        Task<List<JobSeekerCvViewModel>> GetCvByJobSeekerId(int JobSeekerId);
+
+        Task<int> AddCv(int JobSeekerId, CvCreateRequest request);
+
+        Task<int> RemoveCv(int CvId);
+
+        Task<int> UpdateCv(int CvId, CvUpdateRequest request);
+
+        Task<List<CvViewModel>> GetCvByJobSeekerId(int JobSeekerId);
+
+        Task<CvViewModel> GetCvById(int Cvid);
     }
+
     public class JobSeekerService : IJobSeekerService
     {
         private readonly FindJobDBContext _context;
         private readonly IStorageService _storageService;
+
         public JobSeekerService(FindJobDBContext context, IStorageService storageService)
         {
             _context = context;
             _storageService = storageService;
         }
 
-        public Task<int> AddImages(int JobSeekerId, List<IFormFile> request)
+        public async Task<int> AddCv(int JobSeekerId, CvCreateRequest request)
         {
-            throw new NotImplementedException();
+            var cv = new Cv()
+            {
+                Caption = request.Caption,
+                Timespan = DateTime.Now,
+                IsDefault = request.IsDefault,
+                JobSeekerId = JobSeekerId,
+                SortOrder = request.SortOrder,
+            };
+
+            if (request.FileCv != null)
+            {
+                cv.FileSize = request.FileCv.Length;
+                cv.FilePath = await this.SaveFile(request.FileCv);
+            }
+            _context.Cvs.Add(cv);
+
+            await _context.SaveChangesAsync();
+            return cv.CvId;
         }
 
         public async Task<int> Delete(int JobSeekerId)
@@ -43,12 +76,11 @@ namespace FindJobSolution.Application.Catalog
             var jobSeeker = await _context.JobSeekers.FindAsync(JobSeekerId);
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobSeeker: {JobSeekerId}"); }
 
-
             //xóa ảnh
             var thumbnailCv = _context.Cvs.Where(i => i.JobSeekerId == JobSeekerId);
             foreach (var image in thumbnailCv)
             {
-                await _storageService.DeleteFileAsync(image.ImagePath);
+                await _storageService.DeleteFileAsync(image.FilePath);
             }
 
             //xóa jobseeker
@@ -78,7 +110,7 @@ namespace FindJobSolution.Application.Catalog
                    Name = p.j.Name,
                    National = p.j.National,
                    DesiredSalary = p.j.DesiredSalary,
-                   ThumbnailCv = p.i.ImagePath,
+                   ThumbnailCv = p.i.FilePath,
                }).ToListAsync();
         }
 
@@ -94,7 +126,7 @@ namespace FindJobSolution.Application.Catalog
                             Name = j.Name,
                             National = j.National,
                             DesiredSalary = j.DesiredSalary,
-                            ThumbnailCv = i.ImagePath,
+                            ThumbnailCv = i.FilePath,
                         };
 
             if (!string.IsNullOrEmpty(request.keyword))
@@ -117,7 +149,7 @@ namespace FindJobSolution.Application.Catalog
                     ThumbnailCv = p.ThumbnailCv,
                 }).ToListAsync();
 
-            // in ra 
+            // in ra
             var pagedResult = new PagedResult<JobSeekerViewModel>()
             {
                 TotalRecord = totalRow,
@@ -144,19 +176,52 @@ namespace FindJobSolution.Application.Catalog
                 Name = jobSeeker.Name,
                 National = jobSeeker.National,
                 DesiredSalary = jobSeeker.DesiredSalary,
-                ThumbnailCv = query.Select(i => i.i.ImagePath).FirstOrDefault(),
+                ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
             };
             return jobItem;
         }
 
-        public Task<List<JobSeekerCvViewModel>> GetCvByJobSeekerId(int JobSeekerId)
+        public async Task<CvViewModel> GetCvById(int Cvid)
         {
-            throw new NotImplementedException();
+            var cv = await _context.Cvs.FindAsync(Cvid);
+            if (cv == null) { throw new FindJobException($"cannot find a cv: {Cvid}"); }
+
+            var viewmodel = new CvViewModel()
+            {
+                JobSeekerId = cv.JobSeekerId,
+                CvId = cv.CvId,
+                Caption = cv.Caption,
+                FilePath = cv.FilePath,
+                FileSize = cv.FileSize,
+                IsDefault = cv.IsDefault,
+                SortOrder = cv.SortOrder,
+                Timespan = cv.Timespan,
+            };
+            return viewmodel;
         }
 
-        public Task<int> RemoveImages(int CvId)
+        public async Task<List<CvViewModel>> GetCvByJobSeekerId(int JobSeekerId)
         {
-            throw new NotImplementedException();
+            return await _context.Cvs.Where(x => x.JobSeekerId == JobSeekerId)
+                .Select(i => new CvViewModel()
+                {
+                    Caption = i.Caption,
+                    FilePath = i.FilePath,
+                    FileSize = i.FileSize,
+                    IsDefault = i.IsDefault,
+                    SortOrder = i.SortOrder,
+                    Timespan = i.Timespan,
+                    CvId = i.CvId,
+                    JobSeekerId = i.JobSeekerId,
+                }).ToListAsync();
+        }
+
+        public async Task<int> RemoveCv(int CvId)
+        {
+            var cv = await _context.Cvs.FindAsync(CvId);
+            if (cv == null) { throw new FindJobException($"cannot find a cv: {CvId}"); }
+            _context.Cvs.Remove(cv);
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<int> Update(JobSeekerUpdateRequest request)
@@ -178,7 +243,7 @@ namespace FindJobSolution.Application.Catalog
                 {
                     thumbnailCv.Caption = request.nameCv;
                     thumbnailCv.FileSize = request.ThumbnailCv.Length;
-                    thumbnailCv.ImagePath = await this.SaveFile(request.ThumbnailCv);
+                    thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailCv);
                     _context.Cvs.Update(thumbnailCv);
                 }
                 else
@@ -190,7 +255,7 @@ namespace FindJobSolution.Application.Catalog
                             Caption = request.nameCv,
                             Timespan = DateTime.Now,
                             FileSize = request.ThumbnailCv.Length,
-                            ImagePath = await this.SaveFile(request.ThumbnailCv),
+                            FilePath = await this.SaveFile(request.ThumbnailCv),
                             IsDefault = true,
                             SortOrder = 1,
                         }
@@ -201,9 +266,25 @@ namespace FindJobSolution.Application.Catalog
             return await _context.SaveChangesAsync();
         }
 
-        public Task<int> UpdateImages(int CvId, string caption, bool isDefault)
+        public async Task<int> UpdateCv(int CvId, CvUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var cv = await _context.Cvs.FindAsync(CvId);
+            if (cv == null)
+            {
+                throw new FindJobException($"Cannot find a cv with id: {CvId}");
+            }
+
+            if (request.FileCv != null)
+            {
+                cv.Caption = request.Caption;
+                cv.IsDefault = request.IsDefault;
+                cv.SortOrder = request.SortOrder;
+                cv.FileSize = request.FileCv.Length;
+                cv.FilePath = await this.SaveFile(request.FileCv);
+            }
+            _context.Cvs.Update(cv);
+
+            return await _context.SaveChangesAsync();
         }
 
         private async Task<string> SaveFile(IFormFile file)
