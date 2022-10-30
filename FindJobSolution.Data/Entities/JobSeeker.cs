@@ -20,8 +20,8 @@ namespace FindJobSolution.Data.Entities
         public Guid UserId { get; set; }
         public User Users { get; set; }
         public Job Job { get; set; }
-        public List<JobSeekerInApplyJob> jobSeekerInApplyJobs { get; set; }
-        public List<JobSeekerInSaveJob> JobSeekerInSaveJobs { get; set; }
+        public List<ApplyJob> ApplyJobs { get; set; }
+        public List<SaveJob> SaveJobs { get; set; }
         public List<JobSeekerOldCompany> JobSeekerOldCompanies { get; set; }
         public List<JobSeekerSkill> JobSeekerSkills { get; set; }
         public List<Cv> Cvs { get; set; }
