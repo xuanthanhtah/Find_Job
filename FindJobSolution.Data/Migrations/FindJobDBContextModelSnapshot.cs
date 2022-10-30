@@ -245,11 +245,12 @@ namespace FindJobSolution.Data.Migrations
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("JobId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("National")
                         .HasColumnType("nvarchar(max)");
@@ -438,7 +439,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "a39e8b43-1530-4e23-9046-f5df6dabe304",
+                            ConcurrencyStamp = "6dc58c82-4fe8-4915-bd73-f55bd882f162",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -508,11 +509,6 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(max)");
 
@@ -546,14 +542,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0bc47f8a-84fc-4635-9a8a-d1a275f08b4a",
+                            ConcurrencyStamp = "a470c35a-c6eb-4e45-b6ab-44a3b43277e0",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            Name = "Xuan Thanh",
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHfm3X4DX07DzBkbI8po+W7L4lgQoinOTQymF6CklCDoPeXOdv6+jBk9MzZahsO0qQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM+QlsGbnrFvhgEhf5J4Nw4yXBCjUjgKuD6MpAaQSGU9GlmDuTcOgj+dERPAzqaDwQ==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

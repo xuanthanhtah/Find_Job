@@ -15,8 +15,6 @@ namespace FindJobSolution.Data.Configurations
         {
             builder.ToTable("Users");
 
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
-
             builder.HasOne(x => x.JobSeeker).WithOne(x => x.Users).HasForeignKey<JobSeeker>(x => x.UserId);
 
             builder.HasOne(x => x.Recruiter).WithOne(x => x.Users).HasForeignKey<Recruiter>(x => x.UserId);

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FindJobSolution.Data.Migrations
 {
-    public partial class fixalltable : Migration
+    public partial class updatetableuser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -123,7 +123,6 @@ namespace FindJobSolution.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -165,10 +164,10 @@ namespace FindJobSolution.Data.Migrations
                     JobSeekerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     JobId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
                     National = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dob = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DesiredSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -459,7 +458,7 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "a39e8b43-1530-4e23-9046-f5df6dabe304", "admin", "admin" });
+                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "6dc58c82-4fe8-4915-bd73-f55bd882f162", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -468,8 +467,8 @@ namespace FindJobSolution.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "0bc47f8a-84fc-4635-9a8a-d1a275f08b4a", "thanh26092000@gmail.com", true, false, null, "Xuan Thanh", "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEHfm3X4DX07DzBkbI8po+W7L4lgQoinOTQymF6CklCDoPeXOdv6+jBk9MzZahsO0qQ==", null, false, "", false, "Lxthanh" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "a470c35a-c6eb-4e45-b6ab-44a3b43277e0", "thanh26092000@gmail.com", true, false, null, "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEM+QlsGbnrFvhgEhf5J4Nw4yXBCjUjgKuD6MpAaQSGU9GlmDuTcOgj+dERPAzqaDwQ==", null, false, "", false, "Lxthanh" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplyJobs_JobInformationId",
