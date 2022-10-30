@@ -1,4 +1,4 @@
-﻿using FindJobSolution.Application.Catalog.JobInformations;
+﻿using FindJobSolution.Application.Catalog;
 using FindJobSolution.ViewModels.Catalog.JobInformations;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +19,7 @@ namespace FindJobSolution.API.Controllers
         public async Task<IActionResult> GetAll()
         {
             var jobInformation = await _jobInformationService.GetAll();
-            if(jobInformation == null) return BadRequest();
+            if (jobInformation == null) return BadRequest();
             return Ok(jobInformation);
         }
         //http://localhost:port/api/jobInformation/{int:id}
@@ -73,6 +73,12 @@ namespace FindJobSolution.API.Controllers
                 return BadRequest();
             }
             return Ok();
+        }
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetJobInformationPagingRequest request)
+        {
+            var jobSeeker = await _jobInformationService.GetAllPaging(request);
+            return Ok(jobSeeker);
         }
     }
 }

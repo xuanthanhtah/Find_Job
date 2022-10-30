@@ -16,4 +16,8 @@
     <ProjectReference Include="..\FindJobSolution.Utilities\FindJobSolution.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\user-content\" />
+  </ItemGroup>
+
 </Project>

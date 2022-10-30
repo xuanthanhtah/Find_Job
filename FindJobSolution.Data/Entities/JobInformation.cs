@@ -28,7 +28,7 @@ namespace FindJobSolution.Data.Entities
         public int RecruiterId { get; set; }
         public int JobId { get; set; }
         public Job Job { get; set; }
-        public ApplyJob ApplyJob { get; set; }
-        public SaveJob SaveJob { get; set; }
+        public List<ApplyJob> ApplyJobs { get; set; }
+        public List<SaveJob> SaveJobs { get; set; }
     }
 }

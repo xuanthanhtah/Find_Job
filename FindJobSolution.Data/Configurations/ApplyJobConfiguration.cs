@@ -14,13 +14,17 @@ namespace FindJobSolution.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<ApplyJob> builder)
         {
-            //builder.ToTable("ApplyJobs");
+            builder.ToTable("ApplyJobs");
 
-            builder.HasKey(x => x.ApplyJobsId);
-
-            builder.Property(x => x.ApplyJobsId).UseIdentityColumn();
+            builder.HasKey(x => new { x.JobSeekerId, x.JobInformationId });
 
             builder.Property(x => x.Status).HasDefaultValue(Status.Active);
+
+            builder.Property(x => x.TimeApply);
+
+            builder.HasOne(x => x.JobSeeker).WithMany(x => x.ApplyJobs).HasForeignKey(x => x.JobSeekerId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasOne(x => x.JobInformation).WithMany(x => x.ApplyJobs).HasForeignKey(x => x.JobInformationId);
         }
     }
 }

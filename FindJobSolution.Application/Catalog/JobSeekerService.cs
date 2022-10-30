@@ -45,7 +45,7 @@ namespace FindJobSolution.Application.Catalog
 
 
             //xóa ảnh
-            var thumbnailCv =  _context.Cvs.Where(i =>i.JobSeekerId == JobSeekerId);
+            var thumbnailCv = _context.Cvs.Where(i => i.JobSeekerId == JobSeekerId);
             foreach (var image in thumbnailCv)
             {
                 await _storageService.DeleteFileAsync(image.ImagePath);
@@ -59,7 +59,7 @@ namespace FindJobSolution.Application.Catalog
             {
                 _context.Users.Remove(userId);
             }
-            
+
             return await _context.SaveChangesAsync();
         }
 
@@ -85,15 +85,21 @@ namespace FindJobSolution.Application.Catalog
         public async Task<PagedResult<JobSeekerViewModel>> GetAllPaging(GetJobSeekerPagingRequest request)
         {
             var query = from j in _context.JobSeekers
-                        select new { j };
+                        join i in _context.Cvs on j.JobSeekerId equals i.JobSeekerId
+                        select new
+                        {
+                            JobId = j.JobId,
+                            Address = j.Address,
+                            Gender = j.Gender,
+                            Name = j.Name,
+                            National = j.National,
+                            DesiredSalary = j.DesiredSalary,
+                            ThumbnailCv = i.ImagePath,
+                        };
 
             if (!string.IsNullOrEmpty(request.keyword))
-                query = query.Where(x => x.j.Name.Contains(request.keyword));
+                query = query.Where(x => x.Name.Contains(request.keyword));
 
-            if (request.jobSeekerIds.Count > 0)
-            {
-                query = query.Where(x => request.jobSeekerIds.Contains(x.j.JobSeekerId));
-            }
             //phân trang
 
             int totalRow = await query.CountAsync();
@@ -102,13 +108,13 @@ namespace FindJobSolution.Application.Catalog
                 .Take(request.PageSize)
                 .Select(p => new JobSeekerViewModel()
                 {
-                    JobId = p.j.JobId,
-                    Address = p.j.Address,
-                    Gender = p.j.Gender,
-                    Name = p.j.Name,
-                    National = p.j.National,
-                    DesiredSalary = p.j.DesiredSalary,
-                   //ThumbnailCv = p.i.ImagePath,
+                    JobId = p.JobId,
+                    Address = p.Address,
+                    Gender = p.Gender,
+                    Name = p.Name,
+                    National = p.National,
+                    DesiredSalary = p.DesiredSalary,
+                    ThumbnailCv = p.ThumbnailCv,
                 }).ToListAsync();
 
             // in ra 
@@ -127,7 +133,7 @@ namespace FindJobSolution.Application.Catalog
                         join i in _context.Cvs on j.JobSeekerId equals i.JobSeekerId
                         where i.IsDefault == true
                         select new { j, i };
-            
+
             var jobSeeker = await _context.JobSeekers.FindAsync(JobSeekerId);
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {JobSeekerId}"); }
             var jobItem = new JobSeekerViewModel()
@@ -170,25 +176,27 @@ namespace FindJobSolution.Application.Catalog
                 var thumbnailCv = await _context.Cvs.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == request.JobSeekerId);
                 if (thumbnailCv != null)
                 {
+                    thumbnailCv.Caption = request.nameCv;
                     thumbnailCv.FileSize = request.ThumbnailCv.Length;
                     thumbnailCv.ImagePath = await this.SaveFile(request.ThumbnailCv);
                     _context.Cvs.Update(thumbnailCv);
                 }
-            }
-            else
-            {
-                JobSeeker.Cvs = new List<Cv>()
+                else
                 {
-                    new Cv()
+                    JobSeeker.Cvs = new List<Cv>()
                     {
-                        Caption = "Cv",
-                        Timespan = DateTime.Now,
-                        FileSize = request.ThumbnailCv.Length,
-                        ImagePath = await this.SaveFile(request.ThumbnailCv),
-                        IsDefault = true,
-                        SortOrder = 1,
-                    }
-                };
+                        new Cv()
+                        {
+                            Caption = request.nameCv,
+                            Timespan = DateTime.Now,
+                            FileSize = request.ThumbnailCv.Length,
+                            ImagePath = await this.SaveFile(request.ThumbnailCv),
+                            IsDefault = true,
+                            SortOrder = 1,
+                        }
+                    };
+                    _context.Cvs.AddRange(JobSeeker.Cvs);
+                }
             }
             return await _context.SaveChangesAsync();
         }
