@@ -1,13 +1,13 @@
-﻿using FindJobSolution.Data.Enums;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindJobSolution.Data.Entities
+namespace FindJobSolution.ViewModels.Catalog.Cvs
 {
-    public class Cv
+    public class CvViewModel
     {
         public int CvId { get; set; }
         public string Caption { get; set; }
@@ -17,6 +17,5 @@ namespace FindJobSolution.Data.Entities
         public int SortOrder { get; set; }
         public DateTime Timespan { get; set; }
         public int JobSeekerId { get; set; }
-        public JobSeeker JobSeeker { get; set; }
     }
 }

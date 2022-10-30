@@ -28,7 +28,7 @@ namespace FindJobSolution.Data.EF
             modelBuilder.ApplyConfiguration(new JobSeeekerConfiguration());
             modelBuilder.ApplyConfiguration(new JobSeekerOldCompanyConfiguration());
             modelBuilder.ApplyConfiguration(new RecruiterConfiguration());
-            modelBuilder.ApplyConfiguration(new RecruiterGalleriesConfiguration());
+            modelBuilder.ApplyConfiguration(new RecruiterImagesConfiguration());
             modelBuilder.ApplyConfiguration(new SaveJobConfiguration());
             modelBuilder.ApplyConfiguration(new SkillConfiguration());
             modelBuilder.ApplyConfiguration(new JobSeekerSkillConfiguration());
@@ -53,7 +53,7 @@ namespace FindJobSolution.Data.EF
         public DbSet<Job> Jobs { get; set; }
         public DbSet<AppConfig> AppConfigs { get; set; }
         public DbSet<Recruiter> Recruiters { get; set; }
-        public DbSet<RecruiterGalleries> RecruiterGalleries { get; set; }
+        public DbSet<RecruiterImages> RecruiterGalleries { get; set; }
         public DbSet<JobSeeker> JobSeekers { get; set; }
         public DbSet<JobSeekerOldCompany> JobSeekerOldCompanies { get; set; }
         public DbSet<Skill> Skills { get; set; }

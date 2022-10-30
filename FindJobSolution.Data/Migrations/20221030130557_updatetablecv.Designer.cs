@@ -4,6 +4,7 @@ using FindJobSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    partial class FindJobDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221030130557_updatetablecv")]
+    partial class updatetablecv
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -347,7 +349,7 @@ namespace FindJobSolution.Data.Migrations
                     b.ToTable("Recruiters", (string)null);
                 });
 
-            modelBuilder.Entity("FindJobSolution.Data.Entities.RecruiterImages", b =>
+            modelBuilder.Entity("FindJobSolution.Data.Entities.RecruiterGalleries", b =>
                 {
                     b.Property<int>("RecruiterGalleriesId")
                         .ValueGeneratedOnAdd()
@@ -362,27 +364,21 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
-
-                    b.Property<bool>("IsDefault")
-                        .HasColumnType("bit");
+                    b.Property<int>("FileSize")
+                        .HasColumnType("int");
 
                     b.Property<int>("RecruiterId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("int");
+                    b.Property<string>("src")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RecruiterGalleriesId");
 
                     b.HasIndex("RecruiterId");
 
-                    b.ToTable("RecruiterImages", (string)null);
+                    b.ToTable("RecruiterGalleries", (string)null);
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Role", b =>
@@ -408,7 +404,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "a719d11a-3bfe-4e73-a941-8e48c7fd2846",
+                            ConcurrencyStamp = "28034781-6049-4653-ba49-fea12fc12278",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -515,13 +511,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "864c1f81-61f6-439a-9f43-e1c982bca376",
+                            ConcurrencyStamp = "6bc88291-52d1-43a1-a28d-ddfed7d78eaa",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMhH83ZKfzwq3AXZZnimDXl8Bn0F0faXBY5UoOLPomy4E9zkTtiovBOWyV4+u5mc2A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPoOZMCx9PLaxb53L2Xk9pjBd+ZwCw8dtL5hXQJDqMo3S+hrdyEldDZ8g72YaitabA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -742,7 +738,7 @@ namespace FindJobSolution.Data.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("FindJobSolution.Data.Entities.RecruiterImages", b =>
+            modelBuilder.Entity("FindJobSolution.Data.Entities.RecruiterGalleries", b =>
                 {
                     b.HasOne("FindJobSolution.Data.Entities.Recruiter", "Recruiter")
                         .WithMany("recruiterGalleries")
