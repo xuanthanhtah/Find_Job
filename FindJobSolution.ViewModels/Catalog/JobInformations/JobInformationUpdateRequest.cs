@@ -21,8 +21,6 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
         public decimal Salary { get; set; }
         public int ViewCount { set; get; }
         public string Benefits { get; set; }
-        public Status Status { get; set; }
-        public int RecruiterId { get; set; }
         public int JobId { get; set; }
         public DateTime JobInformationTimeStart { get; set; }
         public DateTime JobInformationTimeEnd { get; set; }

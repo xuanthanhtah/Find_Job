@@ -90,7 +90,7 @@ namespace FindJobSolution.Application.Catalog.JobInformations
                    RecruiterId = p.j.RecruiterId,
                    JobInformationTimeEnd = p.j.JobInformationTimeEnd,
                    JobInformationTimeStart = p.j.JobInformationTimeStart
-               }).ToListAsync();
+               }).Where(n=>n.Status ==Data.Enums.Status.Active).ToListAsync();
         }
 
         public async Task<JobInformationViewModel> GetbyId(int JobInformationId)
@@ -132,7 +132,6 @@ namespace FindJobSolution.Application.Catalog.JobInformations
             jobInformation.Benefits = request.Benefits;
             jobInformation.Description = request.Description;
             jobInformation.WorkingLocation = request.WorkingLocation;
-            jobInformation.Status = request.Status;
             jobInformation.MaxSalary = request.MaxSalary;
             jobInformation.MinSalary = request.MinSalary;
             jobInformation.Salary = request.Salary;
@@ -141,7 +140,6 @@ namespace FindJobSolution.Application.Catalog.JobInformations
             jobInformation.JobType = request.JobType;
             jobInformation.JobInformationId = request.JobInformationId;
             jobInformation.JobLevel = request.JobLevel;
-            jobInformation.RecruiterId = request.RecruiterId;
             jobInformation.JobTitle = request.JobTitle;
             return await _context.SaveChangesAsync();
         }
