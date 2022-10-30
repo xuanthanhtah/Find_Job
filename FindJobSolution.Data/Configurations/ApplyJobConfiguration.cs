@@ -22,7 +22,7 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.TimeApply);
 
-            builder.HasOne(x => x.JobSeeker).WithMany(x => x.ApplyJobs).HasForeignKey(x => x.JobSeekerId);
+            builder.HasOne(x => x.JobSeeker).WithMany(x => x.ApplyJobs).HasForeignKey(x => x.JobSeekerId).OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(x => x.JobInformation).WithMany(x => x.ApplyJobs).HasForeignKey(x => x.JobInformationId);
         }
