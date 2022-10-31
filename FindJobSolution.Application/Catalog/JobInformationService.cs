@@ -1,34 +1,33 @@
-﻿using FindJobSolution.Application.Catalog.Jobs.Dtos;
-using FindJobSolution.Data.EF;
+﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.JobInformations;
-using FindJobSolution.ViewModels.Catalog.Jobs;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindJobSolution.Application.Catalog
 {
     public interface IJobInformationService
     {
         Task<int> Create(JobInformationCreateRequest request);
-        Task<int> Update(JobInformationUpdateRequest request);
-        Task<int> Detele(int JobInformationId);
-        Task<List<JobInformationViewModel>> GetAll();
-        Task<JobInformationViewModel> GetbyId(int JobInformationId);
-        Task AddViewcount(int JobInformationId);
-        Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request);
 
+        Task<int> Update(JobInformationUpdateRequest request);
+
+        Task<int> Detele(int JobInformationId);
+
+        Task<List<JobInformationViewModel>> GetAll();
+
+        Task<JobInformationViewModel> GetbyId(int JobInformationId);
+
+        Task AddViewcount(int JobInformationId);
+
+        Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request);
     }
+
     public class JobInformationService : IJobInformationService
     {
         private readonly FindJobDBContext _context;
+
         public JobInformationService(FindJobDBContext context)
         {
             _context = context;
@@ -66,7 +65,6 @@ namespace FindJobSolution.Application.Catalog
             await _context.SaveChangesAsync();
             return newJobInformation.JobInformationId;
         }
-
 
         public async Task<int> Detele(int JobInformationId)
         {
@@ -161,7 +159,7 @@ namespace FindJobSolution.Application.Catalog
                     JobInformationTimeStart = p.JobInformationTimeStart
                 }).ToListAsync();
 
-            // in ra 
+            // in ra
             var pagedResult = new PagedResult<JobInformationViewModel>()
             {
                 TotalRecord = totalRow,

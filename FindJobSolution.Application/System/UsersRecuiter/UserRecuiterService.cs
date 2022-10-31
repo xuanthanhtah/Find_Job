@@ -25,7 +25,7 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
-            _context = context; 
+            _context = context;
         }
 
         public async Task<string> Authenticate(LoginRecruiterRequest request)
@@ -79,8 +79,6 @@ namespace FindJobSolution.Application.System.UsersRecuiter
                 return true;
             }
             return false;
-
-            
         }
     }
 }
