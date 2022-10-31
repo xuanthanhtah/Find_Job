@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    [Migration("20221030145752_updaterecuiterimage")]
-    partial class updaterecuiterimage
+    [Migration("20221031103337_updatetable")]
+    partial class updatetable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -410,7 +410,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "a719d11a-3bfe-4e73-a941-8e48c7fd2846",
+                            ConcurrencyStamp = "edba0c65-db89-48f2-9679-c9b44cbf3211",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -517,13 +517,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "864c1f81-61f6-439a-9f43-e1c982bca376",
+                            ConcurrencyStamp = "20df9701-2e69-4223-abc7-c4273c7b62f7",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMhH83ZKfzwq3AXZZnimDXl8Bn0F0faXBY5UoOLPomy4E9zkTtiovBOWyV4+u5mc2A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHrUYubN9UZARRh06j/CbmVcb8WgQHNg2q4R1nX/OmtVQAjfZrCI6oehZcgZiwmx5w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

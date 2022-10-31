@@ -53,6 +53,7 @@ namespace FindJobSolution.API
             services.AddTransient<IUserRecuiterService, UserRecuiterService>();
             services.AddTransient<IUserJobSeekerService, UserJobSeekerService>();
 
+            services.AddTransient<IJobSeekerOldCompanyService, JobSeekerOldCompanyService>();
             //services.AddTransient<IValidator<LoginRequest>, LoginUserJobSeekerRequestValidator>();
             //services.AddTransient<IValidator<LoginRecruiterRequest>, LoginUserRecuiterRequestValidator>();
 
