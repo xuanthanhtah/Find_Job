@@ -21,7 +21,7 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.FilePath).IsRequired(true);
 
-            builder.HasOne(x => x.Recruiter).WithMany(x => x.recruiterGalleries).HasForeignKey(x => x.RecruiterId);
+            builder.HasOne(x => x.Recruiter).WithMany(x => x.RecruiterImages).HasForeignKey(x => x.RecruiterId);
 
             builder.Property(x => x.DateCreated);
 

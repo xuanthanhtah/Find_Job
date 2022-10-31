@@ -101,6 +101,7 @@ namespace FindJobSolution.Application.Catalog
             return await query
                .Select(p => new JobSeekerViewModel()
                {
+                   jobseekerId = p.j.JobSeekerId,
                    JobId = p.j.JobId,
                    Address = p.j.Address,
                    Gender = p.j.Gender,
@@ -117,6 +118,7 @@ namespace FindJobSolution.Application.Catalog
                         join i in _context.Cvs on j.JobSeekerId equals i.JobSeekerId
                         select new
                         {
+                            JobSeekerId = j.JobSeekerId,
                             JobId = j.JobId,
                             Address = j.Address,
                             Gender = j.Gender,
@@ -137,6 +139,7 @@ namespace FindJobSolution.Application.Catalog
                 .Take(request.PageSize)
                 .Select(p => new JobSeekerViewModel()
                 {
+                    jobseekerId = p.JobSeekerId,
                     JobId = p.JobId,
                     Address = p.Address,
                     Gender = p.Gender,

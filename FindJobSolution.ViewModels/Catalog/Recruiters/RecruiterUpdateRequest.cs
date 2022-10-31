@@ -11,10 +11,9 @@ namespace FindJobSolution.ViewModels.Catalog.Recruiters
     {
         public int RecruiterId { get; set; }
         public string CompanyName { get; set; }
-        public string CompanyLogo { get; set; }
         public string Address { get; set; }
         public string CompanyIntroduction { get; set; }
-        public int ViewCount { set; get; }
         public IFormFile ThumbnailRecuiter { get; set; }
+        public string nameImage { get; set; }
     }
 }

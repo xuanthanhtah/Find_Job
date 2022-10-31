@@ -16,8 +16,8 @@ namespace FindJobSolution.Data.EF
     {
         public FindJobDBContext(DbContextOptions options) : base(options)
         {
-            
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //configure using fluent API
@@ -37,23 +37,23 @@ namespace FindJobSolution.Data.EF
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
 
-
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("UserClaims");
-            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("UserRoles").HasKey(x=> new {x.RoleId, x.UserId});
-            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins").HasKey(x=>x.UserId);
+            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("UserRoles").HasKey(x => new { x.RoleId, x.UserId });
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogins").HasKey(x => x.UserId);
 
             modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("RoleClaims");
-            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens").HasKey(x=>x.UserId);
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("UserTokens").HasKey(x => x.UserId);
 
             //sedding
             modelBuilder.Seed();
 
             //base.OnModelCreating(modelBuilder);
         }
+
         public DbSet<Job> Jobs { get; set; }
         public DbSet<AppConfig> AppConfigs { get; set; }
         public DbSet<Recruiter> Recruiters { get; set; }
-        public DbSet<RecruiterImages> RecruiterGalleries { get; set; }
+        public DbSet<RecruiterImages> RecruiterImages { get; set; }
         public DbSet<JobSeeker> JobSeekers { get; set; }
         public DbSet<JobSeekerOldCompany> JobSeekerOldCompanies { get; set; }
         public DbSet<Skill> Skills { get; set; }
