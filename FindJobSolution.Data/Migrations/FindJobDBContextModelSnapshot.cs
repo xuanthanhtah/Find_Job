@@ -96,9 +96,6 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<int>("JobSeekerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("RecruiterId")
-                        .HasColumnType("int");
-
                     b.Property<int>("SortOrder")
                         .HasColumnType("int");
 
@@ -110,10 +107,7 @@ namespace FindJobSolution.Data.Migrations
                     b.HasIndex("JobSeekerId")
                         .IsUnique();
 
-                    b.HasIndex("RecruiterId")
-                        .IsUnique();
-
-                    b.ToTable("Avatar");
+                    b.ToTable("Avatars", (string)null);
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Cv", b =>
@@ -450,7 +444,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "e2a2c326-2b41-4ad1-8509-ca55a1659747",
+                            ConcurrencyStamp = "6922b1f3-5f8a-4e3b-88fd-6139c159dc11",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -557,13 +551,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bbc22a44-1133-48e8-b5a4-c9aa30bbe427",
+                            ConcurrencyStamp = "fb7c2dcf-8f08-451f-a0b4-3d00f05bffc1",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJlAQuXRL+oEM9BqehqVoVWuAZO+He4rbsAG7KHgLJwkupa4MIRlgljkxw7gKep6bA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJmVCaKj7RLoA5GETu3dfC+Efq8Ec9n934f/djLyMhZd8HO3a5ZDV6+jKPnsLwkG+w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -702,15 +696,7 @@ namespace FindJobSolution.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("FindJobSolution.Data.Entities.Recruiter", "Recruiter")
-                        .WithOne("avatar")
-                        .HasForeignKey("FindJobSolution.Data.Entities.Avatar", "RecruiterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("JobSeeker");
-
-                    b.Navigation("Recruiter");
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Cv", b =>
@@ -868,9 +854,6 @@ namespace FindJobSolution.Data.Migrations
                     b.Navigation("JobInformation");
 
                     b.Navigation("RecruiterImages");
-
-                    b.Navigation("avatar")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Skill", b =>

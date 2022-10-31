@@ -30,10 +30,6 @@ namespace FindJobSolution.Data.Configurations
             builder.Property(x => x.IsDefault);
 
             builder.Property(x => x.FilePath);
-
-            builder.HasOne(x => x.JobSeeker).WithOne(x => x.Avatar).HasForeignKey<Avatar>(x => x.JobSeekerId);
-
-            builder.HasOne(x => x.Recruiter).WithOne(x => x.avatar).HasForeignKey<Avatar>(x => x.RecruiterId);
         }
     }
 }

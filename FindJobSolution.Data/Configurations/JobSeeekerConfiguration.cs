@@ -32,6 +32,8 @@ namespace FindJobSolution.Data.Configurations
             builder.Property(x => x.Name).IsRequired(false).HasMaxLength(100);
 
             builder.HasOne(x => x.Job).WithMany(x=>x.JobSeekers).HasForeignKey(x=>x.JobId);
+
+            builder.HasOne(x => x.Avatar).WithOne(x => x.JobSeeker).HasForeignKey<Avatar>(x => x.JobSeekerId);
         }
     }
 }
