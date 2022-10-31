@@ -50,16 +50,10 @@ namespace FindJobSolution.Data.Migrations
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.ApplyJob", b =>
                 {
-                    b.Property<int>("ApplyJobsId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("JobSeekerId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ApplyJobsId"), 1L, 1);
 
                     b.Property<int>("JobInformationId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("JobSeekerID")
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
@@ -67,12 +61,14 @@ namespace FindJobSolution.Data.Migrations
                         .HasColumnType("int")
                         .HasDefaultValue(1);
 
-                    b.HasKey("ApplyJobsId");
+                    b.Property<DateTime>("TimeApply")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("JobInformationId")
-                        .IsUnique();
+                    b.HasKey("JobSeekerId", "JobInformationId");
 
-                    b.ToTable("ApplyJobs");
+                    b.HasIndex("JobInformationId");
+
+                    b.ToTable("ApplyJobs", (string)null);
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Cv", b =>
@@ -87,12 +83,12 @@ namespace FindJobSolution.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("FileSize")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("FilePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsDefault")
                         .HasColumnType("bit");
@@ -268,42 +264,6 @@ namespace FindJobSolution.Data.Migrations
                     b.ToTable("JobSeekers", (string)null);
                 });
 
-            modelBuilder.Entity("FindJobSolution.Data.Entities.JobSeekerInApplyJob", b =>
-                {
-                    b.Property<int>("ApplyJobsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("JobSeekerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ApplyJobsTime")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("ApplyJobsId", "JobSeekerId");
-
-                    b.HasIndex("JobSeekerId");
-
-                    b.ToTable("JobSeekerInApplyJobs", (string)null);
-                });
-
-            modelBuilder.Entity("FindJobSolution.Data.Entities.JobSeekerInSaveJob", b =>
-                {
-                    b.Property<int>("JobSeekerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SaveJobId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeSaveJob")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("JobSeekerId", "SaveJobId");
-
-                    b.HasIndex("SaveJobId");
-
-                    b.ToTable("JobSeekerInSaveJobs", (string)null);
-                });
-
             modelBuilder.Entity("FindJobSolution.Data.Entities.JobSeekerOldCompany", b =>
                 {
                     b.Property<int>("JobSeekerOldCompanyId")
@@ -367,14 +327,14 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<string>("CompanyIntroduction")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CompanyLogo")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("CompanyName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int");
 
                     b.HasKey("RecruiterId");
 
@@ -384,7 +344,7 @@ namespace FindJobSolution.Data.Migrations
                     b.ToTable("Recruiters", (string)null);
                 });
 
-            modelBuilder.Entity("FindJobSolution.Data.Entities.RecruiterGalleries", b =>
+            modelBuilder.Entity("FindJobSolution.Data.Entities.RecruiterImages", b =>
                 {
                     b.Property<int>("RecruiterGalleriesId")
                         .ValueGeneratedOnAdd()
@@ -399,21 +359,27 @@ namespace FindJobSolution.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FileSize")
-                        .HasColumnType("int");
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
 
                     b.Property<int>("RecruiterId")
                         .HasColumnType("int");
 
-                    b.Property<string>("src")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
 
                     b.HasKey("RecruiterGalleriesId");
 
                     b.HasIndex("RecruiterId");
 
-                    b.ToTable("RecruiterGalleries", (string)null);
+                    b.ToTable("RecruiterImages", (string)null);
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Role", b =>
@@ -439,7 +405,9 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "c138b4ed-1076-4451-949c-ef85aed21294",
+
+                            ConcurrencyStamp = "507959a0-0b4d-4c4d-9539-d17663b68863",
+
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -447,19 +415,23 @@ namespace FindJobSolution.Data.Migrations
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.SaveJob", b =>
                 {
-                    b.Property<int>("SaveJobId")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("JobSeekerId")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SaveJobId"), 1L, 1);
 
                     b.Property<int>("JobInformationId")
                         .HasColumnType("int");
 
-                    b.HasKey("SaveJobId");
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
-                    b.HasIndex("JobInformationId")
-                        .IsUnique();
+                    b.Property<DateTime>("TimeSave")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("JobSeekerId", "JobInformationId");
+
+                    b.HasIndex("JobInformationId");
 
                     b.ToTable("SaveJobs", (string)null);
                 });
@@ -542,13 +514,17 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6b63a5c0-ec7a-4a04-aac2-7414b0cdd8f7",
+
+                            ConcurrencyStamp = "ea4eed3d-dddd-486f-8373-3f19c58a7e68",
+
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAELby1XF3WdRR3OtDg/5/hbwLCyAwnz2JvPY998/E5a6eCl6y72kegxt1/i05ZWwPFA==",
+
+                            PasswordHash = "AQAAAAEAACcQAAAAEKETrfXAoTWMCRNg+0W1EkZXxE/11Kx/yLtgc4ANxBdtp92Cad7KDO8O8YBfwKACXw==",
+
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -663,12 +639,20 @@ namespace FindJobSolution.Data.Migrations
             modelBuilder.Entity("FindJobSolution.Data.Entities.ApplyJob", b =>
                 {
                     b.HasOne("FindJobSolution.Data.Entities.JobInformation", "JobInformation")
-                        .WithOne("ApplyJob")
-                        .HasForeignKey("FindJobSolution.Data.Entities.ApplyJob", "JobInformationId")
+                        .WithMany("ApplyJobs")
+                        .HasForeignKey("JobInformationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FindJobSolution.Data.Entities.JobSeeker", "JobSeeker")
+                        .WithMany("ApplyJobs")
+                        .HasForeignKey("JobSeekerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("JobInformation");
+
+                    b.Navigation("JobSeeker");
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Cv", b =>
@@ -720,44 +704,6 @@ namespace FindJobSolution.Data.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("FindJobSolution.Data.Entities.JobSeekerInApplyJob", b =>
-                {
-                    b.HasOne("FindJobSolution.Data.Entities.ApplyJob", "ApplyJob")
-                        .WithMany("jobSeekerInApplyJobs")
-                        .HasForeignKey("ApplyJobsId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("FindJobSolution.Data.Entities.JobSeeker", "JobSeeker")
-                        .WithMany("jobSeekerInApplyJobs")
-                        .HasForeignKey("JobSeekerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("ApplyJob");
-
-                    b.Navigation("JobSeeker");
-                });
-
-            modelBuilder.Entity("FindJobSolution.Data.Entities.JobSeekerInSaveJob", b =>
-                {
-                    b.HasOne("FindJobSolution.Data.Entities.JobSeeker", "JobSeeker")
-                        .WithMany("JobSeekerInSaveJobs")
-                        .HasForeignKey("JobSeekerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FindJobSolution.Data.Entities.SaveJob", "SaveJob")
-                        .WithMany("JobSeekerInSaveJobs")
-                        .HasForeignKey("SaveJobId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("JobSeeker");
-
-                    b.Navigation("SaveJob");
-                });
-
             modelBuilder.Entity("FindJobSolution.Data.Entities.JobSeekerOldCompany", b =>
                 {
                     b.HasOne("FindJobSolution.Data.Entities.JobSeeker", "JobSeeker")
@@ -799,10 +745,10 @@ namespace FindJobSolution.Data.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("FindJobSolution.Data.Entities.RecruiterGalleries", b =>
+            modelBuilder.Entity("FindJobSolution.Data.Entities.RecruiterImages", b =>
                 {
                     b.HasOne("FindJobSolution.Data.Entities.Recruiter", "Recruiter")
-                        .WithMany("recruiterGalleries")
+                        .WithMany("RecruiterImages")
                         .HasForeignKey("RecruiterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -813,17 +759,20 @@ namespace FindJobSolution.Data.Migrations
             modelBuilder.Entity("FindJobSolution.Data.Entities.SaveJob", b =>
                 {
                     b.HasOne("FindJobSolution.Data.Entities.JobInformation", "JobInformation")
-                        .WithOne("SaveJob")
-                        .HasForeignKey("FindJobSolution.Data.Entities.SaveJob", "JobInformationId")
+                        .WithMany("SaveJobs")
+                        .HasForeignKey("JobInformationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("JobInformation");
-                });
+                    b.HasOne("FindJobSolution.Data.Entities.JobSeeker", "JobSeeker")
+                        .WithMany("SaveJobs")
+                        .HasForeignKey("JobSeekerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-            modelBuilder.Entity("FindJobSolution.Data.Entities.ApplyJob", b =>
-                {
-                    b.Navigation("jobSeekerInApplyJobs");
+                    b.Navigation("JobInformation");
+
+                    b.Navigation("JobSeeker");
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Job", b =>
@@ -835,36 +784,29 @@ namespace FindJobSolution.Data.Migrations
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.JobInformation", b =>
                 {
-                    b.Navigation("ApplyJob")
-                        .IsRequired();
+                    b.Navigation("ApplyJobs");
 
-                    b.Navigation("SaveJob")
-                        .IsRequired();
+                    b.Navigation("SaveJobs");
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.JobSeeker", b =>
                 {
-                    b.Navigation("Cvs");
+                    b.Navigation("ApplyJobs");
 
-                    b.Navigation("JobSeekerInSaveJobs");
+                    b.Navigation("Cvs");
 
                     b.Navigation("JobSeekerOldCompanies");
 
                     b.Navigation("JobSeekerSkills");
 
-                    b.Navigation("jobSeekerInApplyJobs");
+                    b.Navigation("SaveJobs");
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Recruiter", b =>
                 {
                     b.Navigation("JobInformation");
 
-                    b.Navigation("recruiterGalleries");
-                });
-
-            modelBuilder.Entity("FindJobSolution.Data.Entities.SaveJob", b =>
-                {
-                    b.Navigation("JobSeekerInSaveJobs");
+                    b.Navigation("RecruiterImages");
                 });
 
             modelBuilder.Entity("FindJobSolution.Data.Entities.Skill", b =>

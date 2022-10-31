@@ -18,5 +18,6 @@ namespace FindJobSolution.ViewModels.Catalog.JobSeekers
         public string National { get; set; }
         public decimal DesiredSalary { get; set; }
         public IFormFile ThumbnailCv { get; set; }
+        public string nameCv { get; set; }
     }
 }

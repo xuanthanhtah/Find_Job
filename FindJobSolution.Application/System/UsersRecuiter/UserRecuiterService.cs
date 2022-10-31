@@ -25,7 +25,7 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
-            _context = context; 
+            _context = context;
         }
 
         public async Task<string> Authenticate(LoginRecruiterRequest request)
@@ -50,7 +50,7 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             var token = new JwtSecurityToken(_config["Token:Issuer"],
                 _config["Tokens:Issuer"],
                 claims,
-                expires: DateTime.Now.AddHours(3),
+                expires: DateTime.Now.AddHours(24),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
@@ -79,8 +79,6 @@ namespace FindJobSolution.Application.System.UsersRecuiter
                 return true;
             }
             return false;
-
-            
         }
     }
 }

@@ -9,11 +9,11 @@ namespace FindJobSolution.Data.Entities
 {
     public class ApplyJob
     {
-        public int ApplyJobsId { get; set; }
-        public int JobSeekerID { get; set; }
+        public int JobSeekerId { get; set; }
+        public JobSeeker JobSeeker { get; set; }
         public int JobInformationId { get; set; }
         public JobInformation JobInformation { get; set; }
         public Status Status { get; set; }
-        public List<JobSeekerInApplyJob> jobSeekerInApplyJobs { get; set; }
+        public DateTime TimeApply { get; set; }
     }
 }

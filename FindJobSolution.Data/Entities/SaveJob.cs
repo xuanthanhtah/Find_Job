@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FindJobSolution.Data.Enums;
 
 namespace FindJobSolution.Data.Entities
 {
     public class SaveJob
     {
-        public int SaveJobId { get; set; }
+        public int JobSeekerId { get; set; }
+        public JobSeeker JobSeeker { get; set; }
         public int JobInformationId { get; set; }
         public JobInformation JobInformation { get; set; }
-        public List<JobSeekerInSaveJob> JobSeekerInSaveJobs { get; set; }
-
+        public Status Status { get; set; }
+        public DateTime TimeSave { get; set; }
     }
 }

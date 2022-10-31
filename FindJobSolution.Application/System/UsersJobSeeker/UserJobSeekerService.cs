@@ -1,13 +1,10 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
-using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.System.UsersJobSeeker;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 
@@ -53,7 +50,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             var token = new JwtSecurityToken(_config["Token:Issuer"],
                 _config["Tokens:Issuer"],
                 claims,
-                expires: DateTime.Now.AddHours(3),
+                expires: DateTime.Now.AddHours(24),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
@@ -61,7 +58,6 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
 
         public async Task<bool> Register(RegisterRequest request)
         {
-
             var user = new User()
             {
                 UserName = request.UserName,
@@ -85,6 +81,5 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             }
             return false;
         }
-        
     }
 }

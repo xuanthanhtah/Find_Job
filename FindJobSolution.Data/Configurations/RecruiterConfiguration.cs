@@ -21,10 +21,10 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.CompanyName).IsRequired(false);
 
-            builder.Property(x => x.CompanyLogo).IsRequired(false);
+            builder.Property(x => x.ViewCount);
 
             builder.Property(x => x.Address).IsRequired(false);
-            
+
             builder.Property(x => x.CompanyIntroduction).IsRequired(false);
         }
     }
