@@ -4,6 +4,7 @@ using FindJobSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    partial class FindJobDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221031132239_updateê")]
+    partial class updateê
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -405,9 +407,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-
-                            ConcurrencyStamp = "507959a0-0b4d-4c4d-9539-d17663b68863",
-
+                            ConcurrencyStamp = "1fd27e7e-b7a7-482f-9ef5-b2661c766b62",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -514,17 +514,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-
-                            ConcurrencyStamp = "ea4eed3d-dddd-486f-8373-3f19c58a7e68",
-
+                            ConcurrencyStamp = "44dad775-7607-45eb-8431-68c7eb66e923",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-
-                            PasswordHash = "AQAAAAEAACcQAAAAEKETrfXAoTWMCRNg+0W1EkZXxE/11Kx/yLtgc4ANxBdtp92Cad7KDO8O8YBfwKACXw==",
-
+                            PasswordHash = "AQAAAAEAACcQAAAAEMSEkSopThXuy2IVT0vh1XivPv9yWW37c6Vbw4+e1zZOWN+8J5udTXPLS2ttcdYvxA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
