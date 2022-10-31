@@ -17,5 +17,6 @@ namespace FindJobSolution.Data.Entities
         public User Users { get; set; }
         public List<JobInformation> JobInformation { get; set; }
         public List<RecruiterImages> RecruiterImages { get; set; }
+        public Avatar avatar { get; set; }
     }
 }

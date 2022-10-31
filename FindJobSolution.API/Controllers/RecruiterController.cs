@@ -1,7 +1,6 @@
 ﻿using FindJobSolution.Application.Catalog;
 using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Catalog.RecuiterImages;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.API.Controllers
@@ -10,31 +9,31 @@ namespace FindJobSolution.API.Controllers
     [ApiController]
     public class RecruiterController : ControllerBase
     {
-        private readonly IRecruiterService _RecruiterService;
+        private readonly IRecruiterService _recruiterService;
 
-        public RecruiterController(IRecruiterService RecruiterService)
+        public RecruiterController(IRecruiterService recruiterService)
         {
-            _RecruiterService = RecruiterService;
+            _recruiterService = recruiterService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var recruiter = await _RecruiterService.GetAll();
+            var recruiter = await _recruiterService.GetAll();
             return Ok(recruiter);
         }
 
         [HttpGet("paging")]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetRecuiterPagingRequest request)
         {
-            var recruiter = await _RecruiterService.GetAllPaging(request);
+            var recruiter = await _recruiterService.GetAllPaging(request);
             return Ok(recruiter);
         }
 
         [HttpGet("{RecruiterId}")]
         public async Task<IActionResult> GetById(int RecruiterId)
         {
-            var recruiter = await _RecruiterService.GetById(RecruiterId);
+            var recruiter = await _recruiterService.GetById(RecruiterId);
             if (recruiter == null)
                 return BadRequest("Cannot find recruiter");
             return Ok(recruiter);
@@ -47,19 +46,19 @@ namespace FindJobSolution.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _RecruiterService.Update(request);
+            var result = await _recruiterService.Update(request);
             if (result == 0)
             {
                 return BadRequest();
             }
-            var recruiter = await _RecruiterService.GetById(result);
+            var recruiter = await _recruiterService.GetById(result);
             return CreatedAtAction(nameof(GetById), new { id = result }, recruiter);
         }
 
         [HttpDelete]
         public async Task<IActionResult> Delete(int RecruiterId)
         {
-            var result = await _RecruiterService.Delete(RecruiterId);
+            var result = await _recruiterService.Delete(RecruiterId);
             if (result == 0)
                 return BadRequest();
             return Ok();
@@ -72,12 +71,12 @@ namespace FindJobSolution.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _RecruiterService.AddImage(RecruiterId, request);
+            var result = await _recruiterService.AddImage(RecruiterId, request);
             if (result == 0)
             {
                 return BadRequest();
             }
-            var image = await _RecruiterService.GetImageById(result);
+            var image = await _recruiterService.GetImageById(result);
             return CreatedAtAction(nameof(GetImageById), new { id = result }, image);
         }
 
@@ -88,28 +87,28 @@ namespace FindJobSolution.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var result = await _RecruiterService.UpdateImage(ImageId, request);
+            var result = await _recruiterService.UpdateImage(ImageId, request);
             if (result == 0)
             {
                 return BadRequest();
             }
-            var image = await _RecruiterService.GetImageById(ImageId);
+            var image = await _recruiterService.GetImageById(ImageId);
             return CreatedAtAction(nameof(GetImageById), new { id = ImageId }, image);
         }
 
         [HttpDelete("image/{ImageId}")]
         public async Task<IActionResult> DeleteImage(int ImageId)
         {
-            var result = await _RecruiterService.RemoveImage(ImageId);
+            var result = await _recruiterService.RemoveImage(ImageId);
             if (result == 0)
                 return BadRequest();
             return Ok();
         }
 
-        [HttpGet("image/{ImageId}")]
-        public async Task<IActionResult> GetImageByRecuiterid(int ImageId)
+        [HttpGet("{Recuiterid}/image")]
+        public async Task<IActionResult> GetImageByRecuiterid(int Recuiterid)
         {
-            var image = await _RecruiterService.GetImageByRecuiterid(ImageId);
+            var image = await _recruiterService.GetImageByRecuiterid(Recuiterid);
             if (image == null)
                 return BadRequest("Cannot find image");
             return Ok(image);
@@ -118,7 +117,7 @@ namespace FindJobSolution.API.Controllers
         [HttpGet("image/{ImageId}")]
         public async Task<IActionResult> GetImageById(int ImageId)
         {
-            var image = await _RecruiterService.GetImageById(ImageId);
+            var image = await _recruiterService.GetImageById(ImageId);
             if (image == null)
                 return BadRequest("Cannot find image");
             return Ok(image);
