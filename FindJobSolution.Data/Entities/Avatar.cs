@@ -17,7 +17,5 @@ namespace FindJobSolution.Data.Entities
         public DateTime Timespan { get; set; }
         public int JobSeekerId { get; set; }
         public JobSeeker JobSeeker { get; set; }
-        public int RecruiterId { get; set; }
-        public Recruiter Recruiter { get; set; }
     }
 }
