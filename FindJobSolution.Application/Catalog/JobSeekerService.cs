@@ -252,6 +252,7 @@ namespace FindJobSolution.Application.Catalog
                     {
                         new Cv()
                         {
+                            
                             Caption = request.nameCv,
                             Timespan = DateTime.Now,
                             FileSize = request.ThumbnailCv.Length,
@@ -261,6 +262,30 @@ namespace FindJobSolution.Application.Catalog
                         }
                     };
                     _context.Cvs.AddRange(JobSeeker.Cvs);
+                }
+            }
+            if (request.ThumbnailAvatar != null)
+            {
+                var thumbnailCv = await _context.Avatars.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == request.JobSeekerId);
+                if (thumbnailCv != null)
+                {
+                    thumbnailCv.Caption = request.nameAvatar;
+                    thumbnailCv.FileSize = request.ThumbnailAvatar.Length;
+                    thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailAvatar);
+                    _context.Avatars.Update(thumbnailCv);
+                }
+                else
+                {
+                    JobSeeker.Avatar = new Avatar()
+                    {
+                            Caption = request.nameAvatar,
+                            Timespan = DateTime.Now,
+                            FileSize = request.ThumbnailAvatar.Length,
+                            FilePath = await this.SaveFile(request.ThumbnailAvatar),
+                            IsDefault = true,
+                            SortOrder = 1,
+                    };
+                    _context.Avatars.AddRange(JobSeeker.Avatar);
                 }
             }
 

@@ -19,5 +19,7 @@ namespace FindJobSolution.ViewModels.Catalog.JobSeekers
         public decimal DesiredSalary { get; set; }
         public IFormFile ThumbnailCv { get; set; }
         public string nameCv { get; set; }
+        public IFormFile ThumbnailAvatar { get; set; }
+        public string nameAvatar { get; set; }
     }
 }

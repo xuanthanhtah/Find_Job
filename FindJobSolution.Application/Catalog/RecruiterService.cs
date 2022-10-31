@@ -254,6 +254,7 @@ public class RecruiterService : IRecruiterService
                 _context.RecruiterImages.AddRange(recruiters.RecruiterImages);
             }
         }
+
         return await _context.SaveChangesAsync();
     }
 

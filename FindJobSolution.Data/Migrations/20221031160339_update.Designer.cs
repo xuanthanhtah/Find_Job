@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    [Migration("20221031144319_tableavavtar")]
-    partial class tableavavtar
+    [Migration("20221031160339_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -452,7 +452,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "e2a2c326-2b41-4ad1-8509-ca55a1659747",
+                            ConcurrencyStamp = "9e2ee0d7-85e1-4b04-ad9b-31fcfd15fb3f",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -559,13 +559,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bbc22a44-1133-48e8-b5a4-c9aa30bbe427",
+                            ConcurrencyStamp = "7646a1f9-e772-42f9-8263-45d7654b5240",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJlAQuXRL+oEM9BqehqVoVWuAZO+He4rbsAG7KHgLJwkupa4MIRlgljkxw7gKep6bA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEhqheb66uB8tU8UbjnZrDD3RImqTTgIxcpFOHIw7o8dn1Y+HhviJRwa6jDRAtBVxg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -707,7 +707,7 @@ namespace FindJobSolution.Data.Migrations
                     b.HasOne("FindJobSolution.Data.Entities.Recruiter", "Recruiter")
                         .WithOne("avatar")
                         .HasForeignKey("FindJobSolution.Data.Entities.Avatar", "RecruiterId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("JobSeeker");

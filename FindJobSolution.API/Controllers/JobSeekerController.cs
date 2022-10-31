@@ -51,8 +51,7 @@ namespace FindJobSolution.API.Controllers
             {
                 return BadRequest();
             }
-            var jobseeker = await _IJobSeekerService.GetbyId(result);
-            return CreatedAtAction(nameof(GetById), new { id = result }, jobseeker);
+            return Ok();
         }
 
         [HttpDelete]

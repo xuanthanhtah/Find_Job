@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.ViewModels"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.AdminApp", "FindJobSolution.AdminApp\FindJobSolution.AdminApp.csproj", "{D5B49B56-CF48-4A54-B15E-7B522D4B0894}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.Data", "FindJobSolution.Data\FindJobSolution.Data.csproj", "{928A13CA-D337-4BC2-B006-6704F465A0EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{D5B49B56-CF48-4A54-B15E-7B522D4B0894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5B49B56-CF48-4A54-B15E-7B522D4B0894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5B49B56-CF48-4A54-B15E-7B522D4B0894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{928A13CA-D337-4BC2-B006-6704F465A0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{928A13CA-D337-4BC2-B006-6704F465A0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{928A13CA-D337-4BC2-B006-6704F465A0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{928A13CA-D337-4BC2-B006-6704F465A0EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +68,7 @@ Global
 		{01D9D2D0-EA30-4A1A-8068-E48F48FF0678} = {3C43FF97-A9CA-490A-90FD-80A4E0C55A34}
 		{1C489556-9CB1-45EF-9DF7-92088FB37715} = {BF9F32CA-8C06-44BD-A089-BEADC7F6EC71}
 		{D5B49B56-CF48-4A54-B15E-7B522D4B0894} = {3C43FF97-A9CA-490A-90FD-80A4E0C55A34}
+		{928A13CA-D337-4BC2-B006-6704F465A0EE} = {6E892D7A-EB05-485B-8633-4E00F5648C99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {770B2018-0EB6-4025-A602-DC841C85379A}
