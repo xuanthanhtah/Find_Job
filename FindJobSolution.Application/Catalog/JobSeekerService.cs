@@ -4,9 +4,6 @@ using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.Cvs;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
-
-using FindJobSolution.ViewModels.Catalog.Cvs;
-
 using FindJobSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;

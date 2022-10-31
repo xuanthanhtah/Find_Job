@@ -4,12 +4,7 @@ using FindJobSolution.Data.EF;
 using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindJobSolution.Application.Catalog
 {
