@@ -1,4 +1,5 @@
 ﻿using FindJobSolution.Application.Catalog;
+using FindJobSolution.Application.Catalog.Jobs;
 using FindJobSolution.ViewModels.Catalog.Jobs;
 using Microsoft.AspNetCore.Mvc;
 

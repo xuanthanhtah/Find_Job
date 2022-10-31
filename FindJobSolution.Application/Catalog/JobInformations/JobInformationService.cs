@@ -1,5 +1,4 @@
-﻿using FindJobSolution.Application.Catalog.Jobs.Dtos;
-using FindJobSolution.Data.EF;
+﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.JobInformations;
