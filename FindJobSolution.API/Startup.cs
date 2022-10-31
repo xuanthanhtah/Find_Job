@@ -44,7 +44,6 @@ namespace FindJobSolution.API
             services.AddTransient<IJobSeekerService, JobSeekerService>();
             services.AddTransient<IJobInformationService, JobInformationService>();
             services.AddTransient<IRecruiterService, RecruiterService>();
-            //services.AddTransient<ICvService, CvService>();
             services.AddTransient<ISkillService, SkillService>();
 
             services.AddTransient<UserManager<User>, UserManager<User>>();

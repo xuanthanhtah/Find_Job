@@ -193,6 +193,9 @@ public class RecruiterService : IRecruiterService
 
     public async Task<List<ImageViewModel>> GetImageByRecuiterid(int Recuiterid)
     {
+        var recruiters = await _context.Recruiters.FindAsync(Recuiterid);
+        if (recruiters == null) { throw new FindJobException($"cannot find a recruiters: {Recuiterid}"); }
+
         return await _context.RecruiterImages.Where(x => x.RecruiterId == Recuiterid)
                 .Select(i => new ImageViewModel()
                 {
