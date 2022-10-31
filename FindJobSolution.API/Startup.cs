@@ -1,4 +1,6 @@
 using FindJobSolution.Application.Catalog;
+using FindJobSolution.Application.Catalog.Jobs;
+using FindJobSolution.Application.Catalog.Skills;
 using FindJobSolution.Application.Common;
 using FindJobSolution.Application.System.UsersJobSeeker;
 using FindJobSolution.Application.System.UsersRecuiter;
@@ -41,6 +43,8 @@ namespace FindJobSolution.API
             services.AddTransient<IJobService, JobService>();
             services.AddTransient<IJobSeekerService, JobSeekerService>();
             services.AddTransient<IJobInformationService, JobInformationService>();
+            //services.AddTransient<ICvService, CvService>();
+            services.AddTransient<ISkillService, SkillService>();
 
             services.AddTransient<UserManager<User>, UserManager<User>>();
             services.AddTransient<SignInManager<User>, SignInManager<User>>();
