@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FindJobSolution.Data.Migrations
 {
-    public partial class updatedb : Migration
+    public partial class updatetable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -220,7 +220,7 @@ namespace FindJobSolution.Data.Migrations
                     CvId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Caption = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FileSize = table.Column<long>(type: "bigint", nullable: false),
                     IsDefault = table.Column<bool>(type: "bit", nullable: false),
                     SortOrder = table.Column<int>(type: "int", nullable: false),
@@ -326,22 +326,24 @@ namespace FindJobSolution.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RecruiterGalleries",
+                name: "RecruiterImages",
                 columns: table => new
                 {
                     RecruiterGalleriesId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RecruiterId = table.Column<int>(type: "int", nullable: false),
-                    src = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Caption = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    FileSize = table.Column<int>(type: "int", nullable: false)
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: false),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RecruiterGalleries", x => x.RecruiterGalleriesId);
+                    table.PrimaryKey("PK_RecruiterImages", x => x.RecruiterGalleriesId);
                     table.ForeignKey(
-                        name: "FK_RecruiterGalleries_Recruiters_RecruiterId",
+                        name: "FK_RecruiterImages_Recruiters_RecruiterId",
                         column: x => x.RecruiterId,
                         principalTable: "Recruiters",
                         principalColumn: "RecruiterId",
@@ -421,7 +423,7 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "2b69122d-b015-4408-8194-c2a46d1d2b49", "admin", "admin" });
+                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "edba0c65-db89-48f2-9679-c9b44cbf3211", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -431,7 +433,7 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "0eb071b8-6163-422e-a7af-11362af6748f", "thanh26092000@gmail.com", true, false, null, "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEIlH6uJinMsHlNxjdfHDbttrrxq3AnQ/ol1wfxtYvBQtPkzpEMx+aLBWb08M/pLZSg==", null, false, "", false, "Lxthanh" });
+                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "20df9701-2e69-4223-abc7-c4273c7b62f7", "thanh26092000@gmail.com", true, false, null, "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEHrUYubN9UZARRh06j/CbmVcb8WgQHNg2q4R1nX/OmtVQAjfZrCI6oehZcgZiwmx5w==", null, false, "", false, "Lxthanh" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplyJobs_JobInformationId",
@@ -475,8 +477,8 @@ namespace FindJobSolution.Data.Migrations
                 column: "JobSeekerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RecruiterGalleries_RecruiterId",
-                table: "RecruiterGalleries",
+                name: "IX_RecruiterImages_RecruiterId",
+                table: "RecruiterImages",
                 column: "RecruiterId");
 
             migrationBuilder.CreateIndex(
@@ -509,7 +511,7 @@ namespace FindJobSolution.Data.Migrations
                 name: "JobSeekerSkills");
 
             migrationBuilder.DropTable(
-                name: "RecruiterGalleries");
+                name: "RecruiterImages");
 
             migrationBuilder.DropTable(
                 name: "RoleClaims");
