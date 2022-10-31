@@ -15,9 +15,9 @@ namespace FindJobSolution.Data.Configurations
         {
             builder.ToTable("RecruiterImages");
 
-            builder.HasKey(x => x.RecruiterGalleriesId);
+            builder.HasKey(x => x.RecruiterImagesId);
 
-            builder.Property(x => x.RecruiterGalleriesId).UseIdentityColumn();
+            builder.Property(x => x.RecruiterImagesId).UseIdentityColumn();
 
             builder.Property(x => x.FilePath).IsRequired(true);
 

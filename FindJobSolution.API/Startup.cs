@@ -8,7 +8,6 @@ using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Constants;
 using FindJobSolution.ViewModels.System.UsersJobSeeker;
 using FindJobSolution.ViewModels.System.UsersRecruiter;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -42,6 +41,7 @@ namespace FindJobSolution.API
             services.AddTransient<IJobService, JobService>();
             services.AddTransient<IJobSeekerService, JobSeekerService>();
             services.AddTransient<IJobInformationService, JobInformationService>();
+            services.AddTransient<IRecruiterService, RecruiterService>();
 
             services.AddTransient<UserManager<User>, UserManager<User>>();
             services.AddTransient<SignInManager<User>, SignInManager<User>>();
