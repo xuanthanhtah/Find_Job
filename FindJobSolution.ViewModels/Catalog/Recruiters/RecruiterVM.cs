@@ -9,7 +9,6 @@ namespace FindJobSolution.ViewModels.Catalog.Recruiters
     public class RecruiterVM
     {
         public string CompanyName { get; set; }
-        public string CompanyLogo { get; set; }
         public string Address { get; set; }
         public string CompanyIntroduction { get; set; }
         public int ViewCount { set; get; }

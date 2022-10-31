@@ -1,16 +1,29 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
-using FindJobSolution.ViewModels.System.UsersRecruiter;
+using FindJobSolution.Utilities.Exceptions;
+using FindJobSolution.ViewModels.Common;
+using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace FindJobSolution.Application.System.UsersRecuiter
+namespace FindJobSolution.Application.System
 {
-    public class UserRecuiterService : IUserRecuiterService
+    public interface IAdminService
+    {
+        Task<string> Authencate(UserLoginRequest request);
+
+        Task<bool> Register(UserRegisterRequest request);
+    }
+
+    public class AdminService : IAdminService
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
@@ -18,7 +31,7 @@ namespace FindJobSolution.Application.System.UsersRecuiter
         private readonly IConfiguration _config;
         private readonly FindJobDBContext _context;
 
-        public UserRecuiterService(UserManager<User> userManager, SignInManager<User> signInManager,
+        public AdminService(UserManager<User> userManager, SignInManager<User> signInManager,
             RoleManager<Role> roleManager, IConfiguration config, FindJobDBContext context)
         {
             _userManager = userManager;
@@ -28,15 +41,15 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             _context = context;
         }
 
-        public async Task<string> Authenticate(LoginRecruiterRequest request)
+        public async Task<string> Authencate(UserLoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) return null;
+            if (user == null) throw new FindJobException("Tài khoản không tồn tại");
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
             {
-                return null;
+                throw new FindJobException("Đăng nhập không đúng");
             }
             var roles = _userManager.GetRolesAsync(user);
             var claims = new[]
@@ -56,8 +69,19 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public async Task<bool> Register(RegisterRecuiterRequest request)
+        public async Task<bool> Register(UserRegisterRequest request)
         {
+            var userid = await _userManager.FindByNameAsync(request.UserName);
+            if (userid != null)
+            {
+                throw new FindJobException("Tài khoản đã tồn tại");
+            }
+
+            if (await _userManager.FindByEmailAsync(request.Email) != null)
+            {
+                throw new FindJobException("Emai đã tồn tại");
+            }
+
             var user = new User()
             {
                 UserName = request.UserName,
@@ -66,19 +90,11 @@ namespace FindJobSolution.Application.System.UsersRecuiter
 
             var result = await _userManager.CreateAsync(user, request.Password);
 
-            var recruiter = new Recruiter()
-            {
-                UserId = user.Id,
-            };
-
-            await _context.AddAsync(recruiter);
-            await _context.SaveChangesAsync();
-
             if (result.Succeeded)
             {
                 return true;
             }
-            return false;
+            throw new FindJobException("Đăng ký không thành công");
         }
     }
 }
