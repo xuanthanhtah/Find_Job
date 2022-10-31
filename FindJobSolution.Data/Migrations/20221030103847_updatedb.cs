@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FindJobSolution.Data.Migrations
 {
-    public partial class fixalltable : Migration
+    public partial class updatedb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -123,7 +123,6 @@ namespace FindJobSolution.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -165,10 +164,10 @@ namespace FindJobSolution.Data.Migrations
                     JobSeekerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     JobId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
                     National = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Dob = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DesiredSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -200,6 +199,7 @@ namespace FindJobSolution.Data.Migrations
                     CompanyLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyIntroduction = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ViewCount = table.Column<int>(type: "int", nullable: true),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -352,89 +352,51 @@ namespace FindJobSolution.Data.Migrations
                 name: "ApplyJobs",
                 columns: table => new
                 {
-                    ApplyJobsId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    JobSeekerID = table.Column<int>(type: "int", nullable: false),
+                    JobSeekerId = table.Column<int>(type: "int", nullable: false),
                     JobInformationId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1)
+                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    TimeApply = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplyJobs", x => x.ApplyJobsId);
+                    table.PrimaryKey("PK_ApplyJobs", x => new { x.JobSeekerId, x.JobInformationId });
                     table.ForeignKey(
                         name: "FK_ApplyJobs_JobInformations_JobInformationId",
                         column: x => x.JobInformationId,
                         principalTable: "JobInformations",
                         principalColumn: "JobInformationId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApplyJobs_JobSeekers_JobSeekerId",
+                        column: x => x.JobSeekerId,
+                        principalTable: "JobSeekers",
+                        principalColumn: "JobSeekerId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
                 name: "SaveJobs",
                 columns: table => new
                 {
-                    SaveJobId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    JobInformationId = table.Column<int>(type: "int", nullable: false)
+                    JobSeekerId = table.Column<int>(type: "int", nullable: false),
+                    JobInformationId = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
+                    TimeSave = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SaveJobs", x => x.SaveJobId);
+                    table.PrimaryKey("PK_SaveJobs", x => new { x.JobSeekerId, x.JobInformationId });
                     table.ForeignKey(
                         name: "FK_SaveJobs_JobInformations_JobInformationId",
                         column: x => x.JobInformationId,
                         principalTable: "JobInformations",
                         principalColumn: "JobInformationId",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "JobSeekerInApplyJobs",
-                columns: table => new
-                {
-                    JobSeekerId = table.Column<int>(type: "int", nullable: false),
-                    ApplyJobsId = table.Column<int>(type: "int", nullable: false),
-                    ApplyJobsTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_JobSeekerInApplyJobs", x => new { x.ApplyJobsId, x.JobSeekerId });
                     table.ForeignKey(
-                        name: "FK_JobSeekerInApplyJobs_ApplyJobs_ApplyJobsId",
-                        column: x => x.ApplyJobsId,
-                        principalTable: "ApplyJobs",
-                        principalColumn: "ApplyJobsId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_JobSeekerInApplyJobs_JobSeekers_JobSeekerId",
+                        name: "FK_SaveJobs_JobSeekers_JobSeekerId",
                         column: x => x.JobSeekerId,
                         principalTable: "JobSeekers",
                         principalColumn: "JobSeekerId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "JobSeekerInSaveJobs",
-                columns: table => new
-                {
-                    JobSeekerId = table.Column<int>(type: "int", nullable: false),
-                    SaveJobId = table.Column<int>(type: "int", nullable: false),
-                    TimeSaveJob = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_JobSeekerInSaveJobs", x => new { x.JobSeekerId, x.SaveJobId });
-                    table.ForeignKey(
-                        name: "FK_JobSeekerInSaveJobs_JobSeekers_JobSeekerId",
-                        column: x => x.JobSeekerId,
-                        principalTable: "JobSeekers",
-                        principalColumn: "JobSeekerId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_JobSeekerInSaveJobs_SaveJobs_SaveJobId",
-                        column: x => x.SaveJobId,
-                        principalTable: "SaveJobs",
-                        principalColumn: "SaveJobId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -459,7 +421,7 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "a39e8b43-1530-4e23-9046-f5df6dabe304", "admin", "admin" });
+                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "2b69122d-b015-4408-8194-c2a46d1d2b49", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -468,14 +430,13 @@ namespace FindJobSolution.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "0bc47f8a-84fc-4635-9a8a-d1a275f08b4a", "thanh26092000@gmail.com", true, false, null, "Xuan Thanh", "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEHfm3X4DX07DzBkbI8po+W7L4lgQoinOTQymF6CklCDoPeXOdv6+jBk9MzZahsO0qQ==", null, false, "", false, "Lxthanh" });
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "0eb071b8-6163-422e-a7af-11362af6748f", "thanh26092000@gmail.com", true, false, null, "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEIlH6uJinMsHlNxjdfHDbttrrxq3AnQ/ol1wfxtYvBQtPkzpEMx+aLBWb08M/pLZSg==", null, false, "", false, "Lxthanh" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplyJobs_JobInformationId",
                 table: "ApplyJobs",
-                column: "JobInformationId",
-                unique: true);
+                column: "JobInformationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CVs_JobSeekerId",
@@ -491,16 +452,6 @@ namespace FindJobSolution.Data.Migrations
                 name: "IX_JobInformations_RecruiterId",
                 table: "JobInformations",
                 column: "RecruiterId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JobSeekerInApplyJobs_JobSeekerId",
-                table: "JobSeekerInApplyJobs",
-                column: "JobSeekerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_JobSeekerInSaveJobs_SaveJobId",
-                table: "JobSeekerInSaveJobs",
-                column: "SaveJobId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobSeekerOldCompanys_JobSeekerId",
@@ -537,8 +488,7 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_SaveJobs_JobInformationId",
                 table: "SaveJobs",
-                column: "JobInformationId",
-                unique: true);
+                column: "JobInformationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -547,13 +497,10 @@ namespace FindJobSolution.Data.Migrations
                 name: "AppConfigs");
 
             migrationBuilder.DropTable(
+                name: "ApplyJobs");
+
+            migrationBuilder.DropTable(
                 name: "CVs");
-
-            migrationBuilder.DropTable(
-                name: "JobSeekerInApplyJobs");
-
-            migrationBuilder.DropTable(
-                name: "JobSeekerInSaveJobs");
 
             migrationBuilder.DropTable(
                 name: "JobSeekerOldCompanys");
@@ -571,6 +518,9 @@ namespace FindJobSolution.Data.Migrations
                 name: "Roles");
 
             migrationBuilder.DropTable(
+                name: "SaveJobs");
+
+            migrationBuilder.DropTable(
                 name: "UserClaims");
 
             migrationBuilder.DropTable(
@@ -583,25 +533,19 @@ namespace FindJobSolution.Data.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
-                name: "ApplyJobs");
-
-            migrationBuilder.DropTable(
-                name: "SaveJobs");
-
-            migrationBuilder.DropTable(
-                name: "JobSeekers");
-
-            migrationBuilder.DropTable(
                 name: "Skills");
 
             migrationBuilder.DropTable(
                 name: "JobInformations");
 
             migrationBuilder.DropTable(
-                name: "Jobs");
+                name: "JobSeekers");
 
             migrationBuilder.DropTable(
                 name: "Recruiters");
+
+            migrationBuilder.DropTable(
+                name: "Jobs");
 
             migrationBuilder.DropTable(
                 name: "Users");

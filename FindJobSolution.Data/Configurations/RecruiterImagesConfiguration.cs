@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace FindJobSolution.Data.Configurations
 {
-    public class RecruiterGalleriesConfiguration : IEntityTypeConfiguration<RecruiterGalleries>
+    public class RecruiterImagesConfiguration : IEntityTypeConfiguration<RecruiterImages>
     {
-        public void Configure(EntityTypeBuilder<RecruiterGalleries> builder)
+        public void Configure(EntityTypeBuilder<RecruiterImages> builder)
         {
-            builder.ToTable("RecruiterGalleries");
-            
+            builder.ToTable("RecruiterImages");
+
             builder.HasKey(x => x.RecruiterGalleriesId);
 
             builder.Property(x => x.RecruiterGalleriesId).UseIdentityColumn();
 
-            builder.Property(x => x.src).IsRequired(true);
+            builder.Property(x => x.FilePath).IsRequired(true);
 
             builder.HasOne(x => x.Recruiter).WithMany(x => x.recruiterGalleries).HasForeignKey(x => x.RecruiterId);
 
@@ -28,6 +28,10 @@ namespace FindJobSolution.Data.Configurations
             builder.Property(x => x.FileSize);
 
             builder.Property(x => x.Caption);
+
+            builder.Property(x => x.IsDefault);
+
+            builder.Property(x => x.SortOrder);
         }
     }
 }

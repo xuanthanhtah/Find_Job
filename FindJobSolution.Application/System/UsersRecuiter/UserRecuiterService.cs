@@ -25,7 +25,7 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             _signInManager = signInManager;
             _roleManager = roleManager;
             _config = config;
-            _context = context; 
+            _context = context;
         }
 
         public async Task<string> Authenticate(LoginRecruiterRequest request)
@@ -42,7 +42,6 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.Name),
                 new Claim(ClaimTypes.Role, string.Join(";",roles))
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -63,7 +62,6 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             {
                 UserName = request.UserName,
                 Email = request.Email,
-                Name = request.Name,
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
@@ -81,8 +79,6 @@ namespace FindJobSolution.Application.System.UsersRecuiter
                 return true;
             }
             return false;
-
-            
         }
     }
 }

@@ -13,9 +13,10 @@ namespace FindJobSolution.Data.Entities
         public string CompanyLogo { get; set; }
         public string Address { get; set; }
         public string CompanyIntroduction { get; set; }
+        public int ViewCount { set; get; }
         public Guid UserId { get; set; }
         public User Users { get; set; }
         public List<JobInformation> JobInformation { get; set; }
-        public List<RecruiterGalleries> recruiterGalleries { get; set; }
+        public List<RecruiterImages> recruiterGalleries { get; set; }
     }
 }

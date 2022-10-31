@@ -25,15 +25,12 @@ namespace FindJobSolution.Data.EF
             modelBuilder.ApplyConfiguration(new ApplyJobConfiguration());
             modelBuilder.ApplyConfiguration(new JobConfiguration());
             modelBuilder.ApplyConfiguration(new JobInfomationConfiguration());
-            //modelBuilder.ApplyConfiguration(new JobInfomationConfig());
             modelBuilder.ApplyConfiguration(new JobSeeekerConfiguration());
             modelBuilder.ApplyConfiguration(new JobSeekerOldCompanyConfiguration());
             modelBuilder.ApplyConfiguration(new RecruiterConfiguration());
-            modelBuilder.ApplyConfiguration(new RecruiterGalleriesConfiguration());
+            modelBuilder.ApplyConfiguration(new RecruiterImagesConfiguration());
             modelBuilder.ApplyConfiguration(new SaveJobConfiguration());
             modelBuilder.ApplyConfiguration(new SkillConfiguration());
-            modelBuilder.ApplyConfiguration(new JobSeekerInApplyJobConfiguration());
-            modelBuilder.ApplyConfiguration(new JobSeekerInSaveJobConfiguration());
             modelBuilder.ApplyConfiguration(new JobSeekerSkillConfiguration());
             modelBuilder.ApplyConfiguration(new CvConfiguration());
 
@@ -56,15 +53,13 @@ namespace FindJobSolution.Data.EF
         public DbSet<Job> Jobs { get; set; }
         public DbSet<AppConfig> AppConfigs { get; set; }
         public DbSet<Recruiter> Recruiters { get; set; }
-        public DbSet<RecruiterGalleries> RecruiterGalleries { get; set; }
+        public DbSet<RecruiterImages> RecruiterGalleries { get; set; }
         public DbSet<JobSeeker> JobSeekers { get; set; }
         public DbSet<JobSeekerOldCompany> JobSeekerOldCompanies { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<JobInformation> JobInformations { get; set; }
         public DbSet<ApplyJob> ApplyJobs { get; set; }
         public DbSet<SaveJob> SaveJobs { get; set; }
-        public DbSet<JobSeekerInApplyJob> JobSeekerInApplyJobs { get; set; }
-        public DbSet<JobSeekerInSaveJob> JobSeekerInSaveJobs { get; set; }
         public DbSet<JobSeekerSkill> JobSeekerSkills { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }

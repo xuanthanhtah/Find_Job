@@ -1,13 +1,10 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
-using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.System.UsersJobSeeker;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 
@@ -45,7 +42,6 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.Name),
                 new Claim(ClaimTypes.Role, string.Join(";",roles))
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -62,23 +58,21 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
 
         public async Task<bool> Register(RegisterRequest request)
         {
-
             var user = new User()
             {
                 UserName = request.UserName,
                 Email = request.Email,
-                Name = request.Name,
             };
 
             var result = await _userManager.CreateAsync(user, request.Password);
 
-            var jobseeker = new JobSeeker()
+            var JobSeeker = new JobSeeker()
             {
                 UserId = user.Id,
                 JobId = 1,
             };
 
-            await _context.AddAsync(jobseeker);
+            await _context.AddAsync(JobSeeker);
             await _context.SaveChangesAsync();
 
             if (result.Succeeded)
@@ -87,6 +81,5 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             }
             return false;
         }
-        
     }
 }

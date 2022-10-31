@@ -29,7 +29,7 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.IsDefault);
 
-            builder.Property(x => x.ImagePath);
+            builder.Property(x => x.FilePath);
 
             builder.HasOne(x => x.JobSeeker).WithMany(x=>x.Cvs).HasForeignKey(x=>x.JobSeekerId);
         }
