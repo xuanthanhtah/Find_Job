@@ -50,7 +50,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             var token = new JwtSecurityToken(_config["Token:Issuer"],
                 _config["Tokens:Issuer"],
                 claims,
-                expires: DateTime.Now.AddHours(3),
+                expires: DateTime.Now.AddHours(24),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
