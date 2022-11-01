@@ -1,29 +1,24 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
-using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace FindJobSolution.Application.System
 {
-    public interface IAdminService
+    public interface IUserService
     {
         Task<string> Authencate(UserLoginRequest request);
 
         Task<bool> Register(UserRegisterRequest request);
     }
 
-    public class AdminService : IAdminService
+    public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
@@ -31,7 +26,7 @@ namespace FindJobSolution.Application.System
         private readonly IConfiguration _config;
         private readonly FindJobDBContext _context;
 
-        public AdminService(UserManager<User> userManager, SignInManager<User> signInManager,
+        public UserService(UserManager<User> userManager, SignInManager<User> signInManager,
             RoleManager<Role> roleManager, IConfiguration config, FindJobDBContext context)
         {
             _userManager = userManager;
@@ -55,7 +50,8 @@ namespace FindJobSolution.Application.System
             var claims = new[]
             {
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, string.Join(";",roles))
+                new Claim(ClaimTypes.Role, string.Join(";",roles)),
+                new Claim(ClaimTypes.Name, user.UserName),
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

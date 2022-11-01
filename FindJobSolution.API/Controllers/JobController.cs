@@ -1,5 +1,4 @@
 ﻿using FindJobSolution.Application.Catalog;
-using FindJobSolution.Application.Catalog.Jobs;
 using FindJobSolution.ViewModels.Catalog.Jobs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +17,7 @@ namespace FindJobSolution.API.Controllers
             _jobService = jobService;
         }
 
-        //http://localhost:port/api/job/
+        //http://localhost:port jo
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
