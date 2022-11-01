@@ -5,8 +5,6 @@ VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.WebApp", "FindJobSolution.WebApp\FindJobSolution.WebApp.csproj", "{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.Data", "FindJobSolution.Data\FindJobSolution.Data.csproj", "{EA57104E-0611-482E-9A15-8802EC7CECEF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.Application", "FindJobSolution.Application\FindJobSolution.Application.csproj", "{59C58378-8CB2-4D1A-9593-ADEE5507B198}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.Utilities", "FindJobSolution.Utilities\FindJobSolution.Utilities.csproj", "{10CD0758-6D0D-4D22-863D-25DCC413FDFC}"
@@ -21,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{3C43FF97
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.ViewModels", "FindJobSolution.ViewModels\FindJobSolution.ViewModels.csproj", "{1C489556-9CB1-45EF-9DF7-92088FB37715}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindJobSolution.AdminApp", "FindJobSolution.AdminApp\FindJobSolution.AdminApp.csproj", "{D5B49B56-CF48-4A54-B15E-7B522D4B0894}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.AdminApp", "FindJobSolution.AdminApp\FindJobSolution.AdminApp.csproj", "{D5B49B56-CF48-4A54-B15E-7B522D4B0894}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindJobSolution.Data", "FindJobSolution.Data\FindJobSolution.Data.csproj", "{928A13CA-D337-4BC2-B006-6704F465A0EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,6 @@ Global
 		{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA57104E-0611-482E-9A15-8802EC7CECEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA57104E-0611-482E-9A15-8802EC7CECEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA57104E-0611-482E-9A15-8802EC7CECEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA57104E-0611-482E-9A15-8802EC7CECEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{59C58378-8CB2-4D1A-9593-ADEE5507B198}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{59C58378-8CB2-4D1A-9593-ADEE5507B198}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59C58378-8CB2-4D1A-9593-ADEE5507B198}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -57,18 +53,22 @@ Global
 		{D5B49B56-CF48-4A54-B15E-7B522D4B0894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5B49B56-CF48-4A54-B15E-7B522D4B0894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5B49B56-CF48-4A54-B15E-7B522D4B0894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{928A13CA-D337-4BC2-B006-6704F465A0EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{928A13CA-D337-4BC2-B006-6704F465A0EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{928A13CA-D337-4BC2-B006-6704F465A0EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{928A13CA-D337-4BC2-B006-6704F465A0EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A9CDB479-647B-4CE3-B04F-0EDC22A2F2E8} = {3C43FF97-A9CA-490A-90FD-80A4E0C55A34}
-		{EA57104E-0611-482E-9A15-8802EC7CECEF} = {6E892D7A-EB05-485B-8633-4E00F5648C99}
 		{59C58378-8CB2-4D1A-9593-ADEE5507B198} = {6E892D7A-EB05-485B-8633-4E00F5648C99}
 		{10CD0758-6D0D-4D22-863D-25DCC413FDFC} = {BF9F32CA-8C06-44BD-A089-BEADC7F6EC71}
 		{01D9D2D0-EA30-4A1A-8068-E48F48FF0678} = {3C43FF97-A9CA-490A-90FD-80A4E0C55A34}
 		{1C489556-9CB1-45EF-9DF7-92088FB37715} = {BF9F32CA-8C06-44BD-A089-BEADC7F6EC71}
 		{D5B49B56-CF48-4A54-B15E-7B522D4B0894} = {3C43FF97-A9CA-490A-90FD-80A4E0C55A34}
+		{928A13CA-D337-4BC2-B006-6704F465A0EE} = {6E892D7A-EB05-485B-8633-4E00F5648C99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {770B2018-0EB6-4025-A602-DC841C85379A}

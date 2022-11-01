@@ -1,7 +1,6 @@
 ﻿using FindJobSolution.Application.Catalog;
 using FindJobSolution.ViewModels.Catalog.Cvs;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.API.Controllers
@@ -52,8 +51,7 @@ namespace FindJobSolution.API.Controllers
             {
                 return BadRequest();
             }
-            var jobseeker = await _IJobSeekerService.GetbyId(result);
-            return CreatedAtAction(nameof(GetById), new { id = result }, jobseeker);
+            return Ok();
         }
 
         [HttpDelete]

@@ -5,20 +5,27 @@ using FindJobSolution.ViewModels.Catalog.Jobs;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace FindJobSolution.Application.Catalog.Jobs
+namespace FindJobSolution.Application.Catalog
 {
     public interface IJobService
     {
         Task<int> Create(JobCreateRequest request);
+
         Task<int> Update(JobUpdateRequest request);
+
         Task<int> Detele(int JobId);
+
         Task<PagedResult<JobViewModel>> GetAllPaging(GetJobPagingRequest request);
+
         Task<List<JobViewModel>> GetAll();
+
         Task<JobViewModel> GetbyId(int JobId);
     }
+
     public class JobService : IJobService
     {
         private readonly FindJobDBContext _context;
+
         public JobService(FindJobDBContext context)
         {
             _context = context;
@@ -59,7 +66,6 @@ namespace FindJobSolution.Application.Catalog.Jobs
                {
                    JobName = p.j.JobName,
                }).ToListAsync();
-
         }
 
         public async Task<PagedResult<JobViewModel>> GetAllPaging(GetJobPagingRequest request)
@@ -70,7 +76,6 @@ namespace FindJobSolution.Application.Catalog.Jobs
             //Kiểm tra có nhập vào không
             if (!string.IsNullOrEmpty(request.keyword))
                 query = query.Where(x => x.j.JobName.Contains(request.keyword));
-
 
             if (request.jobIds.Count > 0)
             {
@@ -88,7 +93,7 @@ namespace FindJobSolution.Application.Catalog.Jobs
                     JobName = p.j.JobName,
                 }).ToListAsync();
 
-            // in ra 
+            // in ra
             var pagedResult = new PagedResult<JobViewModel>()
             {
                 TotalRecord = totalRow,
@@ -119,8 +124,5 @@ namespace FindJobSolution.Application.Catalog.Jobs
 
             return await _context.SaveChangesAsync();
         }
-
     }
 }
-
-

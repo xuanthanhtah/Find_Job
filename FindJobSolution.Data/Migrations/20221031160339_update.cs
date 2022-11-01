@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FindJobSolution.Data.Migrations
 {
-    public partial class updatetable : Migration
+    public partial class update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -196,7 +196,6 @@ namespace FindJobSolution.Data.Migrations
                     RecruiterId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CompanyLogo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyIntroduction = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ViewCount = table.Column<int>(type: "int", nullable: true),
@@ -286,6 +285,38 @@ namespace FindJobSolution.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Avatar",
+                columns: table => new
+                {
+                    AvatarId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Caption = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: false),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    Timespan = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    JobSeekerId = table.Column<int>(type: "int", nullable: false),
+                    RecruiterId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Avatar", x => x.AvatarId);
+                    table.ForeignKey(
+                        name: "FK_Avatar_JobSeekers_JobSeekerId",
+                        column: x => x.JobSeekerId,
+                        principalTable: "JobSeekers",
+                        principalColumn: "JobSeekerId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Avatar_Recruiters_RecruiterId",
+                        column: x => x.RecruiterId,
+                        principalTable: "Recruiters",
+                        principalColumn: "RecruiterId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JobInformations",
                 columns: table => new
                 {
@@ -329,7 +360,7 @@ namespace FindJobSolution.Data.Migrations
                 name: "RecruiterImages",
                 columns: table => new
                 {
-                    RecruiterGalleriesId = table.Column<int>(type: "int", nullable: false)
+                    RecruiterImagesId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RecruiterId = table.Column<int>(type: "int", nullable: false),
                     Caption = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -341,7 +372,7 @@ namespace FindJobSolution.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RecruiterImages", x => x.RecruiterGalleriesId);
+                    table.PrimaryKey("PK_RecruiterImages", x => x.RecruiterImagesId);
                     table.ForeignKey(
                         name: "FK_RecruiterImages_Recruiters_RecruiterId",
                         column: x => x.RecruiterId,
@@ -423,7 +454,7 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "edba0c65-db89-48f2-9679-c9b44cbf3211", "admin", "admin" });
+                values: new object[] { new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"), "9e2ee0d7-85e1-4b04-ad9b-31fcfd15fb3f", "admin", "admin" });
 
             migrationBuilder.InsertData(
                 table: "UserRoles",
@@ -433,12 +464,24 @@ namespace FindJobSolution.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "20df9701-2e69-4223-abc7-c4273c7b62f7", "thanh26092000@gmail.com", true, false, null, "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEHrUYubN9UZARRh06j/CbmVcb8WgQHNg2q4R1nX/OmtVQAjfZrCI6oehZcgZiwmx5w==", null, false, "", false, "Lxthanh" });
+                values: new object[] { new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"), 0, "7646a1f9-e772-42f9-8263-45d7654b5240", "thanh26092000@gmail.com", true, false, null, "thanh26092000@gmail.com", "Lxthanh", "AQAAAAEAACcQAAAAEEhqheb66uB8tU8UbjnZrDD3RImqTTgIxcpFOHIw7o8dn1Y+HhviJRwa6jDRAtBVxg==", null, false, "", false, "Lxthanh" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ApplyJobs_JobInformationId",
                 table: "ApplyJobs",
                 column: "JobInformationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Avatar_JobSeekerId",
+                table: "Avatar",
+                column: "JobSeekerId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Avatar_RecruiterId",
+                table: "Avatar",
+                column: "RecruiterId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CVs_JobSeekerId",
@@ -500,6 +543,9 @@ namespace FindJobSolution.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ApplyJobs");
+
+            migrationBuilder.DropTable(
+                name: "Avatar");
 
             migrationBuilder.DropTable(
                 name: "CVs");

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindJobSolution.Data.Entities
+namespace FindJobSolution.ViewModels.Catalog.RecuiterImages
 {
-    public class RecruiterImages
+    public class ImageViewModel
     {
-        public int RecruiterImagesId { get; set; }
+        public int RecruiterGalleriesId { get; set; }
         public int RecruiterId { get; set; }
         public string Caption { get; set; }
         public string FilePath { get; set; }
@@ -16,6 +16,5 @@ namespace FindJobSolution.Data.Entities
         public bool IsDefault { get; set; }
         public int SortOrder { get; set; }
         public DateTime DateCreated { get; set; }
-        public Recruiter Recruiter { get; set; }
     }
 }

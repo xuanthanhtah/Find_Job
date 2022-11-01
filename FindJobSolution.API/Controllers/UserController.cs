@@ -1,45 +1,44 @@
 ﻿using FindJobSolution.Application.System;
 using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminnController : ControllerBase
+    public class UserController : ControllerBase
     {
-        private readonly IAdminService _IAdminService;
+        private readonly IUserService _UserService;
 
-        public AdminnController(IAdminService IAdminService)
+        public UserController(IUserService userService)
         {
-            _IAdminService = IAdminService;
+            _UserService = userService;
         }
 
         [HttpPost("authenticate")]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromForm] UserLoginRequest request)
+        public async Task<IActionResult> Authenticate([FromBody] UserLoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var resultToken = await _IAdminService.Authencate(request);
+            var resultToken = await _UserService.Authencate(request);
             if (string.IsNullOrEmpty(resultToken))
             {
                 return BadRequest("Username or password is incorrect.");
             }
-            return Ok(new { token = resultToken });
+            return Ok(resultToken);
         }
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromForm] UserRegisterRequest request)
+        public async Task<IActionResult> Register([FromBody] UserRegisterRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var result = await _IAdminService.Register(request);
+            var result = await _UserService.Register(request);
             if (!result)
             {
                 return BadRequest("Register is unsuccessful.");

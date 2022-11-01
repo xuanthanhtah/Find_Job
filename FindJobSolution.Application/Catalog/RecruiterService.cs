@@ -4,6 +4,7 @@ using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.Recruiters;
+using FindJobSolution.ViewModels.Catalog.RecuiterImages;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,16 @@ namespace FindJobSolution.Application.Catalog
         Task<PagedResult<RecruiterVM>> GetAllPaging(GetRecuiterPagingRequest request);
 
         Task<List<RecruiterVM>> GetAll();
+
+        Task<int> AddImage(int Recuiterid, ImageCreateRequest request);
+
+        Task<int> RemoveImage(int ImageId);
+
+        Task<int> UpdateImage(int ImageId, ImageUpdateRequest request);
+
+        Task<List<ImageViewModel>> GetImageByRecuiterid(int Recuiterid);
+
+        Task<ImageViewModel> GetImageById(int ImageId);
     }
 }
 
@@ -34,6 +45,28 @@ public class RecruiterService : IRecruiterService
     {
         _context = context;
         _storageService = storageService;
+    }
+
+    public async Task<int> AddImage(int Recuiterid, ImageCreateRequest request)
+    {
+        var image = new RecruiterImages()
+        {
+            Caption = request.Caption,
+            DateCreated = DateTime.Now,
+            IsDefault = request.IsDefault,
+            RecruiterId = Recuiterid,
+            SortOrder = request.SortOrder,
+        };
+
+        if (request.FileImage != null)
+        {
+            image.FileSize = request.FileImage.Length;
+            image.FilePath = await this.SaveFile(request.FileImage);
+        }
+        _context.RecruiterImages.Add(image);
+
+        await _context.SaveChangesAsync();
+        return image.RecruiterImagesId;
     }
 
     public async Task<int> Delete(int Recuiterid)
@@ -139,6 +172,52 @@ public class RecruiterService : IRecruiterService
         return jobItem;
     }
 
+    public async Task<ImageViewModel> GetImageById(int ImageId)
+    {
+        var cv = await _context.RecruiterImages.FindAsync(ImageId);
+        if (cv == null) { throw new FindJobException($"cannot find a cv: {ImageId}"); }
+
+        var viewmodel = new ImageViewModel()
+        {
+            RecruiterId = cv.RecruiterId,
+            RecruiterGalleriesId = cv.RecruiterImagesId,
+            Caption = cv.Caption,
+            FilePath = cv.FilePath,
+            FileSize = cv.FileSize,
+            IsDefault = cv.IsDefault,
+            SortOrder = cv.SortOrder,
+            DateCreated = cv.DateCreated,
+        };
+        return viewmodel;
+    }
+
+    public async Task<List<ImageViewModel>> GetImageByRecuiterid(int Recuiterid)
+    {
+        var recruiters = await _context.Recruiters.FindAsync(Recuiterid);
+        if (recruiters == null) { throw new FindJobException($"cannot find a recruiters: {Recuiterid}"); }
+
+        return await _context.RecruiterImages.Where(x => x.RecruiterId == Recuiterid)
+                .Select(i => new ImageViewModel()
+                {
+                    Caption = i.Caption,
+                    FilePath = i.FilePath,
+                    FileSize = i.FileSize,
+                    IsDefault = i.IsDefault,
+                    SortOrder = i.SortOrder,
+                    DateCreated = i.DateCreated,
+                    RecruiterId = i.RecruiterId,
+                    RecruiterGalleriesId = i.RecruiterImagesId,
+                }).ToListAsync();
+    }
+
+    public async Task<int> RemoveImage(int ImageId)
+    {
+        var cv = await _context.RecruiterImages.FindAsync(ImageId);
+        if (cv == null) { throw new FindJobException($"cannot find a cv: {ImageId}"); }
+        _context.RecruiterImages.Remove(cv);
+        return await _context.SaveChangesAsync();
+    }
+
     public async Task<int> Update(RecruiterUpdateRequest request)
     {
         var recruiters = await _context.Recruiters.FindAsync(request.RecruiterId);
@@ -175,6 +254,28 @@ public class RecruiterService : IRecruiterService
                 _context.RecruiterImages.AddRange(recruiters.RecruiterImages);
             }
         }
+
+        return await _context.SaveChangesAsync();
+    }
+
+    public async Task<int> UpdateImage(int ImageId, ImageUpdateRequest request)
+    {
+        var cv = await _context.RecruiterImages.FindAsync(ImageId);
+        if (cv == null)
+        {
+            throw new FindJobException($"Cannot find a cv with id: {ImageId}");
+        }
+
+        if (request.FileImage != null)
+        {
+            cv.Caption = request.Caption;
+            cv.IsDefault = request.IsDefault;
+            cv.SortOrder = request.SortOrder;
+            cv.FileSize = request.FileImage.Length;
+            cv.FilePath = await this.SaveFile(request.FileImage);
+        }
+        _context.RecruiterImages.Update(cv);
+
         return await _context.SaveChangesAsync();
     }
 
