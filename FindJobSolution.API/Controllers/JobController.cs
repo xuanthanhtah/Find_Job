@@ -43,7 +43,7 @@ namespace FindJobSolution.API.Controllers
             return Ok(job);
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> Create([FromForm] JobCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace FindJobSolution.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = result }, job);
         }
 
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<IActionResult> Update([FromForm] JobUpdateRequest request)
         {
             if (!ModelState.IsValid)
