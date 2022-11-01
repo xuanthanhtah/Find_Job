@@ -45,22 +45,40 @@ builder.Services.AddTransient<IJobSeekerOldCompanyService, JobSeekerOldCompanySe
 //services.AddTransient<IValidator<LoginRequest>, LoginUserJobSeekerRequestValidator>();
 //services.AddTransient<IValidator<LoginRecruiterRequest>, LoginUserRecuiterRequestValidator>();
 
-//AddFluentValidation:
-//userjobseeker
-builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginUserJobSeekerRequestValidator>());
-builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserJobSeekerRequestValidator>());
+////AddFluentValidation:
+////userjobseeker
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginUserJobSeekerRequestValidator>());
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserJobSeekerRequestValidator>());
 
-//userrecuiter
-builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginUserRecuiterRequestValidator>());
-builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserRecuiterRequestValidator>());
+////userrecuiter
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginUserRecuiterRequestValidator>());
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RegisterUserRecuiterRequestValidator>());
 
-//jobseeker
+////jobseeker
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<JobSeekerOldCompanyUpdateRequestValidator>());
 
-//recuiter
+////recuiter
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<RecruiterUpdateRequestValidator>());
 
-//jobinformation
+////jobinformation
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<JobInformationRequestValidator>());
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<JobInformationUpdateRequestValidator>());
 
-//cv
+////cv
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CvCreateRequestValidator>());
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CvUpdateRequestValidator>());
+
+////JobseekerOldCompany
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<JobSeekerOldCompanyCreateRequestValidator>());
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<JobSeekerOldCompanyUpdateRequestValidator>());
+
+////job
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<JobCreateRequestValidator>());
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<JobUpdateRequestValidator>());
+
+////Skill
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<SkillCreateRequestValidator>());
+//builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<SkillUpdateRequestValidator>());
 
 builder.Services.AddSwaggerGen(c =>
 {
