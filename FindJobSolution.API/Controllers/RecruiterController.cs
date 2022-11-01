@@ -40,7 +40,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromForm] RecruiterUpdateRequest request)
+        public async Task<IActionResult> Update([FromBody] RecruiterUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPost("image/{RecruiterId}")]
-        public async Task<IActionResult> AddImage(int RecruiterId, [FromForm] ImageCreateRequest request)
+        public async Task<IActionResult> AddImage(int RecruiterId, [FromBody] ImageCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPut("image/{ImageId}")]
-        public async Task<IActionResult> UpdateImage(int ImageId, [FromForm] ImageUpdateRequest request)
+        public async Task<IActionResult> UpdateImage(int ImageId, [FromBody] ImageUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {

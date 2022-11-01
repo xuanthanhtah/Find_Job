@@ -9,6 +9,7 @@ namespace FindSkillSolution.API.Controllers
     public class SkillController : ControllerBase
     {
         private readonly ISkillService _skillService;
+
         public SkillController(ISkillService SkillService)
         {
             _skillService = SkillService;
@@ -41,7 +42,7 @@ namespace FindSkillSolution.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] SkillCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] SkillCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -59,7 +60,7 @@ namespace FindSkillSolution.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromForm] SkillUpdateRequest request)
+        public async Task<IActionResult> Update([FromBody] SkillUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
