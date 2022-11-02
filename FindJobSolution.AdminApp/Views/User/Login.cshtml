@@ -26,7 +26,7 @@
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng nhập</h3></div>
                                 <div class="card-body">
-                                        <form asp-action="Login" asp-controller="User" method="post">
+                                    <form asp-action="Login" asp-controller="User" method="post">
                                         <div class="form-floating mb-3">
                                             <input class="form-control" asp-for="UserName" type="text" placeholder="Nhập tài khoản" />
                                             <label>Tài khoản</label>
@@ -45,9 +45,9 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer text-center py-3">
+                                @*<div class="card-footer text-center py-3">
                                     <div class="small"><a href="/User/register">Không có tài khoản? Đăng ký!</a></div>
-                                </div>
+                                </div>*@
                             </div>
                         </div>
                     </div>

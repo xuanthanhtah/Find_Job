@@ -27,6 +27,7 @@ namespace FindJobSolution.API.Controllers
 
         //http://localhost:port/api/job/paging/
         [HttpGet("paging")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetJobPagingRequest request)
         {
             var job = await _jobService.GetAllPaging(request);
@@ -35,6 +36,7 @@ namespace FindJobSolution.API.Controllers
 
         //http://localhost:port/api/job/1
         [HttpGet("{JobId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int JobId)
         {
             var job = await _jobService.GetbyId(JobId);

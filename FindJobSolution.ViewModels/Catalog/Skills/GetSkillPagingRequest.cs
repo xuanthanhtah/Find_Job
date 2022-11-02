@@ -9,7 +9,7 @@ namespace FindJobSolution.ViewModels.Catalog.Skills
 {
     public class GetSkillPagingRequest : PagingRequestBase
     {
-        public string keyword { get; set; }
+        public string? keyword { get; set; }
         public List<int> skillIds { get; set; }
     }
 }

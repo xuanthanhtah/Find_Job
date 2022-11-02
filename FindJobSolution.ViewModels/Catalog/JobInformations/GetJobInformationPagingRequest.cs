@@ -9,7 +9,7 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
 {
     public class GetJobInformationPagingRequest : PagingRequestBase
     {
-        public string keyword { get; set; }
+        public string? keyword { get; set; }
         public List<int> JobInformationId { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using FindJobSolution.ViewModels.Catalog.Skills;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace FindJobSolution.Application.Catalog.Skills
+namespace FindJobSolution.Application.Catalog
 {
     public interface ISkillService
     {

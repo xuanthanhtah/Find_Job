@@ -1,8 +1,11 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
+using FindJobSolution.ViewModels.Catalog.JobInformations;
+using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,6 +19,8 @@ namespace FindJobSolution.Application.System
         Task<string> Authencate(UserLoginRequest request);
 
         Task<bool> Register(UserRegisterRequest request);
+
+        Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request);
     }
 
     public class UserService : IUserService
@@ -56,13 +61,42 @@ namespace FindJobSolution.Application.System
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var token = new JwtSecurityToken(_config["Token:Issuer"],
+            var token = new JwtSecurityToken(_config["Tokens:Issuer"],
                 _config["Tokens:Issuer"],
                 claims,
                 expires: DateTime.Now.AddHours(24),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public async Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request)
+        {
+            var query = _userManager.Users;
+            if (!string.IsNullOrEmpty(request.keyword))
+            {
+                query = query.Where(x => x.UserName.Contains(request.keyword));
+            }
+
+            int totalRow = await query.CountAsync();
+
+            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(p => new UserViewModel()
+                {
+                    Id = p.Id,
+                    UserName = p.UserName,
+                    Email = p.Email
+                }).ToListAsync();
+
+            // in ra
+            var pagedResult = new PagedResult<UserViewModel>()
+            {
+                TotalRecord = totalRow,
+                Items = data
+            };
+
+            return pagedResult;
         }
 
         public async Task<bool> Register(UserRegisterRequest request)
