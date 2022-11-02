@@ -41,7 +41,6 @@ namespace FindJobSolution.AdminApp.Controllers
             {
                 return View(ModelState);
             }
-            var token = await _userAPI.Authencate(request);
 
             var userPrincipal = this.ValidateToken(token);
 
