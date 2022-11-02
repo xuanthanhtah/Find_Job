@@ -1,5 +1,4 @@
 using FindJobSolution.Application.Catalog;
-using FindJobSolution.Application.Catalog.Skills;
 using FindJobSolution.Application.Common;
 using FindJobSolution.Application.System;
 using FindJobSolution.Application.System.UsersJobSeeker;

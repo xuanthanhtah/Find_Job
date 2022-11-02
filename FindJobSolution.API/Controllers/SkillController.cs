@@ -1,11 +1,13 @@
 ﻿using FindJobSolution.Application.Catalog;
 using FindJobSolution.ViewModels.Catalog.Skills;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindSkillSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SkillController : ControllerBase
     {
         private readonly ISkillService _skillService;
@@ -17,6 +19,7 @@ namespace FindSkillSolution.API.Controllers
 
         //http://localhost:port/api/Skill/
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var Skill = await _skillService.GetAll();
@@ -25,6 +28,7 @@ namespace FindSkillSolution.API.Controllers
 
         //http://localhost:port/api/Skill/paging/
         [HttpGet("paging")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetSkillPagingRequest request)
         {
             var Skill = await _skillService.GetAllPaging(request);
@@ -33,6 +37,7 @@ namespace FindSkillSolution.API.Controllers
 
         //http://localhost:port/api/Skill/1
         [HttpGet("{SkillId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int skillId)
         {
             var skill = await _skillService.GetbyId(skillId);

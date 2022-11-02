@@ -7,6 +7,7 @@ namespace FindJobSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _UserService;
@@ -44,6 +45,14 @@ namespace FindJobSolution.API.Controllers
                 return BadRequest("Register is unsuccessful.");
             }
             return Ok();
+        }
+
+        //http://localhost:5000/api/user/paging?pageIndex=1&pageSize=10&keyword=
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetUsersPaging([FromQuery] GetUserPagingRequest request)
+        {
+            var users = await _UserService.GetUsersPaging(request);
+            return Ok(users);
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using FindJobSolution.Application.Catalog;
 using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Catalog.RecuiterImages;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class RecruiterController : ControllerBase
     {
         private readonly IRecruiterService _recruiterService;
@@ -17,6 +19,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var recruiter = await _recruiterService.GetAll();
@@ -24,6 +27,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpGet("paging")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetRecuiterPagingRequest request)
         {
             var recruiter = await _recruiterService.GetAllPaging(request);

@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace FindJobSolution.ViewModels.System.User
 {
-    public class UserRegisterRequest
+    public class UserViewModel
     {
-        public string Email { get; set; }
+        public Guid Id { get; set; }
         public string UserName { get; set; }
-        public string Password { get; set; }
-        public string ConfirmPassword { get; set; }
+        public string Email { get; set; }
     }
 }

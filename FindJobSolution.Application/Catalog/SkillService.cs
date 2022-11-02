@@ -11,7 +11,8 @@ namespace FindJobSolution.Application.Catalog
     {
         Task<int> Create(SkillCreateRequest request);
         Task<int> Update(SkillUpdateRequest request);
-        Task<int> Delete(int SkillId);
+        Task<int> Detele(int SkillId);
+
         Task<PagedResult<SkillViewModel>> GetAllPaging(GetSkillPagingRequest request);
         Task<List<SkillViewModel>> GetAll();
         Task<SkillViewModel> GetbyId(int SkillId);
@@ -37,7 +38,8 @@ namespace FindJobSolution.Application.Catalog
             return skill.SkillId;
         }
 
-        public async Task<int> Delete(int SkillId)
+        public async Task<int> Detele(int SkillId)
+
         {
             var skill = await _context.Skills.FindAsync(SkillId);
             if (skill == null) { throw new FindJobException($"cannot find a skill: {SkillId}"); }

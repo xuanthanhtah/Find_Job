@@ -7,6 +7,7 @@ namespace FindJobSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersRecuiterController : ControllerBase
     {
         private readonly IUserRecuiterService _userService;
