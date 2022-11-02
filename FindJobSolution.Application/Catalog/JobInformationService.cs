@@ -13,7 +13,7 @@ namespace FindJobSolution.Application.Catalog
 
         Task<int> Update(JobInformationUpdateRequest request);
 
-        Task<int> Detele(int JobInformationId);
+        Task<int> Delete(int JobInformationId);
 
         Task<List<JobInformationViewModel>> GetAll();
 
@@ -66,7 +66,7 @@ namespace FindJobSolution.Application.Catalog
             return newJobInformation.JobInformationId;
         }
 
-        public async Task<int> Detele(int JobInformationId)
+        public async Task<int> Delete(int JobInformationId)
         {
             var jobInformation = await _context.JobInformations.FindAsync(JobInformationId);
             if (jobInformation == null) return 0;
