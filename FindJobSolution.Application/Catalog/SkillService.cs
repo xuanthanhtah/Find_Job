@@ -5,13 +5,13 @@ using FindJobSolution.ViewModels.Catalog.Skills;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace FindJobSolution.Application.Catalog.Skills
+namespace FindJobSolution.Application.Catalog
 {
     public interface ISkillService
     {
         Task<int> Create(SkillCreateRequest request);
         Task<int> Update(SkillUpdateRequest request);
-        Task<int> Detele(int SkillId);
+        Task<int> Delete(int SkillId);
         Task<PagedResult<SkillViewModel>> GetAllPaging(GetSkillPagingRequest request);
         Task<List<SkillViewModel>> GetAll();
         Task<SkillViewModel> GetbyId(int SkillId);
@@ -37,7 +37,7 @@ namespace FindJobSolution.Application.Catalog.Skills
             return skill.SkillId;
         }
 
-        public async Task<int> Detele(int SkillId)
+        public async Task<int> Delete(int SkillId)
         {
             var skill = await _context.Skills.FindAsync(SkillId);
             if (skill == null) { throw new FindJobException($"cannot find a skill: {SkillId}"); }

@@ -67,7 +67,7 @@ namespace FindJobSolution.API.Controllers
         [HttpDelete("Delete/{JobInformationId}")]
         public async Task<IActionResult> Delete(int JobInformationId)
         {
-            var result = await _jobInformationService.Detele(JobInformationId);
+            var result = await _jobInformationService.Delete(JobInformationId);
             if (result == 0)
             {
                 return BadRequest();

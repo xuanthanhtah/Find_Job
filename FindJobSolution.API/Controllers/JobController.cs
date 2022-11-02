@@ -1,5 +1,4 @@
 ﻿using FindJobSolution.Application.Catalog;
-using FindJobSolution.Application.Catalog.Jobs;
 using FindJobSolution.ViewModels.Catalog.Jobs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -80,7 +79,7 @@ namespace FindJobSolution.API.Controllers
         [HttpDelete("{JobId}")]
         public async Task<IActionResult> Delete(int JobId)
         {
-            var result = await _jobService.Detele(JobId);
+            var result = await _jobService.Delete(JobId);
             if (result == 0)
             {
                 return BadRequest();

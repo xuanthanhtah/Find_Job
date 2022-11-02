@@ -1,4 +1,4 @@
-﻿using FindJobSolution.Application.Catalog.Skills;
+﻿using FindJobSolution.Application.Catalog;
 using FindJobSolution.ViewModels.Catalog.Skills;
 using Microsoft.AspNetCore.Mvc;
 
@@ -76,7 +76,7 @@ namespace FindSkillSolution.API.Controllers
         [HttpDelete("{SkillId}")]
         public async Task<IActionResult> Delete(int SkillId)
         {
-            var result = await _skillService.Detele(SkillId);
+            var result = await _skillService.Delete(SkillId);
             if (result == 0)
             {
                 return BadRequest();

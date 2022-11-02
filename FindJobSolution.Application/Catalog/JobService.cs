@@ -5,13 +5,13 @@ using FindJobSolution.ViewModels.Catalog.Jobs;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace FindJobSolution.Application.Catalog.Jobs
+namespace FindJobSolution.Application.Catalog
 {
     public interface IJobService
     {
         Task<int> Create(JobCreateRequest request);
         Task<int> Update(JobUpdateRequest request);
-        Task<int> Detele(int JobId);
+        Task<int> Delete(int JobId);
         Task<PagedResult<JobViewModel>> GetAllPaging(GetJobPagingRequest request);
         Task<List<JobViewModel>> GetAll();
         Task<JobViewModel> GetbyId(int JobId);
@@ -41,7 +41,7 @@ namespace FindJobSolution.Application.Catalog.Jobs
             return job.JobId;
         }
 
-        public async Task<int> Detele(int JobId)
+        public async Task<int> Delete(int JobId)
         {
             var job = await _context.Jobs.FindAsync(JobId);
             if (job == null) { throw new FindJobException($"cannot find a job: {JobId}"); }
