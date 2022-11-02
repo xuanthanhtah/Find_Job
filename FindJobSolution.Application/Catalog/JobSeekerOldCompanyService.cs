@@ -22,7 +22,7 @@ namespace FindJobSolution.Application.Catalog
 
         Task<int> Update(JobSeekerOldCompanyUpdateRequest request);
 
-        Task<int> Detele(int JobSeekerOldCompanyId);
+        Task<int> Delete(int JobSeekerOldCompanyId);
 
         Task<List<JobSeekerOldCompanyViewmodel>> GetAll();
 
@@ -55,7 +55,7 @@ public class JobSeekerOldCompanyService : IJobSeekerOldCompanyService
         return JobSeekerOldCompany.JobSeekerOldCompanyId;
     }
 
-    public async Task<int> Detele(int JobSeekerOldCompanyId)
+    public async Task<int> Delete(int JobSeekerOldCompanyId)
     {
         var JobSeekerOldCompany = await _context.JobSeekerOldCompanies.FindAsync(JobSeekerOldCompanyId);
         if (JobSeekerOldCompany == null) { throw new FindJobException($"cannot find a job: {JobSeekerOldCompanyId}"); }
