@@ -1,7 +1,6 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
-using FindJobSolution.ViewModels.Catalog.JobInformations;
 using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Identity;
@@ -96,7 +95,7 @@ namespace FindJobSolution.Application.System
                 Items = data
             };
 
-            return pagedResult;
+            return (pagedResult);
         }
 
         public async Task<bool> Register(UserRegisterRequest request)
@@ -104,12 +103,12 @@ namespace FindJobSolution.Application.System
             var userid = await _userManager.FindByNameAsync(request.UserName);
             if (userid != null)
             {
-                throw new FindJobException("Tài khoản đã tồn tại");
+                return false;
             }
 
             if (await _userManager.FindByEmailAsync(request.Email) != null)
             {
-                throw new FindJobException("Emai đã tồn tại");
+                return false;
             }
 
             var user = new User()
@@ -124,7 +123,7 @@ namespace FindJobSolution.Application.System
             {
                 return true;
             }
-            throw new FindJobException("Đăng ký không thành công");
+            return false;
         }
     }
 }

@@ -1,3 +1,4 @@
+using FindJobSolution.AdminApp.API;
 using FindJobSolution.AdminApp.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -9,6 +10,8 @@ builder.Services.AddRazorPages()
 builder.Services.AddControllersWithViews();
 //Add Transient
 builder.Services.AddTransient<IUserAPI, UserAPI>();
+builder.Services.AddTransient<IJobSeekerAPI, JobSeekerAPI>();
+builder.Services.AddTransient<IRecuiterAPI, RecuiterAPI>();
 // Add services to the container.
 builder.Services.AddHttpClient();
 

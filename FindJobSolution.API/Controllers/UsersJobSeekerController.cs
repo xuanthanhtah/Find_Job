@@ -40,7 +40,7 @@ namespace FindJobSolution.API.Controllers
                 return BadRequest(ModelState);
 
             var result = await _UserJobSeekerService.Register(request);
-            if (!result)
+            if (!result.IsSuccessed)
             {
                 return BadRequest("Register is unsuccessful.");
             }

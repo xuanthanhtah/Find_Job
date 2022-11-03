@@ -26,6 +26,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpGet("paging")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetJobSeekerPagingRequest request)
         {
             var jobSeeker = await _IJobSeekerService.GetAllPaging(request);
