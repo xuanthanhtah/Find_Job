@@ -1,4 +1,4 @@
-using FindJobSolution.AdminApp.Service;
+    using FindJobSolution.AdminApp.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
