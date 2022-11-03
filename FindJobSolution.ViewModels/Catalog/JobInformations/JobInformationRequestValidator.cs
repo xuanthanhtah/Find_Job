@@ -1,19 +1,12 @@
-﻿using FindJobSolution.ViewModels.System.UsersJobSeeker;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FluentValidation;
 
 namespace FindJobSolution.ViewModels.Catalog.JobInformations
 {
     public class JobInformationRequestValidator : AbstractValidator<JobInformationCreateRequest>
     {
-     public JobInformationRequestValidator()
+        public JobInformationRequestValidator()
         {
-            RuleFor(x=>x.Benefits).NotEmpty().WithMessage("Benefits is required");
+            RuleFor(x => x.Benefits).NotEmpty().WithMessage("Benefits is required");
             RuleFor(x => x.JobTitle).NotEmpty().WithMessage("Title is required");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required");
             RuleFor(x => x.Salary).NotEmpty().WithMessage("Salary is required");
@@ -28,6 +21,5 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
             RuleFor(x => x.JobInformationTimeStart).NotEmpty().WithMessage("JobInformationTimeStart is required hehe");
             RuleFor(x => x.JobInformationTimeEnd).NotEmpty().WithMessage("JobInformationTimeEnd is required hehe");
         }
-
     }
 }
