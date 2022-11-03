@@ -1,4 +1,4 @@
-﻿    using FindJobSolution.AdminApp.Service;
+﻿using FindJobSolution.AdminApp.Service;
 using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -9,6 +9,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace FindJobSolution.AdminApp.Controllers
 {
@@ -25,10 +26,10 @@ namespace FindJobSolution.AdminApp.Controllers
 
         public async Task<IActionResult> Index(string keyWord, int pageIndex = 1, int pageSize = 10)
         {
-            var sessions = HttpContext.Session.GetString("Token");
+            //var sessions = HttpContext.Session.GetString("Token");
             var request = new GetUserPagingRequest()
             {
-                BearerToken = sessions,
+                //BearerToken = sessions,
                 keyword = keyWord,
                 PageIndex = pageIndex,
                 PageSize = pageSize

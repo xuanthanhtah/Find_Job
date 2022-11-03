@@ -82,7 +82,7 @@ namespace FindSkillSolution.API.Controllers
         [HttpDelete("{SkillId}")]
         public async Task<IActionResult> Delete(int SkillId)
         {
-            var result = await _skillService.Delete(SkillId);
+            var result = await _skillService.Detele(SkillId);
             if (result == 0)
             {
                 return BadRequest();

@@ -1,9 +1,4 @@
 ﻿using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FindJobSolution.ViewModels.Catalog.JobSeekers
 {
@@ -20,7 +15,6 @@ namespace FindJobSolution.ViewModels.Catalog.JobSeekers
             RuleFor(x => x.nameCv).NotEmpty().WithMessage("Address is required");
             RuleFor(x => x.National).NotEmpty().WithMessage("Address is required");
             RuleFor(x => x.Name).NotEmpty().WithMessage("Address is required");
-            
         }
     }
 }

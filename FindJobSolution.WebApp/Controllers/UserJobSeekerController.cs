@@ -22,5 +22,10 @@ namespace FindJobSolution.WebApp.Controllers
 
         //    var result = await
         //}
+
+        public IActionResult UserProfile()
+        {
+            return View();
+        }
     }
 }

@@ -49,6 +49,7 @@ namespace FindJobSolution.API.Controllers
 
         //http://localhost:5000/api/user/paging?pageIndex=1&pageSize=10&keyword=
         [HttpGet("paging")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUsersPaging([FromQuery] GetUserPagingRequest request)
         {
             var users = await _UserService.GetUsersPaging(request);
