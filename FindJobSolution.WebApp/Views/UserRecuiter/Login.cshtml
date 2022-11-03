@@ -1,0 +1,68 @@
+﻿@model FindJobSolution.Data.Entities.User
+
+@{
+    ViewData["Title"] = "LoginRecuiter";
+    Layout = "_Layout2";
+}
+
+<form method="post" asp-action="LoginEmployer">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="grid--flexbox">
+        <div class="grid--35 min-height--100vh text-align--center" style="background:#010b1d">
+            <div class="container--sidebar" style="min-height:80vh; position: relative;top: 50%; transform: translateY(-50%);">
+                <a href="~/UserEmp/Index">
+                    <img src="../assets/img/logo/logo_footer.png" />
+                </a>
+                <div>
+                    <div class="container-slide" style="width:100% ; display: inline-block height: 70vh;align-items: center;justify-content: center; width: 100%; display: grid !important;">
+                        <img src="../assets/img/hero/employer.jpg" style="width:100%" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="grid--65 grid--relative">
+            <div class="width-percent--60 form-register-content margin--auto">
+                <div class="col-12">
+                    <h2 class="contact-title text-center">Đăng nhập</h2>
+                </div>
+                <div class="col-lg-6 mx-auto">
+                    <div class="form-contact contact_form">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input asp-for="Email" class="form-control" type="email" name="Email" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Mật khẩu</label>
+                                    <input asp-for="PasswordHash" class="form-control" type="password" name="Password" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <input type="submit" value="Đăng nhập" class="button button-contactForm boxed-btn mr-4" />
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container-info-bottom">
+                <p class="px--30 py--20">
+                    <lable style="font-family: Barlow">Chưa có tài khoản? </lable><span class="clicklink"><a href="~/Home/RegisterEmployer">Đăng ký</a></span>
+                </p>
+            </div>
+        </div>
+    </div>
+    @Html.Raw(TempData["msg"])
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
