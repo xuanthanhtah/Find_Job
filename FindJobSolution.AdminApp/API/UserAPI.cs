@@ -1,8 +1,7 @@
-﻿using FindJobSolution.Data.Entities;
+﻿using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
 using System.Text;
 
 namespace FindJobSolution.AdminApp.Service

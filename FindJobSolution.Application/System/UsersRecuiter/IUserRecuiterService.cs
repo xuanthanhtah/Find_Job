@@ -1,4 +1,4 @@
-﻿
+﻿using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.UsersRecruiter;
 
 namespace FindJobSolution.Application.System.UsersRecuiter

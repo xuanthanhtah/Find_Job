@@ -10,7 +10,5 @@ namespace FindJobSolution.ViewModels.Catalog.ApplyJob
     public class GetApplyJobPagingRequest : PagingRequestBase
     {
         public string keyword { get; set; }
-        public List<int> JobSeekerId { get; set; }
-        public List<int> JobInformationId { get; set; }
     }
 }

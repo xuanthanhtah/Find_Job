@@ -11,7 +11,7 @@
     "FindJobSolution.API": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": false,
+      "launchBrowser": true,
       "launchUrl": "swagger",
       "applicationUrl": "https://localhost:2001",
       "environmentVariables": {

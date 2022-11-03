@@ -1,7 +1,10 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
+using FindJobSolution.ViewModels.Common;
+using FindJobSolution.ViewModels.System.User;
 using FindJobSolution.ViewModels.System.UsersJobSeeker;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -56,8 +59,18 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public async Task<bool> Register(RegisterRequest request)
+        public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
+            var userid = await _userManager.FindByNameAsync(request.UserName);
+            if (userid != null)
+            {
+                return new ApiErrorResult<bool>("Tài khoản đã tồn tại");
+            }
+
+            if (await _userManager.FindByEmailAsync(request.Email) != null)
+            {
+                return new ApiErrorResult<bool>("Emai đã tồn tại");
+            }
             var user = new User()
             {
                 UserName = request.UserName,
@@ -77,9 +90,9 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
 
             if (result.Succeeded)
             {
-                return true;
+                return new ApiSuccessResult<bool>();
             }
-            return false;
+            return new ApiErrorResult<bool>("Đăng ký không thành công");
         }
     }
 }
