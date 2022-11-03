@@ -9,7 +9,7 @@ namespace FindJobSolution.ViewModels.Catalog.JobSeekerOldCompany
 {
     public class JobSeekerOldCompanyViewmodelPagingRequest : PagingRequestBase
     {
-        public string keyword { get; set; }
+        public string? keyword { get; set; }
         public List<int> JobSeekerOldCompanyId { get; set; }
     }
 }

@@ -7,8 +7,84 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\assets\assets\**" />
+    <Content Remove="wwwroot\assets\assets\**" />
+    <EmbeddedResource Remove="wwwroot\assets\assets\**" />
+    <None Remove="wwwroot\assets\assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\assets\fonts\fa-brands-400.svg" />
+    <None Include="wwwroot\assets\fonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\assets\fonts\fa-regular-400.svg" />
+    <None Include="wwwroot\assets\fonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\assets\fonts\fa-solid-900.svg" />
+    <None Include="wwwroot\assets\fonts\fa-solid-900.woff2" />
+    <None Include="wwwroot\assets\fonts\Flaticon.svg" />
+    <None Include="wwwroot\assets\fonts\Flaticon.woff2" />
+    <None Include="wwwroot\assets\fonts\themify.svg" />
+    <None Include="wwwroot\assets\fonts\_flaticon.scss" />
+    <None Include="wwwroot\assets\img\adapt_icon\1.svg" />
+    <None Include="wwwroot\assets\js\animated.headline.js" />
+    <None Include="wwwroot\assets\js\bootstrap.min.js" />
+    <None Include="wwwroot\assets\js\contact.js" />
+    <None Include="wwwroot\assets\js\jquery.ajaxchimp.min.js" />
+    <None Include="wwwroot\assets\js\jquery.form.js" />
+    <None Include="wwwroot\assets\js\jquery.magnific-popup.js" />
+    <None Include="wwwroot\assets\js\jquery.nice-select.min.js" />
+    <None Include="wwwroot\assets\js\jquery.paroller.min.js" />
+    <None Include="wwwroot\assets\js\jquery.scrollUp.min.js" />
+    <None Include="wwwroot\assets\js\jquery.slicknav.min.js" />
+    <None Include="wwwroot\assets\js\jquery.sticky.js" />
+    <None Include="wwwroot\assets\js\jquery.validate.min.js" />
+    <None Include="wwwroot\assets\js\mail-script.js" />
+    <None Include="wwwroot\assets\js\main.js" />
+    <None Include="wwwroot\assets\js\one-page-nav-min.js" />
+    <None Include="wwwroot\assets\js\owl.carousel.min.js" />
+    <None Include="wwwroot\assets\js\plugins.js" />
+    <None Include="wwwroot\assets\js\popper.min.js" />
+    <None Include="wwwroot\assets\js\price_rangs.js" />
+    <None Include="wwwroot\assets\js\slick.min.js" />
+    <None Include="wwwroot\assets\js\vendor\jquery-1.12.4.min.js" />
+    <None Include="wwwroot\assets\js\vendor\modernizr-3.5.0.min.js" />
+    <None Include="wwwroot\assets\js\wow.min.js" />
+    <None Include="wwwroot\assets\scss\style.scss" />
+    <None Include="wwwroot\assets\scss\_apply-proces.scss" />
+    <None Include="wwwroot\assets\scss\_blog.scss" />
+    <None Include="wwwroot\assets\scss\_blog_page.scss" />
+    <None Include="wwwroot\assets\scss\_bradcam.scss" />
+    <None Include="wwwroot\assets\scss\_color.scss" />
+    <None Include="wwwroot\assets\scss\_common.scss" />
+    <None Include="wwwroot\assets\scss\_contact.scss" />
+    <None Include="wwwroot\assets\scss\_cv-online.scss" />
+    <None Include="wwwroot\assets\scss\_elements.scss" />
+    <None Include="wwwroot\assets\scss\_extend.scss" />
+    <None Include="wwwroot\assets\scss\_featured-Jobs.scss" />
+    <None Include="wwwroot\assets\scss\_footer.scss" />
+    <None Include="wwwroot\assets\scss\_h1-hero.scss" />
+    <None Include="wwwroot\assets\scss\_headerMenu.scss" />
+    <None Include="wwwroot\assets\scss\_job_details.scss" />
+    <None Include="wwwroot\assets\scss\_job_listing.scss" />
+    <None Include="wwwroot\assets\scss\_mixins.scss" />
+    <None Include="wwwroot\assets\scss\_overlay.scss" />
+    <None Include="wwwroot\assets\scss\_pagination.scss" />
+    <None Include="wwwroot\assets\scss\_recent.scss" />
+    <None Include="wwwroot\assets\scss\_services.scss" />
+    <None Include="wwwroot\assets\scss\_services_section.scss" />
+    <None Include="wwwroot\assets\scss\_support-company.scss" />
+    <None Include="wwwroot\assets\scss\_team.scss" />
+    <None Include="wwwroot\assets\scss\_testimonial.scss" />
+    <None Include="wwwroot\assets\scss\_variables.scss" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FindJobSolution.Data\FindJobSolution.Data.csproj" />
+    <ProjectReference Include="..\FindJobSolution.ViewModels\FindJobSolution.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

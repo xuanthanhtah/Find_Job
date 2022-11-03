@@ -27,6 +27,7 @@ namespace FindJobSolution.API.Controllers
 
         //http://localhost:port/api/job/paging/
         [HttpGet("paging")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllPaging([FromQuery] GetJobPagingRequest request)
         {
             var job = await _jobService.GetAllPaging(request);
@@ -35,6 +36,7 @@ namespace FindJobSolution.API.Controllers
 
         //http://localhost:port/api/job/1
         [HttpGet("{JobId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int JobId)
         {
             var job = await _jobService.GetbyId(JobId);
@@ -79,7 +81,7 @@ namespace FindJobSolution.API.Controllers
         [HttpDelete("{JobId}")]
         public async Task<IActionResult> Delete(int JobId)
         {
-            var result = await _jobService.Detele(JobId);
+            var result = await _jobService.Delete(JobId);
             if (result == 0)
             {
                 return BadRequest();

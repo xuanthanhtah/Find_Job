@@ -9,7 +9,7 @@ namespace FindJobSolution.ViewModels.Catalog.Recruiters
 {
     public class GetRecuiterPagingRequest : PagingRequestBase
     {
-        public string keyword { get; set; }
+        public string? keyword { get; set; }
         public List<int> recuiterIds { get; set; }
     }
 }

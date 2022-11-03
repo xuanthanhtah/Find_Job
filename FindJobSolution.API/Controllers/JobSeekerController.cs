@@ -1,12 +1,14 @@
 ﻿using FindJobSolution.Application.Catalog;
 using FindJobSolution.ViewModels.Catalog.Cvs;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class JobSeekerController : ControllerBase
     {
         private readonly IJobSeekerService _IJobSeekerService;

@@ -6,7 +6,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
     {
         Task<string> Authenticate(LoginRequest request);
 
-        Task<bool> Register(RegisterRequest request);
+        Task<bool> Register(RegisterRequest request);   
     }
 }
 
