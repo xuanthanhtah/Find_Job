@@ -40,7 +40,7 @@ namespace FindJobSolution.AdminApp.Service
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer" + request.BearerToken);
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer" + request.BearerToken);
 
             var response = await client.GetAsync($"/api/User/paging?PageIndex=" +
                 $"{request.PageIndex}&PageSize={request.PageSize}&keyword={request.keyword}");
