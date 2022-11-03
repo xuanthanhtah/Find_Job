@@ -6,12 +6,15 @@ using FindJobSolution.Application.System.UsersRecuiter;
 using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Constants;
+using FindJobSolution.ViewModels.Catalog.ApplyJob;
 using FindJobSolution.ViewModels.Catalog.Cvs;
 using FindJobSolution.ViewModels.Catalog.JobInformations;
 using FindJobSolution.ViewModels.Catalog.Jobs;
 using FindJobSolution.ViewModels.Catalog.JobSeekerOldCompany;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Catalog.Recruiters;
+using FindJobSolution.ViewModels.Catalog.RecuiterImages;
+using FindJobSolution.ViewModels.Catalog.SaveJob;
 using FindJobSolution.ViewModels.Catalog.Skills;
 using FindJobSolution.ViewModels.System.UsersJobSeeker;
 using FindJobSolution.ViewModels.System.UsersRecruiter;
@@ -85,6 +88,18 @@ builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidator
 //Skill
 builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<SkillCreateRequestValidator>());
 builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<SkillUpdateRequestValidator>());
+
+//ApplyJob
+builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ApplyJobCreateRequestValidator>());
+builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ApplyJobUpdateRequestValidator>());
+
+//savejob
+builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<SavejobCreateRequestValidator>());
+builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<SaveJobUpdateRequestValidator>());
+
+//RecruiterImage
+builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ImageCreateRequestValidator>());
+builder.Services.AddControllers().AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ImageUpdateRequestValidator>());
 
 builder.Services.AddSwaggerGen(c =>
 {
