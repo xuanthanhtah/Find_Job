@@ -1,4 +1,4 @@
-    using FindJobSolution.AdminApp.Service;
+using FindJobSolution.AdminApp.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +22,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/User/Login/";
+        options.LoginPath = "/Login/Index";
         options.AccessDeniedPath = "/User/Forbidden/";
     });
 
