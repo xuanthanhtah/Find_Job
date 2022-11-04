@@ -44,7 +44,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] RecruiterUpdateRequest request)
+        public async Task<IActionResult> Update([FromForm] RecruiterUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {

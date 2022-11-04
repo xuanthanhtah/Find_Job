@@ -1,5 +1,7 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
+using FindJobSolution.Utilities.Exceptions;
+using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.UsersRecruiter;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -58,6 +60,16 @@ namespace FindJobSolution.Application.System.UsersRecuiter
 
         public async Task<bool> Register(RegisterRecuiterRequest request)
         {
+            var userid = await _userManager.FindByNameAsync(request.UserName);
+            if (userid != null)
+            {
+                throw new FindJobException("Tài khoản đã tồn tại");
+            }
+
+            if (await _userManager.FindByEmailAsync(request.Email) != null)
+            {
+                throw new FindJobException("Emai đã tồn tại");
+            }
             var user = new User()
             {
                 UserName = request.UserName,
@@ -74,11 +86,11 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             await _context.AddAsync(recruiter);
             await _context.SaveChangesAsync();
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
     }
 }

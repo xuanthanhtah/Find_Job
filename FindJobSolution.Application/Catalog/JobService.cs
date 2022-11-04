@@ -12,7 +12,9 @@ namespace FindJobSolution.Application.Catalog
         Task<int> Create(JobCreateRequest request);
 
         Task<int> Update(JobUpdateRequest request);
+
         Task<int> Delete(int JobId);
+
         Task<PagedResult<JobViewModel>> GetAllPaging(GetJobPagingRequest request);
 
         Task<List<JobViewModel>> GetAll();
@@ -74,11 +76,6 @@ namespace FindJobSolution.Application.Catalog
             //Kiểm tra có nhập vào không
             if (!string.IsNullOrEmpty(request.keyword))
                 query = query.Where(x => x.j.JobName.Contains(request.keyword));
-
-            if (request.jobIds.Count > 0)
-            {
-                query = query.Where(x => request.jobIds.Contains(x.j.JobId));
-            }
 
             //phân trang
 

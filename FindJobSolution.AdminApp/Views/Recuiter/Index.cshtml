@@ -1,0 +1,81 @@
+﻿@using FindJobSolution.ViewModels.Common
+@model PagedResult<FindJobSolution.ViewModels.Catalog.Recruiters.RecruiterVM>
+
+@{
+    ViewData["Title"] = "Danh sách người tuyển dụng";
+    Layout = "~/Views/Shared/_Layout.cshtml";}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Danh sách nhà tuyển dụng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách người tìm việc</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo người dùng mới</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                @*<p>
+                    <a asp-action="Create">Tạo nhà tuyển dụng mới</a>
+                </p>*@
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                CompanyName
+                            </th>
+                            <th>
+                                Address
+                            </th>
+                            <th>
+                                CompanyIntroduction
+                            </th>
+                            @*<th>
+                                ViewCount
+                            </th>*@
+                            <th>
+                                ThumbnailCv
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(Model.Items != null) {
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CompanyIntroduction)
+                                    </td>
+                                    @*<td>
+                                        @Html.DisplayFor(modelItem => item.ViewCount)
+                                    </td>*@
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ThumbnailCv)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>
