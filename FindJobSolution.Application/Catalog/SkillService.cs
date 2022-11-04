@@ -9,7 +9,7 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface ISkillService
     {
-        Task<int> Create(SkillCreateRequest request);
+        Task<bool> Create(SkillCreateRequest request);
 
         Task<int> Update(SkillUpdateRequest request);
 
@@ -31,17 +31,16 @@ namespace FindJobSolution.Application.Catalog
             _context = context;
         }
 
-        public async Task<int> Create(SkillCreateRequest request)
+        public async Task<bool> Create(SkillCreateRequest request)
         {
-            var skill = new Skill()
+            var Skill = new Skill()
             {
                 Name = request.Name,
                 Experience = request.Experience,
             };
-
-            _context.Skills.Add(skill);
+            _context.Skills.Add(Skill);
             await _context.SaveChangesAsync();
-            return skill.SkillId;
+            return true;
         }
 
         public async Task<int> Detele(int SkillId)
@@ -75,11 +74,6 @@ namespace FindJobSolution.Application.Catalog
             if (!string.IsNullOrEmpty(request.keyword))
                 query = query.Where(x => x.j.Name.Contains(request.keyword));
 
-            if (request.skillIds.Count > 0)
-            {
-                query = query.Where(x => request.skillIds.Contains(x.j.SkillId));
-            }
-
             //phân trang
 
             int totalRow = await query.CountAsync();
@@ -88,6 +82,7 @@ namespace FindJobSolution.Application.Catalog
                 .Take(request.PageSize)
                 .Select(p => new SkillViewModel()
                 {
+                    Id = p.j.SkillId,
                     Name = p.j.Name,
                     Experience = p.j.Experience
                 }).ToListAsync();

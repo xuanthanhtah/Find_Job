@@ -1,0 +1,64 @@
+﻿@using FindJobSolution.ViewModels.Common
+@model PagedResult<FindJobSolution.ViewModels.Catalog.Skills.SkillViewModel>
+
+@{
+    ViewData["Title"] = "Kỹ năng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Danh sách kỹ năng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách kỹ năng</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Create" asp-controller="skill">Tạo kỹ năng mới</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Trình độ
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Experience)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                                    @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>
+
+
