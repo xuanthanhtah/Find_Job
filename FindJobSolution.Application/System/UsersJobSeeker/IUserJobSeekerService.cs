@@ -1,4 +1,6 @@
-﻿using FindJobSolution.ViewModels.System.UsersJobSeeker;
+﻿using FindJobSolution.ViewModels.Common;
+using FindJobSolution.ViewModels.System.User;
+using FindJobSolution.ViewModels.System.UsersJobSeeker;
 
 namespace FindJobSolution.Application.System.UsersJobSeeker
 {
@@ -6,7 +8,6 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
     {
         Task<string> Authenticate(LoginRequest request);
 
-        Task<bool> Register(RegisterRequest request);   
+        Task<ApiResult<bool>> Register(RegisterRequest request);
     }
 }
-

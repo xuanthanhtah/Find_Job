@@ -4,7 +4,6 @@
     {
         public int jobseekerId { get; set; }
         public int JobId { get; set; }
-
         public string Address { get; set; }
         public string Gender { get; set; }
         public string Name { get; set; }

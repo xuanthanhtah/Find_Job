@@ -42,9 +42,9 @@ namespace FindJobSolution.API.Controllers
             var result = await _UserService.Register(request);
             if (!result)
             {
-                return BadRequest("Register is unsuccessful.");
+                return BadRequest(result);
             }
-            return Ok();
+            return Ok(result);
         }
 
         //http://localhost:5000/api/user/paging?pageIndex=1&pageSize=10&keyword=

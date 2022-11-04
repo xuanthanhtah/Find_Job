@@ -3,17 +3,11 @@ using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Http;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace FindJobSolution.AdminApp.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private readonly IUserAPI _userAPI;
         private readonly IConfiguration _configuration;
@@ -26,10 +20,8 @@ namespace FindJobSolution.AdminApp.Controllers
 
         public async Task<IActionResult> Index(string keyWord, int pageIndex = 1, int pageSize = 10)
         {
-            //var sessions = HttpContext.Session.GetString("Token");
             var request = new GetUserPagingRequest()
             {
-                //BearerToken = sessions,
                 keyword = keyWord,
                 PageIndex = pageIndex,
                 PageSize = pageSize
@@ -39,40 +31,25 @@ namespace FindJobSolution.AdminApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Login()
+        public IActionResult Create()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(UserLoginRequest request)
+        public async Task<IActionResult> Create(UserRegisterRequest request)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return View(new UserLoginRequest());
+                return View();
             }
-
-            var token = await _userAPI.Authencate(request);
-            //if (token == null)
-            //{
-            //    ModelState.AddModelError("", token);
-            //    return View();
-            //}
-            var userPrincipal = this.ValidateToken(token);
-
-            var authProperties = new AuthenticationProperties
+            var result = await _userAPI.Register(request);
+            if (result)
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
-                IsPersistent = true
-            };
-            HttpContext.Session.SetString("Token", token);
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                userPrincipal,
-                authProperties);
-
-            return RedirectToAction("Index", "Home");
+                TempData["result"] = "Create user successfully";
+                return RedirectToAction("Index");
+            }
+            return View(request);
         }
 
         [HttpPost]
@@ -80,26 +57,7 @@ namespace FindJobSolution.AdminApp.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove("Token");
-            return RedirectToAction("Login", "User");
-        }
-
-        private ClaimsPrincipal ValidateToken(string jwtToken)
-        {
-            IdentityModelEventSource.ShowPII = true;
-
-            SecurityToken validatedToken;
-            TokenValidationParameters validationParameters = new TokenValidationParameters();
-
-            validationParameters.ValidateLifetime = true;
-
-            validationParameters.ValidAudience = _configuration["Tokens:Issuer"];
-            validationParameters.ValidIssuer = _configuration["Tokens:Issuer"];
-
-            validationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
-
-            ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out validatedToken);
-
-            return principal;
+            return RedirectToAction("index", "Login");
         }
     }
 }
