@@ -30,8 +30,8 @@ namespace FindJobSolution.Application.Catalog
 
         Task<PagedResult<JobSeekerOldCompanyViewmodel>> GetAllPaging(JobSeekerOldCompanyViewmodelPagingRequest request);
     }
-
 }
+
 public class JobSeekerOldCompanyService : IJobSeekerOldCompanyService
 {
     private readonly FindJobDBContext _context;
@@ -40,6 +40,7 @@ public class JobSeekerOldCompanyService : IJobSeekerOldCompanyService
     {
         _context = context;
     }
+
     public async Task<int> Create(JobSeekerOldCompanyCreateRequest request)
     {
         var JobSeekerOldCompany = new JobSeekerOldCompany()
@@ -71,25 +72,22 @@ public class JobSeekerOldCompanyService : IJobSeekerOldCompanyService
         return await query
            .Select(p => new JobSeekerOldCompanyViewmodel()
            {
-                CompanyName = p.j.CompanyName,
-                JobSeekerId=p.j.JobSeekerId,
-                WorkExperience = p.j.WorkExperience,
-                WorkingTime = p.j.WorkingTime,
-                JobTitle = p.j.JobTitle,
-                JobSeekerOldCompanyId = p.j.JobSeekerOldCompanyId,
+               CompanyName = p.j.CompanyName,
+               JobSeekerId = p.j.JobSeekerId,
+               WorkExperience = p.j.WorkExperience,
+               WorkingTime = p.j.WorkingTime,
+               JobTitle = p.j.JobTitle,
+               JobSeekerOldCompanyId = p.j.JobSeekerOldCompanyId,
            }).ToListAsync();
-
     }
 
-    
     public async Task<PagedResult<JobSeekerOldCompanyViewmodel>> GetAllPaging(JobSeekerOldCompanyViewmodelPagingRequest request)
     {
-        var query = from j in _context.JobSeekerOldCompanies select new {j};
+        var query = from j in _context.JobSeekerOldCompanies select new { j };
 
         //Kiểm tra có nhập vào không
         if (!string.IsNullOrEmpty(request.keyword))
             query = query.Where(x => x.j.JobTitle.Contains(request.keyword));
-
 
         //phân trang
 
@@ -99,18 +97,20 @@ public class JobSeekerOldCompanyService : IJobSeekerOldCompanyService
             .Take(request.PageSize)
             .Select(p => new JobSeekerOldCompanyViewmodel()
             {
-                CompanyName=p.j.CompanyName,
-                JobTitle=p.j.JobTitle, 
-                WorkExperience=p.j.WorkExperience,
-                JobSeekerOldCompanyId=p.j.JobSeekerOldCompanyId,
-                WorkingTime=p.j.WorkingTime,
+                CompanyName = p.j.CompanyName,
+                JobTitle = p.j.JobTitle,
+                WorkExperience = p.j.WorkExperience,
+                JobSeekerOldCompanyId = p.j.JobSeekerOldCompanyId,
+                WorkingTime = p.j.WorkingTime,
                 JobSeekerId = p.j.JobSeekerId
             }).ToListAsync();
 
-        // in ra 
+        // in ra
         var pagedResult = new PagedResult<JobSeekerOldCompanyViewmodel>()
         {
-            TotalRecord = totalRow,
+            TotalRecords = totalRow,
+            PageIndex = request.PageIndex,
+            PageSize = request.PageSize,
             Items = data
         };
 
@@ -123,10 +123,10 @@ public class JobSeekerOldCompanyService : IJobSeekerOldCompanyService
         if (job == null) { throw new FindJobException($"cannot find a job: {JobSeekerOldCompanyId}"); }
         var JobSeekerOldCompanyItem = new JobSeekerOldCompanyViewmodel()
         {
-           JobSeekerOldCompanyId = job.JobSeekerOldCompanyId,
-            JobSeekerId=job.JobSeekerId,
-            JobTitle=job.JobTitle,
-            WorkingTime=job.WorkingTime,
+            JobSeekerOldCompanyId = job.JobSeekerOldCompanyId,
+            JobSeekerId = job.JobSeekerId,
+            JobTitle = job.JobTitle,
+            WorkingTime = job.WorkingTime,
             WorkExperience = job.WorkExperience,
             CompanyName = job.CompanyName,
         };
@@ -146,5 +146,3 @@ public class JobSeekerOldCompanyService : IJobSeekerOldCompanyService
         return await _context.SaveChangesAsync();
     }
 }
-
-

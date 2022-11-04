@@ -152,7 +152,9 @@ namespace FindJobSolution.Application.Catalog
             // in ra
             var pagedResult = new PagedResult<JobSeekerViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data
             };
 
@@ -170,6 +172,7 @@ namespace FindJobSolution.Application.Catalog
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {JobSeekerId}"); }
             var jobItem = new JobSeekerViewModel()
             {
+                jobseekerId = jobSeeker.JobSeekerId,
                 JobId = jobSeeker.JobId,
                 Address = jobSeeker.Address,
                 Gender = jobSeeker.Gender,
@@ -252,7 +255,6 @@ namespace FindJobSolution.Application.Catalog
                     {
                         new Cv()
                         {
-                            
                             Caption = request.nameCv,
                             Timespan = DateTime.Now,
                             FileSize = request.ThumbnailCv.Length,
@@ -278,12 +280,12 @@ namespace FindJobSolution.Application.Catalog
                 {
                     JobSeeker.Avatar = new Avatar()
                     {
-                            Caption = request.nameAvatar,
-                            Timespan = DateTime.Now,
-                            FileSize = request.ThumbnailAvatar.Length,
-                            FilePath = await this.SaveFile(request.ThumbnailAvatar),
-                            IsDefault = true,
-                            SortOrder = 1,
+                        Caption = request.nameAvatar,
+                        Timespan = DateTime.Now,
+                        FileSize = request.ThumbnailAvatar.Length,
+                        FilePath = await this.SaveFile(request.ThumbnailAvatar),
+                        IsDefault = true,
+                        SortOrder = 1,
                     };
                     _context.Avatars.AddRange(JobSeeker.Avatar);
                 }

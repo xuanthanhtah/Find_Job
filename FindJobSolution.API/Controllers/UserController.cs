@@ -55,5 +55,25 @@ namespace FindJobSolution.API.Controllers
             var users = await _UserService.GetUsersPaging(request);
             return Ok(users);
         }
+
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var user = await _UserService.GetById(id);
+            return Ok(user);
+        }
+
+        [HttpDelete("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _UserService.Delete(id);
+            if (result)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
     }
 }

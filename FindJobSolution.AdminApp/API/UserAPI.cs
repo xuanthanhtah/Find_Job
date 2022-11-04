@@ -1,7 +1,7 @@
-﻿using FindJobSolution.ViewModels.Catalog.JobSeekers;
-using FindJobSolution.ViewModels.Common;
+﻿using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace FindJobSolution.AdminApp.Service
@@ -13,6 +13,10 @@ namespace FindJobSolution.AdminApp.Service
         Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request);
 
         Task<bool> Register(UserRegisterRequest request);
+
+        Task<UserViewModel> GetById(Guid id);
+
+        Task<bool> Delete(Guid id);
     }
 
     public class UserAPI : IUserAPI
@@ -36,6 +40,32 @@ namespace FindJobSolution.AdminApp.Service
             var response = await client.PostAsync("/api/User/authenticate", httpContent);
             var token = await response.Content.ReadAsStringAsync();
             return token;
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            //var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var response = await client.DeleteAsync($"/api/user/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<bool>(body);
+            return user;
+        }
+
+        public async Task<UserViewModel> GetById(Guid id)
+        {
+            //var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var response = await client.GetAsync($"/api/user/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<UserViewModel>(body);
+            return user;
         }
 
         public async Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request)

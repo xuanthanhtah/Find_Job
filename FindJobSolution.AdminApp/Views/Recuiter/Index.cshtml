@@ -9,13 +9,13 @@
     <h1 class="mt-4">Danh sách nhà tuyển dụng</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Danh sách người tìm việc</li>
+        <li class="breadcrumb-item active">Danh sách nhà tuyển dụng</li>
     </ol>
 
     <div class="card mb-4">
-        <div class="card-header">
+        @*<div class="card-header">
             <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo người dùng mới</a>
-        </div>
+        </div>*@
         <div class="card-body">
             <div class="table-responsive">
                 @*<p>
@@ -25,19 +25,13 @@
                     <thead>
                         <tr>
                             <th>
-                                CompanyName
+                            Id
                             </th>
                             <th>
-                                Address
+                                Tên công ty
                             </th>
                             <th>
-                                CompanyIntroduction
-                            </th>
-                            @*<th>
-                                ViewCount
-                            </th>*@
-                            <th>
-                                ThumbnailCv
+                                Địa chỉ
                             </th>
                             <th></th>
                         </tr>
@@ -48,24 +42,17 @@
                             {
                                 <tr>
                                     <td>
+                                        @Html.DisplayFor(modelItem => item.RecruiterId)
+                                    </td>
+                                    <td>
                                         @Html.DisplayFor(modelItem => item.CompanyName)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Address)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.CompanyIntroduction)
-                                    </td>
-                                    @*<td>
-                                        @Html.DisplayFor(modelItem => item.ViewCount)
-                                    </td>*@
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.ThumbnailCv)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                        @Html.ActionLink("Chi tiết", "Details", new { id= item.RecruiterId }) |
+                                        @Html.ActionLink("Delete", "Delete", new {  id= item.RecruiterId  })
                                     </td>
                                 </tr>
                             }
@@ -76,6 +63,7 @@
 
 
             </div>
+            @await Component.InvokeAsync("Pager", Model)
         </div>
     </div>
 </div>
