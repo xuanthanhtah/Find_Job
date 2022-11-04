@@ -10,16 +10,22 @@ namespace FindJobSolution.Application.Catalog
     public interface ISkillService
     {
         Task<int> Create(SkillCreateRequest request);
+
         Task<int> Update(SkillUpdateRequest request);
+
         Task<int> Detele(int SkillId);
 
         Task<PagedResult<SkillViewModel>> GetAllPaging(GetSkillPagingRequest request);
+
         Task<List<SkillViewModel>> GetAll();
+
         Task<SkillViewModel> GetbyId(int SkillId);
     }
+
     public class SkillService : ISkillService
     {
         private readonly FindJobDBContext _context;
+
         public SkillService(FindJobDBContext context)
         {
             _context = context;
@@ -58,7 +64,6 @@ namespace FindJobSolution.Application.Catalog
                    Name = p.j.Name,
                    Experience = p.j.Experience,
                }).ToListAsync();
-
         }
 
         public async Task<PagedResult<SkillViewModel>> GetAllPaging(GetSkillPagingRequest request)
@@ -69,7 +74,6 @@ namespace FindJobSolution.Application.Catalog
             //Kiểm tra có nhập vào không
             if (!string.IsNullOrEmpty(request.keyword))
                 query = query.Where(x => x.j.Name.Contains(request.keyword));
-
 
             if (request.skillIds.Count > 0)
             {
@@ -88,10 +92,12 @@ namespace FindJobSolution.Application.Catalog
                     Experience = p.j.Experience
                 }).ToListAsync();
 
-            // in ra 
+            // in ra
             var pagedResult = new PagedResult<SkillViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data
             };
 

@@ -162,7 +162,9 @@ namespace FindJobSolution.Application.Catalog
             // in ra
             var pagedResult = new PagedResult<JobInformationViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
                 Items = data
             };
 

@@ -117,6 +117,7 @@ public class RecruiterService : IRecruiterService
                     join i in _context.RecruiterImages on j.RecruiterId equals i.RecruiterId
                     select new
                     {
+                        RecruiterId = j.RecruiterId,
                         CompanyName = j.CompanyName,
                         Address = j.Address,
                         CompanyIntroduction = j.CompanyIntroduction,
@@ -135,6 +136,7 @@ public class RecruiterService : IRecruiterService
             .Take(request.PageSize)
             .Select(p => new RecruiterVM()
             {
+                RecruiterId = p.RecruiterId,
                 CompanyName = p.CompanyName,
                 Address = p.Address,
                 CompanyIntroduction = p.CompanyIntroduction,
@@ -145,7 +147,9 @@ public class RecruiterService : IRecruiterService
         // in ra
         var pagedResult = new PagedResult<RecruiterVM>()
         {
-            TotalRecord = totalRow,
+            TotalRecords = totalRow,
+            PageIndex = request.PageIndex,
+            PageSize = request.PageSize,
             Items = data
         };
 
@@ -163,6 +167,7 @@ public class RecruiterService : IRecruiterService
         if (recruiters == null) { throw new FindJobException($"cannot find a recruiters: {recruiters}"); }
         var jobItem = new RecruiterVM()
         {
+            RecruiterId = recruiters.RecruiterId,
             CompanyName = recruiters.CompanyName,
             Address = recruiters.Address,
             CompanyIntroduction = recruiters.CompanyIntroduction,

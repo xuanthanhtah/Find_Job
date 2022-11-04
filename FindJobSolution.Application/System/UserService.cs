@@ -20,6 +20,10 @@ namespace FindJobSolution.Application.System
         Task<bool> Register(UserRegisterRequest request);
 
         Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request);
+
+        Task<UserViewModel> GetById(Guid id);
+
+        Task<bool> Delete(Guid id);
     }
 
     public class UserService : IUserService
@@ -69,6 +73,33 @@ namespace FindJobSolution.Application.System
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public async Task<UserViewModel> GetById(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                throw new FindJobException("User không tồn tại");
+            }
+            var userVm = new UserViewModel()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName
+            };
+            return (userVm);
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                throw new FindJobException("User không tồn tại");
+            }
+            var result = await _userManager.DeleteAsync(user);
+            return result.Succeeded;
+        }
+
         public async Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request)
         {
             var query = _userManager.Users;
@@ -91,7 +122,9 @@ namespace FindJobSolution.Application.System
             // in ra
             var pagedResult = new PagedResult<UserViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
                 Items = data
             };
 

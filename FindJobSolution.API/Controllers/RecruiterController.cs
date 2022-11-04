@@ -8,7 +8,6 @@ namespace FindJobSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class RecruiterController : ControllerBase
     {
         private readonly IRecruiterService _recruiterService;
@@ -35,6 +34,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpGet("{RecruiterId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int RecruiterId)
         {
             var recruiter = await _recruiterService.GetById(RecruiterId);
@@ -59,13 +59,13 @@ namespace FindJobSolution.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = result }, recruiter);
         }
 
-        [HttpDelete]
+        [HttpDelete("{RecruiterId}")]
         public async Task<IActionResult> Delete(int RecruiterId)
         {
             var result = await _recruiterService.Delete(RecruiterId);
             if (result == 0)
                 return BadRequest();
-            return Ok();
+            return Ok("1");
         }
 
         [HttpPost("image/{RecruiterId}")]

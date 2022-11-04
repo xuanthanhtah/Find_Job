@@ -8,7 +8,6 @@ namespace FindJobSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class JobSeekerController : ControllerBase
     {
         private readonly IJobSeekerService _IJobSeekerService;
@@ -34,6 +33,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpGet("{JobSeekerId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int JobSeekerId)
         {
             var jobSeeker = await _IJobSeekerService.GetbyId(JobSeekerId);
@@ -57,7 +57,7 @@ namespace FindJobSolution.API.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{JobSeekerId}")]
         public async Task<IActionResult> Delete(int JobSeekerId)
         {
             var result = await _IJobSeekerService.Delete(JobSeekerId);
@@ -65,7 +65,7 @@ namespace FindJobSolution.API.Controllers
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok("1");
         }
 
         [HttpPost("cv/{JobSeekerId}")]
