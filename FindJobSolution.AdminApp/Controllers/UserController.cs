@@ -3,7 +3,6 @@ using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
 
 namespace FindJobSolution.AdminApp.Controllers
 {
