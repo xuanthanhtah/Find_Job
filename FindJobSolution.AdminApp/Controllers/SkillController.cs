@@ -1,5 +1,5 @@
 ﻿using FindJobSolution.AdminApp.API;
-using FindJobSolution.ViewModels.Catalog.JobSeekers;
+using FindJobSolution.ViewModels.Catalog.Skills;
 using FindJobSolution.ViewModels.System.User;
 using FindJobSolution.ViewModels.System.UsersJobSeeker;
 using Microsoft.AspNetCore.Authorization;
@@ -8,53 +8,68 @@ using Microsoft.AspNetCore.Mvc;
 namespace FindJobSolution.AdminApp.Controllers
 {
     [Authorize]
-    public class JobSeekerController : Controller
+    public class SkillController : Controller
     {
-        private readonly IJobSeekerAPI _jobSeekerAPI;
+        private readonly ISkillAPI _SkillAPI;
         private readonly IConfiguration _configuration;
 
-        public JobSeekerController(IJobSeekerAPI jobSeekerAPI, IConfiguration configuration)
+        public SkillController(ISkillAPI SkillAPI, IConfiguration configuration)
         {
-            _jobSeekerAPI = jobSeekerAPI;
+            _SkillAPI = SkillAPI;
             _configuration = configuration;
         }
 
         public async Task<IActionResult> Index(string keyWord, int pageIndex = 1, int pageSize = 5)
         {
-            var request = new GetJobSeekerPagingRequest()
+            var request = new GetSkillPagingRequest()
             {
                 keyword = keyWord,
                 PageIndex = pageIndex,
                 PageSize = pageSize
             };
-            var data = await _jobSeekerAPI.GetAllPagingJobSeeker(request);
+            var data = await _SkillAPI.GetAllPaging(request);
             return View(data);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Create()
         {
-            var result = await _jobSeekerAPI.GetById(id);
-            return View(result);
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(SkillCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _SkillAPI.Create(request);
+            if (result)
+            {
+                TempData["result"] = "Create user successfully";
+                return RedirectToAction("Index");
+            }
+            return View(request);
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(new JobseekerDeleteRequest()
+            return View(new SkillDeleteRequest()
             {
                 Id = id
             });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(JobseekerDeleteRequest request)
+        public async Task<IActionResult> Delete(SkillDeleteRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            var result = await _jobSeekerAPI.Delete(request.Id);
+            var result = await _SkillAPI.Delete(request.Id);
             if (result)
             {
                 return RedirectToAction("index");

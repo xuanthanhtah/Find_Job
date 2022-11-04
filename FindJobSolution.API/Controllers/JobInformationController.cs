@@ -7,7 +7,6 @@ namespace FindJobSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class JobInformationController : ControllerBase
     {
         private readonly IJobInformationService _jobInformationService;
