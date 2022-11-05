@@ -16,12 +16,12 @@ namespace FindJobSolution.Application.System.UsersRecuiter
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<Role> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
         private readonly FindJobDBContext _context;
 
         public UserRecuiterService(UserManager<User> userManager, SignInManager<User> signInManager,
-            RoleManager<Role> roleManager, IConfiguration config, FindJobDBContext context)
+            RoleManager<AppRole> roleManager, IConfiguration config, FindJobDBContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -86,11 +86,12 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             await _context.AddAsync(recruiter);
             await _context.SaveChangesAsync();
 
-            if (!result.Succeeded)
+            if (result.Succeeded)
             {
-                return false;
+                await _userManager.AddToRoleAsync(user, "JobSeeker");
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }

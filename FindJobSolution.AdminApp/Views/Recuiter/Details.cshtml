@@ -1,0 +1,78 @@
+﻿@model FindJobSolution.ViewModels.Catalog.Recruiters.RecruiterVM
+
+@{
+    ViewData["Title"] = "Chi tiết nhà tuyển dụng";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Chi tiết người dùng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Chi tiết người dùng</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="index" asp-controller="Recuiter">Trở lại danh sách người dùng</a>
+        </div>
+        <div class="card-body">
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <dl class="row">
+                            <h1>Details</h1>
+
+                            <div>
+                                <h4>RecruiterVM</h4>
+                                <hr />
+                                <dl class="row">
+                                    <dt class="col-sm-2">
+                                        @Html.DisplayNameFor(model => model.RecruiterId)
+                                    </dt>
+                                    <dd class="col-sm-10">
+                                        @Html.DisplayFor(model => model.RecruiterId)
+                                    </dd>
+                                    <dt class="col-sm-2">
+                                        @Html.DisplayNameFor(model => model.CompanyName)
+                                    </dt>
+                                    <dd class="col-sm-10">
+                                        @Html.DisplayFor(model => model.CompanyName)
+                                    </dd>
+                                    <dt class="col-sm-2">
+                                        @Html.DisplayNameFor(model => model.Address)
+                                    </dt>
+                                    <dd class="col-sm-10">
+                                        @Html.DisplayFor(model => model.Address)
+                                    </dd>
+                                    <dt class="col-sm-2">
+                                        @Html.DisplayNameFor(model => model.CompanyIntroduction)
+                                    </dt>
+                                    <dd class="col-sm-10">
+                                        @Html.DisplayFor(model => model.CompanyIntroduction)
+                                    </dd>
+                                    <dt class="col-sm-2">
+                                        @Html.DisplayNameFor(model => model.ViewCount)
+                                    </dt>
+                                    <dd class="col-sm-10">
+                                        @Html.DisplayFor(model => model.ViewCount)
+                                    </dd>
+                                    <dt class="col-sm-2">
+                                        @Html.DisplayNameFor(model => model.ThumbnailCv)
+                                    </dt>
+                                    <dd class="col-sm-10">
+                                        @Html.DisplayFor(model => model.ThumbnailCv)
+                                    </dd>
+                                </dl>
+                            </div>
+
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

@@ -1,6 +1,7 @@
 using FindJobSolution.Application.Catalog;
 using FindJobSolution.Application.Common;
 using FindJobSolution.Application.System;
+using FindJobSolution.Application.System.Role;
 using FindJobSolution.Application.System.UsersJobSeeker;
 using FindJobSolution.Application.System.UsersRecuiter;
 using FindJobSolution.Data.EF;
@@ -29,7 +30,7 @@ var builder = WebApplication.CreateBuilder(args);
 //ConfigureServices
 builder.Services.AddDbContext<FindJobDBContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString(SystemConstants.MainConnectionString)));
-builder.Services.AddIdentity<User, Role>()
+builder.Services.AddIdentity<User, AppRole>()
     .AddEntityFrameworkStores<FindJobDBContext>()
     .AddDefaultTokenProviders();
 
@@ -44,11 +45,12 @@ builder.Services.AddTransient<ISkillService, SkillService>();
 
 builder.Services.AddTransient<UserManager<User>, UserManager<User>>();
 builder.Services.AddTransient<SignInManager<User>, SignInManager<User>>();
-builder.Services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
+builder.Services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
 
 builder.Services.AddTransient<IUserRecuiterService, UserRecuiterService>();
 builder.Services.AddTransient<IUserJobSeekerService, UserJobSeekerService>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IRoleService, RoleService>();
 
 builder.Services.AddTransient<IJobSeekerOldCompanyService, JobSeekerOldCompanyService>();
 //services.AddTransient<IValidator<LoginRequest>, LoginUserJobSeekerRequestValidator>();

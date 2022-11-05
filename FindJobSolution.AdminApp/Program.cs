@@ -12,6 +12,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IUserAPI, UserAPI>();
 builder.Services.AddTransient<IJobSeekerAPI, JobSeekerAPI>();
 builder.Services.AddTransient<IRecuiterAPI, RecuiterAPI>();
+builder.Services.AddTransient<ISkillAPI, SkillAPI>();
+builder.Services.AddTransient<IRoleApi, RoleAPI>();
+builder.Services.AddTransient<IJobAPI, JobAPI>();
 // Add services to the container.
 builder.Services.AddHttpClient();
 

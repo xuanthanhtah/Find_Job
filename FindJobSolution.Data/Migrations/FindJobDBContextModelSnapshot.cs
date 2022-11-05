@@ -71,6 +71,35 @@ namespace FindJobSolution.Data.Migrations
                     b.ToTable("ApplyJobs", (string)null);
                 });
 
+            modelBuilder.Entity("FindJobSolution.Data.Entities.AppRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
+                            ConcurrencyStamp = "e61bfed4-7fe7-41b7-97db-ea6da9abbaac",
+                            Name = "admin",
+                            NormalizedName = "admin"
+                        });
+                });
+
             modelBuilder.Entity("FindJobSolution.Data.Entities.Avatar", b =>
                 {
                     b.Property<int>("AvatarId")
@@ -421,35 +450,6 @@ namespace FindJobSolution.Data.Migrations
                     b.ToTable("RecruiterImages", (string)null);
                 });
 
-            modelBuilder.Entity("FindJobSolution.Data.Entities.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "6922b1f3-5f8a-4e3b-88fd-6139c159dc11",
-                            Name = "admin",
-                            NormalizedName = "admin"
-                        });
-                });
-
             modelBuilder.Entity("FindJobSolution.Data.Entities.SaveJob", b =>
                 {
                     b.Property<int>("JobSeekerId")
@@ -551,13 +551,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fb7c2dcf-8f08-451f-a0b4-3d00f05bffc1",
+                            ConcurrencyStamp = "4a12dd3c-305e-40a7-932e-cbb6820236bc",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJmVCaKj7RLoA5GETu3dfC+Efq8Ec9n934f/djLyMhZd8HO3a5ZDV6+jKPnsLwkG+w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEE/5gvbRJ0RkZHGPdVNO3pvOaSWjGcM6FhzjvEKEdXCgFtHVOnxE9Xonw0EN6EVrlg==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

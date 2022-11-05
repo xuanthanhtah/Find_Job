@@ -15,7 +15,7 @@ namespace FindJobSolution.Data.Extensions
         {
             var roleId = new Guid("70E7A246-E168-45E9-B78C-6F66B23F4633");
             var adminId = new Guid("D1A052BE-B2E2-4DBF-8778-DA82A7BBCB98");
-            modelBuilder.Entity<Role>().HasData(new Role
+            modelBuilder.Entity<AppRole>().HasData(new AppRole
             {
                 Id = roleId,
                 Name = "admin",

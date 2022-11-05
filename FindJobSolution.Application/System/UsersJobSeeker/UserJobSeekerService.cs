@@ -17,12 +17,12 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<Role> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
         private readonly FindJobDBContext _context;
 
         public UserJobSeekerService(UserManager<User> userManager, SignInManager<User> signInManager,
-            RoleManager<Role> roleManager, IConfiguration config, FindJobDBContext context)
+            RoleManager<AppRole> roleManager, IConfiguration config, FindJobDBContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -90,6 +90,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, "JobSeeker");
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Đăng ký không thành công");

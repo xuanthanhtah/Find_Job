@@ -7,7 +7,6 @@ namespace FindSkillSolution.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class SkillController : ControllerBase
     {
         private readonly ISkillService _skillService;
@@ -54,17 +53,15 @@ namespace FindSkillSolution.API.Controllers
                 return BadRequest(ModelState);
             }
             var result = await _skillService.Create(request);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }
-
-            var Skill = await _skillService.GetbyId(result);
-
-            return CreatedAtAction(nameof(GetById), new { id = result }, Skill);
+            return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPut("{Id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Update([FromBody] SkillUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -72,11 +69,11 @@ namespace FindSkillSolution.API.Controllers
                 return BadRequest(ModelState);
             }
             var result = await _skillService.Update(request);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(result);
         }
 
         [HttpDelete("{SkillId}")]
@@ -87,7 +84,7 @@ namespace FindSkillSolution.API.Controllers
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(result);
         }
     }
 }

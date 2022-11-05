@@ -1,10 +1,13 @@
 ﻿using FindJobSolution.AdminApp.API;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.System.User;
+using FindJobSolution.ViewModels.System.UsersJobSeeker;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FindJobSolution.AdminApp.Controllers
 {
+    [Authorize]
     public class JobSeekerController : Controller
     {
         private readonly IJobSeekerAPI _jobSeekerAPI;
@@ -16,7 +19,7 @@ namespace FindJobSolution.AdminApp.Controllers
             _configuration = configuration;
         }
 
-        public async Task<IActionResult> Index(string keyWord, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyWord, int pageIndex = 1, int pageSize = 5)
         {
             var request = new GetJobSeekerPagingRequest()
             {
@@ -26,6 +29,37 @@ namespace FindJobSolution.AdminApp.Controllers
             };
             var data = await _jobSeekerAPI.GetAllPagingJobSeeker(request);
             return View(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var result = await _jobSeekerAPI.GetById(id);
+            return View(result);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            return View(new JobseekerDeleteRequest()
+            {
+                Id = id
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(JobseekerDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _jobSeekerAPI.Delete(request.Id);
+            if (result)
+            {
+                return RedirectToAction("index");
+            }
+            return View(request);
         }
     }
 }
