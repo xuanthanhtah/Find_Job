@@ -1,7 +1,5 @@
 ﻿using FindJobSolution.AdminApp.API;
 using FindJobSolution.ViewModels.Catalog.Skills;
-using FindJobSolution.ViewModels.System.User;
-using FindJobSolution.ViewModels.System.UsersJobSeeker;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

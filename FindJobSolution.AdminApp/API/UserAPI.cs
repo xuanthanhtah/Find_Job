@@ -1,4 +1,5 @@
 ﻿using FindJobSolution.ViewModels.Common;
+using FindJobSolution.ViewModels.System.Role;
 using FindJobSolution.ViewModels.System.User;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
@@ -17,6 +18,8 @@ namespace FindJobSolution.AdminApp.Service
         Task<UserViewModel> GetById(Guid id);
 
         Task<bool> Delete(Guid id);
+
+        Task<bool> RoleAssign(Guid id, RoleAssignRequest request);
     }
 
     public class UserAPI : IUserAPI
@@ -92,6 +95,19 @@ namespace FindJobSolution.AdminApp.Service
             var response = await client.PostAsync($"/api/User/register", httpContent);
             //trả về thành công 200 hay thất bại 400 > 500
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> RoleAssign(Guid id, RoleAssignRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/user/{id}/roles", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<bool>(result);
         }
     }
 }

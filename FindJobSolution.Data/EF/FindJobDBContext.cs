@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FindJobSolution.Data.EF
 {
-    public class FindJobDBContext : IdentityDbContext<User, Role, Guid>
+    public class FindJobDBContext : IdentityDbContext<User, AppRole, Guid>
     {
         public FindJobDBContext(DbContextOptions options) : base(options)
         {
@@ -36,7 +36,7 @@ namespace FindJobSolution.Data.EF
             modelBuilder.ApplyConfiguration(new AvatarConfiguration());
 
             modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new AppRoleConfiguration());
 
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("UserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("UserRoles").HasKey(x => new { x.RoleId, x.UserId });
@@ -63,7 +63,7 @@ namespace FindJobSolution.Data.EF
         public DbSet<SaveJob> SaveJobs { get; set; }
         public DbSet<JobSeekerSkill> JobSeekerSkills { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<AppRole> Roles { get; set; }
         public DbSet<Cv> Cvs { get; set; }
         public DbSet<Avatar> Avatars { get; set; }
     }
