@@ -60,7 +60,8 @@ namespace FindSkillSolution.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut]
+        [HttpPut("{Id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Update([FromBody] SkillUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -68,7 +69,7 @@ namespace FindSkillSolution.API.Controllers
                 return BadRequest(ModelState);
             }
             var result = await _skillService.Update(request);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }

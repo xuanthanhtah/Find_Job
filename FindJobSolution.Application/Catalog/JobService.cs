@@ -9,9 +9,9 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface IJobService
     {
-        Task<int> Create(JobCreateRequest request);
+        Task<bool> Create(JobCreateRequest request);
 
-        Task<int> Update(JobUpdateRequest request);
+        Task<bool> Update(JobUpdateRequest request);
 
         Task<int> Delete(int JobId);
 
@@ -31,7 +31,7 @@ namespace FindJobSolution.Application.Catalog
             _context = context;
         }
 
-        public async Task<int> Create(JobCreateRequest request)
+        public async Task<bool> Create(JobCreateRequest request)
         {
             var jobName = await _context.Jobs.FirstOrDefaultAsync(x => x.JobName == request.JobName);
             if (jobName != null)
@@ -45,7 +45,7 @@ namespace FindJobSolution.Application.Catalog
 
             _context.Jobs.Add(job);
             await _context.SaveChangesAsync();
-            return job.JobId;
+            return true;
         }
 
         public async Task<int> Delete(int JobId)
@@ -85,6 +85,7 @@ namespace FindJobSolution.Application.Catalog
                 .Take(request.PageSize)
                 .Select(p => new JobViewModel()
                 {
+                    JobId = p.j.JobId,
                     JobName = p.j.JobName,
                 }).ToListAsync();
 
@@ -106,20 +107,22 @@ namespace FindJobSolution.Application.Catalog
             if (job == null) { throw new FindJobException($"cannot find a job: {JobId}"); }
             var jobItem = new JobViewModel()
             {
+                JobId = job.JobId,
                 JobName = job.JobName,
             };
             return jobItem;
         }
 
-        public async Task<int> Update(JobUpdateRequest request)
+        public async Task<bool> Update(JobUpdateRequest request)
         {
-            var job = await _context.Jobs.FindAsync(request.JobId);
+            var job = await _context.Jobs.FindAsync(request.Id);
 
-            if (job == null) { throw new FindJobException($"cannot find a job: {request.JobId}"); }
+            if (job == null) { throw new FindJobException($"cannot find a job: {request.Id}"); }
 
             job.JobName = request.JobName;
 
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

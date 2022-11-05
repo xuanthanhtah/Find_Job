@@ -7,26 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 namespace FindJobSolution.AdminApp.Controllers
 {
     [Authorize]
-    public class SkillController : Controller
+    public class JobController : Controller
     {
-        private readonly ISkillAPI _SkillAPI;
+        private readonly IJobAPI _jobAPI;
         private readonly IConfiguration _configuration;
 
-        public SkillController(ISkillAPI SkillAPI, IConfiguration configuration)
+        public JobController(IJobAPI jobAPI, IConfiguration configuration)
         {
-            _SkillAPI = SkillAPI;
+            _jobAPI = jobAPI;
             _configuration = configuration;
         }
 
         public async Task<IActionResult> Index(string keyWord, int pageIndex = 1, int pageSize = 5)
         {
-            var request = new GetSkillPagingRequest()
+            var request = new GetJobPagingRequest()
             {
                 keyword = keyWord,
                 PageIndex = pageIndex,
                 PageSize = pageSize
             };
-            var data = await _SkillAPI.GetAllPaging(request);
+            var data = await _jobAPI.GetAllPaging(request);
             return View(data);
         }
 
@@ -37,16 +37,16 @@ namespace FindJobSolution.AdminApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(SkillCreateRequest request)
+        public async Task<IActionResult> Create(JobCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            var result = await _SkillAPI.Create(request);
+            var result = await _jobAPI.Create(request);
             if (result)
             {
-                TempData["result"] = "Create user successfully";
+                TempData["result"] = "Create job successfully";
                 return RedirectToAction("Index");
             }
             return View(request);
@@ -55,20 +55,20 @@ namespace FindJobSolution.AdminApp.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(new SkillDeleteRequest()
+            return View(new JobDeleteRequest()
             {
                 Id = id
             });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(SkillDeleteRequest request)
+        public async Task<IActionResult> Delete(JobDeleteRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            var result = await _SkillAPI.Delete(request.Id);
+            var result = await _jobAPI.Delete(request.Id);
             if (result)
             {
                 return RedirectToAction("index");
@@ -79,14 +79,14 @@ namespace FindJobSolution.AdminApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var result = await _SkillAPI.GetById(id);
+            var result = await _jobAPI.GetById(id);
             if (result != null)
             {
                 var user = result;
-                var updateRequest = new SkillUpdateRequest()
+                var updateRequest = new JobUpdateRequest()
                 {
                     Id = id,
-                    Name = user.Name,
+                    JobName = user.JobName,
                 };
                 return View(updateRequest);
             }
@@ -94,12 +94,12 @@ namespace FindJobSolution.AdminApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(SkillUpdateRequest request)
+        public async Task<IActionResult> Edit(JobUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _SkillAPI.Edit(request);
+            var result = await _jobAPI.Edit(request);
             if (result)
             {
                 TempData["result"] = "Cập nhật người dùng thành công";

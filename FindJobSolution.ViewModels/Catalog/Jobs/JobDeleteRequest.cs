@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace FindJobSolution.ViewModels.Catalog.Jobs
 {
-    public class JobUpdateRequest
+    public class JobDeleteRequest
     {
         public int Id { get; set; }
-        public string JobName { get; set; }
     }
 }

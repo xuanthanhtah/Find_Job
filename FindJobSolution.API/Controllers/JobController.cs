@@ -44,37 +44,36 @@ namespace FindJobSolution.API.Controllers
             return Ok(job);
         }
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] JobCreateRequest request)
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Create([FromBody] JobCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var result = await _jobService.Create(request);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }
-
-            var job = await _jobService.GetbyId(result);
-
-            return CreatedAtAction(nameof(GetById), new { id = result }, job);
+            return Ok(result);
         }
 
-        [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] JobUpdateRequest request)
+        [HttpPut("{Id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Update([FromBody] JobUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var result = await _jobService.Update(request);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(result);
         }
 
         [HttpDelete("{JobId}")]
@@ -85,7 +84,7 @@ namespace FindJobSolution.API.Controllers
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(result);
         }
     }
 }
