@@ -1,4 +1,5 @@
 ﻿using FindJobSolution.Application.System;
+using FindJobSolution.ViewModels.System.Role;
 using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -69,6 +70,21 @@ namespace FindJobSolution.API.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _UserService.Delete(id);
+            if (result)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+        [HttpPut("{id}/roles")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _UserService.RoleAssign(id, request);
             if (result)
             {
                 return Ok(result);

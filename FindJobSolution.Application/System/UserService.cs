@@ -2,6 +2,7 @@
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Common;
+using FindJobSolution.ViewModels.System.Role;
 using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -24,18 +25,20 @@ namespace FindJobSolution.Application.System
         Task<UserViewModel> GetById(Guid id);
 
         Task<bool> Delete(Guid id);
+
+        Task<bool> RoleAssign(Guid id, RoleAssignRequest request);
     }
 
     public class UserService : IUserService
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<Role> _roleManager;
+        private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _config;
         private readonly FindJobDBContext _context;
 
         public UserService(UserManager<User> userManager, SignInManager<User> signInManager,
-            RoleManager<Role> roleManager, IConfiguration config, FindJobDBContext context)
+            RoleManager<AppRole> roleManager, IConfiguration config, FindJobDBContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -80,11 +83,14 @@ namespace FindJobSolution.Application.System
             {
                 throw new FindJobException("User không tồn tại");
             }
+            var roles = await _userManager.GetRolesAsync(user);
+
             var userVm = new UserViewModel()
             {
                 Id = user.Id,
                 Email = user.Email,
-                UserName = user.UserName
+                UserName = user.UserName,
+                Roles = roles
             };
             return (userVm);
         }
@@ -157,6 +163,35 @@ namespace FindJobSolution.Application.System
                 return true;
             }
             return false;
+        }
+
+        public async Task<bool> RoleAssign(Guid id, RoleAssignRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return false;
+            }
+            var removedRoles = request.Roles.Where(x => x.Selected == false).Select(x => x.Name).ToList();
+            foreach (var roleName in removedRoles)
+            {
+                if (await _userManager.IsInRoleAsync(user, roleName) == true)
+                {
+                    await _userManager.RemoveFromRoleAsync(user, roleName);
+                }
+            }
+            await _userManager.RemoveFromRolesAsync(user, removedRoles);
+
+            var addedRoles = request.Roles.Where(x => x.Selected).Select(x => x.Name).ToList();
+            foreach (var roleName in addedRoles)
+            {
+                if (await _userManager.IsInRoleAsync(user, roleName) == false)
+                {
+                    await _userManager.AddToRoleAsync(user, roleName);
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FindJobSolution.ViewModels.Common;
+using FindJobSolution.ViewModels.System.Role;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,5 +18,7 @@ namespace FindJobSolution.ViewModels.System.User
 
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        public IList<string> Roles { get; set; }
     }
 }

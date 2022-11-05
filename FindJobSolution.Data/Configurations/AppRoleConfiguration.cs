@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace FindJobSolution.Data.Configurations
 {
-    public class RoleConfiguration : IEntityTypeConfiguration<Role>
+    public class AppRoleConfiguration : IEntityTypeConfiguration<AppRole>
     {
-        public void Configure(EntityTypeBuilder<Role> builder)
+        public void Configure(EntityTypeBuilder<AppRole> builder)
         {
             builder.ToTable("Roles");
         }
