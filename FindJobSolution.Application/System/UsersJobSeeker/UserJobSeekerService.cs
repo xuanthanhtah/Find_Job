@@ -90,6 +90,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
 
             if (result.Succeeded)
             {
+                await _userManager.AddToRoleAsync(user, "JobSeeker");
                 return new ApiSuccessResult<bool>();
             }
             return new ApiErrorResult<bool>("Đăng ký không thành công");

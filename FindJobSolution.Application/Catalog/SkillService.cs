@@ -11,7 +11,7 @@ namespace FindJobSolution.Application.Catalog
     {
         Task<bool> Create(SkillCreateRequest request);
 
-        Task<int> Update(SkillUpdateRequest request);
+        Task<bool> Update(SkillUpdateRequest request);
 
         Task<int> Detele(int SkillId);
 
@@ -111,16 +111,17 @@ namespace FindJobSolution.Application.Catalog
             return skillItem;
         }
 
-        public async Task<int> Update(SkillUpdateRequest request)
+        public async Task<bool> Update(SkillUpdateRequest request)
         {
-            var skill = await _context.Skills.FindAsync(request.SkillId);
+            var skill = await _context.Skills.FindAsync(request.Id);
 
-            if (skill == null) { throw new FindJobException($"cannot find a skill: {request.SkillId}"); }
+            if (skill == null) { throw new FindJobException($"cannot find a skill: {request.Id}"); }
 
             skill.Name = request.Name;
             skill.Experience = request.Experience;
 
-            return await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

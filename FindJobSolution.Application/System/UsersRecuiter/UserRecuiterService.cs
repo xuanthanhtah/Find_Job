@@ -86,11 +86,12 @@ namespace FindJobSolution.Application.System.UsersRecuiter
             await _context.AddAsync(recruiter);
             await _context.SaveChangesAsync();
 
-            if (!result.Succeeded)
+            if (result.Succeeded)
             {
-                return false;
+                await _userManager.AddToRoleAsync(user, "JobSeeker");
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }

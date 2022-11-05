@@ -1,13 +1,13 @@
-﻿@model FindJobSolution.ViewModels.Catalog.Skills.SkillDeleteRequest
+﻿@model FindJobSolution.ViewModels.Catalog.Jobs.JobDeleteRequest
 
 @{
     ViewData["Title"] = "Delete";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Xóa kỹ năng</h1>
+<h1>Xóa công việc</h1>
 
-<h3>Bạn có chắc muốn xóa kỹ năng này không</h3>
+<h3>Bạn có chắc muốn xóa công việc này không</h3>
 <div>
     <hr />
     <dl class="row">
@@ -22,6 +22,6 @@
     <form asp-action="Delete">
         <input asp-for="Id" type="hidden" />
         <input type="submit" value="Xóa" class="btn btn-danger" />
-        <a class="btn btn-success" asp-action="index" asp-controller="skill">Trở lại danh sách kỹ năng</a>
+        <a class="btn btn-success" asp-action="index" asp-controller="job">Trở lại danh sách công việc</a>
     </form>
 </div>
