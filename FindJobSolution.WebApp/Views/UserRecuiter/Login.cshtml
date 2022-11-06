@@ -1,11 +1,11 @@
-﻿@model FindJobSolution.Data.Entities.User
+﻿@using FindJobSolution.ViewModels.System.User
+@model UserLoginRequest
 
 @{
     ViewData["Title"] = "LoginRecuiter";
-    Layout = "_Layout2";
 }
 
-<form method="post" asp-action="LoginEmployer">
+<form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="grid--flexbox">
@@ -33,15 +33,19 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input asp-for="Email" class="form-control" type="email" name="Email" />
+                                    <input class="form-control" type="text" name="UserName" asp-for="UserName" />
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Mật khẩu</label>
-                                    <input asp-for="PasswordHash" class="form-control" type="password" name="Password" />
+                                    <input class="form-control" type="password" name="Password" asp-for="Password" />
                                 </div>
                             </div>
+                            <div class="form-group">
+                                    <input class="form-check-input" asp-for="RememberMe" type="checkbox" value="" />
+                                    <label class="form-check-label">Nhớ mật khẩu</label>
+                                </div>
                             <div class="col-12">
                                 <input type="submit" value="Đăng nhập" class="button button-contactForm boxed-btn mr-4" />
                             </div>
@@ -58,11 +62,4 @@
             </div>
         </div>
     </div>
-    @Html.Raw(TempData["msg"])
 </form>
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
-
