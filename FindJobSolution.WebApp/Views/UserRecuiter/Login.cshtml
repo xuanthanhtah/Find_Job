@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "LoginRecuiter";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
 <form method="post">
@@ -57,7 +58,7 @@
             </div>
             <div class="container-info-bottom">
                 <p class="px--30 py--20">
-                    <lable style="font-family: Barlow">Chưa có tài khoản? </lable><span class="clicklink"><a href="~/Home/RegisterEmployer">Đăng ký</a></span>
+                    <lable style="font-family: Barlow">Chưa có tài khoản? </lable><span class="clicklink"><a asp-action="Create" asp-controller="UserRecuiter">Đăng ký</a></span>
                 </p>
             </div>
         </div>
