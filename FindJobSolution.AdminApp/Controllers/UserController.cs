@@ -1,5 +1,4 @@
-﻿using FindJobSolution.AdminApp.API;
-using FindJobSolution.AdminApp.Service;
+﻿using FindJobSolution.APItotwoweb.API;
 using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.Role;
 using FindJobSolution.ViewModels.System.User;

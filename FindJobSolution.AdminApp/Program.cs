@@ -1,5 +1,4 @@
-using FindJobSolution.AdminApp.API;
-using FindJobSolution.AdminApp.Service;
+using FindJobSolution.APItotwoweb.API;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,11 +1,12 @@
 ﻿using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.Role;
 using FindJobSolution.ViewModels.System.User;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace FindJobSolution.AdminApp.Service
+namespace FindJobSolution.APItotwoweb.API
 {
     public interface IUserAPI
     {

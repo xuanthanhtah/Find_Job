@@ -83,7 +83,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FindJobSolution.Data\FindJobSolution.Data.csproj" />
     <ProjectReference Include="..\FindJobSolution.ViewModels\FindJobSolution.ViewModels.csproj" />
   </ItemGroup>
 

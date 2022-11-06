@@ -2,9 +2,10 @@
 using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-namespace FindJobSolution.AdminApp.API
+namespace FindJobSolution.APItotwoweb.API
 {
     public interface IRecuiterAPI
     {
