@@ -1,10 +1,10 @@
-﻿@model FindJobSolution.Data.Entities.User
-
+﻿@using FindJobSolution.ViewModels.System.User
+@model UserLoginRequest
 @{
-    ViewData["Title"] = "LoginJobSeeker";
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<hr />
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <section>
@@ -19,13 +19,17 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input class="form-control" type="email" name="UserName" asp-for="UserName" />
+                                    <input class="form-control" type="text" name="UserName" asp-for="UserName" />
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Mật khẩu</label>
-                                    <input class="form-control" type="password" name="Password" asp-for="PasswordHash" />
+                                    <input class="form-control" type="password" name="Password" asp-for="Password" />
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-check-input" asp-for="RememberMe" type="checkbox" value="" />
+                                    <label class="form-check-label">Nhớ mật khẩu</label>
                                 </div>
                             </div>
                         </div>
@@ -36,17 +40,11 @@
                         </div>
                         <hr />
                         <div clas="form-group">
-                            <lable style="font-family: Barlow">Bạn là nhà tuyển dụng, ấn vào </lable><span class="clicklink"><a href="~/Home/LoginEmployer">đây</a></span>
+                            <lable style="font-family: Barlow">Bạn là nhà tuyển dụng, ấn vào </lable><span class="clicklink"><a asp-action="Login" asp-controller="UserRecuiter">đây</a></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @Html.Raw(TempData["msg"])
     </section>
 </form>
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
