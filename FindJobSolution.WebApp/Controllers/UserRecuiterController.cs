@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using FindJobSolution.ViewModels.System.UsersRecruiter;
 
 namespace FindJobSolution.WebApp.Controllers
 {
@@ -15,11 +16,13 @@ namespace FindJobSolution.WebApp.Controllers
     {
         private readonly IUserAPI _userAPI;
         private readonly IConfiguration _configuration;
+        private readonly IRecuiterAPI _recuiterAPI;
 
-        public UserRecuiterController(IUserAPI userAPI, IConfiguration configuration)
+        public UserRecuiterController(IUserAPI userAPI, IConfiguration configuration, IRecuiterAPI recuiterAPI)
         {
             _userAPI = userAPI;
             _configuration = configuration;
+            _recuiterAPI = recuiterAPI;
         }
 
         [HttpGet]
@@ -89,6 +92,28 @@ namespace FindJobSolution.WebApp.Controllers
         public IActionResult UserProfile()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(RegisterRecuiterRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _recuiterAPI.Register(request);
+            if (result)
+            {
+                TempData["result"] = "Create recuiter successfully";
+                return RedirectToAction("Login");
+            }
+            return View(request);
         }
     }
 }

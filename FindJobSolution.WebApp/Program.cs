@@ -14,6 +14,8 @@ builder.Services.AddHttpClient();
 
 //Add Transient
 builder.Services.AddTransient<IUserAPI, UserAPI>();
+builder.Services.AddTransient<IJobInformationApi, JobInformationAPI>();
+builder.Services.AddTransient<IRecuiterAPI, RecuiterAPI>();
 
 builder.Services.AddSession(options =>
 {

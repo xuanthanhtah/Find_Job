@@ -9,7 +9,7 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface IJobInformationService
     {
-        Task<int> Create(JobInformationCreateRequest request);
+        Task<bool> Create(JobInformationCreateRequest request);
 
         Task<int> Update(JobInformationUpdateRequest request);
 
@@ -18,6 +18,8 @@ namespace FindJobSolution.Application.Catalog
         Task<List<JobInformationViewModel>> GetAll();
 
         Task<JobInformationViewModel> GetbyId(int JobInformationId);
+
+        Task<PagedResult<JobInformationViewModel>> GetbyRecuiterId(int Id, GetJobInformationPagingRequest request);
 
         Task AddViewcount(int JobInformationId);
 
@@ -40,7 +42,7 @@ namespace FindJobSolution.Application.Catalog
             await _context.SaveChangesAsync();
         }
 
-        public async Task<int> Create(JobInformationCreateRequest request)
+        public async Task<bool> Create(JobInformationCreateRequest request)
         {
             var newJobInformation = new JobInformation()
             {
@@ -63,7 +65,7 @@ namespace FindJobSolution.Application.Catalog
             };
             _context.JobInformations.Add(newJobInformation);
             await _context.SaveChangesAsync();
-            return newJobInformation.JobInformationId;
+            return true;
         }
 
         public async Task<int> Delete(int JobInformationId)
@@ -197,6 +199,77 @@ namespace FindJobSolution.Application.Catalog
                 JobInformationId = jobInformation.JobInformationId,
             };
             return JobInformationItem;
+        }
+
+        public async Task<PagedResult<JobInformationViewModel>> GetbyRecuiterId(int Id, GetJobInformationPagingRequest request)
+        {
+            var recuiter = await _context.JobInformations.FirstOrDefaultAsync(x => x.RecruiterId == Id);
+            if (recuiter == null) { throw new FindJobException($"cannot find a recuiter: {Id}"); }
+            var query = from j in _context.JobInformations
+                        select new
+                        {
+                            JobInformationId = j.JobInformationId,
+                            JobLevel = j.JobLevel,
+                            JobTitle = j.JobTitle,
+                            JobType = j.JobType,
+                            Description = j.Description,
+                            Requirements = j.Requirements,
+                            Benefits = j.Benefits,
+                            MaxSalary = j.MaxSalary,
+                            MinSalary = j.MinSalary,
+                            Salary = j.Salary,
+                            WorkingLocation = j.WorkingLocation,
+                            ViewCount = j.ViewCount,
+                            Status = j.Status,
+                            JobId = j.JobId,
+                            RecruiterId = j.RecruiterId,
+                            JobInformationTimeEnd = j.JobInformationTimeEnd,
+                            JobInformationTimeStart = j.JobInformationTimeStart
+                        };
+
+            if (!string.IsNullOrEmpty(request.keyword))
+            {
+                query = query.Where(x => (x.JobLevel.Contains(request.keyword)) ||
+                (x.JobTitle.Contains(request.keyword)) || (x.JobType.Contains(request.keyword)));
+            }
+
+            //phân trang
+
+            int totalRow = await query.CountAsync();
+
+            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(p => new JobInformationViewModel()
+                {
+                    JobInformationId = p.JobInformationId,
+                    JobLevel = p.JobLevel,
+                    JobTitle = p.JobTitle,
+                    JobType = p.JobType,
+                    Description = p.Description,
+                    Requirements = p.Requirements,
+                    Benefits = p.Benefits,
+                    MaxSalary = p.MaxSalary,
+                    MinSalary = p.MinSalary,
+                    Salary = p.Salary,
+                    WorkingLocation = p.WorkingLocation,
+                    ViewCount = p.ViewCount,
+                    Status = p.Status,
+                    JobId = p.JobId,
+                    RecruiterId = p.RecruiterId,
+                    JobInformationTimeEnd = p.JobInformationTimeEnd,
+                    JobInformationTimeStart = p.JobInformationTimeStart
+                }).ToListAsync();
+
+            // in ra
+            var pagedResult = new PagedResult<JobInformationViewModel>()
+            {
+                TotalRecords = totalRow,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
+                Items = data
+            };
+
+            return pagedResult;
         }
 
         public async Task<int> Update(JobInformationUpdateRequest request)

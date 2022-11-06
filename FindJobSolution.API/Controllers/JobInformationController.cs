@@ -37,22 +37,20 @@ namespace FindJobSolution.API.Controllers
             return Ok(jobInformation);
         }
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] JobInformationCreateRequest request)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] JobInformationCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var result = await _jobInformationService.Create(request);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }
 
-            var jobInformation = await _jobInformationService.GetbyId(result);
-
-            return CreatedAtAction(nameof(GetById), new { id = result }, jobInformation);
+            return Ok(result);
         }
 
         [HttpPut("Update")]
@@ -86,6 +84,14 @@ namespace FindJobSolution.API.Controllers
         public async Task<IActionResult> GetAllPaging([FromQuery] GetJobInformationPagingRequest request)
         {
             var jobSeeker = await _jobInformationService.GetAllPaging(request);
+            return Ok(jobSeeker);
+        }
+
+        [HttpGet("paging/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetbyRecuiterId([FromQuery] GetJobInformationPagingRequest request, int id)
+        {
+            var jobSeeker = await _jobInformationService.GetbyRecuiterId(id, request);
             return Ok(jobSeeker);
         }
     }
