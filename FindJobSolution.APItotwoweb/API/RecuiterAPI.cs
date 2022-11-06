@@ -1,13 +1,19 @@
 ﻿using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Common;
+using FindJobSolution.ViewModels.System.User;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
-namespace FindJobSolution.AdminApp.API
+namespace FindJobSolution.APItotwoweb.API
 {
     public interface IRecuiterAPI
     {
         Task<PagedResult<RecruiterVM>> GetAllPagingRecuiter(GetRecuiterPagingRequest request);
+
+        Task<RecruiterVM> GetById(int id);
+
+        Task<bool> Delete(int id);
     }
 
     public class RecuiterAPI : IRecuiterAPI
@@ -21,6 +27,17 @@ namespace FindJobSolution.AdminApp.API
             _configuration = configuration;
         }
 
+        public async Task<bool> Delete(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.DeleteAsync($"/api/Recruiter/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<bool>(body);
+            return user;
+        }
+
         public async Task<PagedResult<RecruiterVM>> GetAllPagingRecuiter(GetRecuiterPagingRequest request)
         {
             var client = _httpClientFactory.CreateClient();
@@ -31,6 +48,17 @@ namespace FindJobSolution.AdminApp.API
             var body = await response.Content.ReadAsStringAsync();
             var recuiter = JsonConvert.DeserializeObject<PagedResult<RecruiterVM>>(body);
             return recuiter;
+        }
+
+        public async Task<RecruiterVM> GetById(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/Recruiter/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<RecruiterVM>(body);
+            return user;
         }
     }
 }

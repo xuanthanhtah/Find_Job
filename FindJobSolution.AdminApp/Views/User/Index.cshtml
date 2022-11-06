@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="container-fluid px-4">
     <h1 class="mt-4">Danh sách người dùng</h1>
     <ol class="breadcrumb mb-4">
@@ -23,7 +24,7 @@
                     <thead>
                         <tr>
                             <th>
-                                UserName
+                                Tên tài khoản
                             </th>
                             <th>
                                 Email
@@ -43,20 +44,17 @@
                                     @Html.DisplayFor(modelItem => item.Email)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                    @Html.ActionLink("Chi tiết", "Details", new {  id=item.Id  }) |
+                                        @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
+                                        @Html.ActionLink("Quyền", "RoleAssign", new { id = item.Id })
                                 </td>
                             </tr>
+                            }
                         }
-                        }
-                            
-                        
-
-
                     </tbody>
                 </table>
             </div>
+            @await Component.InvokeAsync("Pager", Model)
         </div>
     </div>
 </div>

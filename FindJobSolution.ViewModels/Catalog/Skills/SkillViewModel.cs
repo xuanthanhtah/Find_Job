@@ -8,6 +8,7 @@ namespace FindJobSolution.ViewModels.Catalog.Skills
 {
     public class SkillViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Experience { get; set; }
 

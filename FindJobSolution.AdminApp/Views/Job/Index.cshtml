@@ -1,0 +1,57 @@
+﻿@using FindJobSolution.ViewModels.Common
+@model PagedResult<FindJobSolution.ViewModels.Catalog.Jobs.JobViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Danh sách người dùng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách người dùng</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Create" asp-controller="Job">Tạo công việc mới</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    JobId
+                                </th>
+                                <th>
+                                    JobName
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.JobId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.JobName)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new {  id=item.JobId  }) |
+                                        @Html.ActionLink("Delete", "Delete", new {  id=item.JobId  })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>

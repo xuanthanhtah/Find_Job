@@ -13,8 +13,7 @@ namespace FindJobSolution.ViewModels.Catalog.Jobs
         public JobUpdateRequestValidator()
         {
             RuleFor(x => x.JobName).NotEmpty().WithMessage("JobName is required");
-            RuleFor(x => x.JobId).NotEmpty().WithMessage("JobId is required");
+            RuleFor(x => x.Id).NotEmpty().WithMessage("JobId is required");
         }
-
     }
 }
