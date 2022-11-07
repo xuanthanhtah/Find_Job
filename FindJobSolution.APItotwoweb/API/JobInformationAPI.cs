@@ -1,6 +1,7 @@
 ﻿using FindJobSolution.ViewModels.Catalog.JobInformations;
 using FindJobSolution.ViewModels.Catalog.Jobs;
 using FindJobSolution.ViewModels.Common;
+using FindJobSolution.ViewModels.System.User;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -16,6 +17,8 @@ namespace FindJobSolution.APItotwoweb.API
         Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request);
 
         Task<bool> Create(JobInformationCreateRequest request);
+
+        Task<JobInformationViewModel> GetById(int id);
     }
 
     public class JobInformationAPI : IJobInformationApi
@@ -52,6 +55,19 @@ namespace FindJobSolution.APItotwoweb.API
             var body = await response.Content.ReadAsStringAsync();
             var jobSeeker = JsonConvert.DeserializeObject<PagedResult<JobInformationViewModel>>(body);
             return jobSeeker;
+        }
+
+        public async Task<JobInformationViewModel> GetById(int id)
+        {
+            //var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var response = await client.GetAsync($"/api/JobInformation/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<JobInformationViewModel>(body);
+            return user;
         }
     }
 }
