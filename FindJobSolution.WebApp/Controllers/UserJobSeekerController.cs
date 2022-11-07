@@ -9,6 +9,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using FindJobSolution.APItotwoweb.API;
+using FindJobSolution.ViewModels.System.UsersRecruiter;
+using FindJobSolution.Data.Entities;
+using FindJobSolution.Data.EF;
 
 namespace FindJobSolution.WebApp.Controllers
 {
@@ -16,11 +19,15 @@ namespace FindJobSolution.WebApp.Controllers
     {
         private readonly IUserAPI _userAPI;
         private readonly IConfiguration _configuration;
+        private readonly IJobSeekerAPI _jobseekerAPI;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration)
+        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IJobSeekerAPI jobseekerAPI, IHttpContextAccessor httpContextAccessor)
         {
             _userAPI = userAPI;
             _configuration = configuration;
+            _jobseekerAPI = jobseekerAPI;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
@@ -52,6 +59,7 @@ namespace FindJobSolution.WebApp.Controllers
                 IsPersistent = false
             };
             HttpContext.Session.SetString("Token", token);
+            
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 userPrincipal,
@@ -87,9 +95,34 @@ namespace FindJobSolution.WebApp.Controllers
             return RedirectToAction("index", "Home");
         }
 
-        public IActionResult UserProfile()
+        [HttpGet]
+        public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(RegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _jobseekerAPI.Register(request);
+            if (result)
+            {
+                TempData["result"] = "Create recuiter successfully";
+                return RedirectToAction("Login");
+            }
+            return View(request);
+        }
+
+        public async Task<IActionResult> UserProfile()
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var data = await _jobseekerAPI.GetByUserId(userId);
+            return View(data);
+
         }
     }
 }
