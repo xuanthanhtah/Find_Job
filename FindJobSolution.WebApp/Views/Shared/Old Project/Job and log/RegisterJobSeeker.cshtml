@@ -1,4 +1,4 @@
-﻿
+﻿@model Website_Tuyển_dụng.Models.TaiKhoanNguoiTimViec
 @addTagHelper*, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -15,12 +15,12 @@
                     <h2 class="contact-title text-center">Đăng ký</h2>
                 </div>
                 <div class="col-lg-6 mx-auto">
-                    <div class="form-contact contact_form">
+                    <div class="form-contact contact_form">       
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Email</label>
-
+                                    <input asp-for="Email" class="form-control" type="email" />
                                 </div>
                             </div>
                             <div class="col-12">
@@ -31,7 +31,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Mật khẩu</label>
-
+                                    <input asp-for="MatKhau" class="form-control" type="password"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -45,13 +45,13 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Họ tên</label>
-
+                                    <input asp-for="HoTen" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>SDT</label>
-
+                                    <input asp-for="Sdt" class="form-control" />
                                 </div>
                             </div>
                             <div class="col-12">
@@ -64,11 +64,11 @@
 
                         <div class="form-group mt-3">
                             <input type="submit" value="Tạo tài khoản" class="button button-contactForm boxed-btn mr-4" />
-                            <lable style="font-family: Barlow">Đã có tài khoản? </lable><span class="clicklink"><a href="~/Home/LoginJobSeeker">Đăng nhập</a></span>
+                            <lable style ="font-family: Barlow" >Đã có tài khoản? </lable><span class="clicklink"><a href="~/Home/LoginJobSeeker">Đăng nhập</a></span>
                         </div>
                         <hr />
                         <div clas="form-group">
-                            <lable style="font-family: Barlow">Nếu bạn đang có nhu cầu tuyển dụng, ấn vào </lable><span class="clicklink"><a href="~/Home/RegisterEmployer">đây</a></span>
+                            <lable style ="font-family: Barlow" >Nếu bạn đang có nhu cầu tuyển dụng, ấn vào </lable><span class="clicklink"><a href="~/Home/RegisterEmployer">đây</a></span>
                         </div>
                     </div>
                 </div>
@@ -78,6 +78,6 @@
 </form>
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
