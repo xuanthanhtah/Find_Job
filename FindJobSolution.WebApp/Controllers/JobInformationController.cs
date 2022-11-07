@@ -56,5 +56,12 @@ namespace FindJobSolution.WebApp.Controllers
             }
             return View(request);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var result = await _jobInformationApi.GetById(id);
+            return View(result);
+        }
     }
 }
