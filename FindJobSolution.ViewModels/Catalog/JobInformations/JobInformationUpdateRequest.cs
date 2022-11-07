@@ -14,13 +14,11 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
         public string JobLevel { get; set; }
         public string JobType { get; set; }
         public string Description { get; set; }
-        public string Requirements { get; set; }
         public string WorkingLocation { get; set; }
         public decimal MinSalary { get; set; }
         public decimal MaxSalary { get; set; }
-        public decimal Salary { get; set; }
-        public string Benefits { get; set; }
         public int JobId { get; set; }
+        public Status Status { get; set; }
         public DateTime JobInformationTimeStart { get; set; }
         public DateTime JobInformationTimeEnd { get; set; }
     }

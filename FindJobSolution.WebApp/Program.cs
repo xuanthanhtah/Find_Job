@@ -1,5 +1,7 @@
 using FindJobSolution.APItotwoweb.API;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddTransient<IUserAPI, UserAPI>();
 builder.Services.AddTransient<IJobInformationApi, JobInformationAPI>();
 builder.Services.AddTransient<IRecuiterAPI, RecuiterAPI>();
+builder.Services.AddTransient<IJobAPI, JobAPI>();
 
 builder.Services.AddSession(options =>
 {
@@ -31,6 +34,10 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.AccessDeniedPath = "/User/Forbidden/";
     });
 
+builder.Services.Configure<IdentityOptions>(options =>
+    options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
+
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

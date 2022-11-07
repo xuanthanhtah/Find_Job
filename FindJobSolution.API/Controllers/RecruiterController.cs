@@ -43,7 +43,18 @@ namespace FindJobSolution.API.Controllers
             return Ok(recruiter);
         }
 
-        [HttpPut]
+        [HttpGet("user/{Id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByUserId(Guid Id)
+        {
+            var recruiter = await _recruiterService.GetByUserId(Id);
+            if (recruiter == null)
+                return BadRequest("Cannot find recruiter");
+            return Ok(recruiter);
+        }
+
+        [HttpPut("{id}")]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Update([FromForm] RecruiterUpdateRequest request)
         {
             if (!ModelState.IsValid)
@@ -51,12 +62,11 @@ namespace FindJobSolution.API.Controllers
                 return BadRequest(ModelState);
             }
             var result = await _recruiterService.Update(request);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }
-            var recruiter = await _recruiterService.GetById(result);
-            return CreatedAtAction(nameof(GetById), new { id = result }, recruiter);
+            return Ok(result);
         }
 
         [HttpDelete("{RecruiterId}")]

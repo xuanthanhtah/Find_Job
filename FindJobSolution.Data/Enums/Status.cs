@@ -8,7 +8,7 @@ namespace FindJobSolution.Data.Enums
 {
     public enum Status
     {
-        InActive,
+        NoActive,
         Active
     }
 }

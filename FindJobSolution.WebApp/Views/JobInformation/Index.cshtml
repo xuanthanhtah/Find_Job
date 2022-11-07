@@ -15,7 +15,7 @@
     
     <div class="card mb-4">
         <div class="card-header">
-            <a class="btn btn-success" asp-action="Create" asp-controller="User">Thêm công việc mới</a>
+            <a class="btn btn-success" asp-action="Create" asp-controller="JobInformation">Thêm công việc mới</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -34,11 +34,6 @@
                             <th>
                                 JobType
                             </th>
-                            
-                            <th>
-                                Salary
-                            </th>
-                            
                             
                             <th>
                                 Status
@@ -65,19 +60,14 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.JobType)
                                     </td>
-                                    
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Salary)
-                                    </td>
-                                    
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Status)
                                     </td>
                                     
                                     <td>
-                                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                        @Html.ActionLink("Edit", "Edit", new {  id=item.JobInformationId  }, new { @class = "btn btn-success" }) |
+                                        @Html.ActionLink("Details", "Details", new { id=item.JobInformationId  }, new { @class = "btn btn-success"  }) |
+                                        @Html.ActionLink("Delete", "Delete", new {id=item.JobInformationId  }, new { @class = "btn btn-success"  })
                                     </td>
                                 </tr>
                             }

@@ -8,6 +8,7 @@ namespace FindJobSolution.ViewModels.Catalog.Recruiters
 {
     public class RecruiterVM
     {
+        public Guid id { get; set; }
         public int RecruiterId { get; set; }
         public string CompanyName { get; set; }
         public string Address { get; set; }

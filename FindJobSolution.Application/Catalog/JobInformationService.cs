@@ -48,12 +48,9 @@ namespace FindJobSolution.Application.Catalog
             {
                 JobTitle = request.JobTitle,
                 Description = request.Description,
-                Benefits = request.Benefits,
-                Requirements = request.Requirements,
                 JobId = request.JobId,
                 RecruiterId = request.RecruiterId,
                 WorkingLocation = request.WorkingLocation,
-                Salary = request.Salary,
                 MinSalary = request.MinSalary,
                 MaxSalary = request.MaxSalary,
                 Status = Data.Enums.Status.Active,
@@ -72,7 +69,7 @@ namespace FindJobSolution.Application.Catalog
         {
             var jobInformation = await _context.JobInformations.FindAsync(JobInformationId);
             if (jobInformation == null) return 0;
-            jobInformation.Status = Data.Enums.Status.InActive;
+            jobInformation.Status = Data.Enums.Status.NoActive;
 
             return await _context.SaveChangesAsync();
         }
@@ -89,11 +86,8 @@ namespace FindJobSolution.Application.Catalog
                    JobTitle = p.j.JobTitle,
                    JobType = p.j.JobType,
                    Description = p.j.Description,
-                   Requirements = p.j.Requirements,
-                   Benefits = p.j.Benefits,
                    MaxSalary = p.j.MaxSalary,
                    MinSalary = p.j.MinSalary,
-                   Salary = p.j.Salary,
                    WorkingLocation = p.j.WorkingLocation,
                    ViewCount = p.j.ViewCount,
                    Status = p.j.Status,
@@ -114,11 +108,8 @@ namespace FindJobSolution.Application.Catalog
                             JobTitle = j.JobTitle,
                             JobType = j.JobType,
                             Description = j.Description,
-                            Requirements = j.Requirements,
-                            Benefits = j.Benefits,
                             MaxSalary = j.MaxSalary,
                             MinSalary = j.MinSalary,
-                            Salary = j.Salary,
                             WorkingLocation = j.WorkingLocation,
                             ViewCount = j.ViewCount,
                             Status = j.Status,
@@ -147,11 +138,8 @@ namespace FindJobSolution.Application.Catalog
                     JobTitle = p.JobTitle,
                     JobType = p.JobType,
                     Description = p.Description,
-                    Requirements = p.Requirements,
-                    Benefits = p.Benefits,
                     MaxSalary = p.MaxSalary,
                     MinSalary = p.MinSalary,
-                    Salary = p.Salary,
                     WorkingLocation = p.WorkingLocation,
                     ViewCount = p.ViewCount,
                     Status = p.Status,
@@ -182,12 +170,9 @@ namespace FindJobSolution.Application.Catalog
             {
                 JobTitle = jobInformation.JobTitle,
                 Description = jobInformation.Description,
-                Benefits = jobInformation.Benefits,
-                Requirements = jobInformation.Requirements,
                 JobId = jobInformation.JobId,
                 RecruiterId = jobInformation.RecruiterId,
                 WorkingLocation = jobInformation.WorkingLocation,
-                Salary = jobInformation.Salary,
                 MinSalary = jobInformation.MinSalary,
                 MaxSalary = jobInformation.MaxSalary,
                 Status = jobInformation.Status,
@@ -213,11 +198,8 @@ namespace FindJobSolution.Application.Catalog
                             JobTitle = j.JobTitle,
                             JobType = j.JobType,
                             Description = j.Description,
-                            Requirements = j.Requirements,
-                            Benefits = j.Benefits,
                             MaxSalary = j.MaxSalary,
                             MinSalary = j.MinSalary,
-                            Salary = j.Salary,
                             WorkingLocation = j.WorkingLocation,
                             ViewCount = j.ViewCount,
                             Status = j.Status,
@@ -246,11 +228,8 @@ namespace FindJobSolution.Application.Catalog
                     JobTitle = p.JobTitle,
                     JobType = p.JobType,
                     Description = p.Description,
-                    Requirements = p.Requirements,
-                    Benefits = p.Benefits,
                     MaxSalary = p.MaxSalary,
                     MinSalary = p.MinSalary,
-                    Salary = p.Salary,
                     WorkingLocation = p.WorkingLocation,
                     ViewCount = p.ViewCount,
                     Status = p.Status,
@@ -280,13 +259,10 @@ namespace FindJobSolution.Application.Catalog
 
             jobInformation.JobInformationTimeEnd = request.JobInformationTimeEnd;
             jobInformation.JobInformationTimeStart = request.JobInformationTimeStart;
-            jobInformation.Benefits = request.Benefits;
             jobInformation.Description = request.Description;
             jobInformation.WorkingLocation = request.WorkingLocation;
             jobInformation.MaxSalary = request.MaxSalary;
             jobInformation.MinSalary = request.MinSalary;
-            jobInformation.Salary = request.Salary;
-            jobInformation.Requirements = request.Requirements;
             jobInformation.JobId = request.JobId;
             jobInformation.JobType = request.JobType;
             jobInformation.JobInformationId = request.JobInformationId;

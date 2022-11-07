@@ -10,6 +10,8 @@ namespace FindJobSolution.APItotwoweb.API
     {
         Task<PagedResult<JobViewModel>> GetAllPaging(GetJobPagingRequest request);
 
+        Task<List<JobViewModel>> GetAll();
+
         Task<bool> Create(JobCreateRequest request);
 
         Task<bool> Delete(int id);
@@ -90,6 +92,17 @@ namespace FindJobSolution.APItotwoweb.API
             var body = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<JobViewModel>(body);
             return user;
+        }
+
+        public async Task<List<JobViewModel>> GetAll()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/Job");
+            var body = await response.Content.ReadAsStringAsync();
+            var jobSeeker = JsonConvert.DeserializeObject<List<JobViewModel>>(body);
+            return jobSeeker;
         }
     }
 }
