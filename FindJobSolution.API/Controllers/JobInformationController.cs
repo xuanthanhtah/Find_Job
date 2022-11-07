@@ -27,7 +27,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         //http://localhost:port/api/jobInformation/{int:id}
-        [HttpGet("/{JobInformationId}")]
+        [HttpGet("/JobInformation/GetById/{JobInformationId}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetById(int JobInformationId)
         {

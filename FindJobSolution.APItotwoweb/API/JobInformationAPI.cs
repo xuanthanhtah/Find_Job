@@ -64,7 +64,7 @@ namespace FindJobSolution.APItotwoweb.API
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
-            var response = await client.GetAsync($"/api/JobInformation/{id}");
+            var response = await client.GetAsync($"/JobInformation/GetById/{id}");
             var body = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<JobInformationViewModel>(body);
             return user;
