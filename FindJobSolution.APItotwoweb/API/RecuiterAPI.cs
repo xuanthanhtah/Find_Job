@@ -1,4 +1,5 @@
-﻿using FindJobSolution.ViewModels.Catalog.JobSeekers;
+﻿using FindJobSolution.ViewModels.Catalog.Jobs;
+using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
@@ -15,9 +16,13 @@ namespace FindJobSolution.APItotwoweb.API
 
         Task<RecruiterVM> GetById(int id);
 
+        Task<RecruiterVM> GetByUserId(string id);
+
         Task<bool> Delete(int id);
 
         Task<bool> Register(RegisterRecuiterRequest request);
+
+        Task<bool> Edit(RecruiterUpdateRequest request);
     }
 
     public class RecuiterAPI : IRecuiterAPI
@@ -42,6 +47,21 @@ namespace FindJobSolution.APItotwoweb.API
             return user;
         }
 
+        public async Task<bool> Edit(RecruiterUpdateRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/Recruiter/{request.Id}", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<bool>(result);
+            return JsonConvert.DeserializeObject<bool>(result);
+        }
+
         public async Task<PagedResult<RecruiterVM>> GetAllPagingRecuiter(GetRecuiterPagingRequest request)
         {
             var client = _httpClientFactory.CreateClient();
@@ -60,6 +80,17 @@ namespace FindJobSolution.APItotwoweb.API
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
             var response = await client.GetAsync($"/api/Recruiter/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<RecruiterVM>(body);
+            return user;
+        }
+
+        public async Task<RecruiterVM> GetByUserId(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/Recruiter/user/{id}");
             var body = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<RecruiterVM>(body);
             return user;

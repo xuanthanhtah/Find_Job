@@ -64,6 +64,7 @@ namespace FindJobSolution.Application.Catalog
             return await query
                .Select(p => new JobViewModel()
                {
+                   JobId = p.j.JobId,
                    JobName = p.j.JobName,
                }).ToListAsync();
         }

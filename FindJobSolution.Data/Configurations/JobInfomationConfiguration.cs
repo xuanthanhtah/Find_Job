@@ -14,7 +14,7 @@ namespace FindJobSolution.Data.Configurations
             builder.HasKey(x => x.JobInformationId);
 
             builder.Property(x => x.JobInformationId).UseIdentityColumn();
-            
+
             builder.Property(x => x.JobTitle).IsRequired();
 
             builder.Property(x => x.JobLevel).IsRequired();
@@ -23,17 +23,11 @@ namespace FindJobSolution.Data.Configurations
 
             builder.Property(x => x.Description).IsRequired();
 
-            builder.Property(x => x.Requirements).IsRequired();
-
             builder.Property(x => x.WorkingLocation).IsRequired();
 
             builder.Property(x => x.MinSalary).IsRequired().HasDefaultValue(0);
 
             builder.Property(x => x.MaxSalary).IsRequired().HasDefaultValue(0);
-
-            builder.Property(x => x.Salary).IsRequired().HasDefaultValue(0);
-
-            builder.Property(x => x.Benefits).IsRequired();
 
             builder.Property(x => x.Status).HasDefaultValue(Status.Active);
 

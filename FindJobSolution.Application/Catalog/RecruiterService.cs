@@ -14,11 +14,13 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface IRecruiterService
     {
-        Task<int> Update(RecruiterUpdateRequest request);
+        Task<bool> Update(RecruiterUpdateRequest request);
 
         Task<int> Delete(int Recuiterid);
 
         Task<RecruiterVM> GetById(int Recuiterid);
+
+        Task<RecruiterVM> GetByUserId(Guid id);
 
         Task<PagedResult<RecruiterVM>> GetAllPaging(GetRecuiterPagingRequest request);
 
@@ -177,6 +179,28 @@ public class RecruiterService : IRecruiterService
         return jobItem;
     }
 
+    public async Task<RecruiterVM> GetByUserId(Guid id)
+    {
+        var query = from j in _context.Recruiters
+                    join i in _context.RecruiterImages on j.RecruiterId equals i.RecruiterId
+                    where i.IsDefault == true
+                    select new { j, i };
+
+        var recruiters = await _context.Recruiters.FirstOrDefaultAsync(x => x.UserId == id);
+        if (recruiters == null) { throw new FindJobException($"cannot find a recruiters: {recruiters}"); }
+        var jobItem = new RecruiterVM()
+        {
+            id = id,
+            RecruiterId = recruiters.RecruiterId,
+            CompanyName = recruiters.CompanyName,
+            Address = recruiters.Address,
+            CompanyIntroduction = recruiters.CompanyIntroduction,
+            ViewCount = recruiters.ViewCount,
+            ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
+        };
+        return jobItem;
+    }
+
     public async Task<ImageViewModel> GetImageById(int ImageId)
     {
         var cv = await _context.RecruiterImages.FindAsync(ImageId);
@@ -223,10 +247,10 @@ public class RecruiterService : IRecruiterService
         return await _context.SaveChangesAsync();
     }
 
-    public async Task<int> Update(RecruiterUpdateRequest request)
+    public async Task<bool> Update(RecruiterUpdateRequest request)
     {
-        var recruiters = await _context.Recruiters.FindAsync(request.RecruiterId);
-        if (recruiters == null) throw new FindJobException($"Cannot find a recruiters with id: {request.RecruiterId}");
+        var recruiters = await _context.Recruiters.FirstOrDefaultAsync(x => x.UserId == request.Id);
+        if (recruiters == null) throw new FindJobException($"Cannot find a recruiters with id: {request.Id}");
 
         recruiters.CompanyName = request.CompanyName;
         recruiters.Address = request.Address;
@@ -259,8 +283,8 @@ public class RecruiterService : IRecruiterService
                 _context.RecruiterImages.AddRange(recruiters.RecruiterImages);
             }
         }
-
-        return await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
+        return true;
     }
 
     public async Task<int> UpdateImage(int ImageId, ImageUpdateRequest request)
