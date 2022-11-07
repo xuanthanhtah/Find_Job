@@ -14,6 +14,8 @@ namespace FindJobSolution.APItotwoweb.API
     public interface IJobInformationApi
     {
         Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request);
+
+        Task<bool> Create(JobInformationCreateRequest request);
     }
 
     public class JobInformationAPI : IJobInformationApi
@@ -25,6 +27,20 @@ namespace FindJobSolution.APItotwoweb.API
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
+        }
+
+        public async Task<bool> Create(JobInformationCreateRequest request)
+        {
+            //tạo trang mới
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            //Hàm lấy api từ backend xử lý đăng ký tài khoản
+            var response = await client.PostAsync($"/api/JobInformation", httpContent);
+            //trả về thành công 200 hay thất bại 400 > 500
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request)

@@ -3,7 +3,14 @@
     ViewData["Title"] = "IndexRecuiter";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="/assets/demo/chart-area-demo.js"></script>
+    <script src="/assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
+    <script src="/assets/demo/datatables-demo.js"></script>
+}
 <!doctype html>
 <html lang="en">
 <head>
@@ -108,18 +115,20 @@
                 <div class="sidebar-menu__header"></div>
                 <div class="sidebar-menu__body--notlogin" style="min-height:705px">
                     <p style="margin-top: 1rem!important ; color: black">Chào mừng quý công ty @User.Identity.Name đến với website chúng tôi</p>
+                    
                     @if (User.Identity.IsAuthenticated)
                     {
-
-                            <br></br>
-                                <form method="post" asp-controller="UserRecuiter" asp-action="Logout">
-                            <button type="submit" class="dropdown-item" value="Logout" style="background-color: black; color: white">Đăng xuất</button>
-                                </form>
-                            
+                        <div>
+                            <a asp-action="Index" asp-controller="UserRecuiter" class="btn head-btn2">Thông Tin</a>
+                        </div>
+                        <br></br>
+                        <form method="post" asp-controller="UserRecuiter" asp-action="Logout">
+                            <button type="submit" class="dropdown-item" value="Logout" style="background-color: #ff3333; color: white">Đăng xuất</button>
+                        </form>
                     }
                     else
                     {
-                        <a href="~/Home/UserRecuiter" class="btn head-btn1">Đăng ký</a>
+                        <a asp-action="Create" asp-controller="UserRecuiter" class="btn head-btn1">Đăng ký</a>
                         <a asp-action="Login" asp-controller="UserRecuiter" class="btn head-btn2">Đăng nhập</a>
                     }
                 </div>
