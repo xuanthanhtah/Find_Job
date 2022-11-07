@@ -1,11 +1,11 @@
-﻿
+﻿@model Website_Tuyển_dụng.Models.TaiKhoanNguoiTimViec
 
 @{
     ViewData["Title"] = "LoginJobSeeker";
 }
 
 <hr />
-<form method="post">
+<form method="post" >
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <section>
         <div class="container pt-50 pb-40">
@@ -14,39 +14,39 @@
                     <h2 class="contact-title text-center">Đăng nhập</h2>
                 </div>
                 <div class="col-lg-6 mx-auto">
-                    <div class="form-contact contact_form">
+                    <div class="form-contact contact_form">       
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Email</label>
-
+                                    <input class="form-control" type="email" name="Email" asp-for="Email"/>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
                                     <label>Mật khẩu</label>
-
+                                    <input class="form-control" type="password" name="Password" asp-for="MatKhau"/>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group mt-3">
                             <input type="submit" value="Đăng nhập" class="button button-contactForm boxed-btn mr-4" />
-                            <lable style="font-family: Barlow">Chưa có tài khoản? </lable><span class="clicklink"><a href="~/Home/RegisterJobSeeker">Đăng ký</a></span>
+                            <lable style ="font-family: Barlow" >Chưa có tài khoản? </lable><span class="clicklink"><a href="~/Home/RegisterJobSeeker">Đăng ký</a></span>
                         </div>
                         <hr />
                         <div clas="form-group">
-                            <lable style="font-family: Barlow">Bạn là nhà tuyển dụng, ấn vào </lable><span class="clicklink"><a href="~/Home/LoginEmployer">đây</a></span>
+                            <lable style ="font-family: Barlow" >Bạn là nhà tuyển dụng, ấn vào </lable><span class="clicklink"><a href="~/Home/LoginEmployer">đây</a></span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @Html.Raw(TempData["msg"])
+    @Html.Raw(TempData["msg"])
     </section>
 </form>
 @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-    }
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

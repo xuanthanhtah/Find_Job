@@ -1,0 +1,187 @@
+﻿@model Website_Tuyển_dụng.Models.NguoiTimViec
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Candidate";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Sidebar 04</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/sidebar/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+            .swiper-slide img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+    </style>
+
+</head>
+<body style="overflow-x: hidden">
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar" class="order-last img active" style="background-image: url(~/sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem">
+            <div class="custom-menu">
+            </div>
+            @if (HttpContextAccessor.HttpContext.Session.GetString("Email1") != null)
+            {
+                var email = HttpContextAccessor.HttpContext.Session.GetString("Email1");
+                QLTDContext context = new QLTDContext();
+                TaiKhoanNhaTuyenDung tkntd = context.TaiKhoanNhaTuyenDungs.SingleOrDefault(p => p.Email == email);
+                <div class="">
+                    <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> @tkntd.HoTen<span>@tkntd.Email</span> </a></h1>
+                    <ul class="list-unstyled components mb-5">
+                        <li class="active">
+                            <a href="@Url.Action("UserProfile", "UserEmp")"><span class="fa fa-user mr-3"></span>Quản lý tài khoản</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("UserCompanyEdit", "UserEmp")"><span class="fa fa-building mr-3" aria-hidden="true"></span>Thông tin công ty</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Logout2", "Home")"><span class="fa fa-times mr-3"></span>Thoát</a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="">
+                    <div class="sidebar-menu__header"></div>
+                    <div class="sidebar-menu__body--notlogin" style="min-height:705px">
+                        <p style="margin-top: 1rem!important ; color: black">Đăng nhập để tuyển dụng và nhiều thứ khác nữa</p>
+                        <a href="@Url.Action("LoginEmployer", "Home")" class="btn-page--orj" style="color:white">Đăng nhập</a>
+                    </div>
+                    <div class="sidebar-menu__footer" style="text-align:center">
+                        <a href="@Url.Action("RegisterEmployer", "Home")" class="clicklink">Tôi không có tài khoản</a>
+                    </div>
+                </div>
+            }
+        </nav>
+        <!-- Page Content  -->
+        <div id="content" style="z-index:1;background: #f9f9f9;min-height:fit-content">
+            <div style="padding-top: 40px; padding-bottom: 40px; background-color: #f9f9f9;">
+                <div style="width: 100%; padding-right: 15px; padding-left: 15px; margin-right: auto;  margin-left: auto;">
+                <div class="row">
+                    <div class="col-9">
+                        <div style="background-color: #fff; padding: 40px 24px; margin-bottom: 20px; position: relative;">
+                            <div style="display:grid;grid-template-columns: 220px 1fr auto;grid-auto-rows: auto auto;">
+                                <div style="width: 150px; grid-column: 1; grid-row: 1/3; margin: 0 auto;">
+                                    <img src="~/assets/img/hero/default-profile.png" style="width: 100%; height: auto;" />
+                                </div>
+                                @{
+                                    QLTDContext context1 = new QLTDContext();
+                                    KyNangNguoiTimViec knntv = context1.KyNangNguoiTimViecs.FirstOrDefault(p => p.MaNguoiTimViec == Model.Id);
+                                    NganhNghe nn = context1.NganhNghes.FirstOrDefault(p => p.Id == Model.MaNganhNghe);
+                                }
+                                <div style="grid-column: 2/4;grid-row: 1;padding-left: 35px; padding-bottom: 25px;">
+                                    <div style="font-size: 30px;color: #10316b; padding-bottom: 12px;text-transform: uppercase;"><span>@Html.DisplayFor(model => model.HoTen)</span></div>
+                                    <div style="color: #1e88e5; font-size: 20px; font-weight: 400; padding-bottom: 8px; text-transform: capitalize;"><span>@knntv.ChucDanh</span></div>
+                                    <div style="color: #1e88e5; font-size: 20px; font-weight: 400; padding-bottom: 8px; text-transform: capitalize;"><span>@knntv.TenCongTy</span></div>
+                                    <div style="font-size: 16px;padding-bottom: 8px; text-transform: capitalize;">@Html.DisplayFor(model => model.DiaChi)</div>
+                                </div>
+
+                                <div style="grid-column: 2;grid-row: 2;padding-left: 35px;">
+                                    <div style="font-size: 16px; padding-bottom: 7px; text-transform: capitalize;"><span>Ngày sinh: @Model.NgaySinh.Value.ToString("dd/MM/yyyy")</span></div>
+                                    <div style="font-size: 16px; padding-bottom: 7px; text-transform: capitalize;"><span>Giới Tính: @Html.DisplayFor(model => model.GioiTinh)</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="background-color: #fff; margin-bottom: 24px; font-size: 18px;">
+                            <div style="padding: 32px 24px 24px; box-shadow: 0 0.15rem 1.75rem 0 rgb(33 37 41 / 15%); border-radius: 0.25rem;display:flex!important">
+                                <div class="col-sm-6">
+                                    @*<div style="margin-bottom: 8px;display:flex!important">
+                                        <span style="max-width: 200px; white-space: pre-wrap; text-transform: capitalize;">Mức lương mong muốn</span>
+                                        <span style="display: block;text-transform: capitalize; margin-left: 1rem; width: fit-content; max-width: 100%;color: #1e88e5; font-weight: 500;">@Html.DisplayFor(model => model.DiaChi)</span>
+                                    </div>*@
+                                    <div style="margin-bottom: 8px;display:flex!important">
+                                        <span style="max-width: 200px; white-space: pre-wrap; text-transform: capitalize;">Kinh nghiệm làm việc</span>
+                                        <span style="display: block;text-transform: capitalize; margin-left: 1rem; width: fit-content; max-width: 100%;color: #1e88e5; font-weight: 500;">@knntv.ThoiGianLamViec</span>
+                                    </div>
+                                    <div style="margin-bottom: 8px;display:flex!important">
+                                        <span style="max-width: 200px; white-space: pre-wrap; text-transform: capitalize;">Ngành nghề</span>
+                                        <span style="display: block;text-transform: capitalize; margin-left: 1rem; width: fit-content; max-width: 100%;color: #1e88e5; font-weight: 500;">@nn.TenNganhNghe</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6" style="padding-left: 40px;">
+                                    <div style="margin-bottom: 8px;display:flex!important">
+                                        <span style="max-width: 200px; white-space: pre-wrap; text-transform: capitalize;">Vị trí hiện tại</span>
+                                        <span style="display: block;text-transform: capitalize; margin-left: 1rem; width: fit-content; max-width: 100%;color: #1e88e5; font-weight: 500;">@knntv.ChucDanh</span>
+                                    </div>
+                                    <div style="margin-bottom: 8px;display:flex!important">
+                                        <span style="max-width: 200px; white-space: pre-wrap; text-transform: capitalize;">Công ty hiện tại</span>
+                                        <span style="display: block;text-transform: capitalize; margin-left: 1rem; width: fit-content; max-width: 100%;color: #1e88e5; font-weight: 500;">@knntv.TenCongTy</span>
+                                    </div>
+                                    <div style="margin-bottom: 8px;display:flex!important">
+                                        <span style="max-width: 200px; white-space: pre-wrap; text-transform: capitalize;">Trình độ học vấn</span>
+                                        <span style="display: block;text-transform: capitalize; margin-left: 1rem; width: fit-content; max-width: 100%;color: #1e88e5; font-weight: 500;">@knntv.BangCap</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script src="~/sidebar/js/jquery.min.js"></script>
+    <script src="~/sidebar/js/popper.js"></script>
+    <script src="~/sidebar/js/bootstrap.min.js"></script>
+    <script src="~/sidebar/js/main.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+</body>
+</html>
+

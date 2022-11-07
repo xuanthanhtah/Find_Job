@@ -1,0 +1,230 @@
+﻿@model Website_Tuyển_dụng.Models.NhaTuyenDung
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "UserProfileEdit";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Sidebar 04</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../sidebar/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+            .swiper-slide img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+    </style>
+</head>
+<body>
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" class="order-last img active" style="background-image: url(../sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem">
+        <div class="custom-menu">
+        </div>
+        @if (HttpContextAccessor.HttpContext.Session.GetString("Email1") != null)
+        {
+            var email = HttpContextAccessor.HttpContext.Session.GetString("Email1");
+            QLTDContext context = new QLTDContext();
+            TaiKhoanNhaTuyenDung tkntd = context.TaiKhoanNhaTuyenDungs.SingleOrDefault(p => p.Email == email);
+            <div class="">
+                <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> @tkntd.HoTen<span>@tkntd.Email</span> </a></h1>
+                <ul class="list-unstyled components mb-5">
+                    <li class="active">
+                        <a href="@Url.Action("UserProfile", "UserEmp")"><span class="fa fa-user mr-3"></span>Quản lý tài khoản</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("UserCompanyEdit", "UserEmp")"><span class="fa fa-building mr-3" aria-hidden="true"></span>Thông tin công ty</a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Logout2", "Home")"><span class="fa fa-times mr-3"></span>Thoát</a>
+                    </li>
+                </ul>
+            </div>
+        }
+        else
+        {
+            <div class="">
+                <div class="sidebar-menu__header"></div>
+                <div class="sidebar-menu__body--notlogin" style="min-height:705px">
+                    <p style="margin-top: 1rem!important ; color: black">Đăng nhập để tuyển dụng và nhiều thứ khác nữa</p>
+                    <a href="@Url.Action("LoginEmployer", "Home")" class="btn-page--orj" style="color:white">Đăng nhập</a>
+                </div>
+                <div class="sidebar-menu__footer" style="text-align:center">
+                    <a href="@Url.Action("RegisterEmployer", "Home")" class="clicklink">Tôi không có tài khoản</a>
+                </div>
+            </div>
+        }
+    </nav>
+    <div id="content" style="z-index:1">
+        <div class="" style="width: 100%; height: 100vh; display: table; background-color: white;">
+            <div class="container-fluid" style="margin:3rem!important">
+                <div class="row">
+                    <div class="col-sidebar-ac1" style="flex: 0 0 21%; max-width: 21%;">
+                        <ul class="" style="flex-direction: column!important; padding-left: 0; margin-bottom: 0; list-style: none; display: flex;">
+                            <li style="margin-bottom: -1px; cursor: pointer;">
+                                <a style="font-size: 15px; font-weight: 600; padding-left: 24px; padding-right: 24px;  display: flex; align-items: center; color: #474747; background-color: #fff; border: 1px solid #e2e2e2; height: 46px; font-family: Open Sans,sans-serif" href="@Url.Action("UserProfile", "UserEmp")">Quản lý tài khoản</a>
+                            </li>
+                            <li style="margin-bottom: -1px; cursor: pointer;">
+                                <a style="font-size: 15px; font-weight: 600; padding-left: 24px; padding-right: 24px;  display: flex; align-items: center; color: #474747; background-color: #fff; border: 1px solid #e2e2e2; height: 46px; font-family: Open Sans,sans-serif" href="@Url.Action("UserCompanyEdit", "UserEmp")">Thông tin công ty</a>
+                            </li>
+                            <li style="margin-bottom: -1px; cursor: pointer;">
+                                <a style="font-size: 15px; font-weight: 600; padding-left: 24px; padding-right: 24px;  display: flex; align-items: center; color: #474747; background-color: #fff; border: 1px solid #e2e2e2; height: 46px; font-family: Open Sans,sans-serif" href="@Url.Action("CompanyProfile", "UserEmp")">Lịch sử hoạt động</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-content-ac1" style="padding-left:3rem!important; flex: 0 0 79%; max-width: 79%;">
+                        <div class="row">
+                            <div class="" style="flex: 0 0 91.666667%; max-width: 91.666667%;">
+                                <p class="title-page">Thông tin công ty</p>
+                                <div style=" margin-top: 1rem; margin-bottom: 1rem; border: 0; border-top: 1px solid rgba(0,0,0,.1);"></div>
+                                <form asp-action="UserCompanyEdit" method="post" enctype="multipart/form-data">
+                                    <fieldset aria-hidden="false">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <label class="col-sm-3" style="position:relative; text-transform: capitalize; font-family: Open Sans,sans-serif; max-width: fit-content!important; padding: 0; font-weight: 700; display: flex; align-items: center; white-space: nowrap;" aria-required="true">Tên công ty</label>
+                                                    <div style="position:relative">
+                                                        <input asp-for="TenCongTy" class="form-control" required="required" maxlength="255" placeholder="Ví dụ: DDT" tabindex="9" style="border: 1px solid #979797;"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="col-sm-3" style="position:relative; text-transform: capitalize; font-family: Open Sans,sans-serif; max-width: fit-content!important; padding: 0; font-weight: 700; display: flex; align-items: center; white-space: nowrap;" aria-required="true">Điện thoại</label>
+                                                    <div style="position:relative">
+                                                        <input asp-for="Sdt" class="form-control" required="required" maxlength="255" tabindex="9" style="border: 1px solid #979797;"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <label class="col-sm-3" style="position:relative; text-transform: capitalize; font-family: Open Sans,sans-serif; max-width: fit-content!important; padding: 0; font-weight: 700; display: flex; align-items: center; white-space: nowrap;" aria-required="true">Địa chỉ</label>
+                                                    <div style="position:relative">
+                                                        <input asp-for="Diachi" class="form-control" required="required" maxlength="255" placeholder="Ví dụ: 242 Nguyễn Văn Lượng, Phường 10, Quận Gò Vấp" tabindex="9" style="border: 1px solid #979797;"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label class="col-sm-3" style="position:relative; text-transform: capitalize; font-family: Open Sans,sans-serif; max-width: fit-content!important; padding: 0; font-weight: 700; display: flex; align-items: center; white-space: nowrap;" aria-required="true">Ngành nghề</label>
+                                                    <div style="position:relative">
+                                                        <div>@Html.DropDownList("MaNganhNghe", new SelectList(Model.ListNganhNghe, "Id", "TenNganhNghe"), htmlAttributes: new { @class = "form-control-1" })</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label class="col-sm-3" style="position:relative; text-transform: capitalize; font-family: Open Sans,sans-serif; max-width: fit-content!important; padding: 0; font-weight: 700; display: flex; align-items: center; white-space: nowrap;" aria-required="true">Sơ lược về công ty</label>
+                                                    <div style="position:relative">
+                                                        <textarea asp-for="SoLuocCongTy" maxlength="10000" type="text" class="form-control1" cols="30" rows="7" placeholder="Sơ lược về công ty của bạn" tabindex="15" style="height: 130px;width: 100%"></textarea>
+                                                    </div>
+                                                </div>                                             
+                                            </div>
+                                        </div>
+                                            @{
+                                                if (Model.Logo != null)
+                                                {
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <label class="col-sm-3" style="position:relative; text-transform: capitalize; font-family: Open Sans,sans-serif; max-width: fit-content!important; padding: 0; font-weight: 700; display: flex; align-items: center; white-space: nowrap;" aria-required="true">Logo</label>
+                                                                @{
+                                                                    var imgsrc = "";
+                                                                    var base64 = Convert.ToBase64String(Model.Logo.ToArray());
+                                                                    imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                                                    <img src='@imgsrc' style="max-width:500px;max-height:500px" />
+                                                                }
+                                                                <div style="position:relative">
+                                                                    <input asp-for="Logo" type="file" id="file" name="file" class="form-control1" cols="30" rows="7" tabindex="15" style="height: 40px;width: 100%" />
+                                                                </div>
+                                                            </div>                                             
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-12">
+                                                                <label class="col-sm-3" style="position:relative; text-transform: capitalize; font-family: Open Sans,sans-serif; max-width: fit-content!important; padding: 0; font-weight: 700; display: flex; align-items: center; white-space: nowrap;" aria-required="true">Logo</label>
+                                                                <div style="position:relative">
+                                                                    <input asp-for="Logo" type="file" id="file" name="file" class="form-control1" cols="30" rows="7" tabindex="15" style="height: 40px;width: 100%" />
+                                                                </div>
+                                                            </div>                                             
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        <div class="form-group">
+                                            <input type="submit" value="Lưu" class="btn btn-primary" />
+                                        </div>
+                                    </fieldset>
+                                </form>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../sidebar/js/jquery.min.js"></script>
+    <script src="../sidebar/js/popper.js"></script>
+    <script src="../sidebar/js/bootstrap.min.js"></script>
+    <script src="../sidebar/js/main.js"></script>
+
+</div>
+</body>
+</html>

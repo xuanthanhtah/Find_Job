@@ -1,0 +1,283 @@
+﻿@model Website_Tuyển_dụng.Models.CongViecDangTuyen
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Info";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Sidebar 04</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/sidebar/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+            .swiper-slide img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+    </style>
+</head>
+<body>
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar" class="order-last img active" style="background-image: url(~/sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem; ">
+            <div class="custom-menu">
+            </div>
+            @if (HttpContextAccessor.HttpContext.Session.GetString("Email1") != null)
+            {
+                var email = HttpContextAccessor.HttpContext.Session.GetString("Email1");
+                QLTDContext context = new QLTDContext();
+                TaiKhoanNhaTuyenDung tkntd = context.TaiKhoanNhaTuyenDungs.SingleOrDefault(p => p.Email == email);
+                <div class="">
+                    <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> @tkntd.HoTen<span>@tkntd.Email</span> </a></h1>
+                    <ul class="list-unstyled components mb-5">
+                        <li class="active">
+                            <a href="@Url.Action("UserProfile", "UserEmp")"><span class="fa fa-user mr-3"></span>Quản lý tài khoản</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("UserCompanyEdit", "UserEmp")"><span class="fa fa-building mr-3" aria-hidden="true"></span>Thông tin công ty</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Logout2", "Home")"><span class="fa fa-times mr-3"></span>Thoát</a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="">
+                    <div class="sidebar-menu__header"></div>
+                    <div class="sidebar-menu__body--notlogin" style="min-height:705px">
+                        <p style="margin-top: 1rem!important ; color: black">Đăng nhập để tuyển dụng và nhiều thứ khác nữa</p>
+                        <a href="@Url.Action("LoginEmployer", "Home")" class="btn-page--orj" style="color:white">Đăng nhập</a>
+                    </div>
+                    <div class="sidebar-menu__footer" style="text-align:center">
+                        <a href="@Url.Action("RegisterEmployer", "Home")" class="clicklink">Tôi không có tài khoản</a>
+                    </div>
+                </div>
+            }
+        </nav>
+        <div id="content" style="z-index:1; min-height:669px">
+            <div style=" width: 100%; overflow-x: hidden;">
+                <div style="min-height: 669px; background-color: #f6f6f6;">
+                    <div style=" padding: 25px 43px 50px;">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div>
+                                    <div style="background-color:#fff">
+                                        <div style="display:block">
+                                            <div style=" background: #fff; border: 1px solid #e5e6e7; border-radius: 2px; padding: 20px; position: relative;">
+                                                <div class="col-sm-12 col-lg-12">
+                                                    <div style="box-sizing:border-box">
+                                                        <div>
+                                                            <h2 style="margin-bottom: 15px;font-weight: 100; text-transform:capitalize; font-family:sans-serif; font-size: 24px;">Mô tả công việc</h2>
+                                                            <fieldset aria-hidden=false>
+                                                                <div class="form-group" style="margin-left: -15px;margin-right: -15px;">
+                                                                    <label class="col-sm-3" style="position: relative; padding-top: 7px; margin-bottom: 0; text-align: right;text-transform: capitalize; font-weight:700">Chức danh</label>
+                                                                    <div class="col-sm-9" style="float:right ;padding-top: 7px;">
+                                                                        <span style="position: relative; display: block; direction: ltr; font-weight: 400;">
+                                                                            @Html.DisplayFor(model => model.ChucDanh)
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="margin-left: -15px;margin-right: -15px;">
+                                                                    <label class="col-sm-3" style="position: relative; padding-top: 7px; margin-bottom: 0; text-align: right;text-transform: capitalize; font-weight:700">Cấp bậc</label>
+                                                                    <div class="col-sm-9" style="float:right ;padding-top: 7px;">
+                                                                        @Html.DisplayFor(model => model.Capbac)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="margin-left: -15px;margin-right: -15px;">
+                                                                    <label class="col-sm-3" style="position: relative; padding-top: 7px; margin-bottom: 0; text-align: right;text-transform: capitalize; font-weight:700">Loại việc làm</label>
+                                                                    <div class="col-sm-9" style="float:right ;padding-top: 7px;">
+                                                                        @Html.DisplayFor(model => model.LoaiViecLam)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="margin-left: -15px;margin-right: -15px;">
+                                                                    <label class="col-sm-3" style="position: relative; padding-top: 7px; margin-bottom: 0; text-align: right;text-transform: capitalize; font-weight:700">Ngành nghề</label>
+                                                                    <div class="col-sm-9" style="float:right ;padding-top: 7px;">
+                                                                        <div>
+                                                                            @Html.DisplayFor(model => model.MaNganhNghe)
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="margin-left: -15px;margin-right: -15px;">
+                                                                    <label class="col-sm-3" style="position: relative; padding-top: 7px; margin-bottom: 0; text-align: right;text-transform: capitalize; font-weight:700">Địa điểm làm việc</label>
+                                                                    <div class="col-sm-9" style="float:right ;padding-top: 7px;">
+                                                                        <span style="position: relative; display: block; direction: ltr; font-weight: 400;">
+                                                                            @Html.DisplayFor(model => model.DiaChi)
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="margin-left: -15px;margin-right: -15px;">
+                                                                    <label class="col-sm-3" style="position: relative; padding-top: 7px; margin-bottom: 0; text-align: right;text-transform: capitalize; font-weight:700">Mô tả công việc</label>
+                                                                    <div class="col-sm-9" style="float:right ;padding-top: 7px;">
+                                                                        @Html.DisplayFor(model => model.Mota)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" style="margin-left: -14.9px;margin-right: -15px;">
+                                                                    <label class="col-sm-3" style="position: relative; padding-top: 7px; margin-bottom: 0; text-align: right;text-transform: capitalize; font-weight:700 ; float:left ;padding-top:10px">Mức lương</label>
+                                                                    <div class="col-md-4" style="float:left ;padding-top: 7px;">
+                                                                        <span style="position: relative; display: block; direction: ltr; font-weight: 400;padding-top:4px">
+                                                                            @Html.DisplayFor(model => model.MucLuong)
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </fieldset>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div>
+                                    <div style="background-color:#fff">
+                                        <div style="display:block">
+                                            <div style=" background: #fff; border: 1px solid #e5e6e7; border-radius: 2px; padding: 20px; position: relative;">
+                                                <div class="col-sm-12 col-lg-12">
+                                                    <div style="box-sizing:border-box">
+                                                        <div>
+                                                            <h2 style="margin-bottom: 15px;font-weight: 100; text-transform:capitalize; font-family:sans-serif; font-size: 24px;">Danh sách người ứng tuyển</h2>
+                                                            @{
+                                                                QLTDContext Context = new QLTDContext();
+                                                                List<XinViec> xv = Context.XinViecs.Where(p => p.MaCongViecDangTuyen == Model.Id).ToList();
+                                                                int dem = 1;
+                                                            }
+                                                            <table class="table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            @Html.DisplayNameFor(model => model.Id)
+                                                                        </th>
+                                                                        <th>
+                                                                            Họ và tên
+                                                                        </th>
+                                                                        <th>
+                                                                            Kinh nghiệm làm việc
+                                                                        </th>
+                                                                        <th>
+                                                                            Trình độ học vấn
+                                                                        </th>
+                                                                        <th>
+                                                                            Trạng thái 
+                                                                        </th>
+                                                                        <th>
+
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach (var item in xv)
+                                                                    {
+                                                                        NguoiTimViec ntv = Context.NguoiTimViecs.FirstOrDefault(q => q.Id == item.MaNguoiTimViec);
+                                                                        KyNangNguoiTimViec knntv = Context.KyNangNguoiTimViecs.FirstOrDefault(z => z.MaNguoiTimViec == ntv.Id);
+                                                                        <tr>
+                                                                            <td>
+                                                                                @dem
+                                                                            </td>
+                                                                            <td>
+                                                                                <a href="@Url.Action("CandidateInfo", new { id=item.Id })" class="clicklink">@ntv.HoTen</a>
+                                                                            </td>
+                                                                            <td>
+                                                                                @knntv.MotaKinhNghiemLamViec
+                                                                            </td>
+                                                                            <td>
+                                                                                @knntv.BangCap
+                                                                            </td>
+                                                                            @if (item.TrangThai != null)
+                                                                            {
+                                                                                <td>
+                                                                                    @item.TrangThai
+                                                                                </td>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <td>
+                                                                                    Chưa cập nhật
+                                                                                </td>
+                                                                            }
+                                                                            <td>
+                                                                                @Html.ActionLink("Chấp nhận", "AcceptApplication", new { id = item.Id }) |
+                                                                                @Html.ActionLink("Từ chối", "RejectApplication", new { id = item.Id }) 
+                                                                            </td>
+                                                                        </tr>
+                                                                        dem++;
+                                                                    }
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="~/sidebar/js/jquery.min.js"></script>
+        <script src="~/sidebar/js/popper.js"></script>
+        <script src="~/sidebar/js/bootstrap.min.js"></script>
+        <script src="~/sidebar/js/main.js"></script>
+
+    </div>
+</body>
+</html>

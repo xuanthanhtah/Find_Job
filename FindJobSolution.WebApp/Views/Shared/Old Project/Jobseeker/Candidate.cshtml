@@ -1,0 +1,207 @@
+﻿@model IEnumerable<Website_Tuyển_dụng.Models.NguoiTimViec>
+@using Microsoft.AspNetCore.Http;
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Candidate";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Sidebar 04</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../sidebar/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+            .swiper-slide img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+    </style>
+
+</head>
+<body style="overflow-x: hidden">
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar" class="order-last img active" style="background-image: url(../sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem">
+            <div class="custom-menu">
+            </div>
+            @if (HttpContextAccessor.HttpContext.Session.GetString("Email1") != null)
+            {
+                var email = HttpContextAccessor.HttpContext.Session.GetString("Email1");
+                QLTDContext context = new QLTDContext();
+                TaiKhoanNhaTuyenDung tkntd = context.TaiKhoanNhaTuyenDungs.SingleOrDefault(p => p.Email == email);
+                <div class="">
+                    <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> @tkntd.HoTen<span>@tkntd.Email</span> </a></h1>
+                    <ul class="list-unstyled components mb-5">
+                        <li class="active">
+                            <a href="@Url.Action("UserProfile", "UserEmp")"><span class="fa fa-user mr-3"></span>Quản lý tài khoản</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("UserCompanyEdit", "UserEmp")"><span class="fa fa-building mr-3" aria-hidden="true"></span>Thông tin công ty</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Logout2", "Home")"><span class="fa fa-times mr-3"></span>Thoát</a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="">
+                    <div class="sidebar-menu__header"></div>
+                    <div class="sidebar-menu__body--notlogin" style="min-height:705px">
+                        <p style="margin-top: 1rem!important ; color: black">Đăng nhập để tuyển dụng và nhiều thứ khác nữa</p>
+                        <a href="@Url.Action("LoginEmployer", "Home")" class="btn-page--orj" style="color:white">Đăng nhập</a>
+                    </div>
+                    <div class="sidebar-menu__footer" style="text-align:center">
+                        <a href="@Url.Action("RegisterEmployer", "Home")" class="clicklink">Tôi không có tài khoản</a>
+                    </div>
+                </div>
+            }
+        </nav>
+        <!-- Page Content  -->
+        <div id="content" style="z-index:1;background: #fff;">
+
+            <div style="background: #fff; z-index: 100; top: 0;padding-top: 20px; position: relative;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 p-0" style="display:flex!important">
+                            <div style="width:875px; float:left">
+                                <div class="form-group">
+                                    <span class="fa fa-search" style="position: absolute; z-index: 2; display: block; width: 2.375rem; height: 2.375rem; line-height: 2.3rem;text-align: center; pointer-events: none; color: #aaa; padding-left: 3px;"></span>
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm" style="padding-left: 2.375rem; border-radius: 2px; font-size: 14px; height: 44px; padding-top: 5px; border: 1px solid #636363;outline: none!important;" />
+                                </div>
+                            </div>
+                            <div style="width:128px; margin: auto 10px; float: left;">
+                                <button type="button" class="button button-contactForm boxed-btn mr-4" style="width: 100%; font-weight: 400;text-transform: capitalize; height: 44px!important; border-radius: 2px!important; background: #f7941d; color: #fff; margin: 0;font-size: 14px; text-transform: uppercase;border: 1px solid transparent;margin-top: -16px;letter-spacing:normal;padding:inherit;color:#fff!important   ">Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container" style="margin-top:30px!important; background: #fff;">
+                <div class="row mt-2">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div style="flex:0 0 100%; max-width:100%">
+                                <div class="col-lg-12">
+                                    <div style="display: flex; align-items: center; height: 45px;">
+                                        <div class="col-lg-7 col-md-5 col-sm-12 p-0">
+                                            <p style="margin: 0; position: relative; font-weight: 700; font-size: 15px; padding: 12px 0; top: 3px; text-transform: uppercase;">
+                                                <span>aaa</span>
+                                                Ứng viên cho phép tìm kiếm
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="width: 100%; padding: 0; border: 0.5px solid #e2e2e2; top: 2px;" />
+                                <div style="box-sizing: border-box">
+                                    @foreach (var item in Model)
+                                    {
+                                        QLTDContext context = new QLTDContext();
+                                        KyNangNguoiTimViec knntv = context.KyNangNguoiTimViecs.FirstOrDefault(p => p.MaNguoiTimViec == item.Id);
+                                        <div style="background-color:#fff">
+                                            <div class="col-lg-12">
+                                                <div class="row" style="padding-top: 14px!important; padding-bottom: 14px!important;">
+                                                    <div style="flex: 0 0 75%; max-width: 75%; min-height:fit-content;padding:0!important">
+                                                        <div style="font-size: 17px; font-weight: 700; color: #1c88e5;margin: 0;display: flex; align-items: center ;text-transform: capitalize; line-height: 24px;">
+                                                            <span>@item.HoTen</span>
+                                                        </div>
+                                                        <p style="padding-bottom: 5px; white-space: nowrap; text-overflow: ellipsis; color: #636363; margin: 0; padding: 0; width: auto; flex-grow: 1; overflow-x: hidden; display: flex; font-size: 14px; font-weight: 400;">
+                                                            <span style="color: #474747!important; font-weight: 600!important; width: fit-content; max-width: 100%; overflow: hidden; display: block;">@knntv.ChucDanh</span>
+                                                        </p>
+                                                        <p style="white-space: nowrap; text-overflow: ellipsis; color: #636363; margin: 0; padding: 0; width: auto; flex-grow: 1; overflow-x: hidden; display: flex;">
+                                                            Năm kinh nghiệm:
+                                                            <span style="color: #474747!important; font-weight: 600!important; width: fit-content;  max-width: 100%; overflow: hidden; display: block; white-space: nowrap; text-overflow: ellipsis;text-transform: lowercase!important; padding-left:5px">@knntv.ThoiGianLamViec</span>
+                                                        </p>
+                                                        <p style="white-space: nowrap; text-overflow: ellipsis; color: #636363; margin: 0; padding: 0; width: auto; flex-grow: 1; overflow-x: hidden; display: flex;">
+                                                            Trình độ học vấn:
+                                                            <span style="color: #474747!important; font-weight: 600!important; width: fit-content;  max-width: 100%; overflow: hidden; display: block; white-space: nowrap; text-overflow: ellipsis;text-transform: lowercase!important; padding-left:5px">@knntv.BangCap</span>
+                                                        </p>
+                                                        <div style="display: flex;">
+                                                            <p style="white-space: nowrap; margin: 0; color: #636363;">
+                                                                Địa điểm:
+                                                            </p>
+                                                            <p style="white-space: nowrap; text-overflow: ellipsis; color: #636363; margin: 0; padding: 0; width: auto; flex-grow: 1; overflow-x: hidden; display: flex;">
+                                                                <span style="color: #474747!important; font-weight: 600!important; width: fit-content; max-width: 100%; overflow: hidden;  display: block;padding-left:5px">@item.DiaChi</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-3 p-0">
+                                                        <div style="margin: 0; position: absolute; top: calc(50% - 33px); right: 10px; white-space: nowrap;">
+                                                            <div style="color: rgba(99,99,99,.7411764705882353); font-size: 12px; text-align: end;white-space: nowrap;margin-bottom: 10px;"></div>
+                                                            <a href="@Url.Action("CandidateInfo", new { id=item.Id })" style="height: 37px; width: 120px;  margin: auto; border-radius: 2px;  font-size: 15px; border: 1px solid #f7941d!important; color: #f7941d!important;cursor:pointer;display: inline-block font-weight: 400;color: #212529; text-align: center;vertical-align: middle; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-color: transparent; border: 1px solid transparent; padding: 0.375rem 0.75rem; font-size: 1rem; line-height: 1.5;border-radius: 0.25rem;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;">Hồ sơ chi tiết</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr style="border-top: 1px dotted #979797; padding: 0!important; margin: 0!important;">
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../sidebar/js/jquery.min.js"></script>
+    <script src="../sidebar/js/popper.js"></script>
+    <script src="../sidebar/js/bootstrap.min.js"></script>
+    <script src="../sidebar/js/main.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+</body>
+</html>
