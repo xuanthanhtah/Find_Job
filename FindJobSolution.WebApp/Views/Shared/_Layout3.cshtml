@@ -1,8 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http;
-@using FindJobSolution.Data.EF;
+@inject IHttpContextAccessor HttpContextAccessor
 
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -11,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="site.webmanifest">
     <link rel="shortcut icon" type="image/x-icon" href="~/assets/img/favicon.ico">
-
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <!-- CSS here -->
     <link rel="stylesheet" href="~/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/assets/css/owl.carousel.min.css">
@@ -26,7 +25,7 @@
     <link rel="stylesheet" href="~/assets/css/nice-select.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
 </head>
-<body>
+<body style="overflow-x: hidden">
     <!-- Preloader Start -->
     <div id="preloader-active">
         <div class="preloader d-flex align-items-center justify-content-center">
@@ -39,84 +38,51 @@
         </div>
     </div>
     <!-- Preloader Start -->
-    <header>
+        <header>
         <!-- Header Start -->
         <div class="header-area header-transparrent">
-            <div class="headder-top header-sticky">
-                <div class="container">
+            <div class="headder-top header-sticky" style="background-color:#010b1d">
+                <div class="container" style="max-width:1600px">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="~/Home/Index"><img src="~/assets/img/logo/logo2.png" alt=""></a>
+                                <a href="~/UserEmp/Index"><img src="~/assets/img/logo/logo_footer.png" alt=""></a>
                             </div>
                         </div>
-                        <div class="col-lg-9 col-md-9">
+                        <div class="col-lg-9 col-md-9" style="flex:0 0 50%; max-width: 75%">
                             <div class="menu-wrapper">
                                 <!-- Main-menu -->
                                 <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
-                                            <li><a href="~/Home/Index">Trang chủ</a></li>
-                                            <li><a href="~/Home/JobList">Tìm kiếm việc làm</a></li>
-                                            <li><a href="~/UserEmp/Index">Nhà tuyển dụng</a></li>
+                                            <li><a href="~/UserEmp/CurrentPostedJob" style="color:white">Việc làm</a></li>
+                                            <li><a href="~/UserEmp/Recruitment" style="color:white">Đăng tin tuyển dụng</a></li>                                          
+                                            <li class="separate">
+                                                <a href="~/Home/Index" style="color:white">Tìm việc làm</a>
+                                            </li>
                                         </ul>
                                     </nav>
                                 </div>
                                 <!-- Header-btn -->
-                                @*@if (HttpContextAccessor.HttpContext.Session.GetString("Email") != null)
-                                {
-                                    var email = HttpContextAccessor.HttpContext.Session.GetString("Email");
-                                    FindJobDBContext context = new FindJobDBContext();
-                                    TaiKhoanNguoiTimViec tkntv = context.TaiKhoanNguoiTimViecs.SingleOrDefault(p => p.Email == email);
-                                    <div class="nice-select">
-                                        Hello
-                                        @tkntv.HoTen
-                                        <ul class="list">
-                                            <li data-value class="option"><img src="~/assets/img/icon/menu-user-2.png"><a href="@Url.Action("UserProfile", "UserJS")" style="color:black">Thông tin</a></li>
-                                            <li data-value class="option"><img src="~/assets/img/icon/menu-user-3.png"><a href="@Url.Action("Logout", "Home")" style="color:black">Đăng xuất</a></li>
-                                        </ul>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="header-btn d-none f-right d-lg-block">
-                                        <a href="~/Home/RegisterJobSeeker" class="btn head-btn1">Đăng ký</a>
-                                        <a href="~/Home/LoginJobSeeker" class="btn head-btn2">Đăng nhập</a>
-                                    </div>
-                                }*@
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    @if(User.Identity.IsAuthenticated) {
-                                        <div class="nice-select">
-                                            Hello
-                                            @User.Identity.Name
-                                            <ul class="list">
-                                                <li data-value class="option"><img src="~/assets/img/icon/menu-user-2.png"><a href="@Url.Action("UserProfile", "UserJobSeeker")" style="color:black">Thông tin</a></li>
-                                                <form method="post" asp-controller="UserJobSeeker" asp-action="Logout">
-                                                                        <button type="submit" class="dropdown-item" value="Logout">Đăng xuất</button>
-                                                                        </form>
-                                            </ul>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <a href="~/Home/RegisterJobSeeker" class="btn head-btn1">Đăng ký</a>
-                                        <a asp-action="Login" asp-controller="UserJobSeeker" class="btn head-btn2">Đăng nhập</a>
-                                    }
-                                </div>
                             </div>
                         </div>
+                        <div class="col-lg-3 col-md-2">
+                            <div class="d-none f-right d-lg-block">
+                                        <button type="button" id="sidebarCollapse" style="border:none ; background-color:transparent" >
+                                            <img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px">
+                                        </button>
+                                </div>
+                        </div>
+                        </div>                 
                     </div>
+                    
                 </div>
             </div>
-        </div>
         <!-- Header End -->
     </header>
-    <div class="container body-container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+
+    @RenderBody()
 
     <footer>
         <!-- Footer Start-->
@@ -182,7 +148,7 @@
                                               method="get" class="subscribe_form relative mail_part">
                                             <input type="email" name="email" id="newsletter-form-email" placeholder="Email Address"
                                                    class="placeholder hide-on-focus" onfocus="this.placeholder = ''"
-                                                   onblur="this.placeholder = 'Email Address'">
+                                                   onblur="this.placeholder = ' Email Address '">
                                             <div class="form-icon">
                                                 <button type="submit" name="submit" id="newsletter-submit"
                                                         class="email_icon newsletter-submit button-contactForm">
@@ -246,6 +212,7 @@
                                 <a href="#"><i class="fab fa-facebook-f"></i></a>
                                 <a href="#"><i class="fab fa-twitter"></i></a>
                                 <a href="#"><i class="fas fa-globe"></i></a>
+
                                 <a href="#"><i class="fab fa-behance"></i></a>
                             </div>
                         </div>
@@ -255,7 +222,6 @@
         </div>
         <!-- Footer End-->
     </footer>
-
     <!-- JS here -->
     <!-- All JS Custom Plugins Link Here here -->
     <script src="~/assets/js/vendor/modernizr-3.5.0.min.js"></script>
@@ -292,9 +258,10 @@
     <script src="~/assets/js/plugins.js"></script>
     <script src="~/assets/js/main.js"></script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
