@@ -53,30 +53,30 @@ namespace FindJobSolution.API.Controllers
             return Ok(result);
         }
 
-        [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] JobInformationUpdateRequest request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] JobInformationUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _jobInformationService.Update(request);
-            if (result == 0)
+            var result = await _jobInformationService.Update(id, request);
+            if (result == false)
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(result);
         }
 
-        [HttpDelete("Delete/{JobInformationId}")]
+        [HttpDelete("{JobInformationId}")]
         public async Task<IActionResult> Delete(int JobInformationId)
         {
             var result = await _jobInformationService.Delete(JobInformationId);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet("paging")]

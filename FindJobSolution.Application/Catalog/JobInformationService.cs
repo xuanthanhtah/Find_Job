@@ -11,9 +11,9 @@ namespace FindJobSolution.Application.Catalog
     {
         Task<bool> Create(JobInformationCreateRequest request);
 
-        Task<int> Update(JobInformationUpdateRequest request);
+        Task<bool> Update(int id, JobInformationUpdateRequest request);
 
-        Task<int> Delete(int JobInformationId);
+        Task<bool> Delete(int JobInformationId);
 
         Task<List<JobInformationViewModel>> GetAll();
 
@@ -65,13 +65,13 @@ namespace FindJobSolution.Application.Catalog
             return true;
         }
 
-        public async Task<int> Delete(int JobInformationId)
+        public async Task<bool> Delete(int JobInformationId)
         {
             var jobInformation = await _context.JobInformations.FindAsync(JobInformationId);
-            if (jobInformation == null) return 0;
-            jobInformation.Status = Data.Enums.Status.NoActive;
-
-            return await _context.SaveChangesAsync();
+            if (jobInformation == null) return false;
+            _context.JobInformations.Remove(jobInformation);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<List<JobInformationViewModel>> GetAll()
@@ -251,11 +251,11 @@ namespace FindJobSolution.Application.Catalog
             return pagedResult;
         }
 
-        public async Task<int> Update(JobInformationUpdateRequest request)
+        public async Task<bool> Update(int id, JobInformationUpdateRequest request)
         {
-            var jobInformation = await _context.JobInformations.FindAsync(request.JobInformationId);
+            var jobInformation = await _context.JobInformations.FindAsync(id);
 
-            if (jobInformation == null) { throw new FindJobException($"cannot find a job: {request.JobInformationId}"); }
+            if (jobInformation == null) { throw new FindJobException($"cannot find a job: {id}"); }
 
             jobInformation.JobInformationTimeEnd = request.JobInformationTimeEnd;
             jobInformation.JobInformationTimeStart = request.JobInformationTimeStart;
@@ -265,10 +265,12 @@ namespace FindJobSolution.Application.Catalog
             jobInformation.MinSalary = request.MinSalary;
             jobInformation.JobId = request.JobId;
             jobInformation.JobType = request.JobType;
-            jobInformation.JobInformationId = request.JobInformationId;
+            jobInformation.JobInformationId = id;
             jobInformation.JobLevel = request.JobLevel;
             jobInformation.JobTitle = request.JobTitle;
-            return await _context.SaveChangesAsync();
+            jobInformation.Status = request.Status;
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

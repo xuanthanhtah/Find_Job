@@ -136,5 +136,15 @@ namespace FindJobSolution.API.Controllers
                 return BadRequest("Cannot find image");
             return Ok(image);
         }
+
+        //get recuiterId by userId
+        [HttpGet("recuiterId/{userId}")]
+        public async Task<IActionResult> GetRecuiterIdByUserId(Guid userId)
+        {
+            var recuiterId = await _recruiterService.GetRecuiterIdByUserId(userId);
+            if (recuiterId == null)
+                return BadRequest("Cannot find recuiterId");
+            return Ok(recuiterId);
+        }
     }
 }

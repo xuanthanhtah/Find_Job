@@ -35,6 +35,8 @@ namespace FindJobSolution.Application.Catalog
         Task<List<ImageViewModel>> GetImageByRecuiterid(int Recuiterid);
 
         Task<ImageViewModel> GetImageById(int ImageId);
+
+        Task<RecruiterIdVM> GetRecuiterIdByUserId(Guid id);
     }
 }
 
@@ -237,6 +239,18 @@ public class RecruiterService : IRecruiterService
                     RecruiterId = i.RecruiterId,
                     RecruiterGalleriesId = i.RecruiterImagesId,
                 }).ToListAsync();
+    }
+
+    public Task<RecruiterIdVM> GetRecuiterIdByUserId(Guid id)
+    {
+        //get recruiter id by user id
+        var recruiter = _context.Recruiters.FirstOrDefaultAsync(x => x.UserId == id);
+        if (recruiter == null) { throw new FindJobException($"cannot find a recruiters: {recruiter}"); }
+        var recruiterId = new RecruiterIdVM()
+        {
+            RecruiterId = recruiter.Result.RecruiterId,
+        };
+        return Task.FromResult(recruiterId);
     }
 
     public async Task<int> RemoveImage(int ImageId)
