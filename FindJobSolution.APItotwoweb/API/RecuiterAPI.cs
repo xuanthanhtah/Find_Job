@@ -4,8 +4,10 @@ using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
 using FindJobSolution.ViewModels.System.UsersRecruiter;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace FindJobSolution.APItotwoweb.API
@@ -22,18 +24,20 @@ namespace FindJobSolution.APItotwoweb.API
 
         Task<bool> Register(RegisterRecuiterRequest request);
 
-        Task<bool> Edit(RecruiterUpdateRequest request);
+        Task<bool> Edit(int id, RecruiterUpdateRequest request);
     }
 
     public class RecuiterAPI : IRecuiterAPI
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RecuiterAPI(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public RecuiterAPI(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> Delete(int id)
@@ -47,15 +51,39 @@ namespace FindJobSolution.APItotwoweb.API
             return user;
         }
 
-        public async Task<bool> Edit(RecruiterUpdateRequest request)
+        public async Task<bool> Edit(int id, RecruiterUpdateRequest request)
         {
             var client = _httpClientFactory.CreateClient();
+
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var json = JsonConvert.SerializeObject(request);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
 
-            var response = await client.PutAsync($"/api/Recruiter/{request.Id}", httpContent);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.ThumbnailRecuiter != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ThumbnailRecuiter.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ThumbnailRecuiter.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "ThumbnailRecuiter", request.ThumbnailRecuiter.FileName);
+            }
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.CompanyName.ToString()) ? "" : request.CompanyName.ToString()), "CompanyName");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.Address.ToString()) ? "" : request.Address.ToString()), "Address");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.CompanyIntroduction.ToString()) ? "" : request.CompanyIntroduction.ToString()), "CompanyIntroduction");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.nameImage.ToString()) ? "" : request.nameImage.ToString()), "nameImage");
+
+            var response = await client.PutAsync($"/api/Recruiter/edit/{id}", requestContent);
+
             var result = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(result);

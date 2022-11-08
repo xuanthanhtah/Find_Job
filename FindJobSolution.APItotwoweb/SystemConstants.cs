@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindJobSolution.Utilities.Constants
+namespace FindJobSolution.APItotwoweb
 {
     public class SystemConstants
     {

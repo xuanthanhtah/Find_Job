@@ -101,12 +101,6 @@ namespace FindJobSolution.WebApp.Controllers
             return principal;
         }
 
-        //public async Task<IActionResult> UserProfile(Guid id)
-        //{
-        //    var result = await _recuiterAPI.GetByUserId(id);
-        //    return View(result);
-        //}
-
         [HttpGet]
         public IActionResult Create()
         {
@@ -129,41 +123,40 @@ namespace FindJobSolution.WebApp.Controllers
             return View(request);
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(Guid id)
-        //{
-        //    var result = await _recuiterAPI.GetByUserId(id);
-        //    if (result != null)
-        //    {
-        //        var user = result;
-        //        var updateRequest = new RecruiterUpdateRequest()
-        //        {
-        //            Id = id,
-        //            RecruiterId = user.RecruiterId,
-        //            CompanyName = user.CompanyName,
-        //            Address = user.Address,
-        //            CompanyIntroduction = user.CompanyIntroduction,
-        //        };
-        //        return View(updateRequest);
-        //    }
-        //    return RedirectToAction("Error", "Home");
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var result = await _recuiterAPI.GetById(id);
+            if (result != null)
+            {
+                var user = result;
+                var updateRequest = new RecruiterUpdateRequest()
+                {
+                    CompanyName = user.CompanyName,
+                    Address = user.Address,
+                    CompanyIntroduction = user.CompanyIntroduction,
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Edit(RecruiterUpdateRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return View();
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Edit(int id, [FromForm] RecruiterUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
 
-        //    var result = await _recuiterAPI.Edit(request);
-        //    if (result)
-        //    {
-        //        TempData["result"] = "Cập nhật người dùng thành công";
-        //        return RedirectToAction("Index");
-        //    }
+            var result = await _recuiterAPI.Edit(id, request);
+            if (result)
+            {
+                TempData["result"] = "Cập nhật người dùng thành công";
+                return RedirectToAction("Index");
+            }
 
-        //    ModelState.AddModelError("", result.ToString());
-        //    return View(request);
-        //}
+            ModelState.AddModelError("", result.ToString());
+            return View(request);
+        }
     }
 }
