@@ -9,7 +9,7 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
 {
     public class JobInformationUpdateRequest
     {
-        public int JobInformationId { get; set; }
+        //public int JobInformationId { get; set; }
         public string JobTitle { get; set; }
         public string JobLevel { get; set; }
         public string JobType { get; set; }

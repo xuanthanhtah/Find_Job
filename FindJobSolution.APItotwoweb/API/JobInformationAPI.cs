@@ -16,9 +16,17 @@ namespace FindJobSolution.APItotwoweb.API
     {
         Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request);
 
+        Task<PagedResult<JobInformationViewModel>> GetPagingByRecuiterId(int id, GetJobInformationPagingRequest request);
+
         Task<bool> Create(JobInformationCreateRequest request);
 
         Task<JobInformationViewModel> GetById(int id);
+
+        Task<JobInformationViewModel> GetRecuiterIdByUserId(string id);
+
+        Task<bool> Edit(int id, JobInformationUpdateRequest request);
+
+        Task<bool> Delete(int id);
     }
 
     public class JobInformationAPI : IJobInformationApi
@@ -46,6 +54,32 @@ namespace FindJobSolution.APItotwoweb.API
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> Delete(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.DeleteAsync($"/api/JobInformation/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<bool>(body);
+            return user;
+        }
+
+        public async Task<bool> Edit(int id, JobInformationUpdateRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/JobInformation/{id}", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<bool>(result);
+            return JsonConvert.DeserializeObject<bool>(result);
+        }
+
         public async Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request)
         {
             var client = _httpClientFactory.CreateClient();
@@ -65,6 +99,30 @@ namespace FindJobSolution.APItotwoweb.API
             //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
 
             var response = await client.GetAsync($"/JobInformation/GetById/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<JobInformationViewModel>(body);
+            return user;
+        }
+
+        public async Task<PagedResult<JobInformationViewModel>> GetPagingByRecuiterId(int id, GetJobInformationPagingRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/JobInformation/paging/{id}?pageIndex={request.PageIndex}&pageSize={request.PageSize}&keyword={request.keyword}");
+            var body = await response.Content.ReadAsStringAsync();
+            var jobSeeker = JsonConvert.DeserializeObject<PagedResult<JobInformationViewModel>>(body);
+            return jobSeeker;
+        }
+
+        public async Task<JobInformationViewModel> GetRecuiterIdByUserId(string id)
+        {
+            //var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var response = await client.GetAsync($"/api/Recruiter/recuiterId/{id}");
             var body = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<JobInformationViewModel>(body);
             return user;
