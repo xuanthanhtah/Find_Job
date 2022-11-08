@@ -53,15 +53,15 @@ namespace FindJobSolution.API.Controllers
             return Ok(recruiter);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("edit/{id}")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Update([FromForm] RecruiterUpdateRequest request)
+        public async Task<IActionResult> Update(int id, [FromForm] RecruiterUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _recruiterService.Update(request);
+            var result = await _recruiterService.Update(id, request);
             if (result == false)
             {
                 return BadRequest();

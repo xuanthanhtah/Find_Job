@@ -14,7 +14,7 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface IRecruiterService
     {
-        Task<bool> Update(RecruiterUpdateRequest request);
+        Task<bool> Update(int id, RecruiterUpdateRequest request);
 
         Task<int> Delete(int Recuiterid);
 
@@ -247,18 +247,17 @@ public class RecruiterService : IRecruiterService
         return await _context.SaveChangesAsync();
     }
 
-    public async Task<bool> Update(RecruiterUpdateRequest request)
+    public async Task<bool> Update(int id, RecruiterUpdateRequest request)
     {
-        var recruiters = await _context.Recruiters.FirstOrDefaultAsync(x => x.UserId == request.Id);
-        if (recruiters == null) throw new FindJobException($"Cannot find a recruiters with id: {request.Id}");
+        var recruiters = await _context.Recruiters.FirstOrDefaultAsync(x => x.RecruiterId == id);
+        if (recruiters == null) throw new FindJobException($"Cannot find a recruiters with id: {id}");
 
         recruiters.CompanyName = request.CompanyName;
         recruiters.Address = request.Address;
         recruiters.CompanyIntroduction = request.CompanyIntroduction;
-
         if (request.ThumbnailRecuiter != null)
         {
-            var thumbnailCv = await _context.RecruiterImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.RecruiterId == request.RecruiterId);
+            var thumbnailCv = await _context.RecruiterImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.RecruiterId == id);
             if (thumbnailCv != null)
             {
                 thumbnailCv.Caption = request.nameImage;
@@ -283,6 +282,7 @@ public class RecruiterService : IRecruiterService
                 _context.RecruiterImages.AddRange(recruiters.RecruiterImages);
             }
         }
+
         await _context.SaveChangesAsync();
         return true;
     }

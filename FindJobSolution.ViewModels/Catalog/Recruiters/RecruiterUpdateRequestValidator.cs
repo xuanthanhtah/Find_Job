@@ -6,7 +6,7 @@ namespace FindJobSolution.ViewModels.Catalog.Recruiters
     {
         public RecruiterUpdateRequestValidator()
         {
-            RuleFor(x => x.RecruiterId).NotEmpty().WithMessage("RecuiterId is required");
+            //RuleFor(x => x.RecruiterId).NotEmpty().WithMessage("RecuiterId is required");
             RuleFor(x => x.Address).NotEmpty().WithMessage("Address is required");
             RuleFor(x => x.ThumbnailRecuiter).NotEmpty().WithMessage("ThumbnailRecuiter is required");
             RuleFor(x => x.CompanyIntroduction).NotEmpty().WithMessage("CompanyIntroduction is required");
