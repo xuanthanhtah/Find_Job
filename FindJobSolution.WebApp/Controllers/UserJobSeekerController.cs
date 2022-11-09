@@ -16,11 +16,15 @@ namespace FindJobSolution.WebApp.Controllers
     {
         private readonly IUserAPI _userAPI;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IJobSeekerAPI _jobSeekerAPI;
 
-        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration)
+        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI)
         {
             _userAPI = userAPI;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
+            _jobSeekerAPI = jobSeekerAPI;
         }
 
         [HttpGet]
@@ -87,9 +91,11 @@ namespace FindJobSolution.WebApp.Controllers
             return RedirectToAction("index", "Home");
         }
 
-        public IActionResult UserProfile()
+        public async Task<IActionResult> UserProfileAsync()
         {
-            return View();
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var data = await _jobSeekerAPI.GetByUserId(userId);
+            return View(data);
         }
     }
 }

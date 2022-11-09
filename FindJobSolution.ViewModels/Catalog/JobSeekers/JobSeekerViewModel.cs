@@ -10,5 +10,6 @@
         public string National { get; set; }
         public decimal DesiredSalary { get; set; }
         public string ThumbnailCv { get; set; }
+
     }
 }
