@@ -1,9 +1,8 @@
-﻿@model FindJobSolution.Data.Entities.JobSeeker;
-@using Microsoft.AspNetCore.Http;
-@inject IHttpContextAccessor HttpContextAccessor
+﻿@model FindJobSolution.ViewModels.Catalog.JobSeekers.JobSeekerViewModel
 
 @{
     ViewData["Title"] = "UserProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <main>
@@ -15,7 +14,7 @@
                         Nghề nghiệp của tôi
                         <ul class="sidebarMenu">
                             <li class="sidebarMenuItem">
-                                <a href="@Url.Action("UserProfile", "UserJS")">
+                                <a href="@Url.Action("UserProfile", "UserJobSeeker")">
                                     <span class="navIcon">
                                         <img src="~/assets/img/icon/person1.png" alt="">
                                     </span>
@@ -24,7 +23,7 @@
 
                             </li>
                             <li class="sidebarMenuItem">
-                                <a href="@Url.Action("UserJob", "UserJS")">
+                                <a href="@Url.Action("UserJob", "UserJobSeeker")">
                                     <span class="navIcon">
                                         <img src="~/assets/img/icon/briefcase1.png" alt="">
                                     </span>
@@ -43,134 +42,141 @@
                     <div class="ContactInformation_contactInformationComponent__2Rwzr">
                         <h2 class="ContactInformation_blockTitle__VfSNg">Thông tin cá nhân</h2>
                         <div>
-                            <div class="ContactInfoView_viewSectionWrapper__2SQdc">
-                                <div class="native-grid">
-                                    <div class="roww">
-                                        <div class="col-lg-66">
-                                            <div class="undefied roww">
-                                                <span class="undefied col-44">Email</span>
-                                                <div class="col-88 text-truncate fw-6">@Html.DisplayFor(model => model.Users)</div>
+                            @if (HttpContextAccessor.HttpContext.Session.GetString("UserName") != null)
+                            {
+                                var username = HttpContextAccessor.HttpContext.Session.GetString("UserName");
+                                FindJobDBContext context = new FindJobDBContext();
+                                User user = context.Users.SingleOrDefault(p => p.UserName == username);
+
+                                <div class="ContactInfoView_viewSectionWrapper__2SQdc">
+                                    <div class="native-grid">
+                                        <div class="roww">
+                                            <div class="col-lg-66">
+                                                <div class="undefied roww">
+                                                    <span class="undefied col-44">Email</span>
+                                                    <div class="col-88 text-truncate fw-6">@user.Email</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-66">
+                                                <div>
+                                                    <div class="roww">
+                                                        <div class="col-44">
+                                                            <span>Điện thoại</span>
+                                                        </div>
+                                                        <div class="col-88">
+                                                            <span class="fw-6">@user.PhoneNumber</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-66">
-                                            <div>
+                                        <div class="roww">
+                                            <div class="col-lg-66">
                                                 <div class="roww">
                                                     <div class="col-44">
-                                                        <span>Điện thoại</span>
+                                                        <span>Ngày sinh</span>
                                                     </div>
                                                     <div class="col-88">
-                                                        <span class="fw-6">@Html.DisplayFor(model => model.Users)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="roww">
-                                        <div class="col-lg-66">
-                                            <div class="roww">
-                                                <div class="col-44">
-                                                    <span>Ngày sinh</span>
-                                                </div>
-                                                <div class="col-88">
-                                                    @{
-                                                        //if (Model.Users == null)
-                                                        //{
-                                                        //    <span class="fw-6">@Html.DisplayFor(model => model.Users)</span>
-                                                        //}
-                                                        //else
-                                                        //{
-                                                        //    <span class="fw-6">@Model.Users.Value.ToString("dd/MM/yyyy")</span>
-                                                        //}
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-66">
-                                            <div>
-                                                <div class="roww">
-                                                    <div class="col-44">
-                                                        <span>Quốc tịch</span>
-                                                    </div>
-                                                    <div class="col-88">
-                                                        <span class="fw-6">@Html.DisplayFor(model => model.Users)</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="roww">
-                                        <div class="col-lg-66">
-                                            <div class="roww">
-                                                <div class="col-44">
-                                                    <span>Giới tính</span>
-                                                </div>
-                                                <div class="col-88">
-                                                    <span class="fw-6">@Html.DisplayFor(model => model.Users)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="roww">
-                                        <div class="undefied col-22" style="grid-column: span 8;">
-                                            <div class="roww">
-                                                <span class="undefied col-44">Ngành nghề</span>
-                                                <div class="col-88">
-                                                    @*@if (HttpContextAccessor.HttpContext.Session.GetString("Email") != null)
-                                                    {
-                                                        var email = HttpContextAccessor.HttpContext.Session.GetString("Email");
-                                                        QLTDContext context = new QLTDContext();
-                                                        NguoiTimViec ntv = context.NguoiTimViecs.SingleOrDefault(p => p.Email == email);
-                                                        NganhNghe nn = context.NganhNghes.SingleOrDefault(p => p.Id == ntv.MaNganhNghe);
-                                                        <span class="fw-6" style="margin-left: -25px;">
-                                                            @nn.TenNganhNghe
-                                                        </span>
-                                                    }*@
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="roww">
-                                        <div class="undefied col-22" style="grid-column: span 8;">
-                                            <div class="roww">
-                                                <span class="undefied col-44">Lương mong muốn</span>
-                                                <div class="col-88">
-                                                    @{
-                                                        //if (Model.Users == null)
-                                                        //{
-                                                        //    <span class="fw-6" style="margin-left: -25px;">@Html.DisplayFor(model => model.Users)</span>
-                                                        //}
-                                                        //else
-                                                        //{
-                                                        //    <span class="fw-6" style="margin-left: -25px;">@Html.DisplayFor(model => model.Users)$</span>
+                                                        @{
+                                                            if (Model.Dob.ToString() == null)
+                                                            {
+                                                                <span class="fw-6">@Html.DisplayFor(model => model.Dob)</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="fw-6">@Model.Dob.ToString("dd/MM/yyyy")</span>
+                                                            }
                                                         }
-                                                    }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-66">
+                                                <div>
+                                                    <div class="roww">
+                                                        <div class="col-44">
+                                                            <span>Quốc tịch</span>
+                                                        </div>
+                                                        <div class="col-88">
+                                                            <span class="fw-6">@Html.DisplayFor(model => model.National)</span>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="roww">
-                                        <div class="undefied col-22">
-                                            <div class="roww">
-                                                <div class="col-44">
-                                                    <span>Địa chỉ</span>
-                                                </div>
-                                                <div class="col-88">
-                                                    <div class="fw-6 text-truncate">@Html.DisplayFor(model => model.Users)</div>
+                                        <div class="roww">
+                                            <div class="col-lg-66">
+                                                <div class="roww">
+                                                    <div class="col-44">
+                                                        <span>Giới tính</span>
+                                                    </div>
+                                                    <div class="col-88">
+                                                        <span class="fw-6">@Html.DisplayFor(model => model.Gender)</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row" style="margin-left:1px">
-                                        <a href="@Url.Action("UserProfileEdit", "UserJS")" class="btn btn-primary">Chỉnh sửa</a>
+                                        <div class="roww">
+                                            <div class="undefied col-22" style="grid-column: span 8;">
+                                                <div class="roww">
+                                                    <span class="undefied col-44">Ngành nghề</span>
+                                                    <div class="col-88">
+                                                        @*@if (HttpContextAccessor.HttpContext.Session.GetString("Email") != null)
+                                                        {
+                                                            var email = HttpContextAccessor.HttpContext.Session.GetString("Email");
+                                                            QLTDContext context = new QLTDContext();
+                                                            NguoiTimViec ntv = context.NguoiTimViecs.SingleOrDefault(p => p.Email == email);
+                                                            NganhNghe nn = context.NganhNghes.SingleOrDefault(p => p.Id == ntv.MaNganhNghe);
+                                                            <span class="fw-6" style="margin-left: -25px;">
+                                                                @nn.TenNganhNghe
+                                                            </span>
+                                                        }*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="roww">
+                                            <div class="undefied col-22" style="grid-column: span 8;">
+                                                <div class="roww">
+                                                    <span class="undefied col-44">Lương mong muốn</span>
+                                                    <div class="col-88">
+                                                        @{
+                                                            if (Model.DesiredSalary.ToString() == null)
+                                                            {
+                                                                <span class="fw-6" style="margin-left: -25px;">@Html.DisplayFor(model => model.DesiredSalary)</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="fw-6" style="margin-left: -25px;">@Html.DisplayFor(model => model.DesiredSalary)$</span>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="roww">
+                                            <div class="undefied col-22">
+                                                <div class="roww">
+                                                    <div class="col-44">
+                                                        <span>Địa chỉ</span>
+                                                    </div>
+                                                    <div class="col-88">
+                                                        <div class="fw-6 text-truncate">@Html.DisplayFor(model => model.Address)</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-left:1px">
+                                            <a href="@Url.Action("UserProfileEdit", "UserJobSeeker")" class="btn btn-primary">Chỉnh sửa</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         </div>
                     </div>
                 </div>
-                @{
-                    //QLTDContext context1 = new QLTDContext();
-                    //KyNangNguoiTimViec knntv = context1.KyNangNguoiTimViecs.SingleOrDefault(p => p.MaNguoiTimViec == Model.Id);
+                @*@{
+                    QLTDContext context1 = new QLTDContext();
+                    KyNangNguoiTimViec knntv = context1.KyNangNguoiTimViecs.SingleOrDefault(p => p.MaNguoiTimViec == Model.Id);
                 }
                 <div class="Block_Block__1rMJ_">
                     <div class="ContactInformation_contactInformationComponent__2Rwzr">
@@ -182,7 +188,7 @@
                                         <div class="col-lg-66">
                                             <div class="undefied roww">
                                                 <span class="undefied col-44" style="grid-column: span 5">Tên công ty</span>
-                                                <div class="col-88 text-truncate fw-6">@*@knntv.TenCongTy*@</div>
+                                                <div class="col-88 text-truncate fw-6">@knntv.TenCongTy</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-66">
@@ -192,7 +198,7 @@
                                                         <span>Chức danh</span>
                                                     </div>
                                                     <div class="col-88">
-                                                        <span class="fw-6">@*@knntv.ChucDanh*@</span>
+                                                        <span class="fw-6">@knntv.ChucDanh</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -205,7 +211,7 @@
                                                     <span>Thời gian làm việc</span>
                                                 </div>
                                                 <div class="col-88">
-                                                    <span class="fw-6">@*@knntv.ThoiGianLamViec*@</span>
+                                                    <span class="fw-6">@knntv.ThoiGianLamViec</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -217,7 +223,7 @@
                                                     <span>Mô tả kinh nghiệm làm việc</span>
                                                 </div>
                                                 <div class="col-88">
-                                                    <div class="fw-6 text-truncate">@*@knntv.MotaKinhNghiemLamViec*@</div>
+                                                    <div class="fw-6 text-truncate">@knntv.MotaKinhNghiemLamViec</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -240,7 +246,7 @@
                                         <div class="col-lg-66">
                                             <div class="undefied roww">
                                                 <span class="undefied col-44" style="grid-column: span 5">Chuyên ngành</span>
-                                                <div class="col-88 text-truncate fw-6">@*@knntv.ChuyenNganh*@</div>
+                                                <div class="col-88 text-truncate fw-6">@knntv.ChuyenNganh</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-66">
@@ -250,7 +256,7 @@
                                                         <span>Trường</span>
                                                     </div>
                                                     <div class="col-88">
-                                                        <span class="fw-6">@*@knntv.Truong*@</span>
+                                                        <span class="fw-6">@knntv.Truong</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -263,7 +269,7 @@
                                                     <span>Bằng cấp</span>
                                                 </div>
                                                 <div class="col-88">
-                                                    <span class="fw-6">@*@knntv.BangCap*@</span>
+                                                    <span class="fw-6">@knntv.BangCap</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -275,7 +281,7 @@
                                                     <span>Thành tựu</span>
                                                 </div>
                                                 <div class="col-88">
-                                                    <div class="fw-6 text-truncate">@*@knntv.ThanhTuu*@</div>
+                                                    <div class="fw-6 text-truncate">@knntv.ThanhTuu</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -288,7 +294,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             <div class="master_layout_col_3h2 master_layout_col_13">
                 <div class="vnwBox" style="display:block">
                     <p class="title border-bottom">Việc làm bạn sẽ thích</p>
@@ -312,4 +318,3 @@
         </div>
     </div>
 </main>
-

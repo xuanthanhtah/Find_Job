@@ -1,8 +1,11 @@
 ﻿using FindJobSolution.Application.System;
+using FindJobSolution.Data.Entities;
 using FindJobSolution.ViewModels.System.Role;
 using FindJobSolution.ViewModels.System.User;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FindJobSolution.API.Controllers
 {
@@ -12,9 +15,10 @@ namespace FindJobSolution.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _UserService;
-
-        public UserController(IUserService userService)
+        private readonly UserManager<User> _userManager;
+        public UserController(IUserService userService, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _UserService = userService;
         }
 
@@ -91,5 +95,7 @@ namespace FindJobSolution.API.Controllers
             }
             return BadRequest();
         }
+
+        
     }
 }

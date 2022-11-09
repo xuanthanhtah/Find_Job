@@ -14,11 +14,13 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface IRecruiterService
     {
-        Task<int> Update(RecruiterUpdateRequest request);
+        Task<bool> Update(int id, RecruiterUpdateRequest request);
 
         Task<int> Delete(int Recuiterid);
 
         Task<RecruiterVM> GetById(int Recuiterid);
+
+        Task<RecruiterVM> GetByUserId(Guid id);
 
         Task<PagedResult<RecruiterVM>> GetAllPaging(GetRecuiterPagingRequest request);
 
@@ -33,6 +35,8 @@ namespace FindJobSolution.Application.Catalog
         Task<List<ImageViewModel>> GetImageByRecuiterid(int Recuiterid);
 
         Task<ImageViewModel> GetImageById(int ImageId);
+
+        Task<RecruiterIdVM> GetRecuiterIdByUserId(Guid id);
     }
 }
 
@@ -177,6 +181,28 @@ public class RecruiterService : IRecruiterService
         return jobItem;
     }
 
+    public async Task<RecruiterVM> GetByUserId(Guid id)
+    {
+        var query = from j in _context.Recruiters
+                    join i in _context.RecruiterImages on j.RecruiterId equals i.RecruiterId
+                    where i.IsDefault == true
+                    select new { j, i };
+
+        var recruiters = await _context.Recruiters.FirstOrDefaultAsync(x => x.UserId == id);
+        if (recruiters == null) { throw new FindJobException($"cannot find a recruiters: {recruiters}"); }
+        var jobItem = new RecruiterVM()
+        {
+            id = id,
+            RecruiterId = recruiters.RecruiterId,
+            CompanyName = recruiters.CompanyName,
+            Address = recruiters.Address,
+            CompanyIntroduction = recruiters.CompanyIntroduction,
+            ViewCount = recruiters.ViewCount,
+            ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
+        };
+        return jobItem;
+    }
+
     public async Task<ImageViewModel> GetImageById(int ImageId)
     {
         var cv = await _context.RecruiterImages.FindAsync(ImageId);
@@ -215,6 +241,18 @@ public class RecruiterService : IRecruiterService
                 }).ToListAsync();
     }
 
+    public Task<RecruiterIdVM> GetRecuiterIdByUserId(Guid id)
+    {
+        //get recruiter id by user id
+        var recruiter = _context.Recruiters.FirstOrDefaultAsync(x => x.UserId == id);
+        if (recruiter == null) { throw new FindJobException($"cannot find a recruiters: {recruiter}"); }
+        var recruiterId = new RecruiterIdVM()
+        {
+            RecruiterId = recruiter.Result.RecruiterId,
+        };
+        return Task.FromResult(recruiterId);
+    }
+
     public async Task<int> RemoveImage(int ImageId)
     {
         var cv = await _context.RecruiterImages.FindAsync(ImageId);
@@ -223,18 +261,17 @@ public class RecruiterService : IRecruiterService
         return await _context.SaveChangesAsync();
     }
 
-    public async Task<int> Update(RecruiterUpdateRequest request)
+    public async Task<bool> Update(int id, RecruiterUpdateRequest request)
     {
-        var recruiters = await _context.Recruiters.FindAsync(request.RecruiterId);
-        if (recruiters == null) throw new FindJobException($"Cannot find a recruiters with id: {request.RecruiterId}");
+        var recruiters = await _context.Recruiters.FirstOrDefaultAsync(x => x.RecruiterId == id);
+        if (recruiters == null) throw new FindJobException($"Cannot find a recruiters with id: {id}");
 
         recruiters.CompanyName = request.CompanyName;
         recruiters.Address = request.Address;
         recruiters.CompanyIntroduction = request.CompanyIntroduction;
-
         if (request.ThumbnailRecuiter != null)
         {
-            var thumbnailCv = await _context.RecruiterImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.RecruiterId == request.RecruiterId);
+            var thumbnailCv = await _context.RecruiterImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.RecruiterId == id);
             if (thumbnailCv != null)
             {
                 thumbnailCv.Caption = request.nameImage;
@@ -260,7 +297,8 @@ public class RecruiterService : IRecruiterService
             }
         }
 
-        return await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync();
+        return true;
     }
 
     public async Task<int> UpdateImage(int ImageId, ImageUpdateRequest request)

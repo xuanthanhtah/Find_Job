@@ -43,20 +43,30 @@ namespace FindJobSolution.API.Controllers
             return Ok(recruiter);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromForm] RecruiterUpdateRequest request)
+        [HttpGet("user/{Id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByUserId(Guid Id)
+        {
+            var recruiter = await _recruiterService.GetByUserId(Id);
+            if (recruiter == null)
+                return BadRequest("Cannot find recruiter");
+            return Ok(recruiter);
+        }
+
+        [HttpPut("edit/{id}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update(int id, [FromForm] RecruiterUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _recruiterService.Update(request);
-            if (result == 0)
+            var result = await _recruiterService.Update(id, request);
+            if (result == false)
             {
                 return BadRequest();
             }
-            var recruiter = await _recruiterService.GetById(result);
-            return CreatedAtAction(nameof(GetById), new { id = result }, recruiter);
+            return Ok(result);
         }
 
         [HttpDelete("{RecruiterId}")]
@@ -125,6 +135,16 @@ namespace FindJobSolution.API.Controllers
             if (image == null)
                 return BadRequest("Cannot find image");
             return Ok(image);
+        }
+
+        //get recuiterId by userId
+        [HttpGet("recuiterId/{userId}")]
+        public async Task<IActionResult> GetRecuiterIdByUserId(Guid userId)
+        {
+            var recuiterId = await _recruiterService.GetRecuiterIdByUserId(userId);
+            if (recuiterId == null)
+                return BadRequest("Cannot find recuiterId");
+            return Ok(recuiterId);
         }
     }
 }

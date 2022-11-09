@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @using FindJobSolution.Data.EF;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,8 +86,23 @@
                                     </div>
                                 }*@
                                 <div class="header-btn d-none f-right d-lg-block">
-                                    <a href="~/Home/RegisterJobSeeker" class="btn head-btn1">Đăng ký</a>
-                                    <a href="~/Home/LoginJobSeeker" class="btn head-btn2">Đăng nhập</a>
+                                    @if(User.Identity.IsAuthenticated) {
+                                        <div class="nice-select">
+                                            Hello
+                                            @User.Identity.Name
+                                            <ul class="list">
+                                                <li data-value class="option"><img src="~/assets/img/icon/menu-user-2.png"><a href="@Url.Action("UserProfile", "UserJobSeeker")" style="color:black">Thông tin</a></li>
+                                                <form method="post" asp-controller="UserJobSeeker" asp-action="Logout">
+                                                                        <button type="submit" class="dropdown-item" value="Logout">Đăng xuất</button>
+                                                                        </form>
+                                            </ul>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <a href="~/Home/RegisterJobSeeker" class="btn head-btn1">Đăng ký</a>
+                                        <a asp-action="Login" asp-controller="UserJobSeeker" class="btn head-btn2">Đăng nhập</a>
+                                    }
                                 </div>
                             </div>
                         </div>

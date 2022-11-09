@@ -1,0 +1,129 @@
+﻿@model Website_Tuyển_dụng.Models.CongViecDangTuyen
+
+@{
+    ViewData["Title"] = "JobDetail";
+}
+
+<main>
+    <!-- job post company Start -->
+    <div class="job-post-company pt-120 pb-120">
+        <div class="container">
+            <div class="row justify-content-between">
+                <!-- Left Content -->
+                @{                    QLTDContext Context = new QLTDContext();
+                    NhaTuyenDung ntd = Context.NhaTuyenDungs.SingleOrDefault(p => p.Id == Model.MaNhaTuyenDung);
+                    NganhNghe nn = Context.NganhNghes.SingleOrDefault(p => p.Id == ntd.MaNganhNghe);
+                    <div class="col-xl-7 col-lg-8">
+                        <!-- job single -->                        <div class="single-job-items mb-50" style="border: 1px solid #ededed;">
+                            <div class="job-items">
+                                <div class="company-img company-img-details">
+                                    <a href="#">
+                                        @{
+                                            var imgsrc = "";
+                                            var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
+                                            imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                            <img src='@imgsrc' style="max-width:100px;max-height:100px" />
+                                        }
+                                    </a>
+                                </div>
+                                <div class="job-tittle">
+                                    <a href="#">
+                                        <h4>@Html.DisplayFor(model => model.ChucDanh)</h4>
+                                    </a>
+                                    <ul>
+                                        <li>@ntd.TenCongTy</li>
+                                        <li>@Html.DisplayFor(modelItem => Model.Capbac)</li>
+                                        <li><i class="fas fa-map-marker-alt"></i>@Html.DisplayFor(modelItem => Model.DiaChi)</li>
+                                        <li>$@Html.DisplayFor(modelItem => Model.MucLuong)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>                        <!-- job single End -->
+                        <div class="job-post-details">
+                            <div class="post-details1 mb-50">
+                                <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Mô tả công việc</h4>
+                                </div>
+                                <p>@Html.DisplayFor(model => model.Mota)</p>
+                            </div>
+                            <div class="post-details2  mb-50">
+                                <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Required Knowledge, Skills, and Abilities</h4>
+                                </div>
+                                <ul>
+                                    <li>System Software Development</li>
+                                    <li>Mobile Applicationin iOS/Android/Tizen or other platform</li>
+                                    <li>Research and code , libraries, APIs and frameworks</li>
+                                    <li>Strong knowledge on software development life cycle</li>
+                                    <li>Strong problem solving and debugging skills</li>
+                                </ul>
+                            </div>
+                            <div class="post-details2  mb-50">
+                                <!-- Small Section Tittle -->
+                                <div class="small-section-tittle">
+                                    <h4>Education + Experience</h4>
+                                </div>
+                                <ul>
+                                    <li>3 or more years of professional design experience</li>
+                                    <li>Direct response email experience</li>
+                                    <li>Ecommerce website design experience</li>
+                                    <li>Familiarity with mobile and web apps preferred</li>
+                                    <li>Experience using Invision a plus</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Right Content -->
+                    <div class="col-xl-4 col-lg-4">
+                        <div class="post-details3  mb-50">
+                            <!-- Small Section Tittle -->
+                            <div class="small-section-tittle">
+                                <h4>Thông tin việc làm</h4>
+                            </div>
+                            <ul>
+                                <li>Posted date : <span>12 Aug 2019</span></li>
+                                <li>Địa chỉ : <span>@Html.DisplayFor(model => model.DiaChi)</span></li>
+                                <li>Loại công việc : <span>@Html.DisplayFor(model => model.LoaiViecLam)</span></li>
+                                <li>Lương :  <span>$@Html.DisplayFor(model => model.MucLuong) monthly</span></li>
+                                <li>Ngành nghề : <span>@nn.TenNganhNghe</span></li>
+                            </ul>
+                            <div class="col-lg-3" style="display: flex; align-content: center; align-items: center;">
+                                <form method="post" asp-action="JobDetail">
+                                <div style="display: flex; align-content: center; align-items: center;">
+                                    <div class="apply-btn2" style="margin-left:-17px;padding-right:10px">
+                                        <input type="submit" value="Xin việc" name="value" class="btn" style=" background: #fb246a; text-transform: capitalize; color: #fff; cursor: pointer; display: inline-block; font-size: 14px; font-weight: 500; letter-spacing: 1px; line-height: 0; padding: 27px 44px; border-radius: 0px; transition: color 0.4s linear; position: relative; z-index: 1;  border: 0; overflow: hidden; margin: 0;"  />
+                                    </div>
+                                    <div class="apply-btn2">
+                                        <input type="submit" value="Lưu việc" name="value" class="btn" style=" background: #fb246a; text-transform: capitalize; color: #fff; cursor: pointer; display: inline-block; font-size: 14px; font-weight: 500; letter-spacing: 1px; line-height: 0; padding: 27px 44px; border-radius: 0px; transition: color 0.4s linear; position: relative; z-index: 1;  border: 0; overflow: hidden; margin: 0;"  />
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="post-details4  mb-50">
+                            <!-- Small Section Tittle -->
+                            <div class="small-section-tittle">
+                                <h4>Thông tin công ty</h4>
+                            </div>
+                            <span>@ntd.TenCongTy</span>
+                            <p>@ntd.SoLuocCongTy</p>
+                            <ul>
+                                <li>Name: <span>@ntd.TenCongTy </span></li>
+                                <li>Web : <span> colorlib.com</span></li>
+                                <li>Email: <span>carrier.colorlib@gmail.com</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- job post company End -->
+</main>
+
+@Html.Raw(TempData["msg"])
+
+
+

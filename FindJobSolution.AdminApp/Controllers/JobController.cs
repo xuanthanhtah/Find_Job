@@ -1,6 +1,5 @@
-﻿using FindJobSolution.AdminApp.API;
+﻿using FindJobSolution.APItotwoweb.API;
 using FindJobSolution.ViewModels.Catalog.Jobs;
-using FindJobSolution.ViewModels.Catalog.Skills;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

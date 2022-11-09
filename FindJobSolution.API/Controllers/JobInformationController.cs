@@ -27,7 +27,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         //http://localhost:port/api/jobInformation/{int:id}
-        [HttpGet("GetById/{JobInformationId}")]
+        [HttpGet("/JobInformation/GetById/{JobInformationId}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetById(int JobInformationId)
         {
@@ -37,48 +37,46 @@ namespace FindJobSolution.API.Controllers
             return Ok(jobInformation);
         }
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create([FromForm] JobInformationCreateRequest request)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] JobInformationCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             var result = await _jobInformationService.Create(request);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }
 
-            var jobInformation = await _jobInformationService.GetbyId(result);
-
-            return CreatedAtAction(nameof(GetById), new { id = result }, jobInformation);
+            return Ok(result);
         }
 
-        [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] JobInformationUpdateRequest request)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] JobInformationUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _jobInformationService.Update(request);
-            if (result == 0)
+            var result = await _jobInformationService.Update(id, request);
+            if (result == false)
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(result);
         }
 
-        [HttpDelete("Delete/{JobInformationId}")]
+        [HttpDelete("{JobInformationId}")]
         public async Task<IActionResult> Delete(int JobInformationId)
         {
             var result = await _jobInformationService.Delete(JobInformationId);
-            if (result == 0)
+            if (result == false)
             {
                 return BadRequest();
             }
-            return Ok();
+            return Ok(result);
         }
 
         [HttpGet("paging")]
@@ -86,6 +84,14 @@ namespace FindJobSolution.API.Controllers
         public async Task<IActionResult> GetAllPaging([FromQuery] GetJobInformationPagingRequest request)
         {
             var jobSeeker = await _jobInformationService.GetAllPaging(request);
+            return Ok(jobSeeker);
+        }
+
+        [HttpGet("paging/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetbyRecuiterId([FromQuery] GetJobInformationPagingRequest request, int id)
+        {
+            var jobSeeker = await _jobInformationService.GetbyRecuiterId(id, request);
             return Ok(jobSeeker);
         }
     }

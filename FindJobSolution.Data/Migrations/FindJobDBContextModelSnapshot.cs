@@ -94,7 +94,7 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "e61bfed4-7fe7-41b7-97db-ea6da9abbaac",
+                            ConcurrencyStamp = "66493a44-c516-4d90-9841-0ca81660471b",
                             Name = "admin",
                             NormalizedName = "admin"
                         });
@@ -214,10 +214,6 @@ namespace FindJobSolution.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("JobInformationId"), 1L, 1);
 
-                    b.Property<string>("Benefits")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -255,15 +251,6 @@ namespace FindJobSolution.Data.Migrations
 
                     b.Property<int>("RecruiterId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Requirements")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Salary")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
-                        .HasDefaultValue(0m);
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
@@ -551,13 +538,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4a12dd3c-305e-40a7-932e-cbb6820236bc",
+                            ConcurrencyStamp = "fbfec6e2-fc9a-49ae-919a-f8aeddbf13b1",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEE/5gvbRJ0RkZHGPdVNO3pvOaSWjGcM6FhzjvEKEdXCgFtHVOnxE9Xonw0EN6EVrlg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAO9eG0+6rO564Rp156dHPZjLNZNS6jVr3sPlXxlPXRyrjzI590AY4DJhKwUhvtALw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
