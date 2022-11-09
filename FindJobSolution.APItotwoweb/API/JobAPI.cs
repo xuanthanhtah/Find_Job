@@ -2,7 +2,12 @@
 using FindJobSolution.ViewModels.Common;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Text;
+using FindJobSolution.APItotwoweb.API;
+using System.Net.Http.Headers;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace FindJobSolution.APItotwoweb.API
 {
@@ -25,11 +30,13 @@ namespace FindJobSolution.APItotwoweb.API
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public JobAPI(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public JobAPI(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> Create(JobCreateRequest request)
@@ -96,13 +103,27 @@ namespace FindJobSolution.APItotwoweb.API
 
         public async Task<List<JobViewModel>> GetAll()
         {
-            var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            return await GetListAsync<JobViewModel>($"/api/Job");
+        }
 
-            var response = await client.GetAsync($"/api/Job");
+        private async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
+        {
+            var sessions = _httpContextAccessor
+               .HttpContext
+               .Session
+               .GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var response = await client.GetAsync(url);
             var body = await response.Content.ReadAsStringAsync();
-            var jobSeeker = JsonConvert.DeserializeObject<List<JobViewModel>>(body);
-            return jobSeeker;
+            if (response.IsSuccessStatusCode)
+            {
+                var data = (List<T>)JsonConvert.DeserializeObject(body, typeof(List<T>));
+                return data;
+            }
+            throw new Exception(body);
         }
     }
 }

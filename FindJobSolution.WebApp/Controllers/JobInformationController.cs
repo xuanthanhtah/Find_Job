@@ -38,6 +38,13 @@ namespace FindJobSolution.WebApp.Controllers
                 PageSize = pageSize
             };
             var result = await _jobInformationApi.GetPagingByRecuiterId(recuiterId.RecruiterId, request);
+
+            var jobName = await _jobAPI.GetAll();
+            ViewBag.JobName = jobName.Select(x => new SelectListItem()
+            {
+                Text = x.JobName,
+                Value = x.JobId.ToString()
+            });
             if (result == null)
             {
                 TempData["result"] = "Bạn chưa tạo công việc nào cả, tạo ngay thôi";
