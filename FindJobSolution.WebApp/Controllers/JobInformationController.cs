@@ -25,26 +25,15 @@ namespace FindJobSolution.WebApp.Controllers
             _jobAPI = jobAPI;
         }
 
-        public async Task<IActionResult> Index(string keyWord, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index()
         {
             //get recuiterId by userId in cookie
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var recuiterId = await _jobInformationApi.GetRecuiterIdByUserId(userId);
 
-            var request = new GetJobInformationPagingRequest()
-            {
-                keyword = keyWord,
-                PageIndex = pageIndex,
-                PageSize = pageSize
-            };
-            var result = await _jobInformationApi.GetPagingByRecuiterId(recuiterId.RecruiterId, request);
+             
+            var result = await _jobInformationApi.GetPagingByRecuiterId(recuiterId.RecruiterId);
 
-            var jobName = await _jobAPI.GetAll();
-            ViewBag.JobName = jobName.Select(x => new SelectListItem()
-            {
-                Text = x.JobName,
-                Value = x.JobId.ToString()
-            });
             if (result == null)
             {
                 TempData["result"] = "Bạn chưa tạo công việc nào cả, tạo ngay thôi";
@@ -56,6 +45,13 @@ namespace FindJobSolution.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
+
+            var jobName = await _jobAPI.GetAll();
+            ViewBag.JobName = jobName.Select(x => new SelectListItem()
+            {
+                Text = x.JobName,
+                Value = x.JobId.ToString()
+            }).ToList();
             return View();
         }
 
@@ -86,11 +82,13 @@ namespace FindJobSolution.WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(JobInformationCreateRequest request)
         {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var recuiterId = await _jobInformationApi.GetRecuiterIdByUserId(userId);
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            var result = await _jobInformationApi.Create(request);
+            var result = await _jobInformationApi.Create(recuiterId.RecruiterId, request);
             if (result)
             {
                 TempData["result"] = "Create job successfully";
@@ -109,6 +107,12 @@ namespace FindJobSolution.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            var jobName = await _jobAPI.GetAll();
+            ViewBag.JobName = jobName.Select(x => new SelectListItem()
+            {
+                Text = x.JobName,
+                Value = x.JobId.ToString()
+            }).ToList();
             var result = await _jobInformationApi.GetById(id);
             if (result != null)
             {

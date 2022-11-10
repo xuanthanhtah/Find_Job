@@ -1,4 +1,5 @@
 ﻿@model FindJobSolution.ViewModels.Catalog.JobInformations.JobInformationCreateRequest
+@Html.Raw(ViewBag.JobName)
 
 @{
     ViewData["Title"] = "Create";
@@ -72,15 +73,13 @@
                             <span asp-validation-for="MaxSalary" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="RecruiterId" class="control-label"></label>
-                            <input asp-for="RecruiterId" class="form-control" />
-                            <span asp-validation-for="RecruiterId" class="text-danger"></span>
+                                <label asp-for="JobId" class="control-label"></label>
+                                <select asp-for="JobId" asp-items="@ViewBag.JobName">
+                                    <option>--Chọn công việc--</option>
+                                </select>
+                                <span asp-validation-for="JobId" class="text-danger"></span>
                         </div>
                             
-                                <select asp-for="JobId" asp-items="@ViewBag.JobName">
-                                    <option>-- Chọn công việc --</option>
-                                </select>
-                        
                         <div class="form-group">
                             <label asp-for="JobInformationTimeStart" class="control-label"></label>
                             <input asp-for="JobInformationTimeStart" class="form-control" />
