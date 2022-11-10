@@ -91,7 +91,7 @@ namespace FindJobSolution.WebApp.Controllers
             return RedirectToAction("index", "Home");
         }
 
-        public async Task<IActionResult> UserProfileAsync()
+        public async Task<IActionResult> UserProfile()
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var data = await _jobSeekerAPI.GetByUserId(userId);

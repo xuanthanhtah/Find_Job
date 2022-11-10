@@ -42,6 +42,16 @@ namespace FindJobSolution.API.Controllers
             return Ok(jobSeeker);
         }
 
+        [HttpGet("user/{Id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByUserId(Guid Id)
+        {
+            var jobseeker = await _IJobSeekerService.GetByUserId(Id);
+            if (jobseeker == null)
+                return BadRequest("Cannot find jobseeker");
+            return Ok(jobseeker);
+        }
+
         [HttpPut]
         public async Task<IActionResult> Update([FromForm] JobSeekerUpdateRequest request)
         {

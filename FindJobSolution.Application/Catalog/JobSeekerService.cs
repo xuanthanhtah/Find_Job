@@ -4,6 +4,7 @@ using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.Cvs;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
+using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace FindJobSolution.Application.Catalog
         Task<List<JobSeekerViewModel>> GetAll();
 
         Task<JobSeekerViewModel> GetbyId(int JobSeekerId);
+        Task<JobSeekerViewModel> GetByUserId(Guid id);
 
         Task<int> AddCv(int JobSeekerId, CvCreateRequest request);
 
@@ -105,6 +107,7 @@ namespace FindJobSolution.Application.Catalog
                    JobId = p.j.JobId,
                    Address = p.j.Address,
                    Gender = p.j.Gender,
+                   Dob = p.j.Dob,
                    Name = p.j.Name,
                    National = p.j.National,
                    DesiredSalary = p.j.DesiredSalary,
@@ -122,6 +125,7 @@ namespace FindJobSolution.Application.Catalog
                             JobId = j.JobId,
                             Address = j.Address,
                             Gender = j.Gender,
+                            Dob = j.Dob,
                             Name = j.Name,
                             National = j.National,
                             DesiredSalary = j.DesiredSalary,
@@ -143,6 +147,7 @@ namespace FindJobSolution.Application.Catalog
                     JobId = p.JobId,
                     Address = p.Address,
                     Gender = p.Gender,
+                    Dob = p.Dob,
                     Name = p.Name,
                     National = p.National,
                     DesiredSalary = p.DesiredSalary,
@@ -169,17 +174,55 @@ namespace FindJobSolution.Application.Catalog
                         select new { j, i };
 
             var jobSeeker = await _context.JobSeekers.FindAsync(JobSeekerId);
-            if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {JobSeekerId}"); }
+
+            var user = _context.Users.FirstOrDefault(p => p.Id == jobSeeker.UserId);
+
+            if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
             var jobItem = new JobSeekerViewModel()
-            {
+            {        
                 jobseekerId = jobSeeker.JobSeekerId,
                 JobId = jobSeeker.JobId,
                 Address = jobSeeker.Address,
                 Gender = jobSeeker.Gender,
+                Dob = jobSeeker.Dob,
                 Name = jobSeeker.Name,
                 National = jobSeeker.National,
                 DesiredSalary = jobSeeker.DesiredSalary,
                 ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
+
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+            };
+            return jobItem;
+        }
+
+        public async Task<JobSeekerViewModel> GetByUserId(Guid id)
+        {
+            var query = from j in _context.JobSeekers
+                        join i in _context.Cvs on j.JobSeekerId equals i.JobSeekerId
+                        where i.IsDefault == true
+                        select new { j, i };
+
+            var jobSeeker = await _context.JobSeekers.FirstOrDefaultAsync(x => x.UserId == id);
+
+            var user = _context.Users.FirstOrDefault(p => p.Id == jobSeeker.UserId);
+
+            if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
+            var jobItem = new JobSeekerViewModel()
+            {
+                id = id,
+                jobseekerId = jobSeeker.JobSeekerId,
+                JobId = jobSeeker.JobId,
+                Address = jobSeeker.Address,
+                Gender = jobSeeker.Gender,
+                Dob = jobSeeker.Dob,
+                Name = jobSeeker.Name,
+                National = jobSeeker.National,
+                DesiredSalary = jobSeeker.DesiredSalary,
+                ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
+
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
             };
             return jobItem;
         }
@@ -238,6 +281,7 @@ namespace FindJobSolution.Application.Catalog
             JobSeeker.Name = request.Name;
             JobSeeker.National = request.National;
             JobSeeker.DesiredSalary = request.DesiredSalary;
+            JobSeeker.Dob = request.Dob;
 
             if (request.ThumbnailCv != null)
             {
