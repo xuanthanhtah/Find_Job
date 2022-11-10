@@ -16,7 +16,6 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
         public string WorkingLocation { get; set; }
         public decimal MinSalary { get; set; }
         public decimal MaxSalary { get; set; }
-        public int RecruiterId { get; set; }
         public int JobId { get; set; }
         public DateTime JobInformationTimeStart { get; set; }
         public DateTime JobInformationTimeEnd { get; set; }

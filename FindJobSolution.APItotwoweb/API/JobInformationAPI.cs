@@ -16,9 +16,9 @@ namespace FindJobSolution.APItotwoweb.API
     {
         Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request);
 
-        Task<PagedResult<JobInformationViewModel>> GetPagingByRecuiterId(int id, GetJobInformationPagingRequest request);
+        Task<List<JobInformationViewModel>> GetPagingByRecuiterId(int id);
 
-        Task<bool> Create(JobInformationCreateRequest request);
+        Task<bool> Create(int id, JobInformationCreateRequest request);
 
         Task<JobInformationViewModel> GetById(int id);
 
@@ -40,7 +40,7 @@ namespace FindJobSolution.APItotwoweb.API
             _configuration = configuration;
         }
 
-        public async Task<bool> Create(JobInformationCreateRequest request)
+        public async Task<bool> Create(int id, JobInformationCreateRequest request)
         {
             //tạo trang mới
             var client = _httpClientFactory.CreateClient();
@@ -49,7 +49,7 @@ namespace FindJobSolution.APItotwoweb.API
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             //Hàm lấy api từ backend xử lý đăng ký tài khoản
-            var response = await client.PostAsync($"/api/JobInformation", httpContent);
+            var response = await client.PostAsync($"/api/JobInformation?id={id}", httpContent);
             //trả về thành công 200 hay thất bại 400 > 500
             return response.IsSuccessStatusCode;
         }
@@ -104,14 +104,15 @@ namespace FindJobSolution.APItotwoweb.API
             return user;
         }
 
-        public async Task<PagedResult<JobInformationViewModel>> GetPagingByRecuiterId(int id, GetJobInformationPagingRequest request)
+        public async Task<List<JobInformationViewModel>> GetPagingByRecuiterId(int id)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.GetAsync($"/api/JobInformation/paging/{id}?pageIndex={request.PageIndex}&pageSize={request.PageSize}&keyword={request.keyword}");
+            var response = await client.GetAsync($"/api/JobInformation/paging/{id}");
+
             var body = await response.Content.ReadAsStringAsync();
-            var jobSeeker = JsonConvert.DeserializeObject<PagedResult<JobInformationViewModel>>(body);
+            var jobSeeker = JsonConvert.DeserializeObject<List<JobInformationViewModel>>(body);
             return jobSeeker;
         }
 

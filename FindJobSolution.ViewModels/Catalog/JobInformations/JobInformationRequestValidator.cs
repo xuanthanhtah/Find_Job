@@ -9,7 +9,7 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
             RuleFor(x => x.JobTitle).NotEmpty().WithMessage("Title is required");
             RuleFor(x => x.Description).NotEmpty().WithMessage("Description is required");
             RuleFor(x => x.WorkingLocation).NotEmpty().WithMessage("WorkingLocation is required");
-            RuleFor(x => x.RecruiterId).NotEmpty().WithMessage("RecruiterId is required");
+            //RuleFor(x => x.RecruiterId).NotEmpty().WithMessage("RecruiterId is required");
             RuleFor(x => x.JobId).NotEmpty().WithMessage("JobId is required hehe");
             RuleFor(x => x.MinSalary).NotEmpty().WithMessage("MinSalary is required hehe");
             RuleFor(x => x.MaxSalary).NotEmpty().WithMessage("MaxSalary is required hehe");
