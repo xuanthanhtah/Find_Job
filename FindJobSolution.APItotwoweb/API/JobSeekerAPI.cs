@@ -1,5 +1,6 @@
 ﻿using FindJobSolution.Data.Entities;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
+using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
 using FindJobSolution.ViewModels.System.UsersRecruiter;
@@ -16,6 +17,8 @@ namespace FindJobSolution.APItotwoweb.API
         Task<JobSeekerViewModel> GetById(int id);
 
         Task<bool> Delete(int id);
+
+        Task<JobSeekerViewModel> GetByUserId(string id);
     }
 
     public class JobSeekerAPI : IJobSeekerAPI
@@ -62,6 +65,17 @@ namespace FindJobSolution.APItotwoweb.API
             var body = await response.Content.ReadAsStringAsync();
             var jobSeeker = JsonConvert.DeserializeObject<JobSeekerViewModel>(body);
             return jobSeeker;
+        }
+
+        public async Task<JobSeekerViewModel> GetByUserId(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/JobSeeker/user/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<JobSeekerViewModel>(body);
+            return user;
         }
     }
 }
