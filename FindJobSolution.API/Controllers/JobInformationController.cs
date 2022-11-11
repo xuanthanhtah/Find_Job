@@ -38,13 +38,13 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] JobInformationCreateRequest request)
+        public async Task<IActionResult> Create(int id, [FromBody] JobInformationCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _jobInformationService.Create(request);
+            var result = await _jobInformationService.Create(id, request);
             if (result == false)
             {
                 return BadRequest();
@@ -84,14 +84,19 @@ namespace FindJobSolution.API.Controllers
         public async Task<IActionResult> GetAllPaging([FromQuery] GetJobInformationPagingRequest request)
         {
             var jobSeeker = await _jobInformationService.GetAllPaging(request);
+            if (jobSeeker == null)
+            {
+                return BadRequest("Cannot find jobSeeker");
+            }
             return Ok(jobSeeker);
         }
 
         [HttpGet("paging/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetbyRecuiterId([FromQuery] GetJobInformationPagingRequest request, int id)
+        public async Task<IActionResult> GetbyRecuiterId(int id)
         {
-            var jobSeeker = await _jobInformationService.GetbyRecuiterId(id, request);
+            var jobSeeker = await _jobInformationService.GetbyRecuiterId(id);
+            if (jobSeeker == null) return BadRequest(ModelState);
             return Ok(jobSeeker);
         }
     }

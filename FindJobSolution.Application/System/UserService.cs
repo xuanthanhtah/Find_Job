@@ -123,7 +123,7 @@ namespace FindJobSolution.Application.System
                 {
                     Id = p.Id,
                     UserName = p.UserName,
-                    Email = p.Email
+                    Email = p.Email,
                 }).ToListAsync();
 
             // in ra

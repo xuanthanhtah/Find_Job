@@ -16,6 +16,7 @@ namespace FindJobSolution.API.Controllers
     {
         private readonly IUserService _UserService;
         private readonly UserManager<User> _userManager;
+
         public UserController(IUserService userService, UserManager<User> userManager)
         {
             _userManager = userManager;
@@ -95,7 +96,5 @@ namespace FindJobSolution.API.Controllers
             }
             return BadRequest();
         }
-
-        
     }
 }

@@ -1,5 +1,4 @@
-﻿@using FindJobSolution.ViewModels.Common
-@model PagedResult<FindJobSolution.ViewModels.Catalog.JobInformations.JobInformationViewModel>
+﻿@model List<FindJobSolution.ViewModels.Catalog.JobInformations.JobInformationViewModel>
 
 @{
     ViewData["Title"] = "Công việc";
@@ -43,9 +42,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.Items != null)
+                        @if (Model != null)
                         {
-                            @foreach (var item in Model.Items)
+                            @foreach (var item in Model)
                             {
                                 <tr>
                                     <td>
@@ -72,10 +71,14 @@
                                 </tr>
                             }
                         }
+                        else {
+                            <p>Bạn chưa có công việc nào cả, thêm công việc mới nào!!!</p>
+                            <a class="btn btn-success" asp-action="Create" asp-controller="JobInformation">Thêm công việc mới</a>
+                        }
                     </tbody>
                 </table>
             </div>
-            @await Component.InvokeAsync("Pager", Model)
+            
         </div>
     </div>
 </div>
