@@ -18,10 +18,10 @@ namespace FindJobSolution.Application.Catalog
         Task<int> Create(ApplyJobCreateRequest request);
         Task<int> Delete(int JobSeekerId, int JobInfomationId);
         //Task<PagedResult<ApplyJobViewModel>> GetAllPaging(GetApplyJobPagingRequest request);
-        Task<List<ApplyJobViewModel>> GetAllApplyJob();
+        Task<List<ApplyJobViewModel>> GetAll();
         Task<ApplyJobViewModel> GetbyId(int JobSeekerId, int JobInfomationId);
 
-
+        //Task<ApplySaveViewModel> GetBoth(int JobSeekerId)
     }
     public class ApplyJobService : IApplyJobService
     {
@@ -56,7 +56,7 @@ namespace FindJobSolution.Application.Catalog
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<ApplyJobViewModel>> GetAll(SaveJobViewModel saveJobViewModel)
+        public async Task<List<ApplyJobViewModel>> GetAll()
         {
             var query = from j in _context.ApplyJobs
 
@@ -73,7 +73,18 @@ namespace FindJobSolution.Application.Catalog
                ).ToListAsync();
         }
 
+        //public async Task<ApplySaveViewModel> GetBoth(int JobSeekerId)
+        //{
+        //    ApplySaveViewModel asvm = new ApplySaveViewModel();
+        //    var applyJobs = _context.ApplyJobs.Where(x => x.JobSeekerId == JobSeekerId).ToList();
 
+        //    var saveJobs = _context.SaveJobs.Where(x => x.JobSeekerId == JobSeekerId).ToList();
+
+        //    //asvm.applyJobs = applyJobs;
+        //    //asvm.saveJobs = saveJobs;
+
+        //    return true;
+        //}
 
         //public async Task<PagedResult<ApplyJobViewModel>> GetAllPaging(GetApplyJobPagingRequest request)
         //{
