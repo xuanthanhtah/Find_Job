@@ -1,6 +1,7 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.ApplyJob;
+using FindJobSolution.ViewModels.Catalog.SaveJob;
 using FindJobSolution.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NuGet.DependencyResolver;
 
 namespace FindJobSolution.Application.Catalog
 {
@@ -16,8 +18,10 @@ namespace FindJobSolution.Application.Catalog
         Task<int> Create(ApplyJobCreateRequest request);
         Task<int> Delete(int JobSeekerId, int JobInfomationId);
         //Task<PagedResult<ApplyJobViewModel>> GetAllPaging(GetApplyJobPagingRequest request);
-        Task<List<ApplyJobViewModel>> GetAll();
+        Task<List<ApplyJobViewModel>> GetAllApplyJob();
         Task<ApplyJobViewModel> GetbyId(int JobSeekerId, int JobInfomationId);
+
+
     }
     public class ApplyJobService : IApplyJobService
     {
@@ -52,9 +56,11 @@ namespace FindJobSolution.Application.Catalog
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<List<ApplyJobViewModel>> GetAll()
+        public async Task<List<ApplyJobViewModel>> GetAll(SaveJobViewModel saveJobViewModel)
         {
-            var query = from j in _context.ApplyJobs select new { j };
+            var query = from j in _context.ApplyJobs
+
+                        select new { j };
 
             return await query
                .Select(p => new ApplyJobViewModel()
@@ -63,9 +69,11 @@ namespace FindJobSolution.Application.Catalog
                    JobSeekerId = p.j.JobSeekerId,
                    Status = p.j.Status,
                    TimeApply = p.j.TimeApply,
-               }).ToListAsync();
-
+               }
+               ).ToListAsync();
         }
+
+
 
         //public async Task<PagedResult<ApplyJobViewModel>> GetAllPaging(GetApplyJobPagingRequest request)
         //{

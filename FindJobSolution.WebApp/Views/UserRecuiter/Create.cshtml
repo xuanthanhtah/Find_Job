@@ -4,50 +4,81 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Tạo người tuyển dụng mới</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Tạo người tuyển dụng mới</li>
-    </ol>
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <a class="btn btn-success" asp-action="Login" asp-controller="UserRecuiter">Đăng nhập</a>
-        </div>
-        <div class="card-body">
-            <hr />
-            <div class="row">
-                <div class="col-md-4">
-                    <form asp-action="Create">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="Email" class="control-label"></label>
-                            <input asp-for="Email" class="form-control" />
-                            <span asp-validation-for="Email" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="UserName" class="control-label"></label>
-                            <input asp-for="UserName" class="form-control" />
-                            <span asp-validation-for="UserName" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="ConfirmPassword" class="control-label"></label>
-                            <input asp-for="ConfirmPassword" class="form-control" />
-                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Tạo tài khoản" class="btn btn-primary" />
-                        </div>
-                    </form>
+    <div class="grid--flexbox">
+        <div class="grid--35 min-height--100vh text-align--center" style="background:#010b1d">
+            <div class="container--sidebar" style="min-height:80vh; position: relative;top: 50%; transform: translateY(-50%);">
+                <a href="~/UserEmp/Index">
+                    <img src="../assets/img/logo/logo_footer.png" />
+                </a>
+                <div>
+                    <div class="container-slide" style="width:100% ; display: inline-block; height: 70vh;align-items: center;justify-content: center; width: 100%; display: grid !important;">
+                        <img src="../assets/img/hero/employer.jpg" style="width:100%" />
+                    </div>
                 </div>
             </div>
 
         </div>
+        <div class="grid--65 grid--relative">
+            <div class="width-percent--60 form-register-content margin--auto">
+                <div class="col-12">
+                    <h2 class="contact-title text-center">Đăng ký</h2>
+                </div>
+                <div class="col-lg-6 mx-auto">
+                    <div class="form-contact contact_form">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input asp-for="Email" class="form-control" type="email" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>UserName</label>
+                                    <input asp-for="UserName" class="form-control"/>
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Mật khẩu</label>
+                                    <input asp-for="Password" class="form-control" type="password" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Xác thực mật khẩu</label>
+                                    <input asp-for="ConfirmPassword" class="form-control" />
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>                        
+                            <div></div>
+                            <div class="col-12">
+                                <input type="submit" value="Tạo tài khoản" class="button button-contactForm boxed-btn mr-4" />
+                            </div>
+                            <hr />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container-info-bottom">
+                <p class="px--30 py--20">
+                    <lable style="font-family: Barlow">Đã có tài khoản? </lable><span class="clicklink"><a href="~/UserRecuiter/Login">Đăng nhập</a></span>
+                </p>
+            </div>
+        </div>
     </div>
-</div>
+
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

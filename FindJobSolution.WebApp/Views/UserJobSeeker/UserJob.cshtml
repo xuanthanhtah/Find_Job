@@ -1,0 +1,268 @@
+﻿@*@model FindJobSolution.ViewModels.Catalog.ApplyJob.ApplyJobViewModel
+
+@{
+    ViewData["Title"] = "UserJob";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        main {
+            font-family: "Lato", sans-serif;
+        }
+
+        .tablink {
+            background-color: #fff;
+            color: #333;
+            float: left;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 1px;
+            width: 25%;
+            border: #fff;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            color: white;
+            display: none;
+        }
+
+        #SavedJob {
+            background-color: white;
+        }
+
+        #AppliedJob {
+            background-color: white;
+        }
+    </style>
+</head>
+<main>
+    <div class="master_layout_container master_layout_background">
+        <div class="master_layout_row">
+            <div class="master_layout_col_3h2 master_layout_col_13">
+                <div class="vnwBox">
+                    <p class="title border-bottom">
+                        Nghề nghiệp của tôi
+                        <ul class="sidebarMenu">
+                            <li class="sidebarMenuItem">
+                                <a href="@Url.Action("UserProfile", "UserJobSeeker")">
+                                    <span class="navIcon">
+                                        <img src="~/assets/img/icon/person1.png" alt="">
+                                    </span>
+                                    <span class="textLabel">Hồ sơ của tôi</span>
+                                </a>
+
+                            </li>
+                            <li class="sidebarMenuItem">
+                                <a href="@Url.Action("UserJob", "UserJobSeeker")">
+                                    <span class="navIcon">
+                                        <img src="~/assets/img/icon/briefcase1.png" alt="">
+                                    </span>
+                                    <span class="textLabel">Việc làm của tôi</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </p>
+                </div>
+            </div>
+            <div class="master_layout_col_3h2 master_layout_col_2">
+                <div class="vnwBox vnwBoxSmall">
+                    <span class="headerTitle">Việc làm của tôi</span>
+                </div>
+                <div class="vnwBox vnwBoxSmall" style="margin-top:0px">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div style="margin-bottom: 1px;">
+                                <div style="font-size: 16px; font-weight: 600; border-bottom: 1px solid #EBEBEB; display: flex;">
+                                    <button class="tablink" onclick="openCity('SavedJob', this, '#F7941D')" id="defaultOpen" style="font-size:14px;font-weight: 600;">Việc đã lưu</button>
+                                    <button class="tablink" onclick="openCity('AppliedJob', this, '#F7941D')" style="font-size:14px;font-weight: 600;">Việc đã ứng tuyển</button>
+                                </div>
+                                <div id="SavedJob" class="tabcontent">
+                                    {
+                                    @{
+                                        QLTDContext context = new QLTDContext();
+                                        List<LuuCongViec> lcv = context.LuuCongViecs.Where(p => p.MaNguoiTimViec == Model.Id).ToList();
+                                        if (lcv.Count == 0)
+                                        {
+                                            <div style="padding-top:0px">
+                                                <div style="padding-top: 20px; padding-bottom: 30px; border-radius: 6px; background-color: #f9f9f9;">
+                                                    <div style="text-align: center; font-size: 14px;">
+                                                        <div style="margin-bottom: 12px;display: flex;-webkit-box-align: center;align-items: center;-webkit-box-pack: center;justify-content: center;">
+                                                            <img src="~/assets/img/icon/document.png" style="height:35px; width:30px" />
+                                                        </div>
+                                                        <h2 style="font-size:16px;margin-bottom: 10px; font-weight: 600;line-height: 1.5;">
+                                                            Bạn chưa lưu công việc nào
+                                                        </h2>
+                                                        <div>
+                                                            <a href="~/Home/JobList" class="clicklink" style="color: #007bff!important;">Tìm việc làm phù hợp</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var item in lcv)
+                                            {
+                                                CongViecDangTuyen cvdt = context.CongViecDangTuyens.SingleOrDefault(q => q.Id == item.MaCongViecDangTuyen);
+                                                NhaTuyenDung ntd = context.NhaTuyenDungs.SingleOrDefault(p => p.Id == cvdt.MaNhaTuyenDung);
+                                                <div style="display: flex; border-bottom: 1px solid #EBEBEB; padding: 16px 0;margin-left: -5px; margin-right: -5px;">
+                                                    <div style="margin-right: 12px;box-sizing: border-box;display:flex">
+                                                        <div class="col-lg-2" style="margin-right: 12px;">
+                                                            @{
+                                                                var imgsrc = "";
+                                                                var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
+                                                                imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                                                <img src='@imgsrc' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
+                                                            }
+                                                        </div>
+                                                        <div class="col-lg-7" style="float:left;margin-left: 45px;">
+                                                            <div>
+                                                                <a href="~/Home/JobDetail/@cvdt.Id" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => cvdt.ChucDanh)</a>
+                                                            </div>
+                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@ntd.TenCongTy</p>
+                                                            <p style="margin-bottom:0!important;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => cvdt.DiaChi)</p>
+                                                            <p style="color: #F7941D;margin-bottom: 0;font-size: 14px;margin-top: -5px;">$@Html.DisplayFor(modelItem => cvdt.MucLuong)</p>
+                                                        </div>
+                                                        <div class="col-lg-3" style="display: flex; align-content: center;justify-content: center; align-items: center;">
+                                                            <div style="display: flex; align-items: center;">
+                                                                <button type="button" style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" onclick="location.href='@Url.Action("UserSavedJobDelete", new { id = item.Id })'">Hủy bỏ</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                    }
+                                </div>
+
+                                <div id="AppliedJob" class="tabcontent">
+                                    {
+                                    @{
+                                        if (Model.JobInformationId. == 0)
+                                        {
+                                            <div style="padding-top:0px">
+                                                <div style="padding-top: 20px; padding-bottom: 30px; border-radius: 6px; background-color: #f9f9f9;">
+                                                    <div style="text-align: center; font-size: 14px;">
+                                                        <div style="margin-bottom: 12px;display: flex;-webkit-box-align: center;align-items: center;-webkit-box-pack: center;justify-content: center;">
+                                                            <img src="~/assets/img/icon/document.png" style="height:35px; width:30px" />
+                                                        </div>
+                                                        <h2 style="font-size:16px;margin-bottom: 10px; font-weight: 600;line-height: 1.5;">
+                                                            Bạn chưa ứng tuyển vị trí nào
+                                                        </h2>
+                                                        <div>
+                                                            <a href="~/Home/JobList" class="clicklink" style="color: #007bff!important;">Tìm việc làm phù hợp</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            @foreach (var item in xv)
+                                            {
+                                                NhaTuyenDung ntd = context.NhaTuyenDungs.SingleOrDefault(p => p.Id == item.MaNhaTuyenDung);
+                                                CongViecDangTuyen cvdt = context.CongViecDangTuyens.SingleOrDefault(q => q.Id == item.MaCongViecDangTuyen);
+                                                <div style="display: flex; border-bottom: 1px solid #EBEBEB; padding: 16px 0;margin-left: -5px; margin-right: -5px;">
+                                                    <div style="margin-right: 12px;box-sizing: border-box;display:flex">
+                                                        <div class="col-lg-2" style="margin-right: 12px;">
+                                                            @{
+                                                                var imgsrc = "";
+                                                                var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
+                                                                imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                                                <img src='@imgsrc' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
+                                                            }
+                                                        </div>
+                                                        <div class="col-lg-7" style="float:left;margin-left: 45px;">
+                                                            <div>
+                                                                <a href="~/Home/JobDetail/@cvdt.Id" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => cvdt.ChucDanh)</a>
+                                                            </div>
+                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@ntd.TenCongTy</p>
+                                                            <p style="margin-bottom:0!important;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => cvdt.DiaChi)</p>
+                                                            <p style="color: #F7941D;margin-bottom: 0;font-size: 14px;margin-top: -5px;">$@Html.DisplayFor(modelItem => cvdt.MucLuong)</p>
+                                                        </div>
+                                                        <div class="col-lg-3" style=" align-content: center;justify-content: center; align-items: center;">
+                                                            @if (item.TrangThai == null)
+                                                            {
+                                                                <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;width: max-content;align-self: center;">Chưa cập nhật</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                if (item.TrangThai == "Chấp nhận")
+                                                                {
+                                                                    <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;width: max-content;color:#4BCA81;align-self: center;">@item.TrangThai <i class="fa-regular fa-circle-check fa-sm"></i></p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;width: max-content;color:#FC100D;align-self: center;">@item.TrangThai <i class="fa-regular fa-circle-xmark fa-sm"></i></p>
+                                                                }
+                                                            }
+                                                            <div style="display: flex; align-items: center;">
+                                                                <button type="button" style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" onclick="location.href='@Url.Action("UserJobDelete", new { id = item.Id })'">Hủy bỏ</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+                                    }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="master_layout_col_3h2 master_layout_col_13">
+                <div class="vnwBox" style="display:block">
+                    <p class="title border-bottom">Việc làm bạn sẽ thích</p>
+                    <div class="roww" style="margin:0px;">
+                        <div class="vnmBox1" style="display:block">
+                            <div class="joblove">
+                                <div class="joblove-row">
+                                    <div class="khung">
+                                        <div class="logobox">
+                                            <img class="logo" src="~/assets/img/logo/logo.png">
+                                        </div>
+                                    </div>
+                                    <div class="khung2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+
+<script>
+    function openCity(cityName, elmnt, color) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.color = "";
+
+        }
+        document.getElementById(cityName).style.display = "block";
+        elmnt.style.color = color;
+
+
+    }
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+
+*@
