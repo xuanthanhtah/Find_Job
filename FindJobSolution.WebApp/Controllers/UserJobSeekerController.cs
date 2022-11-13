@@ -131,6 +131,6 @@ namespace FindJobSolution.WebApp.Controllers
         {
             var all = await _applyJobAPI.GetAll();
             return View(all);
-        }
+        } 
     }
 }
