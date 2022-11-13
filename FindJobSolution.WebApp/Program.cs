@@ -20,6 +20,7 @@ builder.Services.AddTransient<IJobInformationApi, JobInformationAPI>();
 builder.Services.AddTransient<IRecuiterAPI, RecuiterAPI>();
 builder.Services.AddTransient<IJobAPI, JobAPI>();
 builder.Services.AddTransient<IJobSeekerAPI, JobSeekerAPI>();
+builder.Services.AddTransient<IApplyJobAPI, ApplyJobAPI>();
 
 builder.Services.AddSession(options =>
 {
