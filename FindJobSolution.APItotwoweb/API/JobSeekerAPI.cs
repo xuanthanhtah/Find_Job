@@ -1,7 +1,7 @@
 ﻿using FindJobSolution.Data.Entities;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Common;
-using FindJobSolution.ViewModels.System.User;
+using FindJobSolution.ViewModels.System.UsersJobSeeker;
 using FindJobSolution.ViewModels.System.UsersRecruiter;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -16,6 +16,10 @@ namespace FindJobSolution.APItotwoweb.API
         Task<JobSeekerViewModel> GetById(int id);
 
         Task<bool> Delete(int id);
+
+        Task<JobSeekerViewModel> GetByUserId(string id);
+
+        Task<bool> Register(RegisterRequest request);
     }
 
     public class JobSeekerAPI : IJobSeekerAPI
@@ -62,6 +66,31 @@ namespace FindJobSolution.APItotwoweb.API
             var body = await response.Content.ReadAsStringAsync();
             var jobSeeker = JsonConvert.DeserializeObject<JobSeekerViewModel>(body);
             return jobSeeker;
+        }
+
+        public async Task<JobSeekerViewModel> GetByUserId(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/JobSeeker/user/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<JobSeekerViewModel>(body);
+            return user;
+        }
+
+        public async Task<bool> Register(RegisterRequest request)
+        {
+            //tạo trang tạo tài khoản mới
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            //Hàm lấy api từ backend xử lý đăng ký tài khoản
+            var response = await client.PostAsync($"/api/UsersJobSeeker/register", httpContent);
+            //trả về thành công 200 hay thất bại 400 > 500
+            return response.IsSuccessStatusCode;
         }
     }
 }

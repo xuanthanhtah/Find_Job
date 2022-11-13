@@ -1,7 +1,10 @@
-﻿
+﻿@using FindJobSolution.ViewModels.System.User
+@model FindJobSolution.ViewModels.Catalog.Recruiters.RecruiterVM
+
+
 @{
     ViewData["Title"] = "IndexRecuiter";
-    Layout = "~/Views/Shared/_Layout2.cshtml";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
 }
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
@@ -78,22 +81,19 @@
         <nav id="sidebar" class="order-last img active" style="background-image: url(../sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem">
             <div class="cusborderu">
             </div>
-            @*@if (HttpContextAccessor.HttpContext.Session.GetString("Email1") != null)
+            @if (User.Identity.IsAuthenticated)
             {
-                var email = HttpContextAccessor.HttpContext.Session.GetString("Email1");
-                QLTDContext context = new QLTDContext();
-                TaiKhoanNhaTuyenDung tkntd = context.TaiKhoanNhaTuyenDungs.SingleOrDefault(p => p.Email == email);
                 <div class="">
-                    <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> @tkntd.HoTen<span>@tkntd.Email</span> </a></h1>
+                    <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> @Model.RecruiterId<span>@Model.RecruiterId</span> </a></h1>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
-                            <a href="@Url.Action("UserProfile", "UserEmp")"><span class="fa fa-user mr-3"></span>Quản lý tài khoản</a>
+                            <a href="@Url.Action("UserProfile", "UserRecuiter")"><span class="fa fa-user mr-3"></span>Quản lý tài khoản</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("UserCompanyEdit", "UserEmp")"><span class="fa fa-building mr-3" aria-hidden="true"></span>Thông tin công ty</a>
+                            <a href="@Url.Action("UserCompanyEdit", "UserRecuiter")"><span class="fa fa-building mr-3" aria-hidden="true"></span>Thông tin công ty</a>
                         </li>
                         <li>
-                            <a href="@Url.Action("Logout2", "Home")"><span class="fa fa-times mr-3"></span>Thoát</a>
+                            <a href="@Url.Action("Logout", "UserRecuiter")"><span class="fa fa-times mr-3"></span>Thoát</a>
                         </li>
                     </ul>
                 </div>
@@ -104,19 +104,19 @@
                     <div class="sidebar-menu__header"></div>
                     <div class="sidebar-menu__body--notlogin" style="min-height:705px">
                         <p style="margin-top: 1rem!important ; color: black">Đăng nhập để tuyển dụng và nhiều thứ khác nữa</p>
-                        <a href="@Url.Action("LoginEmployer", "Home")" class="btn-page--orj" style="color:white">Đăng nhập</a>
+                        <a href="@Url.Action("Login", "UserRecuiter")" class="btn-page--orj" style="color:white">Đăng nhập</a>
                     </div>
                     <div class="sidebar-menu__footer" style="text-align:center">
-                        <a href="@Url.Action("RegisterEmployer", "Home")" class="clicklink">Tôi không có tài khoản</a>
+                        <a href="@Url.Action("Create", "UserRecuiter")" class="clicklink">Tôi không có tài khoản</a>
                     </div>
                 </div>
-            }*@
+            }
             <div class="">
                 <div class="sidebar-menu__header"></div>
                 <div class="sidebar-menu__body--notlogin" style="min-height:705px">
                     <p style="margin-top: 1rem!important ; color: black">Chào mừng quý công ty @User.Identity.Name đến với website chúng tôi</p>
                     
-                    @if (User.Identity.IsAuthenticated)
+                    @*@if (User.Identity.IsAuthenticated)
                     {
                         <div>
                             <a asp-action="Index" asp-controller="UserRecuiter" class="btn head-btn2">Thông Tin</a>
@@ -130,10 +130,10 @@
                     {
                         <a asp-action="Create" asp-controller="UserRecuiter" class="btn head-btn1">Đăng ký</a>
                         <a asp-action="Login" asp-controller="UserRecuiter" class="btn head-btn2">Đăng nhập</a>
-                    }
+                    }*@
                 </div>
                 <div class="sidebar-menu__footer" style="text-align:center">
-                    <a href="@Url.Action("RegisterEmployer", "Home")" class="clicklink">Tôi không có tài khoản</a>
+                    <a href="@Url.Action("Create", "UserRecuiter")" class="clicklink">Tôi không có tài khoản</a>
                 </div>
             </div>
         </nav>

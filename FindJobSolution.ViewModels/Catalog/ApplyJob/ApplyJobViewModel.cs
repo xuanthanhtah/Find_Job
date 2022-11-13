@@ -13,5 +13,6 @@ namespace FindJobSolution.ViewModels.Catalog.ApplyJob
         public int JobInformationId { get; set; }
         public Status Status { get; set; }
         public DateTime TimeApply { get; set; }
+
     }
 }

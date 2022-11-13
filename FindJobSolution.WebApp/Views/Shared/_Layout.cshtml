@@ -32,7 +32,7 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="~/assets/img/logo/logo2.png" alt="">
+                    <img src="~/assets/img/logo/Logo-TicketToFuture.png" alt="">
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a href="~/Home/Index"><img src="~/assets/img/logo/logo2.png" alt=""></a>
+                                <a href="~/Home/Index"><img src="~/assets/img/logo/Logo-TicketToFuture.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
@@ -90,7 +90,7 @@
                                             Hello
                                             @User.Identity.Name
                                             <ul class="list">
-                                                <li data-value class="option"><img src="~/assets/img/icon/menu-user-2.png"><a href="@Url.Action("UserProfile", "UserJS")" style="color:black">Thông tin</a></li>
+                                                <li data-value class="option"><img src="~/assets/img/icon/menu-user-2.png"><a href="@Url.Action("UserProfile", "UserJobSeeker")" style="color:black">Thông tin</a></li>
                                                 <form method="post" asp-controller="UserJobSeeker" asp-action="Logout">
                                                                         <button type="submit" class="dropdown-item" value="Logout">Đăng xuất</button>
                                                                         </form>
@@ -99,7 +99,7 @@
                                     }
                                     else
                                     {
-                                        <a href="~/Home/RegisterJobSeeker" class="btn head-btn1">Đăng ký</a>
+                                        <a href="~/UserJobSeeker/Register" class="btn head-btn1">Đăng ký</a>
                                         <a asp-action="Login" asp-controller="UserJobSeeker" class="btn head-btn2">Đăng nhập</a>
                                     }
                                 </div>

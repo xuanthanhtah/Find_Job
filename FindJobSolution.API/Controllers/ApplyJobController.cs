@@ -82,5 +82,7 @@ namespace FindJobSolution.API.Controllers
             }
             return Ok();
         }
+
+
     }
 }

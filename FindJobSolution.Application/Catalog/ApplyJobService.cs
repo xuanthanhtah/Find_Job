@@ -1,6 +1,7 @@
 ﻿using FindJobSolution.Data.EF;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.ApplyJob;
+using FindJobSolution.ViewModels.Catalog.SaveJob;
 using FindJobSolution.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NuGet.DependencyResolver;
 
 namespace FindJobSolution.Application.Catalog
 {
@@ -18,6 +20,8 @@ namespace FindJobSolution.Application.Catalog
         //Task<PagedResult<ApplyJobViewModel>> GetAllPaging(GetApplyJobPagingRequest request);
         Task<List<ApplyJobViewModel>> GetAll();
         Task<ApplyJobViewModel> GetbyId(int JobSeekerId, int JobInfomationId);
+
+        //Task<ApplySaveViewModel> GetBoth(int JobSeekerId)
     }
     public class ApplyJobService : IApplyJobService
     {
@@ -54,7 +58,9 @@ namespace FindJobSolution.Application.Catalog
 
         public async Task<List<ApplyJobViewModel>> GetAll()
         {
-            var query = from j in _context.ApplyJobs select new { j };
+            var query = from j in _context.ApplyJobs
+
+                        select new { j };
 
             return await query
                .Select(p => new ApplyJobViewModel()
@@ -63,9 +69,22 @@ namespace FindJobSolution.Application.Catalog
                    JobSeekerId = p.j.JobSeekerId,
                    Status = p.j.Status,
                    TimeApply = p.j.TimeApply,
-               }).ToListAsync();
-
+               }
+               ).ToListAsync();
         }
+
+        //public async Task<ApplySaveViewModel> GetBoth(int JobSeekerId)
+        //{
+        //    ApplySaveViewModel asvm = new ApplySaveViewModel();
+        //    var applyJobs = _context.ApplyJobs.Where(x => x.JobSeekerId == JobSeekerId).ToList();
+
+        //    var saveJobs = _context.SaveJobs.Where(x => x.JobSeekerId == JobSeekerId).ToList();
+
+        //    //asvm.applyJobs = applyJobs;
+        //    //asvm.saveJobs = saveJobs;
+
+        //    return true;
+        //}
 
         //public async Task<PagedResult<ApplyJobViewModel>> GetAllPaging(GetApplyJobPagingRequest request)
         //{
