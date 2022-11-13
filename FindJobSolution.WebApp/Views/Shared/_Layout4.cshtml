@@ -30,7 +30,95 @@
             <div class="preloader-inner position-relative">
                 <div class="preloader-circle"></div>
                 <div class="preloader-img pere-text">
-                    <img src="~/assets/img/logo/Logo_TicketToFuture.png" alt="">
+                    <img src="~/assets/img/logo/Logo-TicketToFuture.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader End -->
+   
+
+    <div class="container-fuild">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+   
+    <!-- JS here -->
+    <!-- All JS Custom Plugins Link Here here -->
+    <script src="./../assets/js/vendor/modernizr-3.5.0.min.js"></script>
+    <!-- Jquery, Popper, Bootstrap -->
+    <script src="./../assets/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="./../assets/js/popper.min.js"></script>
+    <script src="./../assets/js/bootstrap.min.js"></script>
+    <!-- Jquery Mobile Menu -->
+    <script src="./../assets/js/jquery.slicknav.min.js"></script>
+
+    <!-- Jquery Slick , Owl-Carousel Plugins -->
+    <script src="./../assets/js/owl.carousel.min.js"></script>
+    <script src="./../assets/js/slick.min.js"></script>
+    <script src="./../assets/js/price_rangs.js"></script>
+
+    <!-- One Page, Animated-HeadLin -->
+    <script src="./../assets/js/wow.min.js"></script>
+    <script src="./../assets/js/animated.headline.js"></script>
+    <script src="./../assets/js/jquery.magnific-popup.js"></script>
+
+    <!-- Scrollup, nice-select, sticky -->
+    <script src="./../assets/js/jquery.scrollUp.min.js"></script>
+    <script src="./../assets/js/jquery.nice-select.min.js"></script>
+    <script src="./../assets/js/jquery.sticky.js"></script>
+
+    <!-- contact js -->
+    <script src="./../assets/js/contact.js"></script>
+    <script src="./../assets/js/jquery.form.js"></script>
+    <script src="./../assets/js/jquery.validate.min.js"></script>
+    <script src="./../assets/js/mail-script.js"></script>
+    <script src="./../assets/js/jquery.ajaxchimp.min.js"></script>
+
+    <!-- Jquery Plugins, main Jquery -->
+    <script src="./../assets/js/plugins.js"></script>
+    <script src="./../assets/js/main.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Job board</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/img/favicon.ico">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="../assets/css/flaticon.css">
+    <link rel="stylesheet" href="../assets/css/price_rangs.css">
+    <link rel="stylesheet" href="../assets/css/slicknav.css">
+    <link rel="stylesheet" href="../assets/css/animate.min.css">
+    <link rel="stylesheet" href="../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="../assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../assets/css/themify-icons.css">
+    <link rel="stylesheet" href="../assets/css/slick.css">
+    <link rel="stylesheet" href="../assets/css/nice-select.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="~/assets/img/logo/logo2.png" alt="">
                 </div>
             </div>
         </div>
@@ -38,20 +126,20 @@
     <!-- Preloader Start -->
     <header>
         <!-- Header Start -->
-        <div class="header-area header-transparrent" >
+        <div class="header-area header-transparrent">
             <div class="headder-top header-sticky" style="background-color: black">
                 <div class="container">
                     <div class="row align-items-center">
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a asp-action="IndexRecuiter" asp-controller="home"><img style="height:90px" src="~/assets/img/logo/Logo_TicketToFuture2.png" alt=""></a>
+                                <a asp-action="IndexRecuiter" asp-controller="home"><img src="~/assets/img/logo/logo2.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9">
                             <div class="menu-wrapper">
                                 <!-- Main-menu -->
-                                <div class="main-menu" >
+                                <div class="main-menu">
                                     <nav class="d-none d-lg-block">
                                         <ul id="navigation">
                                             <li><a style="color: white;" asp-action="IndexRecuiter" asp-controller="home">Trang chủ</a></li>
@@ -83,24 +171,24 @@
                                 </div>
                                 }*@
                                 @*<div class="header-btn d-none f-right d-lg-block">
-                                    @if (User.Identity.IsAuthenticated)
-                                    {
-                                        <div class="nice-select">
-                                            Hello
-                                            @User.Identity.Name
-                                            <ul class="list">
-                                                <li data-value class="option"><img src="~/assets/img/icon/menu-user-2.png"><a href="@Url.Action("UserProfile", "UserJS")" style="color:black">Thông tin</a></li>
-                                                <form method="post" asp-controller="UserJobSeeker" asp-action="Logout">
-                                                    <button type="submit" class="dropdown-item" value="Logout">Đăng xuất</button>
-                                                </form>
-                                            </ul>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <a href="~/Home/RegisterJobSeeker" class="btn head-btn1">Đăng ký</a>
-                                        <a asp-action="Login" asp-controller="UserJobSeeker" class="btn head-btn2">Đăng nhập</a>
-                                    }
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                <div class="nice-select">
+                                Hello
+                                @User.Identity.Name
+                                <ul class="list">
+                                <li data-value class="option"><img src="~/assets/img/icon/menu-user-2.png"><a href="@Url.Action("UserProfile", "UserJS")" style="color:black">Thông tin</a></li>
+                                <form method="post" asp-controller="UserJobSeeker" asp-action="Logout">
+                                <button type="submit" class="dropdown-item" value="Logout">Đăng xuất</button>
+                                </form>
+                                </ul>
+                                </div>
+                                }
+                                else
+                                {
+                                <a href="~/Home/RegisterJobSeeker" class="btn head-btn1">Đăng ký</a>
+                                <a asp-action="Login" asp-controller="UserJobSeeker" class="btn head-btn2">Đăng nhập</a>
+                                }
                                 </div>*@
                             </div>
                         </div>
