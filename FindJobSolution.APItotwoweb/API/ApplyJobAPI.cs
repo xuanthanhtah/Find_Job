@@ -5,6 +5,9 @@ using Newtonsoft.Json;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
+using FindJobSolution.ViewModels.Catalog.SaveJob;
+using System.Net.Http;
+using FindJobSolution.ViewModels.Catalog.Jobs;
 
 namespace FindJobSolution.APItotwoweb.API
 {
@@ -15,7 +18,7 @@ namespace FindJobSolution.APItotwoweb.API
 
         Task<bool> Delete(Guid id);
 
-        Task<List<ApplyJobViewModel>> GetAll();
+        Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll();
 
     }
     public class ApplyJobAPI : IApplyJobAPI
@@ -49,9 +52,15 @@ namespace FindJobSolution.APItotwoweb.API
             throw new NotImplementedException();
         }
 
-        public async Task<List<ApplyJobViewModel>> GetAll()
+        public async Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll()
         {
-            return await GetListAsync<ApplyJobViewModel>($"/api/Job");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/ApplyJob");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>>(body);
+            return user;
         }
 
         private async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)

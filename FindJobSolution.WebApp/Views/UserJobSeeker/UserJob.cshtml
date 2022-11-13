@@ -1,4 +1,4 @@
-﻿@*@model FindJobSolution.ViewModels.Catalog.ApplyJob.ApplyJobViewModel
+﻿@*@model Tuple<List<FindJobSolution.ViewModels.Catalog.ApplyJob.ApplyJobViewModel>,List<FindJobSolution.ViewModels.Catalog.SaveJob.SaveJobViewModel>>
 
 @{
     ViewData["Title"] = "UserJob";
@@ -84,9 +84,7 @@
                                 <div id="SavedJob" class="tabcontent">
                                     {
                                     @{
-                                        QLTDContext context = new QLTDContext();
-                                        List<LuuCongViec> lcv = context.LuuCongViecs.Where(p => p.MaNguoiTimViec == Model.Id).ToList();
-                                        if (lcv.Count == 0)
+                                        if (Model.Item1.Count == 0)
                                         {
                                             <div style="padding-top:0px">
                                                 <div style="padding-top: 20px; padding-bottom: 30px; border-radius: 6px; background-color: #f9f9f9;">
@@ -106,14 +104,12 @@
                                         }
                                         else
                                         {
-                                            @foreach (var item in lcv)
+                                            @foreach (var item in Model.Item1)
                                             {
-                                                CongViecDangTuyen cvdt = context.CongViecDangTuyens.SingleOrDefault(q => q.Id == item.MaCongViecDangTuyen);
-                                                NhaTuyenDung ntd = context.NhaTuyenDungs.SingleOrDefault(p => p.Id == cvdt.MaNhaTuyenDung);
                                                 <div style="display: flex; border-bottom: 1px solid #EBEBEB; padding: 16px 0;margin-left: -5px; margin-right: -5px;">
                                                     <div style="margin-right: 12px;box-sizing: border-box;display:flex">
                                                         <div class="col-lg-2" style="margin-right: 12px;">
-                                                            @{
+                                                            @*{
                                                                 var imgsrc = "";
                                                                 var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
                                                                 imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
@@ -241,7 +237,6 @@
         </div>
     </div>
 
-
 </main>
 
 <script>
@@ -264,5 +259,4 @@
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("defaultOpen").click();
 </script>
-
 *@
