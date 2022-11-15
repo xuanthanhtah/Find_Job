@@ -1,0 +1,69 @@
+﻿@model List<FindJobSolution.ViewModels.Catalog.ApplyJob.ApplyJobViewModel>
+
+@{
+    ViewData["Title"] = "JobSeekerApply";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Danh sách công việc</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách công việc</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Create" asp-controller="JobInformation">Thêm công việc mới</a>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                người ứng tuyển
+                            </th>
+                            <th>
+                                mã công việc
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>
+                                Thời gian ứng tuyển
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.JobSeekerId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.JobInformationId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TimeApply)
+                                </td>
+                                <td>
+                                <td>
+                                        @Html.ActionLink("sửa trạng thái", "EditStatus", new {  JobSeekerId=item.JobSeekerId, JobInformationId= item.JobInformationId } , new { @class = "btn btn-success" }) |
+                                        @Html.ActionLink("Chi tiết người tìm việc", "ProfileJobSeeker", new { id=item.JobSeekerId  }, new { @class = "btn btn-success"  })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
