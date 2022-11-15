@@ -36,7 +36,7 @@ namespace FindJobSolution.Application.Catalog
             {
                 JobInformationId = request.JobInformationId,
                 JobSeekerId = request.JobSeekerId,
-                Status = request.Status,
+                Status = Data.Enums.Status.Inprogress,
                 TimeApply = request.TimeApply,
             };
 
@@ -57,10 +57,12 @@ namespace FindJobSolution.Application.Catalog
         public async Task<Tuple<List<ApplyJobViewModel>,List<SaveJobViewModel>>> GetAll()
         {
             var query = from j in _context.ApplyJobs
-                        select new { j };
+                        join k in _context.JobInformations on j.JobInformationId equals k.JobInformationId
+                        select new { j, k };
 
             var query2 = from i in _context.SaveJobs
-                         select new { i };
+                         join q in _context.JobInformations on i.JobInformationId equals q.JobInformationId
+                         select new { i, q };
             
             var List1 = await query
                .Select(p => new ApplyJobViewModel()
@@ -69,6 +71,11 @@ namespace FindJobSolution.Application.Catalog
                    JobSeekerId = p.j.JobSeekerId,
                    Status = p.j.Status,
                    TimeApply = p.j.TimeApply,
+
+                   JobType = p.k.JobType,
+                   WorkingLocation = p.k.WorkingLocation,
+                   MinSalary = p.k.MinSalary,
+                   MaxSalary = p.k.MaxSalary,
                }
                ).ToListAsync();
 
@@ -79,6 +86,11 @@ namespace FindJobSolution.Application.Catalog
                    JobSeekerId = p.i.JobSeekerId,
                    Status = p.i.Status,
                    TimeSave = p.i.TimeSave,
+
+                   JobType = p.q.JobType,
+                   WorkingLocation = p.q.WorkingLocation,
+                   MinSalary = p.q.MinSalary,
+                   MaxSalary = p.q.MaxSalary,
                }
                ).ToListAsync();
 

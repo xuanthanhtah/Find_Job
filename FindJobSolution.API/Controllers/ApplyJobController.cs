@@ -42,7 +42,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] ApplyJobCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] ApplyJobCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace FindJobSolution.API.Controllers
         //    return Ok();
         //}
 
-        [HttpDelete("{JobSeekerId, JobInfomationId}")]
+        [HttpDelete("Jobseekerid={JobSeekerId}/JobInfomationId={JobInfomationId}")]
         public async Task<IActionResult> Delete(int JobSeekerId, int JobInfomationId)
         {
             var result = await _applyjobService.Delete(JobSeekerId, JobInfomationId);

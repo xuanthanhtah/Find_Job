@@ -16,7 +16,7 @@ namespace FindJobSolution.APItotwoweb.API
 
         Task<bool> Create(ApplyJobCreateRequest request);
 
-        Task<bool> Delete(Guid id);
+        Task<bool> Delete(int jobinfomationid, int jobseekerid);
 
         Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll();
 
@@ -47,9 +47,15 @@ namespace FindJobSolution.APItotwoweb.API
             return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> Delete(Guid id)
+        public async Task<bool> Delete(int jobinfomationid, int jobseekerid)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.DeleteAsync($"/api/ApplyJob/{jobinfomationid},{jobseekerid}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<bool>(body);
+            return user;
         }
 
         public async Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll()

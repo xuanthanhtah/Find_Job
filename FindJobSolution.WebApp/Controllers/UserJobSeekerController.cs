@@ -14,6 +14,8 @@ using FindJobSolution.ViewModels.System.UsersRecruiter;
 using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 using System.Drawing.Printing;
 using FindJobSolution.Data.Entities;
+using FindJobSolution.ViewModels.Catalog.JobInformations;
+using FindJobSolution.ViewModels.Catalog.SaveJob;
 
 namespace FindJobSolution.WebApp.Controllers
 {
@@ -24,14 +26,16 @@ namespace FindJobSolution.WebApp.Controllers
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IJobSeekerAPI _jobSeekerAPI;
         private readonly IApplyJobAPI _applyJobAPI;
+        private readonly ISaveJobAPI _saveJobAPI;
 
-        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI, IApplyJobAPI applyJobAPI)
+        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI)
         {
             _userAPI = userAPI;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
             _jobSeekerAPI = jobSeekerAPI;
             _applyJobAPI = applyJobAPI;
+            _saveJobAPI = saveJobAPI;
         }
 
         [HttpGet]
@@ -132,5 +136,55 @@ namespace FindJobSolution.WebApp.Controllers
             var all = await _applyJobAPI.GetAll();
             return View(all);
         } 
+
+        [HttpGet]
+        public IActionResult CancelSaveJob(int jobinfoid, int jobseekerid)
+        {
+            return View(new SaveJobDeleteRequest()
+            {
+                JobInformationId = jobinfoid,
+                JobSeekerId = jobseekerid,
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CancelSaveJob(SaveJobDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _saveJobAPI.Delete(request.JobSeekerId,request.JobInformationId);
+            if (result)
+            {
+                return RedirectToAction("index");
+            }
+            return View(request);
+        }
+
+        [HttpGet]
+        public IActionResult CancelApplyJob(int jobinfoid, int jobseekerid)
+        {
+            return View(new ApplyJobDeleteRequest()
+            {
+                JobInformationId = jobinfoid,
+                JobSeekerId = jobseekerid,
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CancelApplyJob(ApplyJobDeleteRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _applyJobAPI.Delete(request.JobSeekerId, request.JobInformationId);
+            if (result)
+            {
+                return RedirectToAction("index");
+            }
+            return View(request);
+        }
     }
 }

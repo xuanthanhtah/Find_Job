@@ -9,6 +9,7 @@ namespace FindJobSolution.Data.Enums
     public enum Status
     {
         NoActive,
-        Active
+        Active,
+        Inprogress,
     }
 }
