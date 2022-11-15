@@ -72,7 +72,7 @@ namespace FindJobSolution.API.Controllers
         //    return Ok();
         //}
 
-        [HttpDelete("{JobSeekerId, JobInfomationId}")]
+        [HttpDelete("Jobseekerid={JobSeekerId}/JobInfomationId={JobInfomationId}")]
         public async Task<IActionResult> Delete(int JobSeekerId, int JobInfomationId)
         {
             var result = await _savejobService.Delete(JobSeekerId, JobInfomationId);
