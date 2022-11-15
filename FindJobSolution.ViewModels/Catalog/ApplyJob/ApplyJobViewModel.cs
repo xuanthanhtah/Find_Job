@@ -19,5 +19,10 @@ namespace FindJobSolution.ViewModels.Catalog.ApplyJob
         public IFormFile ThumbnailRecuiter { get; set; }
         public string nameImage { get; set; }
 
+        public string JobType { get; set; }
+        public string WorkingLocation { get; set; }
+        public decimal MinSalary { get; set; }
+        public decimal MaxSalary { get; set; }
+
     }
 }
