@@ -1,30 +1,31 @@
 ﻿using FindJobSolution.Data.EF;
+using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.ApplyJob;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
-using FindJobSolution.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using NuGet.DependencyResolver;
 
 namespace FindJobSolution.Application.Catalog
 {
     public interface IApplyJobService
     {
         Task<int> Create(ApplyJobCreateRequest request);
+
         Task<int> Delete(int JobSeekerId, int JobInfomationId);
+
         Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll();
+
         Task<ApplyJobViewModel> GetbyId(int JobSeekerId, int JobInfomationId);
 
+        Task<List<ApplyJobViewModel>> GetbyJobInfomationId(int JobInfomationId);
+
+        Task<bool> Update(int jobSeekerId, int JobInformationId, ApplyJobUpdateStatusRequest request);
     }
+
     public class ApplyJobService : IApplyJobService
     {
-
         private readonly FindJobDBContext _context;
+
         public ApplyJobService(FindJobDBContext context)
         {
             _context = context;
@@ -54,7 +55,7 @@ namespace FindJobSolution.Application.Catalog
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<Tuple<List<ApplyJobViewModel>,List<SaveJobViewModel>>> GetAll()
+        public async Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll()
         {
             var query = from j in _context.ApplyJobs
                         join k in _context.JobInformations on j.JobInformationId equals k.JobInformationId
@@ -63,7 +64,7 @@ namespace FindJobSolution.Application.Catalog
             var query2 = from i in _context.SaveJobs
                          join q in _context.JobInformations on i.JobInformationId equals q.JobInformationId
                          select new { i, q };
-            
+
             var List1 = await query
                .Select(p => new ApplyJobViewModel()
                {
@@ -137,7 +138,7 @@ namespace FindJobSolution.Application.Catalog
         //            TimeSave = p.j.TimeSave,
         //        }).ToListAsync();
 
-        //    // in ra 
+        //    // in ra
         //    var pagedResult = new PagedResult<ApplyJobViewModel>()
         //    {
         //        TotalRecord = totalRow,
@@ -159,6 +160,37 @@ namespace FindJobSolution.Application.Catalog
                 TimeApply = ApplyJob.TimeApply,
             };
             return ApplyJobItem;
+        }
+
+        public async Task<List<ApplyJobViewModel>> GetbyJobInfomationId(int JobInfomationId)
+        {
+            var jobInforId = await _context.ApplyJobs.FirstOrDefaultAsync(x => x.JobInformationId == JobInfomationId);
+            if (jobInforId == null) { throw new FindJobException($"cannot find a ApplyJob: {JobInfomationId}"); }
+
+            var query = from j in _context.ApplyJobs
+                        where j.JobInformationId == JobInfomationId
+                        select new { j };
+
+            return await query
+               .Select(p => new ApplyJobViewModel()
+               {
+                   JobInformationId = p.j.JobInformationId,
+                   JobSeekerId = p.j.JobSeekerId,
+                   Status = p.j.Status,
+                   TimeApply = p.j.TimeApply,
+               }).ToListAsync();
+        }
+
+        public async Task<bool> Update(int jobSeekerId, int JobInformationId, ApplyJobUpdateStatusRequest request)
+        {
+            var ApplyJobs = await _context.ApplyJobs.FindAsync(jobSeekerId, JobInformationId);
+
+            if (ApplyJobs == null) { throw new FindJobException($"cannot find a jobinformation: {jobSeekerId} + {JobInformationId}"); }
+
+            ApplyJobs.Status = request.Status;
+
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         //public async Task<int> Update(ApplyJobUpdateRequest request)

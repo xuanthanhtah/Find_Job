@@ -1,0 +1,103 @@
+﻿@model FindJobSolution.ViewModels.Catalog.JobSeekers.JobSeekerViewModel
+
+@{
+    ViewData["Title"] = "ProfileJobSeeker";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Chi tiết người ứng tuyển</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Chi tiết người ứng tuyển</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="index" asp-controller="JobInformation">Trở lại danh sách</a>
+        </div>
+        <div class="card-body">
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <div>
+                        <dl class="row">
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.id)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.id)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.jobseekerId)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.jobseekerId)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.JobId)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.JobId)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Address)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Address)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Gender)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Gender)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Name)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.National)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.National)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Dob)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Dob)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.DesiredSalary)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.DesiredSalary)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.ThumbnailCv)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.ThumbnailCv)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.Email)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.Email)
+                            </dd>
+                            <dt class="col-sm-2">
+                                @Html.DisplayNameFor(model => model.PhoneNumber)
+                            </dt>
+                            <dd class="col-sm-10">
+                                @Html.DisplayFor(model => model.PhoneNumber)
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
