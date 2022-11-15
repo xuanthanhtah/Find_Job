@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace FindJobSolution.ViewModels.Catalog.ApplyJob
 {
-    public class ApplyJobUpdateRequest
+    public class ApplyJobUpdateStatusRequest
     {
-        public int JobSeekerId { get; set; }
-        public int JobInformationId { get; set; }
         public Status Status { get; set; }
 
         public DateTime TimeApply { get; set; }

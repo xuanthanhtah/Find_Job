@@ -63,8 +63,8 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
 
         public async Task<ApiResult<bool>> Register(RegisterRequest request)
         {
-            var userid = await _userManager.FindByNameAsync(request.UserName);
-            if (userid != null)
+            var userName = await _userManager.FindByNameAsync(request.UserName);
+            if (userName != null)
             {
                 return new ApiErrorResult<bool>("Tài khoản đã tồn tại");
             }
@@ -84,7 +84,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             var JobSeeker = new JobSeeker()
             {
                 UserId = user.Id,
-                JobId = 1,
+                JobId = 6,
             };
 
             await _context.AddAsync(JobSeeker);

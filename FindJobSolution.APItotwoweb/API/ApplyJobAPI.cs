@@ -13,14 +13,19 @@ namespace FindJobSolution.APItotwoweb.API
 {
     public interface IApplyJobAPI
     {
-
         Task<bool> Create(ApplyJobCreateRequest request);
 
         Task<bool> Delete(int jobinfomationid, int jobseekerid);
 
+        Task<ApplyJobViewModel> GetById(int jobseekerid, int jobinfomationid);
+
         Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll();
 
+        Task<List<ApplyJobViewModel>> GetByJobInforId(int id);
+
+        Task<bool> Edit(ApplyJobUpdateRequest request);
     }
+
     public class ApplyJobAPI : IApplyJobAPI
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -33,6 +38,7 @@ namespace FindJobSolution.APItotwoweb.API
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
         }
+
         public async Task<bool> Create(ApplyJobCreateRequest request)
         {
             //tạo trang tạo tài khoản mới
@@ -58,6 +64,21 @@ namespace FindJobSolution.APItotwoweb.API
             return user;
         }
 
+        public async Task<bool> Edit(ApplyJobUpdateRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/ApplyJob/JobSeekerId={request.JobSeekerId}/JobInformationId={request.JobInformationId}", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<bool>(result);
+            return JsonConvert.DeserializeObject<bool>(result);
+        }
+
         public async Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll()
         {
             var client = _httpClientFactory.CreateClient();
@@ -66,6 +87,28 @@ namespace FindJobSolution.APItotwoweb.API
             var response = await client.GetAsync($"/api/ApplyJob");
             var body = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>>(body);
+            return user;
+        }
+
+        public async Task<ApplyJobViewModel> GetById(int jobseekerid, int jobinfomationid)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/ApplyJob/Jobseekerid={jobseekerid}/JobInfomationId={jobinfomationid}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<ApplyJobViewModel>(body);
+            return user;
+        }
+
+        public async Task<List<ApplyJobViewModel>> GetByJobInforId(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/ApplyJob/getjobinfor/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<List<ApplyJobViewModel>>(body);
             return user;
         }
 

@@ -92,7 +92,7 @@ namespace FindJobSolution.Application.System.UsersRecuiter
 
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, "JobSeeker");
+                await _userManager.AddToRoleAsync(user, "Recuiter");
                 return true;
             }
             return false;

@@ -23,6 +23,7 @@ namespace FindJobSolution.Application.Catalog
         Task<List<JobSeekerViewModel>> GetAll();
 
         Task<JobSeekerViewModel> GetbyId(int JobSeekerId);
+
         Task<JobSeekerViewModel> GetByUserId(Guid id);
 
         Task<int> AddCv(int JobSeekerId, CvCreateRequest request);
@@ -179,7 +180,8 @@ namespace FindJobSolution.Application.Catalog
 
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
             var jobItem = new JobSeekerViewModel()
-            {        
+            {
+                id = user.Id,
                 jobseekerId = jobSeeker.JobSeekerId,
                 JobId = jobSeeker.JobId,
                 Address = jobSeeker.Address,
