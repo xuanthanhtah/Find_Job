@@ -4,6 +4,7 @@ using FindJobSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    partial class FindJobDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221117102720_updatenewrolee")]
+    partial class updatenewrolee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
