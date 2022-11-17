@@ -61,18 +61,29 @@ namespace FindJobSolution.WebApp.Controllers
             //}
             var userPrincipal = this.ValidateToken(token);
 
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
-                IsPersistent = false
-            };
-            HttpContext.Session.SetString("Token", token);
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                userPrincipal,
-                authProperties);
+            IEnumerable<Claim> claims = userPrincipal.Claims;
 
-            return RedirectToAction("Index", "Home");
+            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+
+            if (role.Contains("JobSeeker"))
+            {
+                var authProperties = new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
+                    IsPersistent = false
+                };
+                HttpContext.Session.SetString("Token", token);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    userPrincipal,
+                    authProperties);
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet]
@@ -135,7 +146,7 @@ namespace FindJobSolution.WebApp.Controllers
         {
             var all = await _applyJobAPI.GetAll();
             return View(all);
-        } 
+        }
 
         [HttpGet]
         public IActionResult CancelSaveJob(int jobinfoid, int jobseekerid)
@@ -154,7 +165,7 @@ namespace FindJobSolution.WebApp.Controllers
             {
                 return View();
             }
-            var result = await _saveJobAPI.Delete(request.JobSeekerId,request.JobInformationId);
+            var result = await _saveJobAPI.Delete(request.JobSeekerId, request.JobInformationId);
             if (result)
             {
                 return RedirectToAction("index");
