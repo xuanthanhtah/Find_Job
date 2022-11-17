@@ -61,17 +61,29 @@ namespace FindJobSolution.WebApp.Controllers
             }
             var userPrincipal = this.ValidateToken(token);
 
-            var authProperties = new AuthenticationProperties
+            IEnumerable<Claim> claims = userPrincipal.Claims;
+
+            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+
+            if (role.Contains("Recuiter"))
             {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
-                IsPersistent = false
-            };
-            HttpContext.Session.SetString("Token", token);
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                userPrincipal,
-                authProperties);
-            return RedirectToAction("IndexRecuiter", "Home");
+                var authProperties = new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
+                    IsPersistent = false
+                };
+                HttpContext.Session.SetString("Token", token);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    userPrincipal,
+                    authProperties);
+                return RedirectToAction("IndexRecuiter", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "You are not a Recuiter");
+                return View();
+            }
         }
 
         [HttpPost]

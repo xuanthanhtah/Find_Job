@@ -57,12 +57,13 @@ namespace FindJobSolution.Application.System
             {
                 throw new FindJobException("Đăng nhập không đúng");
             }
-            var roles = _userManager.GetRolesAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
             {
-                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Email,user.Email),
+                //new Claim(ClaimTypes.GivenName,user.FirstName),
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
-                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Name, request.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
@@ -71,10 +72,36 @@ namespace FindJobSolution.Application.System
             var token = new JwtSecurityToken(_config["Tokens:Issuer"],
                 _config["Tokens:Issuer"],
                 claims,
-                expires: DateTime.Now.AddHours(24),
+                expires: DateTime.Now.AddHours(3),
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+            //var user = await _userManager.FindByNameAsync(request.UserName);
+            //if (user == null) throw new FindJobException("Tài khoản không tồn tại");
+
+            //var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
+            //if (!result.Succeeded)
+            //{
+            //    throw new FindJobException("Đăng nhập không đúng");
+            //}
+            //var roles = _userManager.GetRolesAsync(user);
+            //var claims = new[]
+            //{
+            //    new Claim(ClaimTypes.Email, user.Email),
+            //    new Claim(ClaimTypes.Role, string.Join(";",roles)),
+            //    new Claim(ClaimTypes.Name, user.UserName),
+            //    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            //};
+            //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
+            //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            //var token = new JwtSecurityToken(_config["Tokens:Issuer"],
+            //    _config["Tokens:Issuer"],
+            //    claims,
+            //    expires: DateTime.Now.AddHours(24),
+            //    signingCredentials: creds);
+
+            //return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         public async Task<UserViewModel> GetById(Guid id)
