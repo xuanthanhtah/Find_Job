@@ -45,18 +45,30 @@ namespace FindJobSolution.AdminApp.Controllers
             //}
             var userPrincipal = this.ValidateToken(token);
 
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
-                IsPersistent = true
-            };
-            HttpContext.Session.SetString("Token", token);
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                userPrincipal,
-                authProperties);
+            IEnumerable<Claim> claims = userPrincipal.Claims;
 
-            return RedirectToAction("Index", "Home");
+            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+
+            if (role.Contains("admin"))
+            {
+                var authProperties = new AuthenticationProperties
+                {
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(30),
+                    IsPersistent = true
+                };
+                HttpContext.Session.SetString("Token", token);
+                await HttpContext.SignInAsync(
+                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    userPrincipal,
+                    authProperties);
+
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("", "You are not admin");
+                return View();
+            }
         }
 
         private ClaimsPrincipal ValidateToken(string jwtToken)
