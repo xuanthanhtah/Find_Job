@@ -8,6 +8,7 @@ using FindJobSolution.ViewModels.Catalog.RecuiterImages;
 using FindJobSolution.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Versioning;
 using System.Net.Http.Headers;
 
 namespace FindJobSolution.Application.Catalog
@@ -44,6 +45,7 @@ public class RecruiterService : IRecruiterService
 {
     private readonly FindJobDBContext _context;
     private readonly IStorageService _storageService;
+    private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
     public RecruiterService(FindJobDBContext context, IStorageService storageService)
     {
@@ -107,6 +109,8 @@ public class RecruiterService : IRecruiterService
         return await query
            .Select(p => new RecruiterVM()
            {
+               id = p.j.UserId,
+               RecruiterId = p.j.RecruiterId,
                CompanyName = p.j.CompanyName,
                Address = p.j.Address,
                CompanyIntroduction = p.j.CompanyIntroduction,
@@ -168,7 +172,11 @@ public class RecruiterService : IRecruiterService
                     select new { j, i };
 
         var recruiters = await _context.Recruiters.FindAsync(Recuiterid);
+
+        var image = await _context.RecruiterImages.Where(x => x.RecruiterId == recruiters.RecruiterId).FirstOrDefaultAsync();
+
         if (recruiters == null) { throw new FindJobException($"cannot find a recruiters: {recruiters}"); }
+
         var jobItem = new RecruiterVM()
         {
             RecruiterId = recruiters.RecruiterId,
@@ -176,7 +184,7 @@ public class RecruiterService : IRecruiterService
             Address = recruiters.Address,
             CompanyIntroduction = recruiters.CompanyIntroduction,
             ViewCount = recruiters.ViewCount,
-            ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
+            ThumbnailCv = image.FilePath,
         };
         return jobItem;
     }
@@ -189,6 +197,9 @@ public class RecruiterService : IRecruiterService
                     select new { j, i };
 
         var recruiters = await _context.Recruiters.FirstOrDefaultAsync(x => x.UserId == id);
+
+        var image = await _context.RecruiterImages.Where(x => x.RecruiterId == recruiters.RecruiterId).FirstOrDefaultAsync();
+
         if (recruiters == null) { throw new FindJobException($"cannot find a recruiters: {recruiters}"); }
         var jobItem = new RecruiterVM()
         {
@@ -198,7 +209,8 @@ public class RecruiterService : IRecruiterService
             Address = recruiters.Address,
             CompanyIntroduction = recruiters.CompanyIntroduction,
             ViewCount = recruiters.ViewCount,
-            ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
+            //get path from RecruiterImage
+            ThumbnailCv = image.FilePath,
         };
         return jobItem;
     }
@@ -327,6 +339,6 @@ public class RecruiterService : IRecruiterService
         var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
         await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
-        return fileName;
+        return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
     }
 }

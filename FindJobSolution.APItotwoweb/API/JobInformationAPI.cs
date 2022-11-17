@@ -27,6 +27,7 @@ namespace FindJobSolution.APItotwoweb.API
         Task<bool> Edit(int id, JobInformationUpdateRequest request);
 
         Task<bool> Delete(int id);
+
     }
 
     public class JobInformationAPI : IJobInformationApi

@@ -5,19 +5,27 @@ using Newtonsoft.Json;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
+using FindJobSolution.ViewModels.Catalog.SaveJob;
+using System.Net.Http;
+using FindJobSolution.ViewModels.Catalog.Jobs;
 
 namespace FindJobSolution.APItotwoweb.API
 {
     public interface IApplyJobAPI
     {
-
         Task<bool> Create(ApplyJobCreateRequest request);
 
-        Task<bool> Delete(Guid id);
+        Task<bool> Delete(int jobinfomationid, int jobseekerid);
 
-        Task<List<ApplyJobViewModel>> GetAll();
+        Task<ApplyJobViewModel> GetById(int jobseekerid, int jobinfomationid);
 
+        Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll();
+
+        Task<List<ApplyJobViewModel>> GetByJobInforId(int id);
+
+        Task<bool> Edit(ApplyJobUpdateRequest request);
     }
+
     public class ApplyJobAPI : IApplyJobAPI
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -30,6 +38,7 @@ namespace FindJobSolution.APItotwoweb.API
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
         }
+
         public async Task<bool> Create(ApplyJobCreateRequest request)
         {
             //tạo trang tạo tài khoản mới
@@ -44,14 +53,63 @@ namespace FindJobSolution.APItotwoweb.API
             return response.IsSuccessStatusCode;
         }
 
-        public Task<bool> Delete(Guid id)
+        public async Task<bool> Delete(int jobinfomationid, int jobseekerid)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.DeleteAsync($"/api/ApplyJob/{jobinfomationid},{jobseekerid}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<bool>(body);
+            return user;
         }
 
-        public async Task<List<ApplyJobViewModel>> GetAll()
+        public async Task<bool> Edit(ApplyJobUpdateRequest request)
         {
-            return await GetListAsync<ApplyJobViewModel>($"/api/Job");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/ApplyJob/JobSeekerId={request.JobSeekerId}/JobInformationId={request.JobInformationId}", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<bool>(result);
+            return JsonConvert.DeserializeObject<bool>(result);
+        }
+
+        public async Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/ApplyJob");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>>(body);
+            return user;
+        }
+
+        public async Task<ApplyJobViewModel> GetById(int jobseekerid, int jobinfomationid)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/ApplyJob/Jobseekerid={jobseekerid}/JobInfomationId={jobinfomationid}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<ApplyJobViewModel>(body);
+            return user;
+        }
+
+        public async Task<List<ApplyJobViewModel>> GetByJobInforId(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/ApplyJob/getjobinfor/{id}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<List<ApplyJobViewModel>>(body);
+            return user;
         }
 
         private async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)

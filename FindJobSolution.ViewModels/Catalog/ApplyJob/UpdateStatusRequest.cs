@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FindJobSolution.Data.Enums
+namespace FindJobSolution.ViewModels.Catalog.ApplyJob
 {
-    public enum Status
+    internal class UpdateStatusRequest
     {
-        NoActive,
-        Active,
-        Inprogress,
     }
 }

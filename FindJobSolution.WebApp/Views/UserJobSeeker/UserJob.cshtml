@@ -1,4 +1,4 @@
-﻿@*@model FindJobSolution.ViewModels.Catalog.ApplyJob.ApplyJobViewModel
+﻿@model Tuple<List<FindJobSolution.ViewModels.Catalog.ApplyJob.ApplyJobViewModel>,List<FindJobSolution.ViewModels.Catalog.SaveJob.SaveJobViewModel>>
 
 @{
     ViewData["Title"] = "UserJob";
@@ -84,9 +84,7 @@
                                 <div id="SavedJob" class="tabcontent">
                                     {
                                     @{
-                                        QLTDContext context = new QLTDContext();
-                                        List<LuuCongViec> lcv = context.LuuCongViecs.Where(p => p.MaNguoiTimViec == Model.Id).ToList();
-                                        if (lcv.Count == 0)
+                                        if (Model.Item2.Count == 0)
                                         {
                                             <div style="padding-top:0px">
                                                 <div style="padding-top: 20px; padding-bottom: 30px; border-radius: 6px; background-color: #f9f9f9;">
@@ -94,6 +92,7 @@
                                                         <div style="margin-bottom: 12px;display: flex;-webkit-box-align: center;align-items: center;-webkit-box-pack: center;justify-content: center;">
                                                             <img src="~/assets/img/icon/document.png" style="height:35px; width:30px" />
                                                         </div>
+
                                                         <h2 style="font-size:16px;margin-bottom: 10px; font-weight: 600;line-height: 1.5;">
                                                             Bạn chưa lưu công việc nào
                                                         </h2>
@@ -106,31 +105,29 @@
                                         }
                                         else
                                         {
-                                            @foreach (var item in lcv)
+                                            @foreach (var item in Model.Item2)
                                             {
-                                                CongViecDangTuyen cvdt = context.CongViecDangTuyens.SingleOrDefault(q => q.Id == item.MaCongViecDangTuyen);
-                                                NhaTuyenDung ntd = context.NhaTuyenDungs.SingleOrDefault(p => p.Id == cvdt.MaNhaTuyenDung);
                                                 <div style="display: flex; border-bottom: 1px solid #EBEBEB; padding: 16px 0;margin-left: -5px; margin-right: -5px;">
                                                     <div style="margin-right: 12px;box-sizing: border-box;display:flex">
                                                         <div class="col-lg-2" style="margin-right: 12px;">
-                                                            @{
+                                                            @*{
                                                                 var imgsrc = "";
                                                                 var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
                                                                 imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                                                                 <img src='@imgsrc' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
-                                                            }
+                                                            }*@
                                                         </div>
                                                         <div class="col-lg-7" style="float:left;margin-left: 45px;">
                                                             <div>
-                                                                <a href="~/Home/JobDetail/@cvdt.Id" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => cvdt.ChucDanh)</a>
+                                                                <a href="~/Home/JobDetail/@item.JobInformationId" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => item.JobType)</a>
                                                             </div>
-                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@ntd.TenCongTy</p>
-                                                            <p style="margin-bottom:0!important;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => cvdt.DiaChi)</p>
-                                                            <p style="color: #F7941D;margin-bottom: 0;font-size: 14px;margin-top: -5px;">$@Html.DisplayFor(modelItem => cvdt.MucLuong)</p>
+                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@*ntd.TenCongTy*@</p>
+                                                            <p style="margin-bottom:0!important;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => item.WorkingLocation)</p>
+                                                            <p style="color: #F7941D;margin-bottom: 0;font-size: 14px;margin-top: -5px;">$@Html.DisplayFor(modelItem => item.MinSalary)</p>
                                                         </div>
                                                         <div class="col-lg-3" style="display: flex; align-content: center;justify-content: center; align-items: center;">
                                                             <div style="display: flex; align-items: center;">
-                                                                <button type="button" style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" onclick="location.href='@Url.Action("UserSavedJobDelete", new { id = item.Id })'">Hủy bỏ</button>
+                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" asp-action="CancelSaveJob" asp-controller="UserJobSeeker">Hủy bỏ</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -144,7 +141,7 @@
                                 <div id="AppliedJob" class="tabcontent">
                                     {
                                     @{
-                                        if (Model.JobInformationId. == 0)
+                                        if (Model.Item1.Count == 0)
                                         {
                                             <div style="padding-top:0px">
                                                 <div style="padding-top: 20px; padding-bottom: 30px; border-radius: 6px; background-color: #f9f9f9;">
@@ -164,46 +161,45 @@
                                         }
                                         else
                                         {
-                                            @foreach (var item in xv)
+                                            @foreach (var item in Model.Item1)
                                             {
-                                                NhaTuyenDung ntd = context.NhaTuyenDungs.SingleOrDefault(p => p.Id == item.MaNhaTuyenDung);
-                                                CongViecDangTuyen cvdt = context.CongViecDangTuyens.SingleOrDefault(q => q.Id == item.MaCongViecDangTuyen);
                                                 <div style="display: flex; border-bottom: 1px solid #EBEBEB; padding: 16px 0;margin-left: -5px; margin-right: -5px;">
                                                     <div style="margin-right: 12px;box-sizing: border-box;display:flex">
                                                         <div class="col-lg-2" style="margin-right: 12px;">
-                                                            @{
+                                                            @*{
                                                                 var imgsrc = "";
                                                                 var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
                                                                 imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                                                                 <img src='@imgsrc' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
-                                                            }
+                                                            }*@
                                                         </div>
                                                         <div class="col-lg-7" style="float:left;margin-left: 45px;">
                                                             <div>
-                                                                <a href="~/Home/JobDetail/@cvdt.Id" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => cvdt.ChucDanh)</a>
+                                                                <a href="~/Home/JobDetail/@item.JobInformationId" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => item.JobType)</a>
                                                             </div>
-                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@ntd.TenCongTy</p>
-                                                            <p style="margin-bottom:0!important;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => cvdt.DiaChi)</p>
-                                                            <p style="color: #F7941D;margin-bottom: 0;font-size: 14px;margin-top: -5px;">$@Html.DisplayFor(modelItem => cvdt.MucLuong)</p>
+                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@*ntd.TenCongTy*@</p>
+                                                            <p style="margin-bottom:0!important;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => item.WorkingLocation)</p>
+                                                            <p style="color: #F7941D;margin-bottom: 0;font-size: 14px;margin-top: -5px;">$@Html.DisplayFor(modelItem => item.MinSalary)</p>
                                                         </div>
                                                         <div class="col-lg-3" style=" align-content: center;justify-content: center; align-items: center;">
-                                                            @if (item.TrangThai == null)
+                                                            @if (item.Status.ToString() == "Inprogress")
                                                             {
                                                                 <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;width: max-content;align-self: center;">Chưa cập nhật</p>
                                                             }
                                                             else
                                                             {
-                                                                if (item.TrangThai == "Chấp nhận")
+                                                                if (item.Status.ToString() == "Active")
                                                                 {
-                                                                    <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;width: max-content;color:#4BCA81;align-self: center;">@item.TrangThai <i class="fa-regular fa-circle-check fa-sm"></i></p>
+                                                                    <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;width: max-content;color:#4BCA81;align-self: center;">@item.Status.ToString()<i class="fa-regular fa-circle-check fa-sm"></i></p>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;width: max-content;color:#FC100D;align-self: center;">@item.TrangThai <i class="fa-regular fa-circle-xmark fa-sm"></i></p>
+                                                                    <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;width: max-content;color:#FC100D;align-self: center;">@item.Status.ToString()<i class="fa-regular fa-circle-xmark fa-sm"></i></p>
                                                                 }
                                                             }
+
                                                             <div style="display: flex; align-items: center;">
-                                                                <button type="button" style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" onclick="location.href='@Url.Action("UserJobDelete", new { id = item.Id })'">Hủy bỏ</button>
+                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" asp-action="CancelSaveJob" asp-controller="UserJobSeeker">Hủy bỏ</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -241,7 +237,6 @@
         </div>
     </div>
 
-
 </main>
 
 <script>
@@ -264,5 +259,3 @@
     // Get the element with id="defaultOpen" and click on it
     document.getElementById("defaultOpen").click();
 </script>
-
-*@

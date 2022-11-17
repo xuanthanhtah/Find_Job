@@ -13,5 +13,11 @@ namespace FindJobSolution.ViewModels.Catalog.SaveJob
         public int JobInformationId { get; set; }
         public Status Status { get; set; }
         public DateTime TimeSave { get; set; }
+
+
+        public string JobType { get; set; }
+        public string WorkingLocation { get; set; }
+        public decimal MinSalary { get; set; }
+        public decimal MaxSalary { get; set; }
     }
 }

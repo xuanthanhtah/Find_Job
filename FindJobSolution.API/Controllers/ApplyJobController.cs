@@ -10,6 +10,7 @@ namespace FindJobSolution.API.Controllers
     public class ApplyJobController : ControllerBase
     {
         private readonly IApplyJobService _applyjobService;
+
         public ApplyJobController(IApplyJobService ApplyJobService)
         {
             _applyjobService = ApplyJobService;
@@ -32,7 +33,7 @@ namespace FindJobSolution.API.Controllers
         //}
 
         //http://localhost:port/api/Skill/1
-        [HttpGet("{JobSeekerId, JobInfomationId}")]
+        [HttpGet("Jobseekerid={JobSeekerId}/JobInfomationId={JobInfomationId}")]
         public async Task<IActionResult> GetById(int JobSeekerId, int JobInfomationId)
         {
             var savejob = await _applyjobService.GetbyId(JobSeekerId, JobInfomationId);
@@ -42,7 +43,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] ApplyJobCreateRequest request)
+        public async Task<IActionResult> Create([FromBody] ApplyJobCreateRequest request)
         {
             if (!ModelState.IsValid)
             {
@@ -72,7 +73,7 @@ namespace FindJobSolution.API.Controllers
         //    return Ok();
         //}
 
-        [HttpDelete("{JobSeekerId, JobInfomationId}")]
+        [HttpDelete("Jobseekerid={JobSeekerId}/JobInfomationId={JobInfomationId}")]
         public async Task<IActionResult> Delete(int JobSeekerId, int JobInfomationId)
         {
             var result = await _applyjobService.Delete(JobSeekerId, JobInfomationId);
@@ -83,6 +84,28 @@ namespace FindJobSolution.API.Controllers
             return Ok();
         }
 
+        [HttpGet("getjobinfor/{JobInformationId}")]
+        public async Task<IActionResult> GetByJobInformationId(int JobInformationId)
+        {
+            var applyjob = await _applyjobService.GetbyJobInfomationId(JobInformationId);
+            if (applyjob == null)
+                return BadRequest("Cannot find ApplyJob");
+            return Ok(applyjob);
+        }
 
+        [HttpPut("JobSeekerId={JobSeekerId}/JobInformationId={JobInformationId}")]
+        public async Task<IActionResult> Update(int JobSeekerId, int JobInformationId, ApplyJobUpdateStatusRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var result = await _applyjobService.Update(JobSeekerId, JobInformationId, request);
+            if (result == false)
+            {
+                return BadRequest();
+            }
+            return Ok(result);
+        }
     }
 }
