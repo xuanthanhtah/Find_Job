@@ -12,6 +12,7 @@
         public DateTime Dob { get; set; }
         public decimal DesiredSalary { get; set; }
         public string ThumbnailCv { get; set; }
+        public string Avatar { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
     }

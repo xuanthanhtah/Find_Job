@@ -92,9 +92,7 @@
                         <li>    
                             <a href="@Url.Action("Edit", "UserRecuiter")"><span class="fa fa-building mr-3" aria-hidden="true"></span>Thông tin công ty</a>
                         </li>
-                        <li>
-                            <a href="@Url.Action("Logout", "UserRecuiter")"><span class="fa fa-times mr-3"></span>Thoát</a>
-                        </li>
+                        
                     </ul>
                 </div>
             }
@@ -116,6 +114,20 @@
                 <div class="sidebar-menu__body--notlogin" style="min-height:705px">
                     <p style="margin-top: 1rem!important ; color: black; font-weight: bold; font-size: 30px">Chào mừng quý công ty @User.Identity.Name đến với website chúng tôi</p>
                     
+                        @if (User.Identity.IsAuthenticated)
+                    {
+                        <form method="post" asp-controller="UserRecuiter" asp-action="Logout">
+                            <button type="submit" class="btn btn-error" value="Logout">Đăng xuất</button>
+                        </form>
+                        
+                    } else {
+                        <div class="sidebar-menu__footer" style="text-align:center">
+                            <a href="@Url.Action("Login", "UserRecuiter")" class="btn btn-sucess">Đăng nhập</a>
+                            <a href="@Url.Action("Create", "UserRecuiter")" class="btn btn-error">Tôi không có tài khoản</a>
+                        </div>
+                    }
+                    
+                    
                     @*@if (User.Identity.IsAuthenticated)
                     {
                         <div>
@@ -132,9 +144,7 @@
                         <a asp-action="Login" asp-controller="UserRecuiter" class="btn head-btn2">Đăng nhập</a>
                     }*@
                 </div>
-                <div class="sidebar-menu__footer" style="text-align:center">
-                    <a href="@Url.Action("Create", "UserRecuiter")" class="clicklink">Tôi không có tài khoản</a>
-                </div>
+                
             </div>
         </nav>
 

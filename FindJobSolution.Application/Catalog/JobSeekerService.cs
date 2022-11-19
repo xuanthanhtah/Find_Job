@@ -3,6 +3,7 @@ using FindJobSolution.Data.EF;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.Cvs;
+using FindJobSolution.ViewModels.Catalog.Jobs;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Common;
@@ -35,12 +36,15 @@ namespace FindJobSolution.Application.Catalog
         Task<List<CvViewModel>> GetCvByJobSeekerId(int JobSeekerId);
 
         Task<CvViewModel> GetCvById(int Cvid);
+
+        Task<JobViewModel> GetJobIdByjobSeekerId(int jobSeekerId);
     }
 
     public class JobSeekerService : IJobSeekerService
     {
         private readonly FindJobDBContext _context;
         private readonly IStorageService _storageService;
+        private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
         public JobSeekerService(FindJobDBContext context, IStorageService storageService)
         {
@@ -120,17 +124,21 @@ namespace FindJobSolution.Application.Catalog
         {
             var query = from j in _context.JobSeekers
                         join i in _context.Cvs on j.JobSeekerId equals i.JobSeekerId
+                        join a in _context.Avatars on j.JobSeekerId equals a.JobSeekerId
                         select new
                         {
+                            id = j.UserId,
                             JobSeekerId = j.JobSeekerId,
                             JobId = j.JobId,
-                            Address = j.Address,
-                            Gender = j.Gender,
-                            Dob = j.Dob,
-                            Name = j.Name,
-                            National = j.National,
-                            DesiredSalary = j.DesiredSalary,
-                            ThumbnailCv = i.FilePath,
+                            Address = j.Address != null ? j.Address : "",
+                            Gender = j.Gender != null ? j.Gender : "",
+                            Dob = j.Dob != null ? j.Dob : DateTime.Now,
+                            Name = j.Name != null ? j.Name : "",
+                            National = j.National != null ? j.National : "",
+                            DesiredSalary = j.DesiredSalary != null ? j.DesiredSalary : 0,
+                            ThumbnailCv = i.FilePath != null ? i.FilePath : "",
+                            Avatar = a.FilePath != null ? a.FilePath : "",
+
                         };
 
             if (!string.IsNullOrEmpty(request.keyword))
@@ -144,15 +152,17 @@ namespace FindJobSolution.Application.Catalog
                 .Take(request.PageSize)
                 .Select(p => new JobSeekerViewModel()
                 {
+                    id = p.id,
                     jobseekerId = p.JobSeekerId,
                     JobId = p.JobId,
-                    Address = p.Address,
-                    Gender = p.Gender,
-                    Dob = p.Dob,
-                    Name = p.Name,
-                    National = p.National,
-                    DesiredSalary = p.DesiredSalary,
-                    ThumbnailCv = p.ThumbnailCv,
+                    Address = p.Address != null ? p.Address : "",
+                    Gender = p.Gender != null ? p.Gender : "",
+                    Dob = p.Dob != null ? p.Dob : DateTime.Now,
+                    Name = p.Name != null ? p.Name : "",
+                    National = p.National != null ? p.National : "",
+                    DesiredSalary = p.DesiredSalary != null ? p.DesiredSalary : 0,
+                    ThumbnailCv = p.ThumbnailCv != null ? p.ThumbnailCv : "",
+                    Avatar = p.Avatar != null ? p.Avatar : "",
                 }).ToListAsync();
 
             // in ra
@@ -264,6 +274,26 @@ namespace FindJobSolution.Application.Catalog
                 }).ToListAsync();
         }
 
+        public async Task<JobViewModel> GetJobIdByjobSeekerId(int jobSeekerId)
+        {
+            var query = from j in _context.JobSeekers
+                        select new { j };
+
+            var jobSeeker = await _context.JobSeekers.FindAsync(jobSeekerId);
+
+            var user = _context.Users.FirstOrDefault(p => p.Id == jobSeeker.UserId);
+
+            if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
+
+            var jobName = await _context.Jobs.FindAsync(jobSeeker.JobId);
+            var jobItem = new JobViewModel()
+            {
+                JobId = jobSeeker.JobId,
+                JobName = jobName.JobName,
+            };
+            return jobItem;
+        }
+
         public async Task<int> RemoveCv(int CvId)
         {
             var cv = await _context.Cvs.FindAsync(CvId);
@@ -366,7 +396,7 @@ namespace FindJobSolution.Application.Catalog
             var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
             await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
-            return fileName;
+            return "/" + USER_CONTENT_FOLDER_NAME + "/" + fileName;
         }
     }
 }
