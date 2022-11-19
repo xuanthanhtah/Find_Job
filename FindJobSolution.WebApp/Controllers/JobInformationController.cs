@@ -39,12 +39,10 @@ namespace FindJobSolution.WebApp.Controllers
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var recuiterId = await _jobInformationApi.GetRecuiterIdByUserId(userId);
 
-            var result = await _jobInformationApi.GetPagingByRecuiterId(recuiterId.RecruiterId);
-
+            var result = await _jobInformationApi.GetPagingByRecuiterIdPage(recuiterId.RecruiterId);
             if (result == null)
             {
-                TempData["result"] = "Bạn chưa tạo công việc nào cả, tạo ngay thôi";
-                return RedirectToAction("create");
+                return View("create");
             }
             return View(result);
         }
@@ -167,8 +165,7 @@ namespace FindJobSolution.WebApp.Controllers
 
             if (result == null)
             {
-                TempData["result"] = "Chua co ai apply";
-                return RedirectToAction("Index");
+                return View("Index");
             }
             return View(result);
         }

@@ -51,6 +51,7 @@ namespace FindJobSolution.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 return View(new UserLoginRequest());
+                //return View();
             }
 
             var token = await _userAPI.Authencate(request);

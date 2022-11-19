@@ -22,6 +22,8 @@ namespace FindJobSolution.Application.Catalog
 
         Task<List<JobInformationViewModel>> GetbyRecuiterId(int Id);
 
+        Task<List<JobInformationViewModel>> GetbyRecuiterIdPageRecuiter(int Id);
+
         Task AddViewcount(int JobInformationId);
 
         Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request);
@@ -204,7 +206,7 @@ namespace FindJobSolution.Application.Catalog
                         select new { j };
 
             //get list jobInformation by recuiterId
-            return await query
+            var jobinfor = await query
                .Select(p => new JobInformationViewModel()
                {
                    JobInformationId = p.j.JobInformationId,
@@ -222,6 +224,40 @@ namespace FindJobSolution.Application.Catalog
                    JobInformationTimeEnd = p.j.JobInformationTimeEnd,
                    JobInformationTimeStart = p.j.JobInformationTimeStart
                }).Where(n => n.Status == Data.Enums.Status.Active).ToListAsync();
+
+            return jobinfor.ToList();
+        }
+
+        public async Task<List<JobInformationViewModel>> GetbyRecuiterIdPageRecuiter(int Id)
+        {
+            var recuiter = await _context.JobInformations.FirstOrDefaultAsync(x => x.RecruiterId == Id);
+            if (recuiter == null) { throw new FindJobException($"cannot find a recuiter: {Id}"); }
+
+            var query = from j in _context.JobInformations
+                        where j.RecruiterId == Id
+                        select new { j };
+
+            //get list jobInformation by recuiterId
+            var jobinfor = await query
+               .Select(p => new JobInformationViewModel()
+               {
+                   JobInformationId = p.j.JobInformationId,
+                   JobLevel = p.j.JobLevel,
+                   JobTitle = p.j.JobTitle,
+                   JobType = p.j.JobType,
+                   Description = p.j.Description,
+                   MaxSalary = p.j.MaxSalary,
+                   MinSalary = p.j.MinSalary,
+                   WorkingLocation = p.j.WorkingLocation,
+                   ViewCount = p.j.ViewCount,
+                   Status = p.j.Status,
+                   JobId = p.j.JobId,
+                   RecruiterId = p.j.RecruiterId,
+                   JobInformationTimeEnd = p.j.JobInformationTimeEnd,
+                   JobInformationTimeStart = p.j.JobInformationTimeStart
+               }).ToListAsync();
+
+            return jobinfor.ToList();
         }
 
         public async Task<bool> Update(int id, JobInformationUpdateRequest request)
