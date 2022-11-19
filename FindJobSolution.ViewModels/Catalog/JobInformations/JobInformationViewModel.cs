@@ -44,10 +44,13 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
         [Display(Name = "Ngành nghề")]
         public int JobId { get; set; }
 
+        public string CompanyName { get; set; }
+        
         [Display(Name = "Thời gian bắt đầu tuyển")]
         public DateTime JobInformationTimeStart { get; set; }
 
         [Display(Name = "Thời gian kết thúc tuyển")]
         public DateTime JobInformationTimeEnd { get; set; }
+
     }
 }

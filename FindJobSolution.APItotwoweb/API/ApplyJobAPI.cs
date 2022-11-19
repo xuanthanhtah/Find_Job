@@ -8,12 +8,13 @@ using System.Net.Http.Headers;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
 using System.Net.Http;
 using FindJobSolution.ViewModels.Catalog.Jobs;
+using System.Net.Http.Json;
 
 namespace FindJobSolution.APItotwoweb.API
 {
     public interface IApplyJobAPI
     {
-        Task<bool> Create(ApplyJobCreateRequest request);
+        Task<bool> Create(int id, ApplyJobCreateRequestNew request);
 
         Task<bool> Delete(int jobinfomationid, int jobseekerid);
 
@@ -31,6 +32,7 @@ namespace FindJobSolution.APItotwoweb.API
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private const string USER_CONTENT_FOLDER_NAME = "user-content";
 
         public ApplyJobAPI(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
@@ -39,18 +41,19 @@ namespace FindJobSolution.APItotwoweb.API
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> Create(ApplyJobCreateRequest request)
+        public async Task<bool> Create(int id, ApplyJobCreateRequestNew request)
         {
-            //tạo trang tạo tài khoản mới
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-            //Hàm lấy api từ backend xử lý đăng ký tài khoản
-            var response = await client.PostAsync($"/api/ApplyJob", httpContent);
+            //Hàm lấy api từ backend xử lý 
+            var response = await client.PostAsync($"/api/ApplyJob/JobInfomationId={id}", httpContent);
             //trả về thành công 200 hay thất bại 400 > 500
-            return response.IsSuccessStatusCode;
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<bool>(body);
+            return user;
         }
 
         public async Task<bool> Delete(int jobinfomationid, int jobseekerid)
@@ -58,10 +61,10 @@ namespace FindJobSolution.APItotwoweb.API
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.DeleteAsync($"/api/ApplyJob/{jobinfomationid},{jobseekerid}");
-            var body = await response.Content.ReadAsStringAsync();
-            var user = JsonConvert.DeserializeObject<bool>(body);
-            return user;
+            var response = await client.DeleteAsync($"/api/ApplyJob/Jobseekerid={jobseekerid}/JobInfomationId={jobinfomationid}");
+            //var body = await response.Content.ReadAsStringAsync();
+            //var user = JsonConvert.DeserializeObject<bool>(body);
+            return false;
         }
 
         public async Task<bool> Edit(ApplyJobUpdateRequest request)

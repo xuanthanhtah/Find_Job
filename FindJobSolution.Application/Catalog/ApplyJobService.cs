@@ -3,13 +3,15 @@ using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.ApplyJob;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace FindJobSolution.Application.Catalog
 {
     public interface IApplyJobService
     {
-        Task<int> Create(ApplyJobCreateRequest request);
+        Task<int> Create(int id, ApplyJobCreateRequestNew request);
 
         Task<int> Delete(int JobSeekerId, int JobInfomationId);
 
@@ -31,12 +33,15 @@ namespace FindJobSolution.Application.Catalog
             _context = context;
         }
 
-        public async Task<int> Create(ApplyJobCreateRequest request)
+        public async Task<int> Create(int id, ApplyJobCreateRequestNew request)
         {
+            var getid = await _context.Users.FirstOrDefaultAsync(p => p.UserName == request.UserIdentityName);
+            var getjsid = await _context.JobSeekers.FirstOrDefaultAsync(p => p.UserId == getid.Id);
+
             var ApplyJob = new ApplyJob()
             {
-                JobInformationId = request.JobInformationId,
-                JobSeekerId = request.JobSeekerId,
+                JobInformationId = id,
+                JobSeekerId = getjsid.JobSeekerId,
                 Status = Data.Enums.Status.Inprogress,
                 TimeApply = request.TimeApply,
             };
@@ -59,11 +64,15 @@ namespace FindJobSolution.Application.Catalog
         {
             var query = from j in _context.ApplyJobs
                         join k in _context.JobInformations on j.JobInformationId equals k.JobInformationId
-                        select new { j, k };
+                        join j2 in _context.Recruiters on k.RecruiterId equals j2.RecruiterId
+                        join j3 in _context.RecruiterImages on j2.RecruiterId equals j3.RecruiterId
+                        select new { j, k, j2, j3 };
 
             var query2 = from i in _context.SaveJobs
                          join q in _context.JobInformations on i.JobInformationId equals q.JobInformationId
-                         select new { i, q };
+                         join i2 in _context.Recruiters on q.RecruiterId equals i2.RecruiterId
+                         join i3 in _context.RecruiterImages on i2.RecruiterId equals i3.RecruiterId
+                         select new { i, q, i2, i3 };
 
             var List1 = await query
                .Select(p => new ApplyJobViewModel()
@@ -77,6 +86,9 @@ namespace FindJobSolution.Application.Catalog
                    WorkingLocation = p.k.WorkingLocation,
                    MinSalary = p.k.MinSalary,
                    MaxSalary = p.k.MaxSalary,
+
+                   CompanyName = p.j2.CompanyName,
+                   FilePath = p.j3.FilePath,
                }
                ).ToListAsync();
 
@@ -92,6 +104,9 @@ namespace FindJobSolution.Application.Catalog
                    WorkingLocation = p.q.WorkingLocation,
                    MinSalary = p.q.MinSalary,
                    MaxSalary = p.q.MaxSalary,
+
+                   CompanyName = p.i2.CompanyName,
+                   FilePath = p.i3.FilePath,
                }
                ).ToListAsync();
 

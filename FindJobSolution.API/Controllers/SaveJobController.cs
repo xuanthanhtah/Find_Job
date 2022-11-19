@@ -23,14 +23,6 @@ namespace FindJobSolution.API.Controllers
             return Ok(SaveJob);
         }
 
-        //http://localhost:port/api/Skill/paging/
-        //[HttpGet("paging")]
-        //public async Task<IActionResult> GetAllPaging([FromQuery] GetSaveJobPagingRequest request)
-        //{
-        //    var SaveJob = await _savejobService.GetAllPaging(request);
-        //    return Ok(SaveJob);
-        //}
-
         //http://localhost:port/api/Skill/1
         [HttpGet("{JobSeekerId, JobInfomationId}")]
         public async Task<IActionResult> GetById(int JobSeekerId, int JobInfomationId)
@@ -41,19 +33,14 @@ namespace FindJobSolution.API.Controllers
             return Ok(savejob);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromForm] SaveJobCreateRequest request)
+        [HttpPost("JobInfomationId={jobInformationId}")]
+        public async Task<IActionResult> Create(int jobInformationId, SaveJobCreateRequestNew request)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var result = await _savejobService.Create(request);
+            var result = await _savejobService.Create(jobInformationId, request);
             if (result == 0)
             {
                 return BadRequest();
             }
-
             return Ok(result);
         }
 
