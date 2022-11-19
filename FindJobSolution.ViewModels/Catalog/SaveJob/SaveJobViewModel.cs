@@ -19,5 +19,9 @@ namespace FindJobSolution.ViewModels.Catalog.SaveJob
         public string WorkingLocation { get; set; }
         public decimal MinSalary { get; set; }
         public decimal MaxSalary { get; set; }
+
+        public string CompanyName { get; set; }
+
+        public string FilePath { get; set; }
     }
 }

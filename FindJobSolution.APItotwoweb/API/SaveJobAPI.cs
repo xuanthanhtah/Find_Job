@@ -1,4 +1,5 @@
-﻿using FindJobSolution.ViewModels.Catalog.SaveJob;
+﻿
+using FindJobSolution.ViewModels.Catalog.SaveJob;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,7 +16,7 @@ namespace FindJobSolution.APItotwoweb.API
     public interface ISaveJobAPI
     {
 
-        Task<bool> Create(SaveJobCreateRequest request);
+        Task<bool> Create(int id, SaveJobCreateRequestNew request);
 
         Task<bool> Delete(int jobinfomationid, int jobseekerid);
 
@@ -32,7 +33,7 @@ namespace FindJobSolution.APItotwoweb.API
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
         }
-        public async Task<bool> Create(SaveJobCreateRequest request)
+        public async Task<bool> Create(int id, SaveJobCreateRequestNew request)
         {
             //tạo trang tạo tài khoản mới
             var client = _httpClientFactory.CreateClient();
@@ -41,9 +42,12 @@ namespace FindJobSolution.APItotwoweb.API
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             //Hàm lấy api từ backend xử lý đăng ký tài khoản
-            var response = await client.PostAsync($"/api/SaveJob", httpContent);
+            var response = await client.PostAsync($"/api/SaveJob/JobInfomationId={id}", httpContent);
             //trả về thành công 200 hay thất bại 400 > 500
-            return response.IsSuccessStatusCode;
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<bool>(body);
+
+            return user;
         }
 
         public async Task<bool> Delete(int jobseekerid, int jobinfomationid)
@@ -52,9 +56,7 @@ namespace FindJobSolution.APItotwoweb.API
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
             var response = await client.DeleteAsync($"/api/SaveJob/Jobseekerid={jobseekerid},JobInfomationId={jobinfomationid}");
-            var body = await response.Content.ReadAsStringAsync();
-            var user = JsonConvert.DeserializeObject<bool>(body);
-            return user;
+            return false;
         }
     }
 }
