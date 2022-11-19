@@ -106,6 +106,7 @@ namespace FindJobSolution.Application.Catalog
         public async Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request)
         {
             var query = from j in _context.JobInformations
+                        join j1 in _context.Recruiters on j.RecruiterId equals j1.RecruiterId
                         select new
                         {
                             JobInformationId = j.JobInformationId,
@@ -120,6 +121,8 @@ namespace FindJobSolution.Application.Catalog
                             Status = j.Status,
                             JobId = j.JobId,
                             RecruiterId = j.RecruiterId,
+
+                            CompanyName = j1.CompanyName,
                             JobInformationTimeEnd = j.JobInformationTimeEnd,
                             JobInformationTimeStart = j.JobInformationTimeStart
                         };
@@ -150,6 +153,8 @@ namespace FindJobSolution.Application.Catalog
                     Status = p.Status,
                     JobId = p.JobId,
                     RecruiterId = p.RecruiterId,
+
+                    CompanyName = p.CompanyName,
                     JobInformationTimeEnd = p.JobInformationTimeEnd,
                     JobInformationTimeStart = p.JobInformationTimeStart
                 }).ToListAsync();

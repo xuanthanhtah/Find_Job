@@ -22,56 +22,56 @@
                     <div>
                         <dl class="row">
                             <div>
-                                <h4>JobSeekerViewModel</h4>
+                                <h4>Chi tiết người tìm việc</h4>
                                 <hr />
                                 <dl class="row">
                                     <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.jobseekerId)
+                                        Id người tìm việc
                                     </dt>
                                     <dd class="col-sm-10">
                                         @Html.DisplayFor(model => model.jobseekerId)
                                     </dd>
                                     <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.JobId)
+                                        Công việc
                                     </dt>
                                     <dd class="col-sm-10">
-                                        @Html.DisplayFor(model => model.JobId)
+                                        @ViewBag.JobNamed
                                     </dd>
                                     <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.Address)
+                                        Địa chỉ
                                     </dt>
                                     <dd class="col-sm-10">
                                         @Html.DisplayFor(model => model.Address)
                                     </dd>
                                     <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.Gender)
+                                       Giới tính
                                     </dt>
                                     <dd class="col-sm-10">
                                         @Html.DisplayFor(model => model.Gender)
                                     </dd>
                                     <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.Name)
+                                        Tên
                                     </dt>
                                     <dd class="col-sm-10">
                                         @Html.DisplayFor(model => model.Name)
                                     </dd>
                                     <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.National)
+                                        Quốc tịch
                                     </dt>
                                     <dd class="col-sm-10">
                                         @Html.DisplayFor(model => model.National)
                                     </dd>
                                     <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.DesiredSalary)
+                                        Mức lương mong muốn
                                     </dt>
                                     <dd class="col-sm-10">
-                                        @Html.DisplayFor(model => model.DesiredSalary)
+                                        @Html.DisplayFor(model => model.DesiredSalary) $
                                     </dd>
                                     <dt class="col-sm-2">
-                                        @Html.DisplayNameFor(model => model.ThumbnailCv)
+                                        Cv
                                     </dt>
                                     <dd class="col-sm-10">
-                                        @Html.DisplayFor(model => model.ThumbnailCv)
+                                        <img src="http://localhost:2001/@Html.DisplayFor(model=> model.ThumbnailCv)" alt="image" style="width: 200px"></img>
                                     </dd>
                                 </dl>
                             </div>

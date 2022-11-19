@@ -16,13 +16,13 @@ namespace FindJobSolution.ViewModels.Catalog.ApplyJob
         public DateTime TimeApply { get; set; }
 
 
-        public IFormFile ThumbnailRecuiter { get; set; }
-        public string nameImage { get; set; }
-
         public string JobType { get; set; }
         public string WorkingLocation { get; set; }
         public decimal MinSalary { get; set; }
         public decimal MaxSalary { get; set; }
+
+        public string CompanyName { get; set; }
+        public string FilePath { get; set; }
 
     }
 }

@@ -179,7 +179,10 @@ namespace FindJobSolution.WebApp.Controllers
                 var user = result;
                 var updateRequest = new ApplyJobUpdateRequest()
                 {
-                    Status = user.Status
+                    JobSeekerId = user.JobSeekerId,
+                    JobInformationId = user.JobInformationId,
+                    Status = user.Status,
+                    TimeApply = user.TimeApply,
                 };
 
                 return View(updateRequest);
@@ -197,7 +200,7 @@ namespace FindJobSolution.WebApp.Controllers
             if (result)
             {
                 TempData["result"] = "Cập nhật trạng thái thành công";
-                return RedirectToAction("JobSeekerApply");
+                return RedirectToAction("");
             }
 
             ModelState.AddModelError("", result.ToString());
@@ -207,6 +210,8 @@ namespace FindJobSolution.WebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> ProfileJobSeeker(int id)
         {
+            var jobName = await _jobSeekerAPI.GetJobIdByjobSeekerId(id);
+            ViewBag.JobNamed = jobName.JobName;
             var data = await _jobSeekerAPI.GetById(id);
             return View(data);
         }
