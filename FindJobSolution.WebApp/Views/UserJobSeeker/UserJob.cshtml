@@ -121,13 +121,14 @@
                                                             <div>
                                                                 <a href="~/Home/JobDetail/@item.JobInformationId" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => item.JobType)</a>
                                                             </div>
-                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@*ntd.TenCongTy*@</p>
+                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => item.CompanyName)</p>
                                                             <p style="margin-bottom:0!important;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => item.WorkingLocation)</p>
                                                             <p style="color: #F7941D;margin-bottom: 0;font-size: 14px;margin-top: -5px;">$@Html.DisplayFor(modelItem => item.MinSalary)</p>
                                                         </div>
                                                         <div class="col-lg-3" style="display: flex; align-content: center;justify-content: center; align-items: center;">
                                                             <div style="display: flex; align-items: center;">
-                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" asp-action="CancelSaveJob" asp-controller="UserJobSeeker">Hủy bỏ</a>
+                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" 
+                                                                   onclick="location.href='@Url.Action("CancelSaveJob", new { jobinfoid = item.JobInformationId, jobseekerid = item.JobSeekerId })'">Hủy bỏ</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -177,7 +178,7 @@
                                                             <div>
                                                                 <a href="~/Home/JobDetail/@item.JobInformationId" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => item.JobType)</a>
                                                             </div>
-                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@*ntd.TenCongTy*@</p>
+                                                            <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => item.CompanyName)</p>
                                                             <p style="margin-bottom:0!important;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => item.WorkingLocation)</p>
                                                             <p style="color: #F7941D;margin-bottom: 0;font-size: 14px;margin-top: -5px;">$@Html.DisplayFor(modelItem => item.MinSalary)</p>
                                                         </div>
@@ -199,7 +200,8 @@
                                                             }
 
                                                             <div style="display: flex; align-items: center;">
-                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" asp-action="CancelSaveJob" asp-controller="UserJobSeeker">Hủy bỏ</a>
+                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" 
+                                                                   onclick="location.href='@Url.Action("CancelApplyJob", new { jobinfoid = item.JobInformationId, jobseekerid = item.JobSeekerId })'">Hủy bỏ</a>
                                                             </div>
                                                         </div>
                                                     </div>

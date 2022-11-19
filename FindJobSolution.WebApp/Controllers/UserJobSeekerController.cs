@@ -103,7 +103,7 @@ namespace FindJobSolution.WebApp.Controllers
             if (result)
             {
                 TempData["result"] = "Create jobseeker successfully";
-                return RedirectToAction("Login");
+                return RedirectToAction("Login", "UserJobSeeker");
             }
             return View(request);
         }
@@ -148,19 +148,15 @@ namespace FindJobSolution.WebApp.Controllers
             return View(all);
         }
 
-        [HttpGet]
-        public IActionResult CancelSaveJob(int jobinfoid, int jobseekerid)
+
+        public async Task<IActionResult> CancelSaveJob(int jobinfoid, int jobseekerid)
         {
-            return View(new SaveJobDeleteRequest()
+            SaveJobDeleteRequest request = new SaveJobDeleteRequest()
             {
                 JobInformationId = jobinfoid,
                 JobSeekerId = jobseekerid,
-            });
-        }
+            };
 
-        [HttpPost]
-        public async Task<IActionResult> CancelSaveJob(SaveJobDeleteRequest request)
-        {
             if (!ModelState.IsValid)
             {
                 return View();
@@ -170,32 +166,28 @@ namespace FindJobSolution.WebApp.Controllers
             {
                 return RedirectToAction("index");
             }
-            return View(request);
+            return RedirectToAction("UserJob", "UserJobSeeker");
         }
 
-        [HttpGet]
-        public IActionResult CancelApplyJob(int jobinfoid, int jobseekerid)
+        public async Task<IActionResult> CancelApplyJob(int jobinfoid, int jobseekerid)
         {
-            return View(new ApplyJobDeleteRequest()
+            ApplyJobDeleteRequest request = new ApplyJobDeleteRequest()
             {
                 JobInformationId = jobinfoid,
                 JobSeekerId = jobseekerid,
-            });
-        }
+            };
 
-        [HttpPost]
-        public async Task<IActionResult> CancelApplyJob(ApplyJobDeleteRequest request)
-        {
             if (!ModelState.IsValid)
             {
                 return View();
             }
+
             var result = await _applyJobAPI.Delete(request.JobSeekerId, request.JobInformationId);
             if (result)
             {
                 return RedirectToAction("index");
             }
-            return View(request);
+            return RedirectToAction("UserJob", "UserJobSeeker");
         }
     }
 }

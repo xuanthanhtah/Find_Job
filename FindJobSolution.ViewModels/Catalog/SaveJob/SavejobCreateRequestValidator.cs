@@ -12,9 +12,8 @@ namespace FindJobSolution.ViewModels.Catalog.SaveJob
         public SavejobCreateRequestValidator()
         {
             RuleFor(x => x.JobInformationId).NotEmpty().WithMessage("JobInformationId is required");
-            RuleFor(x => x.JobSeekerId).NotEmpty().WithMessage("JobSeekerId is required");
+            //RuleFor(x => x.JobSeekerId).NotEmpty().WithMessage("JobSeekerId is required");
             RuleFor(x => x.TimeSave).NotEmpty().WithMessage("TimeSave is required");
-            RuleFor(x => x.Status).NotEmpty().WithMessage("Status is required");
         }
     }
 }

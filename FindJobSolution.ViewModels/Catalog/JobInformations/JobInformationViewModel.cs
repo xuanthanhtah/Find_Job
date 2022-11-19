@@ -21,7 +21,10 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
         public Status Status { get; set; }
         public int RecruiterId { get; set; }
         public int JobId { get; set; }
+
+        public string CompanyName { get; set; }
         public DateTime JobInformationTimeStart { get; set; }
         public DateTime JobInformationTimeEnd { get; set; }
+
     }
 }

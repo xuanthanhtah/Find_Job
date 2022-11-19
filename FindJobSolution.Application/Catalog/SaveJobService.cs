@@ -14,7 +14,7 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface ISaveJobService
     {
-        Task<int> Create(SaveJobCreateRequest request);
+        Task<int> Create(int id, SaveJobCreateRequestNew request);
         Task<int> Delete(int JobSeekerId, int JobInfomationId);
         //Task<PagedResult<SaveJobViewModel>> GetAllPaging(GetSaveJobPagingRequest request);
         Task<List<SaveJobViewModel>> GetAll();
@@ -29,13 +29,16 @@ namespace FindJobSolution.Application.Catalog
             _context = context;
         }
 
-        public async Task<int> Create(SaveJobCreateRequest request)
+        public async Task<int> Create(int id, SaveJobCreateRequestNew request)
         {
+            var getid = await _context.Users.FirstOrDefaultAsync(p => p.UserName == request.UserIdentityName);
+            var getjsid = await _context.JobSeekers.FirstOrDefaultAsync(p => p.UserId == getid.Id);
+
             var SaveJob = new SaveJob()
             {
-                JobInformationId = request.JobInformationId,
-                JobSeekerId = request.JobSeekerId,
-                Status = request.Status,
+                JobInformationId = id,
+                JobSeekerId = getjsid.JobSeekerId,
+                Status = Data.Enums.Status.Inprogress,
                 TimeSave = request.TimeSave,
             };
 

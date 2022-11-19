@@ -86,7 +86,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             var JobSeeker = new JobSeeker()
             {
                 UserId = user.Id,
-                JobId = 6,
+                JobId = 1,
             };
 
             await _context.AddAsync(JobSeeker);

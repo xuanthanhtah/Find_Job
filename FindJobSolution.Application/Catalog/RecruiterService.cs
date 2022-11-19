@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Versioning;
 using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Identity;
 
 namespace FindJobSolution.Application.Catalog
 {
