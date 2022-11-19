@@ -81,7 +81,7 @@
         <nav id="sidebar" class="order-last img active" style="background-image: url(../sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem">
             <div class="cusborderu">
             </div>
-            @if (User.Identity.IsAuthenticated)
+            @*@if (User.Identity.IsAuthenticated)
             {
                 <div class="">
                     <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> <span></span> </a></h1>
@@ -110,11 +110,11 @@
                         <a href="@Url.Action("Create", "UserRecuiter")" class="clicklink">Tôi không có tài khoản</a>
                     </div>
                 </div>
-            }
+            }*@
             <div class="">
                 <div class="sidebar-menu__header"></div>
                 <div class="sidebar-menu__body--notlogin" style="min-height:705px">
-                    <p style="margin-top: 1rem!important ; color: black">Chào mừng quý công ty @User.Identity.Name đến với website chúng tôi</p>
+                    <p style="margin-top: 1rem!important ; color: black; font-weight: bold; font-size: 30px">Chào mừng quý công ty @User.Identity.Name đến với website chúng tôi</p>
                     
                     @*@if (User.Identity.IsAuthenticated)
                     {
@@ -170,7 +170,7 @@
                     <div class="" style="margin-right: -15px; margin-left: -15px; overflow: hidden;">
                         <div class="col-12 text-center">
                             <div class="" style="font-size:28px ; font-weight:700; font-family:Open Sans,sans-serif; color: #474747; text-transform:uppercase; ">
-                                Các doanh nghiệp hàng đầu chọn DDT
+                                Các doanh nghiệp hàng đầu chọn Ticket to Future
                             </div>
                             <div class="" style="display:flex ; justify-content:center ; align-items:center; flex-direction: column;">
                                 <div class="" style="flex-direction: row; display:flex ; justify-content:center ; align-items:center;">
