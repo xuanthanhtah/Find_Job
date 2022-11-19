@@ -126,6 +126,7 @@ public class RecruiterService : IRecruiterService
                     join i in _context.RecruiterImages on j.RecruiterId equals i.RecruiterId
                     select new
                     {
+                        id = j.UserId,
                         RecruiterId = j.RecruiterId,
                         CompanyName = j.CompanyName,
                         Address = j.Address,
@@ -145,6 +146,7 @@ public class RecruiterService : IRecruiterService
             .Take(request.PageSize)
             .Select(p => new RecruiterVM()
             {
+                id = p.id,
                 RecruiterId = p.RecruiterId,
                 CompanyName = p.CompanyName,
                 Address = p.Address,
