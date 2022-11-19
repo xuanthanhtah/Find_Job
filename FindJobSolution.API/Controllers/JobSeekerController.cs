@@ -137,5 +137,14 @@ namespace FindJobSolution.API.Controllers
                 return BadRequest("Cannot find cv");
             return Ok(cv);
         }
+
+        [HttpGet("job/{JobSeekerId}")]
+        public async Task<IActionResult> GetJobIdByjobSeekerId(int JobSeekerId)
+        {
+            var cv = await _IJobSeekerService.GetJobIdByjobSeekerId(JobSeekerId);
+            if (cv == null)
+                return BadRequest();
+            return Ok(cv);
+        }
     }
 }

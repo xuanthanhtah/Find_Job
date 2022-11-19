@@ -1,6 +1,7 @@
 ﻿using FindJobSolution.APItotwoweb.API;
 using FindJobSolution.Data.EF;
 using FindJobSolution.ViewModels.Catalog.Jobs;
+using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.System.User;
 using FindJobSolution.ViewModels.System.UsersRecruiter;
@@ -35,6 +36,12 @@ namespace FindJobSolution.WebApp.Controllers
         {
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var data = await _recuiterAPI.GetByUserId(userId);
+            return View(data);
+        }
+
+        public async Task<IActionResult> IndexRecuiter(int id)
+        {
+            var data = await _recuiterAPI.GetById(id);
             return View(data);
         }
 
@@ -170,6 +177,19 @@ namespace FindJobSolution.WebApp.Controllers
 
             ModelState.AddModelError("", result.ToString());
             return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllRecuiter(string keyWord, int pageIndex = 1, int pageSize = 5)
+        {
+            var request = new GetRecuiterPagingRequest()
+            {
+                keyword = keyWord,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
+            var data = await _recuiterAPI.GetAllPagingRecuiter(request);
+            return View(data);
         }
     }
 }
