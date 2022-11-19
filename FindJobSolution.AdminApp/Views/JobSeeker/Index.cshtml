@@ -60,7 +60,7 @@
                                         @Html.DisplayFor(modelItem => item.DesiredSalary)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.ThumbnailCv)
+                                        <img src="http://localhost:2001/@Html.DisplayFor(modelItem=> item.Avatar)" alt="image" style="width: 100px"></img>
                                     </td>
                                     <td>
                                         @Html.ActionLink("Chi tiết", "Details", new { id=item.jobseekerId }) |

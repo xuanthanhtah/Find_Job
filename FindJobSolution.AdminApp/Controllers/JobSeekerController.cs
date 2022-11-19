@@ -33,6 +33,8 @@ namespace FindJobSolution.AdminApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Details(int id)
         {
+            var jobName = await _jobSeekerAPI.GetJobIdByjobSeekerId(id);
+            ViewBag.JobNamed = jobName.JobName;
             var result = await _jobSeekerAPI.GetById(id);
             return View(result);
         }

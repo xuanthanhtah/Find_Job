@@ -24,6 +24,8 @@ namespace FindJobSolution.APItotwoweb.API
         Task<bool> Edit(JobUpdateRequest request);
 
         Task<JobViewModel> GetById(int id);
+
+
     }
 
     public class JobAPI : IJobAPI
