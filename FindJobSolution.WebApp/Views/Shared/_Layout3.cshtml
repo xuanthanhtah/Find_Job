@@ -53,35 +53,28 @@
                         <div class="col-lg-9 col-md-9" style="flex:0 0 50%; max-width: 75%">
                             <div class="menu-wrapper">
                                 <!-- Main-menu -->
-                                @if (User.Identity.IsAuthenticated) {
-                                    <div class="main-menu">
-                                        <nav class="d-none d-lg-block">
-                                            <ul id="navigation">
-                                                <li><a style="color: white;" asp-action="IndexRecuiter" asp-controller="home">Trang chủ</a></li>
-                                                <li><a style="color: white;" asp-action="create" asp-controller="JobInformation">Đăng công việc</a></li>
-                                                <li><a style="color: white;" asp-action="index" asp-controller="JobInformation">Công việc</a></li>
-                                                <li><a style="color: white;" asp-action="Index" asp-controller="UserRecuiter">Quản lý tài khoản</a></li>
-                                                
-                                                
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                } else {
-                                    <div class="main-menu">
-                                        <nav class="d-none d-lg-block">
-                                            <ul id="navigation">
-                                                <li><a style="color: white;" asp-action="IndexRecuiter" asp-controller="home">Trang chủ</a></li>
-                                                <li><a style="color: white;" asp-action="create" asp-controller="JobInformation">Đăng công việc</a></li>
-                                                <li><a style="color: white;" asp-action="index" asp-controller="JobInformation">Công việc</a></li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                }
+                                <div class="main-menu">
+                                    <nav class="d-none d-lg-block">
+                                        <ul id="navigation">
+                                            <li><a href="~/UserEmp/CurrentPostedJob" style="color:white">Việc làm</a></li>
+                                            <li><a href="~/UserEmp/Recruitment" style="color:white">Đăng tin tuyển dụng</a></li>
+                                            <li class="separate">
+                                                <a href="~/Home/Index" style="color:white">Tìm việc làm</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
                                 
                                 <!-- Header-btn -->
                             </div>
                         </div>
-                        
+                        <div class="col-lg-3 col-md-2">
+                            <div class="d-none f-right d-lg-block">
+                                <button type="button" id="sidebarCollapse" style="border:none ; background-color:transparent">
+                                    <img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px">
+                                </button>
+                            </div>
+                        </div>
                         </div>                 
                     </div>
                     

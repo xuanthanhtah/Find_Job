@@ -70,16 +70,6 @@
                                                     <span>Ngày sinh</span>
                                                 </div>
                                                 <div class="col-88">
-                                                   @*@{
-                                                        if (Model.Dob.ToString() == null)
-                                                        {
-                                                            <span class="fw-6">@Html.DisplayFor(model => model.Dob)</span>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span class="fw-6">@Model.Dob.ToString("dd/MM/yyyy")</span>
-                                                        }
-                                                    }*@
                                                     <span class="fw-6">@Html.DisplayFor(model => model.Dob)</span>
                                                 </div>
                                             </div>
@@ -151,7 +141,7 @@
                                         </div>
                                     </div>
                                     <div class="row" style="margin-left:1px">
-                                        <a href="@Url.Action("UserProfileEdit", "UserJS")" class="btn btn-primary">Chỉnh sửa</a>
+                                        <a href="@Url.Action("UserProfileEdit", "UserJobSeeker", new {id = Model.jobseekerId})" class="btn btn-primary">Chỉnh sửa</a>
                                     </div>
                                 </div>
                             </div>
