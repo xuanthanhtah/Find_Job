@@ -47,41 +47,33 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a  href="" ><img style="width: 200px" src="~/assets/img/logo/Logo_TicketToFuture2.png" alt=""></a>
+                                <a  href="~/Home/IndexRecuiter" ><img style="width: 200px" src="~/assets/img/logo/Logo_TicketToFuture2.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9" style="flex:0 0 50%; max-width: 75%">
                             <div class="menu-wrapper">
                                 <!-- Main-menu -->
-                                @if (User.Identity.IsAuthenticated) {
-                                    <div class="main-menu">
-                                        <nav class="d-none d-lg-block">
-                                            <ul id="navigation">
-                                                <li><a style="color: white;" asp-action="IndexRecuiter" asp-controller="home">Trang chủ</a></li>
-                                                <li><a style="color: white;" asp-action="create" asp-controller="JobInformation">Đăng công việc</a></li>
-                                                <li><a style="color: white;" asp-action="index" asp-controller="JobInformation">Công việc</a></li>
-                                                <li><a style="color: white;" asp-action="Index" asp-controller="UserRecuiter">Quản lý tài khoản</a></li>
-                                                
-                                                
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                } else {
-                                    <div class="main-menu">
-                                        <nav class="d-none d-lg-block">
-                                            <ul id="navigation">
-                                                <li><a style="color: white;" asp-action="IndexRecuiter" asp-controller="home">Trang chủ</a></li>
-                                                <li><a style="color: white;" asp-action="create" asp-controller="JobInformation">Đăng công việc</a></li>
-                                                <li><a style="color: white;" asp-action="index" asp-controller="JobInformation">Công việc</a></li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                }
+                                <div class="main-menu">
+                                    <nav class="d-none d-lg-block">
+                                        <ul id="navigation">
+                                            <li><a style="color: white;" asp-action="IndexRecuiter" asp-controller="home">Trang chủ</a></li>
+                                            <li><a style="color: white;" asp-action="create" asp-controller="JobInformation">Đăng công việc</a></li>
+                                            <li><a style="color: white;" asp-action="index" asp-controller="JobInformation">Công việc</a></li>
+                                            <li><a style="color: white;" asp-action="Index" asp-controller="UserRecuiter">Quản lý tài khoản</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
                                 
                                 <!-- Header-btn -->
                             </div>
                         </div>
-                        
+                        <div class="col-lg-3 col-md-2">
+                            <div class="d-none f-right d-lg-block">
+                                <button type="button" id="sidebarCollapse" style="border:none ; background-color:transparent">
+                                    <img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; z-index: 99;">
+                                </button>
+                            </div>
+                        </div>
                         </div>                 
                     </div>
                     

@@ -16,6 +16,8 @@ using System.Drawing.Printing;
 using FindJobSolution.Data.Entities;
 using FindJobSolution.ViewModels.Catalog.JobInformations;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
+using FindJobSolution.ViewModels.Catalog.Recruiters;
+using FindJobSolution.ViewModels.Catalog.JobSeekers;
 
 namespace FindJobSolution.WebApp.Controllers
 {
@@ -137,9 +139,56 @@ namespace FindJobSolution.WebApp.Controllers
 
         public async Task<IActionResult> UserProfile()
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("index", "Home");
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var data = await _jobSeekerAPI.GetByUserId(userId);
             return View(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserProfileEdit(int id)
+        {
+            //if (!User.Identity.IsAuthenticated)
+            //    return RedirectToAction("index", "Home");
+
+            var result = await _jobSeekerAPI.GetById(id);
+            if (result != null)
+            {
+                var user = result;
+                var updateRequest = new JobSeekerUpdateRequest()
+                {
+                    DesiredSalary = user.DesiredSalary,
+                    Dob = user.Dob,
+                    Gender = user.Gender,
+                    //Name = user.Name ,
+                    National = user.National ,
+                    
+                    Address = user.Address ,
+                    PhoneNumber = user.PhoneNumber ,
+                    Email = user.Email,
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UserProfileEdit(int id, [FromForm] JobSeekerUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var data = await _jobSeekerAPI.Edit(id, request);
+            if (data)
+            {
+                TempData["result"] = "Cập nhật người dùng thành công";
+                return RedirectToAction("Index", "Home");
+            }
+
+            ModelState.AddModelError("", data.ToString());
+            return View(request);
         }
 
         public async Task<IActionResult> UserJob()

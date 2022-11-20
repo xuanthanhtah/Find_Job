@@ -1,19 +1,11 @@
 ﻿@using FindJobSolution.ViewModels.System.User
 @model FindJobSolution.ViewModels.Catalog.Recruiters.RecruiterVM
 
-
 @{
-    ViewData["Title"] = "IndexRecuiter";
+    ViewData["Title"] = "IndexRecuiter2";
     Layout = "~/Views/Shared/_Layout3.cshtml";
 }
-@section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="/assets/demo/chart-area-demo.js"></script>
-    <script src="/assets/demo/chart-bar-demo.js"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
-    <script src="/assets/demo/datatables-demo.js"></script>
-}
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -79,20 +71,21 @@
 <body style="overflow-x: hidden">
     <div class="wrapper d-flex align-items-stretch">
         <nav id="sidebar" class="order-last img active" style="background-image: url(../sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem">
-            <div class="cusborderu">
+            <div class="custom-menu">
             </div>
-            @*@if (User.Identity.IsAuthenticated)
+            @if (User.Identity.IsAuthenticated)
             {
                 <div class="">
-                    <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> <span></span> </a></h1>
+                    <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px; font-size: 30px;"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> <span style="font-size: 25px;">@User.Identity.Name</span> </a></h1>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
-                            <a href="@Url.Action("Index", "UserRecuiter")"><span class="fa fa-user mr-3"></span>Quản lý tài khoản</a>
+                            <a href="@Url.Action("index", "UserRecuiter")"><span class="fa fa-user mr-3"></span>Quản lý tài khoản</a>
                         </li>
-                        <li>    
-                            <a href="@Url.Action("Edit", "UserRecuiter")"><span class="fa fa-building mr-3" aria-hidden="true"></span>Thông tin công ty</a>
+                        <li>
+                            <form method="post" asp-controller="UserRecuiter" asp-action="Logout">
+                                <button style="font-face: 'Comic Sans MS'; font-size: larger; color: red;" type="submit" class="dropdown-item" value="Logout">Đăng xuất</button>
+                            </form>
                         </li>
-                        
                     </ul>
                 </div>
             }
@@ -108,48 +101,11 @@
                         <a href="@Url.Action("Create", "UserRecuiter")" class="clicklink">Tôi không có tài khoản</a>
                     </div>
                 </div>
-            }*@
-            <div class="">
-                <div class="sidebar-menu__header"></div>
-                <div class="sidebar-menu__body--notlogin" style="min-height:705px">
-                    <p style="margin-top: 1rem!important ; color: black; font-weight: bold; font-size: 30px">Chào mừng quý công ty @User.Identity.Name đến với website chúng tôi</p>
-                    
-                        @if (User.Identity.IsAuthenticated)
-                    {
-                        <form method="post" asp-controller="UserRecuiter" asp-action="Logout">
-                            <button type="submit" class="btn btn-error" value="Logout">Đăng xuất</button>
-                        </form>
-                        
-                    } else {
-                        <div class="sidebar-menu__footer" style="text-align:center">
-                            <a href="@Url.Action("Login", "UserRecuiter")" class="btn btn-sucess">Đăng nhập</a>
-                            <a href="@Url.Action("Create", "UserRecuiter")" class="btn btn-error">Tôi không có tài khoản</a>
-                        </div>
-                    }
-                    
-                    
-                    @*@if (User.Identity.IsAuthenticated)
-                    {
-                        <div>
-                            <a asp-action="Index" asp-controller="UserRecuiter" class="btn head-btn2">Thông Tin</a>
-                        </div>
-                        <br></br>
-                        <form method="post" asp-controller="UserRecuiter" asp-action="Logout">
-                            <button type="submit" class="dropdown-item" value="Logout" style="background-color: #ff3333; color: white">Đăng xuất</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <a asp-action="Create" asp-controller="UserRecuiter" class="btn head-btn1">Đăng ký</a>
-                        <a asp-action="Login" asp-controller="UserRecuiter" class="btn head-btn2">Đăng nhập</a>
-                    }*@
-                </div>
-                
-            </div>
+            }
         </nav>
 
         <!-- Page Content  -->
-        <div id="content" style="z-index:1; min-height: 100px;">
+        <div id="content" style="z-index:1">
             <section class="main-wrapper" style="background-color: #005385;">
                 <div class="container">
                     <div class="" style="margin-left: 15px ;margin-right: 15px; padding-top: 1rem!important ">
@@ -180,7 +136,7 @@
                     <div class="" style="margin-right: -15px; margin-left: -15px; overflow: hidden;">
                         <div class="col-12 text-center">
                             <div class="" style="font-size:28px ; font-weight:700; font-family:Open Sans,sans-serif; color: #474747; text-transform:uppercase; ">
-                                Các doanh nghiệp hàng đầu chọn Ticket to Future
+                                Các doanh nghiệp hàng đầu chọn DDT
                             </div>
                             <div class="" style="display:flex ; justify-content:center ; align-items:center; flex-direction: column;">
                                 <div class="" style="flex-direction: row; display:flex ; justify-content:center ; align-items:center;">
@@ -209,7 +165,7 @@
     </div>
 
     <div id="content" style="z-index:1; min-height:800px">
-       @* <section class="" style="background-color: #f5f5f5; margin-top: 80px">
+        <section class="" style="background-color: #f5f5f5; margin-top: 80px">
             <div class="" style="padding: 95px 5%; width: 100%; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; height: 500px">
                 <div class="" style="margin-right: -15px; margin-left: -15px; overflow: hidden;">
                     <div class="col-12 text-center">
@@ -235,7 +191,7 @@
                     <div class="swiper-pagination"></div>
                 </div>
             </div>
-        </section>*@
+        </section>
         <section class="" style="background-color: #f5f5f5;">
             <div class="" style="padding: 50px 5%; width: 100%; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; height: 200px">
                 <div class="col-12 text-center">
@@ -244,7 +200,7 @@
                         <br />
                         Bắt đầu trong vài phút
                     </p>
-                    <a href="@Url.Action("LoginEmployer", "Home")" class="btn-page--orj" style="color:white">Tuyển dụng</a>
+                    <a href="@Url.Action("create", "JobInformation")" class="btn-page--orj" style="color:white">Tuyển dụng</a>
                 </div>
             </div>
         </section>

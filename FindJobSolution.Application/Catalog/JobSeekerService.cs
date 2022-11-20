@@ -15,7 +15,7 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface IJobSeekerService
     {
-        Task<int> Update(JobSeekerUpdateRequest request);
+        Task<bool> Update(int id, JobSeekerUpdateRequest request);
 
         Task<int> Delete(int JobSeekerId);
 
@@ -302,72 +302,81 @@ namespace FindJobSolution.Application.Catalog
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<int> Update(JobSeekerUpdateRequest request)
+        public async Task<bool> Update(int id, JobSeekerUpdateRequest request)
         {
-            var JobSeeker = await _context.JobSeekers.FindAsync(request.JobSeekerId);
-            if (JobSeeker == null) throw new FindJobException($"Cannot find a JobSeeker with id: {request.JobSeekerId}");
+            var JobSeeker = await _context.JobSeekers.FindAsync(id);
+            var User = await _context.Users.FirstOrDefaultAsync(p => p.Id == JobSeeker.UserId);
 
-            JobSeeker.JobId = request.JobId;
+            if (JobSeeker == null) throw new FindJobException($"Cannot find a JobSeeker with id: {id}");
+
+            //JobSeeker.JobId = request.JobId;
             JobSeeker.Address = request.Address;
             JobSeeker.Gender = request.Gender;
-            JobSeeker.Name = request.Name;
+            //JobSeeker.Name = request.Name;
+
             JobSeeker.National = request.National;
             JobSeeker.DesiredSalary = request.DesiredSalary;
             JobSeeker.Dob = request.Dob;
 
-            if (request.ThumbnailCv != null)
-            {
-                var thumbnailCv = await _context.Cvs.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == request.JobSeekerId);
-                if (thumbnailCv != null)
-                {
-                    thumbnailCv.Caption = request.nameCv;
-                    thumbnailCv.FileSize = request.ThumbnailCv.Length;
-                    thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailCv);
-                    _context.Cvs.Update(thumbnailCv);
-                }
-                else
-                {
-                    JobSeeker.Cvs = new List<Cv>()
-                    {
-                        new Cv()
-                        {
-                            Caption = request.nameCv,
-                            Timespan = DateTime.Now,
-                            FileSize = request.ThumbnailCv.Length,
-                            FilePath = await this.SaveFile(request.ThumbnailCv),
-                            IsDefault = true,
-                            SortOrder = 1,
-                        }
-                    };
-                    _context.Cvs.AddRange(JobSeeker.Cvs);
-                }
-            }
-            if (request.ThumbnailAvatar != null)
-            {
-                var thumbnailCv = await _context.Avatars.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == request.JobSeekerId);
-                if (thumbnailCv != null)
-                {
-                    thumbnailCv.Caption = request.nameAvatar;
-                    thumbnailCv.FileSize = request.ThumbnailAvatar.Length;
-                    thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailAvatar);
-                    _context.Avatars.Update(thumbnailCv);
-                }
-                else
-                {
-                    JobSeeker.Avatar = new Avatar()
-                    {
-                        Caption = request.nameAvatar,
-                        Timespan = DateTime.Now,
-                        FileSize = request.ThumbnailAvatar.Length,
-                        FilePath = await this.SaveFile(request.ThumbnailAvatar),
-                        IsDefault = true,
-                        SortOrder = 1,
-                    };
-                    _context.Avatars.AddRange(JobSeeker.Avatar);
-                }
-            }
+            //User.UserName = request.Name;
+            User.PhoneNumber = request.PhoneNumber;
+            User.Email = request.Email;
+            
 
-            return await _context.SaveChangesAsync();
+            //if (request.ThumbnailCv != null)
+            //{
+            //    var thumbnailCv = await _context.Cvs.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == request.JobSeekerId);
+            //    if (thumbnailCv != null)
+            //    {
+            //        thumbnailCv.Caption = request.nameCv;
+            //        thumbnailCv.FileSize = request.ThumbnailCv.Length;
+            //        thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailCv);
+            //        _context.Cvs.Update(thumbnailCv);
+            //    }
+            //    else
+            //    {
+            //        JobSeeker.Cvs = new List<Cv>()
+            //        {
+            //            new Cv()
+            //            {
+            //                Caption = request.nameCv,
+            //                Timespan = DateTime.Now,
+            //                FileSize = request.ThumbnailCv.Length,
+            //                FilePath = await this.SaveFile(request.ThumbnailCv),
+            //                IsDefault = true,
+            //                SortOrder = 1,
+            //            }
+            //        };
+            //        _context.Cvs.AddRange(JobSeeker.Cvs);
+            //    }
+            //}
+            //if (request.ThumbnailAvatar != null)
+            //{
+            //    var thumbnailCv = await _context.Avatars.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == request.JobSeekerId);
+            //    if (thumbnailCv != null)
+            //    {
+            //        thumbnailCv.Caption = request.nameAvatar;
+            //        thumbnailCv.FileSize = request.ThumbnailAvatar.Length;
+            //        thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailAvatar);
+            //        _context.Avatars.Update(thumbnailCv);
+            //    }
+            //    else
+            //    {
+            //        JobSeeker.Avatar = new Avatar()
+            //        {
+            //            Caption = request.nameAvatar,
+            //            Timespan = DateTime.Now,
+            //            FileSize = request.ThumbnailAvatar.Length,
+            //            FilePath = await this.SaveFile(request.ThumbnailAvatar),
+            //            IsDefault = true,
+            //            SortOrder = 1,
+            //        };
+            //        _context.Avatars.AddRange(JobSeeker.Avatar);
+            //    }
+            //}
+
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<int> UpdateCv(int CvId, CvUpdateRequest request)

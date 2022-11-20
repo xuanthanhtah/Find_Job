@@ -3,9 +3,10 @@ using FindJobSolution.ViewModels.Catalog.Jobs;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.UsersJobSeeker;
-using FindJobSolution.ViewModels.System.UsersRecruiter;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 
 namespace FindJobSolution.APItotwoweb.API
@@ -23,17 +24,21 @@ namespace FindJobSolution.APItotwoweb.API
         Task<bool> Register(RegisterRequest request);
 
         Task<JobViewModel> GetJobIdByjobSeekerId(int Id);
+
+        Task<bool> Edit(int id, JobSeekerUpdateRequest request);
     }
 
     public class JobSeekerAPI : IJobSeekerAPI
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public JobSeekerAPI(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public JobSeekerAPI(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> Delete(int id)
@@ -45,6 +50,43 @@ namespace FindJobSolution.APItotwoweb.API
             var body = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<bool>(body);
             return user;
+        }
+
+        public async Task<bool> Edit(int id, JobSeekerUpdateRequest request)
+        {
+            var client = _httpClientFactory.CreateClient();
+
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString("Token");
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var requestContent = new MultipartFormDataContent();
+
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.DesiredSalary.ToString()) ? "" : request.DesiredSalary.ToString()), "DesiredSalary");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.Address.ToString()) ? "" : request.Address.ToString()), "Address");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.National.ToString()) ? "" : request.National.ToString()), "National");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.PhoneNumber.ToString()) ? "" : request.PhoneNumber.ToString()), "PhoneNumber");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.Gender.ToString()) ? "" : request.Gender.ToString()), "Gender");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.Dob.ToString()) ? "" : request.Dob.ToString()), "Dob");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.Email.ToString()) ? "" : request.Email.ToString()), "Email");
+            //requestContent.Add(
+            //new StringContent(string.IsNullOrEmpty(request.Name.ToString()) ? "" : request.Name.ToString()), "Name");
+
+            var response = await client.PutAsync($"/api/JobSeeker/editjobseeker/{id}", requestContent);
+
+            var result = response.IsSuccessStatusCode;
+            if (response.IsSuccessStatusCode)
+                return true;
+            return false;
         }
 
         public async Task<PagedResult<JobSeekerViewModel>> GetAllPagingJobSeeker(GetJobSeekerPagingRequest request)
