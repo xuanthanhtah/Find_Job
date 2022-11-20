@@ -81,12 +81,12 @@ namespace FindJobSolution.APItotwoweb.API
             //requestContent.Add(
             //new StringContent(string.IsNullOrEmpty(request.Name.ToString()) ? "" : request.Name.ToString()), "Name");
 
-            var response = await client.PutAsync($"/api/JobSeeker/edit/{id}", requestContent);
+            var response = await client.PutAsync($"/api/JobSeeker/editjobseeker/{id}", requestContent);
 
-            var result = await response.Content.ReadAsStringAsync();
+            var result = response.IsSuccessStatusCode;
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<bool>(result);
-            return JsonConvert.DeserializeObject<bool>(result);
+                return true;
+            return false;
         }
 
         public async Task<PagedResult<JobSeekerViewModel>> GetAllPagingJobSeeker(GetJobSeekerPagingRequest request)

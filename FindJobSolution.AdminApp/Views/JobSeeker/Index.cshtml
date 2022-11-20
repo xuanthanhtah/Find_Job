@@ -63,8 +63,8 @@
                                         <img src="http://localhost:2001/@Html.DisplayFor(modelItem=> item.Avatar)" alt="image" style="width: 100px"></img>
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Chi tiết", "Details", new { id=item.jobseekerId }) |
-                                        @Html.ActionLink("Xóa", "Delete", new {  id=item.jobseekerId  })
+                                        @Html.ActionLink("Chi tiết", "Details", new { id=item.jobseekerId }, new { @class = "btn btn-success" })
+                                        @Html.ActionLink("Xóa", "Delete", new {  id=item.jobseekerId  }, new { @class = "btn btn-danger" })
                                     </td>
                                 </tr>
                             }

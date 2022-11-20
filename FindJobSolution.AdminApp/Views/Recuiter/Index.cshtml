@@ -51,8 +51,8 @@
                                         @Html.DisplayFor(modelItem => item.Address)
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Chi tiết", "Details", new { id= item.RecruiterId }) |
-                                        @Html.ActionLink("Delete", "Delete", new {  id= item.RecruiterId  })
+                                        @Html.ActionLink("Chi tiết", "Details", new { id= item.RecruiterId }, new { @class = "btn btn-success" })
+                                        @Html.ActionLink("Delete", "Delete", new {  id= item.RecruiterId  }, new { @class = "btn btn-danger" })
                                     </td>
                                 </tr>
                             }
