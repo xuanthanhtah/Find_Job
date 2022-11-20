@@ -180,7 +180,7 @@ namespace FindJobSolution.Application.Catalog
         public async Task<List<ApplyJobViewModel>> GetbyJobInfomationId(int JobInfomationId)
         {
             var jobInforId = await _context.ApplyJobs.FirstOrDefaultAsync(x => x.JobInformationId == JobInfomationId);
-            if (jobInforId == null) { throw new FindJobException($"cannot find a ApplyJob: {JobInfomationId}"); }
+            if (jobInforId == null) return null;
 
             var query = from j in _context.ApplyJobs
                         where j.JobInformationId == JobInfomationId
