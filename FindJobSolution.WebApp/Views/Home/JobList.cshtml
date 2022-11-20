@@ -48,7 +48,7 @@
                                 <!-- form -->
                                 <form method="get" asp-action="JobList" class="search-box">
                                     <div class="input-form">
-                                        <input type="search" placeholder="Nghề nghiệp hoặc tên công ty" value="@ViewData["GetJobDetails"]" name="Empsearch">
+                                        <input type="search" placeholder="Nghề nghiệp hoặc tên công ty" name="keyWord">
                                     </div>
                                     <div class="select-form">
                                         <div class="select-itms">
@@ -99,6 +99,7 @@
                                     <h4>Danh sách ngành nghề</h4>
                                 </div>
                                 <!-- Select job items start -->
+                                <form asp-action="JobList" method="get">
                                 <div class="select-job-items2">
                                     <select name="select">
                                         <option value="">All Category</option>
@@ -108,6 +109,7 @@
                                         <option value="">Category 4</option>
                                     </select>
                                 </div>
+                                </form>
                                 <!--  Select job items End-->
                                 <!-- select-Categories start -->
                                 <form method="post" asp-action="JobList">

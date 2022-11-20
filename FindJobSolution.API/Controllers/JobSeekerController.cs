@@ -52,15 +52,16 @@ namespace FindJobSolution.API.Controllers
             return Ok(jobseeker);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromForm] JobSeekerUpdateRequest request)
+        [HttpPut("edit/{id}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update(int id, [FromForm] JobSeekerUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _IJobSeekerService.Update(request);
-            if (result == 0)
+            var result = await _IJobSeekerService.Update(id, request);
+            if (result == false)
             {
                 return BadRequest();
             }
