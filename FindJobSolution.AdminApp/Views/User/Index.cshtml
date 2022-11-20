@@ -44,9 +44,9 @@
                                     @Html.DisplayFor(modelItem => item.Email)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Chi tiết", "Details", new {  id=item.Id  }) |
-                                        @Html.ActionLink("Xóa", "Delete", new { id = item.Id }) |
-                                        @Html.ActionLink("Quyền", "RoleAssign", new { id = item.Id })
+                                        @Html.ActionLink("Chi tiết", "Details", new {  id=item.Id  }, new { @class = "btn btn-success" })
+                                        @Html.ActionLink("Xóa", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                                        @Html.ActionLink("Quyền", "RoleAssign", new { id = item.Id }, new { @class = "btn btn-secondary" })
                                 </td>
                             </tr>
                             }

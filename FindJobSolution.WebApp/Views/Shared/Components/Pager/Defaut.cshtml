@@ -1,11 +1,10 @@
 ﻿@model FindJobSolution.ViewModels.Common.PagedResultBase
 @{
-    //pageIndex=?&keyword=?
-    var urlTemplate = Url.Action() + "?page={0}";
+    var urlTemplate = Url.Action() + "?pageIndex={0}";
     var request = ViewContext.HttpContext.Request;
     foreach (var key in request.Query.Keys)
     {
-        if (key == "page")
+        if (key == "pageIndex")
         {
             continue;
         }

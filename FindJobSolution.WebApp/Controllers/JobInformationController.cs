@@ -165,7 +165,7 @@ namespace FindJobSolution.WebApp.Controllers
 
             if (result == null)
             {
-                return View("Index");
+                return RedirectToAction("Index", "JobInformation");
             }
             return View(result);
         }
