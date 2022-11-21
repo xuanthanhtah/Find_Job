@@ -41,14 +41,17 @@ namespace FindJobSolution.WebApp.Controllers
             return View();
         }
 
-        public async Task<IActionResult> JobList(string keyWord, int pageIndex = 1, int pageSize = 5)
+        public async Task<IActionResult> JobList(string keyWord, int? JobId, int pageIndex = 1, int pageSize = 5)
         {
             var request = new GetJobInformationPagingRequest()
             {
                 keyword = keyWord,
                 PageIndex = pageIndex,
-                PageSize = pageSize
+                PageSize = pageSize,
+                JobId = JobId,
             };
+
+            var data = await _jobInformationApi.GetAllPaging(request);
 
             var Job = await _jobAPI.GetAll();
             ViewBag.Job = Job.Select(x => new SelectListItem()
@@ -57,7 +60,6 @@ namespace FindJobSolution.WebApp.Controllers
                 Value = x.JobId.ToString(),
             });
 
-            var data = await _jobInformationApi.GetAllPaging(request);
             return View(data);
         }
 
