@@ -155,6 +155,8 @@ namespace FindJobSolution.WebApp.Controllers
                     CompanyName = user.CompanyName,
                     Address = user.Address,
                     CompanyIntroduction = user.CompanyIntroduction,
+                    Email = user.Email,
+                    PhoneNumber = user.PhoneNumber,
                 };
                 return View(updateRequest);
             }

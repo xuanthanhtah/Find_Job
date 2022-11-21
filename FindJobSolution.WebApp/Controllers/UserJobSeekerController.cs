@@ -139,9 +139,15 @@ namespace FindJobSolution.WebApp.Controllers
 
         public async Task<IActionResult> UserProfile()
         {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            var jobseerker = await _jobSeekerAPI.GetByUserId(userId);
+            var jobName = await _jobSeekerAPI.GetJobIdByjobSeekerId(jobseerker.jobseekerId);
+            ViewBag.JobNamed = jobName.JobName;
+
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("index", "Home");
-            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+           
             var data = await _jobSeekerAPI.GetByUserId(userId);
             return View(data);
         }

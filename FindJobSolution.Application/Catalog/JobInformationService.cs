@@ -107,6 +107,7 @@ namespace FindJobSolution.Application.Catalog
         {
             var query = from j in _context.JobInformations
                         join j1 in _context.Recruiters on j.RecruiterId equals j1.RecruiterId
+                        where j.Status == Data.Enums.Status.Active
                         select new
                         {
                             JobInformationId = j.JobInformationId,
