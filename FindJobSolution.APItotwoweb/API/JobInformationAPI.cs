@@ -2,11 +2,13 @@
 using FindJobSolution.ViewModels.Catalog.Jobs;
 using FindJobSolution.ViewModels.Common;
 using FindJobSolution.ViewModels.System.User;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,17 +31,20 @@ namespace FindJobSolution.APItotwoweb.API
 
         Task<bool> Delete(int id);
 
+        Task<List<JobInformationViewModel>> GetAll();
     }
 
     public class JobInformationAPI : IJobInformationApi
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public JobInformationAPI(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+        public JobInformationAPI(IHttpClientFactory httpClientFactory, IConfiguration configuration, IHttpContextAccessor httpContextAccessor)
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<bool> Create(int id, JobInformationCreateRequest request)
@@ -80,6 +85,31 @@ namespace FindJobSolution.APItotwoweb.API
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(result);
             return JsonConvert.DeserializeObject<bool>(result);
+        }
+
+        public async Task<List<JobInformationViewModel>> GetAll()
+        {
+            return await GetListAsync<JobInformationViewModel>($"/api/JobInformation");
+        }
+
+        private async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
+        {
+            var sessions = _httpContextAccessor
+               .HttpContext
+               .Session
+               .GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[SystemConstants.AppSettings.BaseAddress]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+
+            var response = await client.GetAsync(url);
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var data = (List<T>)JsonConvert.DeserializeObject(body, typeof(List<T>));
+                return data;
+            }
+            throw new Exception(body);
         }
 
         public async Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request)

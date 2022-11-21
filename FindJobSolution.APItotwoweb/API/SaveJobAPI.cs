@@ -1,4 +1,5 @@
 ﻿
+using FindJobSolution.ViewModels.Catalog.ApplyJob;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,8 @@ namespace FindJobSolution.APItotwoweb.API
         Task<bool> Create(int id, SaveJobCreateRequestNew request);
 
         Task<bool> Delete(int jobinfomationid, int jobseekerid);
+
+        Task<SaveJobViewModel> GetById(int jobseekerid, int jobinfomationid);
 
     }
     public class SaveJobAPI : ISaveJobAPI
@@ -55,8 +58,19 @@ namespace FindJobSolution.APItotwoweb.API
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.DeleteAsync($"/api/SaveJob/Jobseekerid={jobseekerid},JobInfomationId={jobinfomationid}");
+            var response = await client.DeleteAsync($"/api/SaveJob/Jobseekerid={jobseekerid}/JobInfomationId={jobinfomationid}");
             return false;
+        }
+
+        public async Task<SaveJobViewModel> GetById(int jobseekerid, int jobinfomationid)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/SaveJob/Jobseekerid={jobseekerid}/JobInfomationId={jobinfomationid}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<SaveJobViewModel>(body);
+            return user;
         }
     }
 }
