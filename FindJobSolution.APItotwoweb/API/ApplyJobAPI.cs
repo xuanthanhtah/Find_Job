@@ -20,7 +20,7 @@ namespace FindJobSolution.APItotwoweb.API
 
         Task<ApplyJobViewModel> GetById(int jobseekerid, int jobinfomationid);
 
-        Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll();
+        Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll(string id);
 
         Task<List<ApplyJobViewModel>> GetByJobInforId(int id);
 
@@ -56,14 +56,12 @@ namespace FindJobSolution.APItotwoweb.API
             return user;
         }
 
-        public async Task<bool> Delete(int jobinfomationid, int jobseekerid)
+        public async Task<bool> Delete(int jobseekerid, int jobinfomationid)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
             var response = await client.DeleteAsync($"/api/ApplyJob/Jobseekerid={jobseekerid}/JobInfomationId={jobinfomationid}");
-            //var body = await response.Content.ReadAsStringAsync();
-            //var user = JsonConvert.DeserializeObject<bool>(body);
             return false;
         }
 
@@ -82,12 +80,12 @@ namespace FindJobSolution.APItotwoweb.API
             return JsonConvert.DeserializeObject<bool>(result);
         }
 
-        public async Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll()
+        public async Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll(string id)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.GetAsync($"/api/ApplyJob");
+            var response = await client.GetAsync($"/api/ApplyJob/Jobseekerid={id}");
             var body = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>>(body);
             return user;

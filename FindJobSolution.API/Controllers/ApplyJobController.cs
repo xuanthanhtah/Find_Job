@@ -17,20 +17,13 @@ namespace FindJobSolution.API.Controllers
         }
 
         //http://localhost:port/api/Skill/
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("Jobseekerid={id}")]
+        public async Task<IActionResult> GetAll(string id)
         {
-            var ApplyJob = await _applyjobService.GetAll();
+            var ApplyJob = await _applyjobService.GetAll(id);
             return Ok(ApplyJob);
         }
 
-        //http://localhost:port/api/Skill/paging/
-        //[HttpGet("paging")]
-        //public async Task<IActionResult> GetAllPaging([FromQuery] GetApplyJobPagingRequest request)
-        //{
-        //    var ApplyJob = await _applyjobService.GetAllPaging(request);
-        //    return Ok(ApplyJob);
-        //}
 
         //http://localhost:port/api/Skill/1
         [HttpGet("Jobseekerid={JobSeekerId}/JobInfomationId={JobInfomationId}")]

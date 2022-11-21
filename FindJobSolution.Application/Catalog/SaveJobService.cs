@@ -71,44 +71,6 @@ namespace FindJobSolution.Application.Catalog
 
         }
 
-        //public async Task<PagedResult<SaveJobViewModel>> GetAllPaging(GetSaveJobPagingRequest request)
-        //{
-        //    //lấy SaveJob ra
-        //    var query = from j in _context.SaveJobs select new { j };
-
-        //    //Kiểm tra có nhập vào không
-        //    if (!string.IsNullOrEmpty(request.keyword))
-        //        query = query.Where(x => x.j.Name.Contains(request.keyword));
-
-        //    if (request.JobInformationId.Count > 0 && request.JobSeekerId.Count > 0)
-        //    {
-        //        query = query.Where(x => request.JobInformationId.Contains(x.j.JobInformationId) && request.JobSeekerId.Contains(x.j.JobSeekerId));
-        //    }
-
-        //    //phân trang
-
-        //    int totalRow = await query.CountAsync();
-
-        //    var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-        //        .Take(request.PageSize)
-        //        .Select(p => new SaveJobViewModel()
-        //        {
-        //            JobInformationId = p.j.JobInformationId,
-        //            JobSeekerId = p.j.JobSeekerId,
-        //            Status = p.j.Status,
-        //            TimeSave = p.j.TimeSave,
-        //        }).ToListAsync();
-
-        //    // in ra 
-        //    var pagedResult = new PagedResult<SaveJobViewModel>()
-        //    {
-        //        TotalRecord = totalRow,
-        //        Items = data
-        //    };
-
-        //    return pagedResult;
-        //}
-
         public async Task<SaveJobViewModel> GetbyId(int JobSeekerId, int JobInfomationId)
         {
             var SaveJob = await _context.SaveJobs.FindAsync(JobSeekerId, JobInfomationId);
