@@ -3,9 +3,8 @@ using FindJobSolution.Data.Entities;
 using FindJobSolution.Utilities.Exceptions;
 using FindJobSolution.ViewModels.Catalog.ApplyJob;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+using System.Security.Principal;
 
 namespace FindJobSolution.Application.Catalog
 {
@@ -15,7 +14,7 @@ namespace FindJobSolution.Application.Catalog
 
         Task<int> Delete(int JobSeekerId, int JobInfomationId);
 
-        Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll();
+        Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll(string id);
 
         Task<ApplyJobViewModel> GetbyId(int JobSeekerId, int JobInfomationId);
 
@@ -60,8 +59,12 @@ namespace FindJobSolution.Application.Catalog
             return await _context.SaveChangesAsync();
         }
 
-        public async Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll()
+        public async Task<Tuple<List<ApplyJobViewModel>, List<SaveJobViewModel>>> GetAll(string id)
         {
+            var username = id;
+            var user = await _context.Users.FirstOrDefaultAsync(p => p.UserName == id);
+            var jobseeker = await _context.JobSeekers.FirstOrDefaultAsync(p => p.UserId == user.Id);
+
             var query = from j in _context.ApplyJobs
                         join k in _context.JobInformations on j.JobInformationId equals k.JobInformationId
                         join j2 in _context.Recruiters on k.RecruiterId equals j2.RecruiterId
@@ -74,7 +77,7 @@ namespace FindJobSolution.Application.Catalog
                          join i3 in _context.RecruiterImages on i2.RecruiterId equals i3.RecruiterId
                          select new { i, q, i2, i3 };
 
-            var List1 = await query
+            var List1 = await query.Where(p => p.j.JobSeekerId == jobseeker.JobSeekerId)
                .Select(p => new ApplyJobViewModel()
                {
                    JobInformationId = p.j.JobInformationId,
@@ -92,7 +95,7 @@ namespace FindJobSolution.Application.Catalog
                }
                ).ToListAsync();
 
-            var List2 = await query2
+            var List2 = await query2.Where(p => p.i.JobSeekerId == jobseeker.JobSeekerId)
                .Select(p => new SaveJobViewModel()
                {
                    JobInformationId = p.i.JobInformationId,
@@ -124,44 +127,6 @@ namespace FindJobSolution.Application.Catalog
             List<SaveJob> saveJobs = new List<SaveJob>();
             return saveJobs;
         }
-
-        //public async Task<PagedResult<ApplyJobViewModel>> GetAllPaging(GetApplyJobPagingRequest request)
-        //{
-        //    //lấy ApplyJob ra
-        //    var query = from j in _context.ApplyJobs select new { j };
-
-        //    //Kiểm tra có nhập vào không
-        //    if (!string.IsNullOrEmpty(request.keyword))
-        //        query = query.Where(x => x.j.Name.Contains(request.keyword));
-
-        //    if (request.JobInformationId.Count > 0 && request.JobSeekerId.Count > 0)
-        //    {
-        //        query = query.Where(x => request.JobInformationId.Contains(x.j.JobInformationId) && request.JobSeekerId.Contains(x.j.JobSeekerId));
-        //    }
-
-        //    //phân trang
-
-        //    int totalRow = await query.CountAsync();
-
-        //    var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-        //        .Take(request.PageSize)
-        //        .Select(p => new ApplyJobViewModel()
-        //        {
-        //            JobInformationId = p.j.JobInformationId,
-        //            JobSeekerId = p.j.JobSeekerId,
-        //            Status = p.j.Status,
-        //            TimeSave = p.j.TimeSave,
-        //        }).ToListAsync();
-
-        //    // in ra
-        //    var pagedResult = new PagedResult<ApplyJobViewModel>()
-        //    {
-        //        TotalRecord = totalRow,
-        //        Items = data
-        //    };
-
-        //    return pagedResult;
-        //}
 
         public async Task<ApplyJobViewModel> GetbyId(int JobSeekerId, int JobInfomationId)
         {

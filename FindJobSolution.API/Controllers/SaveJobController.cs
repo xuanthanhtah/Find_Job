@@ -24,7 +24,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         //http://localhost:port/api/Skill/1
-        [HttpGet("{JobSeekerId, JobInfomationId}")]
+        [HttpGet("Jobseekerid={JobSeekerId}/JobInfomationId={JobInfomationId}")]
         public async Task<IActionResult> GetById(int JobSeekerId, int JobInfomationId)
         {
             var savejob = await _savejobService.GetbyId(JobSeekerId, JobInfomationId);
