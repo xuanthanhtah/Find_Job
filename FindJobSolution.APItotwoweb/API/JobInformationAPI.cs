@@ -117,7 +117,7 @@ namespace FindJobSolution.APItotwoweb.API
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.GetAsync($"/api/JobInformation/paging?pageIndex={request.PageIndex}&pageSize={request.PageSize}&keyword={request.keyword}");
+            var response = await client.GetAsync($"/api/JobInformation/paging?pageIndex={request.PageIndex}&pageSize={request.PageSize}&keyword={request.keyword}&JobId={request.JobId}");
             var body = await response.Content.ReadAsStringAsync();
             var jobSeeker = JsonConvert.DeserializeObject<PagedResult<JobInformationViewModel>>(body);
             return jobSeeker;

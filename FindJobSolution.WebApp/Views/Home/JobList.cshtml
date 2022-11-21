@@ -30,7 +30,7 @@
     <main>
         <!-- Hero Area Start-->
         <!-- slider Area Start-->
-        @*<div class="slider-area ">
+        <div class="slider-area ">
             <!-- Mobile Menu -->
             <div class="slider-active">
                 <div class="single-slider slider-height d-flex align-items-center" data-background="../assets/img/hero/h1_hero.jpg">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             </div>
-        </div>*@
+        </div>
         <!-- slider Area End-->
         <!-- Hero Area End -->
         <!-- Job List Area Start -->
@@ -101,7 +101,7 @@
                                 <!-- Select job items start -->
                                 <form asp-action="JobList" method="get" >
                                 <div class="select-job-items2">
-                                    <select name="select" asp-items="@ViewBag.Job">
+                                        <select name="JobId" asp-items="@ViewBag.Job" onchange="this.form.submit()">
                                         <option>Chọn danh mục</option>
                                     </select>
                                 </div>
