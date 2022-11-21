@@ -50,15 +50,17 @@
                                                 <div class="job-tittle job-tittle2">
                                                     
                                                     <ul>
+                                                    <a href="~/UserRecuiter/IndexRecuiter/@item.RecruiterId">
                                                         <li>@Html.DisplayFor(modelItem => item.CompanyName)</li>
+                                                    </a>
+                                                    <br></br>
                                                         <li><i class="fas fa-map-marker-alt"></i>@Html.DisplayFor(modelItem => item.Address)</li>
                                                     
                                                     </ul>
-                                                <p style="font-size: 30px; margin-left: 0;">@Html.ActionLink("Chi tiết công ty", "IndexRecuiter", new { id=item.RecruiterId })</p>
                                                 </div>
                                             </div>
                                             <div class="items-link items-link2 f-right">
-                                            <img src="http://localhost:2001/@Html.DisplayFor(modelItem=> item.ThumbnailCv)" alt="image" style="width: 100px"></img>
+                                            <img href="~/UserRecuiter/IndexRecuiter/@item.RecruiterId" src="http://localhost:2001/@Html.DisplayFor(modelItem=> item.ThumbnailCv)" alt="image" style="width: 100px"/>
                                             </div>
                                         </div>
                                 }

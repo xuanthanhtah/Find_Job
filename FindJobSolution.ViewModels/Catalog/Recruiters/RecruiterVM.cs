@@ -28,5 +28,9 @@ namespace FindJobSolution.ViewModels.Catalog.Recruiters
         [Display(Name = "Hình ảnh về công ty")]
 
         public string ThumbnailCv { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        [Display(Name = "Số điện thoại")]
+        public string PhoneNumber { get; set; }
     }
 }
