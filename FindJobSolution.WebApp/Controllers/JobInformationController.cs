@@ -165,6 +165,7 @@ namespace FindJobSolution.WebApp.Controllers
 
             if (result == null)
             {
+                TempData["result"] = "Chưa có ứng viên ứng tuyển công việc này";
                 return RedirectToAction("Index", "JobInformation");
             }
             return View(result);

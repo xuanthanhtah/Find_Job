@@ -177,7 +177,8 @@ public class RecruiterService : IRecruiterService
         var recruiters = await _context.Recruiters.FindAsync(Recuiterid);
 
         var image = await _context.RecruiterImages.Where(x => x.RecruiterId == recruiters.RecruiterId).FirstOrDefaultAsync();
-
+        var user = _context.Users.FirstOrDefault(p => p.Id == recruiters.UserId);
+        if (user == null) { return null; }
         if (recruiters == null) { throw new FindJobException($"cannot find a recruiters: {recruiters}"); }
 
         if (image == null)
@@ -191,6 +192,8 @@ public class RecruiterService : IRecruiterService
                 CompanyIntroduction = recruiters.CompanyIntroduction,
                 ViewCount = recruiters.ViewCount,
                 //ThumbnailCv = image.FilePath,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
             };
             return jobItem1;
         }
@@ -202,6 +205,9 @@ public class RecruiterService : IRecruiterService
             CompanyIntroduction = recruiters.CompanyIntroduction,
             ViewCount = recruiters.ViewCount,
             ThumbnailCv = image.FilePath,
+
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
         };
         return jobItem;
     }
@@ -215,6 +221,9 @@ public class RecruiterService : IRecruiterService
 
         var recruiters = await _context.Recruiters.FirstOrDefaultAsync(x => x.UserId == id);
         if (recruiters == null) { throw new FindJobException($"cannot find a recruiters: {recruiters}"); }
+
+        var user = _context.Users.FirstOrDefault(p => p.Id == id);
+        if(user == null) { return null; }
 
         var image = await _context.RecruiterImages.Where(x => x.RecruiterId == recruiters.RecruiterId).FirstOrDefaultAsync();
 
@@ -230,6 +239,8 @@ public class RecruiterService : IRecruiterService
                 ViewCount = recruiters.ViewCount,
                 //get path from RecruiterImage
                 //ThumbnailCv = image.FilePath,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
             };
             return jobItemm;
         }
@@ -243,6 +254,8 @@ public class RecruiterService : IRecruiterService
             ViewCount = recruiters.ViewCount,
             //get path from RecruiterImage
             ThumbnailCv = image.FilePath,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber,
         };
         return jobItem;
     }
@@ -310,9 +323,14 @@ public class RecruiterService : IRecruiterService
         var recruiters = await _context.Recruiters.FirstOrDefaultAsync(x => x.RecruiterId == id);
         if (recruiters == null) throw new FindJobException($"Cannot find a recruiters with id: {id}");
 
+        var user = _context.Users.FirstOrDefault(p => p.Id == recruiters.UserId);
+        if (user == null) { return false; }
+
         recruiters.CompanyName = request.CompanyName;
         recruiters.Address = request.Address;
         recruiters.CompanyIntroduction = request.CompanyIntroduction;
+        user.PhoneNumber = request.PhoneNumber;
+        user.Email = request.Email;
         if (request.ThumbnailRecuiter != null)
         {
             var thumbnailCv = await _context.RecruiterImages.FirstOrDefaultAsync(i => i.IsDefault == true && i.RecruiterId == id);
