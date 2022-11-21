@@ -109,14 +109,13 @@
                                             {
                                                 <div style="display: flex; border-bottom: 1px solid #EBEBEB; padding: 16px 0;margin-left: -5px; margin-right: -5px;">
                                                     <div style="margin-right: 12px;box-sizing: border-box;display:flex">
-                                                        <div class="col-lg-2" style="margin-right: 12px;">
-                                                            @*{
-                                                                var imgsrc = "";
-                                                                var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
-                                                                imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                                                                <img src='@imgsrc' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
-                                                            }*@
-                                                        </div>
+                                                        @*<div class="col-lg-2" style="margin-right: 12px;">
+                                            {
+                                            var imgsrc = "";
+                                            var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
+                                            imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                                            <img src='@item.' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
+                                            }*@
                                                         <div class="col-lg-7" style="float:left;margin-left: 45px;">
                                                             <div>
                                                                 <a href="~/Home/JobDetail/@item.JobInformationId" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => item.JobType)</a>
@@ -166,14 +165,14 @@
                                             {
                                                 <div style="display: flex; border-bottom: 1px solid #EBEBEB; padding: 16px 0;margin-left: -5px; margin-right: -5px;">
                                                     <div style="margin-right: 12px;box-sizing: border-box;display:flex">
-                                                        <div class="col-lg-2" style="margin-right: 12px;">
-                                                            @*{
+                                                       @*<div class="col-lg-2" style="margin-right: 12px;">
+                                                            {
                                                                 var imgsrc = "";
                                                                 var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
                                                                 imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                                                                <img src='@imgsrc' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
-                                                            }*@
-                                                        </div>
+                                                                <img src='@item.' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
+                                                            }
+                                                        </div>*@
                                                         <div class="col-lg-7" style="float:left;margin-left: 45px;">
                                                             <div>
                                                                 <a href="~/Home/JobDetail/@item.JobInformationId" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => item.JobType)</a>
@@ -182,7 +181,7 @@
                                                             <p style="margin-bottom:0!important;font-size: 14px;margin-top: -5px;">@Html.DisplayFor(modelItem => item.WorkingLocation)</p>
                                                             <p style="color: #F7941D;margin-bottom: 0;font-size: 14px;margin-top: -5px;">$@Html.DisplayFor(modelItem => item.MinSalary)</p>
                                                         </div>
-                                                        <div class="col-lg-3" style=" align-content: center;justify-content: center; align-items: center;">
+                                                        <div class="col-lg-7" style=" align-content: center;justify-content: center; align-items: center;">
                                                             @if (item.Status.ToString() == "Inprogress")
                                                             {
                                                                 <p style="margin-bottom:0;font-size: 14px;margin-top: -5px;width: max-content;align-self: center;">Chưa cập nhật</p>
