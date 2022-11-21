@@ -107,6 +107,7 @@ namespace FindJobSolution.Application.Catalog
         {
             var query = from j in _context.JobInformations
                         join j1 in _context.Recruiters on j.RecruiterId equals j1.RecruiterId
+                        join j2 in _context.Jobs on j.JobId equals j2.JobId
                         select new
                         {
                             JobInformationId = j.JobInformationId,
@@ -124,13 +125,20 @@ namespace FindJobSolution.Application.Catalog
 
                             CompanyName = j1.CompanyName,
                             JobInformationTimeEnd = j.JobInformationTimeEnd,
-                            JobInformationTimeStart = j.JobInformationTimeStart
+                            JobInformationTimeStart = j.JobInformationTimeStart,
+
+                            j2
                         };
 
             if (!string.IsNullOrEmpty(request.keyword))
             {
                 query = query.Where(x => (x.JobLevel.Contains(request.keyword)) ||
                 (x.JobTitle.Contains(request.keyword)) || (x.JobType.Contains(request.keyword)));
+            }
+
+            if (request.JobId != null && request.JobId != 0)
+            {
+                query = query.Where(p => p.j2.JobId == request.JobId);
             }
 
             //phân trang

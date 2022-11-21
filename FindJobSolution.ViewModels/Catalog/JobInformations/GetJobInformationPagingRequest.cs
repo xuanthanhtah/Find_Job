@@ -10,5 +10,7 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
     public class GetJobInformationPagingRequest : PagingRequestBase
     {
         public string? keyword { get; set; }
+
+        public int? JobId { get; set; }
     }
 }
