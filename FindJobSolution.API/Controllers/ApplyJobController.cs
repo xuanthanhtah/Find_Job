@@ -63,7 +63,7 @@ namespace FindJobSolution.API.Controllers
         {
             var applyjob = await _applyjobService.GetbyJobInfomationId(JobInformationId);
             if (applyjob == null)
-                return BadRequest("Cannot find ApplyJob");
+                return Ok(applyjob);
             return Ok(applyjob);
         }
 

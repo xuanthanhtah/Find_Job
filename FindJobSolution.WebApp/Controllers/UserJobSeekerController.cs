@@ -171,17 +171,17 @@ namespace FindJobSolution.WebApp.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UserProfileEdit(int id, [FromForm] JobSeekerUpdateRequest request)
         {
-            //if (!ModelState.IsValid)
-            //    return View();
+            if (!ModelState.IsValid)
+                return View();
 
-            var result = await _jobSeekerAPI.Edit(id, request);
-            if (result)
+            var data = await _jobSeekerAPI.Edit(id, request);
+            if (data)
             {
                 TempData["result"] = "Cập nhật người dùng thành công";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError("", result.ToString());
+            ModelState.AddModelError("", data.ToString());
             return View(request);
         }
 

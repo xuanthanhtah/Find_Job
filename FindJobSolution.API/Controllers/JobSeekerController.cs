@@ -52,7 +52,7 @@ namespace FindJobSolution.API.Controllers
             return Ok(jobseeker);
         }
 
-        [HttpPut("edit/{id}")]
+        [HttpPut("editjobseeker/{id}")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Update(int id, [FromForm] JobSeekerUpdateRequest request)
         {
