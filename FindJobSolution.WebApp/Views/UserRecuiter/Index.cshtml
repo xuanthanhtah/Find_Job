@@ -20,7 +20,84 @@
             <div class="row">
                 <div class="col-md-12">
                     <div>
-                        <dl class="row">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div>
+                                    <div class="ContactInformation_contactInformationComponent__2Rwzr">
+
+                                        <h2 class="ContactInformation_blockTitle__VfSNg">Thông tin công ty @Html.DisplayFor(model => model.CompanyName)</h2>
+                                        <div>
+                                            <div class="ContactInfoView_viewSectionWrapper__2SQdc">
+                                                <div class="native-grid">
+                                                    <div class="roww">
+                                                        <div class="col-lg-66">
+                                                            <div class="undefied roww">
+                                                                <span class="undefied col-44">Tên công ty</span>
+                                                                <div class="col-88 text-truncate fw-6">@Html.DisplayFor(model => model.CompanyName)</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-66">
+                                                            <div>
+                                                                <div class="roww">
+                                                                    <div class="col-44">
+                                                                        <span>Địa chỉ</span>
+                                                                    </div>
+                                                                    <div class="col-88">
+                                                                        <div class="fw-6 text-truncate">@Html.DisplayFor(model => model.Address)</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="roww">
+                                                        <div class="col-lg-66">
+                                                            <div class="undefied roww">
+                                                                <span class="undefied col-44">Email</span>
+                                                                <div class="col-88 text-truncate fw-6">@Html.DisplayFor(model => model.Email)</div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-66">
+                                                            <div>
+                                                                <div class="roww">
+                                                                    <div class="col-44">
+                                                                        <span>Số điện thoại</span>
+                                                                    </div>
+                                                                    <div class="col-88">
+                                                                        <div class="fw-6 text-truncate">@Html.DisplayFor(model => model.PhoneNumber)</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <dl class="row">
+                                        
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor(model => model.CompanyIntroduction)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.Raw(Model.CompanyIntroduction)
+                                        </dd>
+                                    </dl>
+                                    <dl class="row">
+
+                                        <dt class="col-sm-2">
+                                            @Html.DisplayNameFor( model => model.ThumbnailCv)
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            <img src="http://localhost:2001/@Html.DisplayFor(model => model.ThumbnailCv)" alt="image" style="width: 200px"></img>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        @*<dl class="row">
                             <div>
                                 <h4>Chi tiết công ty</h4>
                                 <hr />
@@ -43,12 +120,12 @@
                                     <dd class="col-sm-10">
                                         @Html.Raw(Model.CompanyIntroduction)
                                     </dd>
-                                    @*<dt class = "col-sm-2">
+                                    <dt class = "col-sm-2">
                                     @Html.DisplayNameFor(model => model.ViewCount)
                                     </dt>
                                     <dd class = "col-sm-10">
                                     @Html.DisplayFor(model => model.ViewCount)
-                                    </dd>*@
+                                    </dd>
                                     <dt class="col-sm-2">
                                         @Html.DisplayNameFor( model => model.ThumbnailCv)
                                     </dt>
@@ -57,7 +134,7 @@
                                     </dd>
                                 </dl>
                             </div>
-                        </dl>
+                        </dl>*@
                     </div>
                 </div>
             </div>

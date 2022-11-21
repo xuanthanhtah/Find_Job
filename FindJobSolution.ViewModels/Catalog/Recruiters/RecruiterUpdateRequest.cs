@@ -20,5 +20,9 @@ namespace FindJobSolution.ViewModels.Catalog.Recruiters
         public IFormFile ThumbnailRecuiter { get; set; }
         [Display(Name = "Tên ảnh công Ty")]
         public string nameImage { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+        [Display(Name = "Số điện thoại")]
+        public string PhoneNumber { get; set; }
     }
 }

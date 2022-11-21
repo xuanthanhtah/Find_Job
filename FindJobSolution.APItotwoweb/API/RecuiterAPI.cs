@@ -81,7 +81,10 @@ namespace FindJobSolution.APItotwoweb.API
             new StringContent(string.IsNullOrEmpty(request.CompanyIntroduction.ToString()) ? "" : request.CompanyIntroduction.ToString()), "CompanyIntroduction");
             requestContent.Add(
             new StringContent(string.IsNullOrEmpty(request.nameImage.ToString()) ? "" : request.nameImage.ToString()), "nameImage");
-
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.Email.ToString()) ? "" : request.Email.ToString()), "Email");
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.PhoneNumber.ToString()) ? "" : request.PhoneNumber.ToString()), "PhoneNumber");
             var response = await client.PutAsync($"/api/Recruiter/edit/{id}", requestContent);
 
             var result = await response.Content.ReadAsStringAsync();
