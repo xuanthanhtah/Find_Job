@@ -138,7 +138,6 @@ namespace FindJobSolution.Application.Catalog
                             DesiredSalary = j.DesiredSalary != null ? j.DesiredSalary : 0,
                             ThumbnailCv = i.FilePath != null ? i.FilePath : "",
                             Avatar = a.FilePath != null ? a.FilePath : "",
-
                         };
 
             if (!string.IsNullOrEmpty(request.keyword))
@@ -186,6 +185,11 @@ namespace FindJobSolution.Application.Catalog
 
             var jobSeeker = await _context.JobSeekers.FindAsync(JobSeekerId);
 
+            var thumCv = _context.Cvs.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
+            if (thumCv == null) { return null; }
+            var avatar = _context.Avatars.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
+            if (thumCv == null) { return null; }
+
             var user = _context.Users.FirstOrDefault(p => p.Id == jobSeeker.UserId);
 
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
@@ -200,7 +204,9 @@ namespace FindJobSolution.Application.Catalog
                 Name = jobSeeker.Name,
                 National = jobSeeker.National,
                 DesiredSalary = jobSeeker.DesiredSalary,
-                ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
+
+                ThumbnailCv = thumCv.FilePath,
+                Avatar = avatar.FilePath,
 
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -220,7 +226,10 @@ namespace FindJobSolution.Application.Catalog
             var user = _context.Users.FirstOrDefault(p => p.Id == jobSeeker.UserId);
 
             var thumCv = _context.Cvs.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
+            if (thumCv == null) { return null; }
+
             var avatar = _context.Avatars.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
+            if (thumCv == null) { return null; }
 
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
             var jobItem = new JobSeekerViewModel()
@@ -325,7 +334,6 @@ namespace FindJobSolution.Application.Catalog
             //User.UserName = request.Name;
             User.PhoneNumber = request.PhoneNumber;
             User.Email = request.Email;
-
 
             if (request.ThumbnailCv != null)
             {
