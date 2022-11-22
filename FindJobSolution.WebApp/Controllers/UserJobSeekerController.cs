@@ -161,7 +161,7 @@ namespace FindJobSolution.WebApp.Controllers
                     DesiredSalary = user.DesiredSalary,
                     Dob = user.Dob,
                     Gender = user.Gender,
-                    //Name = user.Name ,
+                    Name = user.Name ,
                     National = user.National ,
                     
                     Address = user.Address ,
