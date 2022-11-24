@@ -11,5 +11,6 @@ namespace FindJobSolution.Data.Entities
     {
         public JobSeeker JobSeeker { get; set; }
         public Recruiter Recruiter { get; set; }
+        public List<Message> messages { get; set; }
     }
 }
