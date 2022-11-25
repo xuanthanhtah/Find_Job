@@ -44,7 +44,7 @@ builder.Services.AddTransient<IRecruiterService, RecruiterService>();
 builder.Services.AddTransient<ISkillService, SkillService>();
 builder.Services.AddTransient<IApplyJobService, ApplyJobService>();
 builder.Services.AddTransient<ISaveJobService, SaveJobService>();
-builder.Services.AddTransient<IMessageService, MessageService>();
+//builder.Services.AddTransient<IMessageService, MessageService>();
 
 builder.Services.AddTransient<UserManager<User>, UserManager<User>>();
 builder.Services.AddTransient<SignInManager<User>, SignInManager<User>>();

@@ -22,9 +22,9 @@ namespace FindJobSolution.WebApp.Controllers
         private readonly ISaveJobAPI _saveJobAPI;
         private readonly IApplyJobAPI _applyJobAPI;
         private readonly IJobAPI _jobAPI;
-        private readonly IMessageAPI _messageAPI;
+        //private readonly IMessageAPI _messageAPI;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IJobInformationApi jobInformationApi, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobAPI jobAPI, IMessageAPI messageAPI)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IJobInformationApi jobInformationApi, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobAPI jobAPI)
         {
             _logger = logger;
             _configuration = configuration;
@@ -32,26 +32,26 @@ namespace FindJobSolution.WebApp.Controllers
             _applyJobAPI = applyJobAPI;
             _saveJobAPI = saveJobAPI;
             _jobAPI = jobAPI;
-            _messageAPI = messageAPI;
+            //_messageAPI = messageAPI;
         }
 
-        public async Task<IActionResult> createChat(MessageCreateRequest request)
-        {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var result = await _messageAPI.Create(userId, request);
-            if (result == false) return BadRequest("Cannot create message");
-            return Ok();
-        }
+        //public async Task<IActionResult> createChat(MessageCreateRequest request)
+        //{
+        //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var result = await _messageAPI.Create(userId, request);
+        //    if (result == false) return BadRequest("Cannot create message");
+        //    return Ok();
+        //}
 
-        public async Task<IActionResult> indexChat()
-        {
-            var currUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var userName = User.FindFirstValue(ClaimTypes.Name);
-            ViewBag.currUser = userName;
-            var message = await _messageAPI.GetbyUserId(currUser);
-            if (message == null) return BadRequest("Cannot find message");
-            return View();
-        }
+        //public async Task<IActionResult> indexChat()
+        //{
+        //    var currUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    var userName = User.FindFirstValue(ClaimTypes.Name);
+        //    ViewBag.currUser = userName;
+        //    var message = await _messageAPI.GetbyUserId(currUser);
+        //    if (message == null) return BadRequest("Cannot find message");
+        //    return View();
+        //}
 
         public IActionResult Index()
         {
