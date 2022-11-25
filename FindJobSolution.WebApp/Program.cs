@@ -1,4 +1,5 @@
 using FindJobSolution.APItotwoweb.API;
+using FindJobSolution.WebApp.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
@@ -22,6 +23,7 @@ builder.Services.AddTransient<IJobAPI, JobAPI>();
 builder.Services.AddTransient<IJobSeekerAPI, JobSeekerAPI>();
 builder.Services.AddTransient<IApplyJobAPI, ApplyJobAPI>();
 builder.Services.AddTransient<ISaveJobAPI, SaveJobAPI>();
+//builder.Services.AddTransient<IMessageAPI, MessageAPI>();
 
 builder.Services.AddSession(options =>
 {
@@ -41,6 +43,9 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
 
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,5 +69,7 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();
