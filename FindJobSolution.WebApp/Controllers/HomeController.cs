@@ -99,7 +99,25 @@ namespace FindJobSolution.WebApp.Controllers
                 TimeSave = DateTime.Now,
                 UserIdentityName = username,
             };
-            await _saveJobAPI.Create(id, saveJob);
+            var result = await _saveJobAPI.Create(id, saveJob);
+
+            if (result)
+            {
+                TempData["result"] = "Lưu công việc thành công";
+                return RedirectToAction("JobDetail", new
+                {
+                    id = id,
+                });
+            }
+            else
+            {
+                TempData["result"] = "Bạn đã lưu công việc này rồi";
+                return RedirectToAction("JobDetail", new
+                {
+                    id = id,
+                });
+            }
+
             return RedirectToAction("JobDetail", new
             {
                 id = id
@@ -115,11 +133,24 @@ namespace FindJobSolution.WebApp.Controllers
                 UserIdentityName = username,
             };
 
-            await _applyJobAPI.Create(id, applyjob);
-            return RedirectToAction("JobDetail", new
+            var result = await _applyJobAPI.Create(id, applyjob);
+
+            if (result)
             {
-                id = id,
-            });
+                TempData["result"] = "Ứng tuyển thành công";
+                return RedirectToAction("JobDetail", new
+                {
+                    id = id,
+                });
+            }
+            else
+            {
+                TempData["result"] = "Bạn đã ứng tuyển công việc này rồi";
+                return RedirectToAction("JobDetail", new
+                {
+                    id = id,
+                });
+            }
         }
     }
 }

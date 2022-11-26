@@ -91,7 +91,7 @@ namespace FindJobSolution.Application.Catalog
                    MaxSalary = p.k.MaxSalary,
 
                    CompanyName = p.j2.CompanyName,
-                   FilePath = p.j3.FilePath,
+                   Avatar = p.j3.FilePath,
                }
                ).ToListAsync();
 
@@ -109,7 +109,7 @@ namespace FindJobSolution.Application.Catalog
                    MaxSalary = p.q.MaxSalary,
 
                    CompanyName = p.i2.CompanyName,
-                   FilePath = p.i3.FilePath,
+                   Avatar = p.i3.FilePath,
                }
                ).ToListAsync();
 

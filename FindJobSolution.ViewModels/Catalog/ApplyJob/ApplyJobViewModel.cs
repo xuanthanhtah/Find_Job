@@ -22,7 +22,7 @@ namespace FindJobSolution.ViewModels.Catalog.ApplyJob
         public decimal MaxSalary { get; set; }
 
         public string CompanyName { get; set; }
-        public string FilePath { get; set; }
+        public string Avatar { get; set; }
 
     }
 }

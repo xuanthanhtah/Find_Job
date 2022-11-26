@@ -36,12 +36,15 @@
                         <section class="featured-job-area">
                             <div class="container">
                                 <!-- Count of Job list Start -->
-                                
+                                <form method="get" asp-action="GetAllRecuiter" class="search-box">
+                                    <div class="input-form" style="width:75%">
+                                        <input type="search" placeholder="Tên công ty" name="keyWord" >
+                                    </div>
+                                    <input type="submit" class="search-form" value="Find job" style="width:25%; background: #fb246a; text-align: center; color: #fff; display: block; padding: 15px; border-radius: 0px; text-transform: capitalize; letter-spacing: 0.1em; line-height: 38px; font-size: 14px; border-width: 0px;cursor:pointer" />
+                                </form>
                                 <!-- Count of Job list End -->
                                 @foreach (var item in Model.Items)
-                                {
-
-                                    
+                                {                                  
                                         <!-- single-job-content -->
                                         <div class="single-job-items mb-30">
                                             <div class="job-items">

@@ -165,7 +165,8 @@ namespace FindJobSolution.Application.Catalog
 
                     CompanyName = p.CompanyName,
                     JobInformationTimeEnd = p.JobInformationTimeEnd,
-                    JobInformationTimeStart = p.JobInformationTimeStart
+                    JobInformationTimeStart = p.JobInformationTimeStart,
+
                 }).ToListAsync();
 
             // in ra
@@ -185,6 +186,9 @@ namespace FindJobSolution.Application.Catalog
             var jobInformation = await _context.JobInformations.FindAsync(JobInformationId);
             if (jobInformation == null) { throw new FindJobException($"cannot find a jobInformation: {JobInformationId}"); }
 
+            var recuiter = await _context.Recruiters.FirstOrDefaultAsync(p => p.RecruiterId == jobInformation.RecruiterId);
+            var user = await _context.Users.FirstOrDefaultAsync(p => p.Id == recuiter.UserId);
+
             var JobInformationItem = new JobInformationViewModel()
             {
                 JobTitle = jobInformation.JobTitle,
@@ -201,6 +205,10 @@ namespace FindJobSolution.Application.Catalog
                 JobInformationTimeEnd = jobInformation.JobInformationTimeEnd,
                 JobInformationTimeStart = jobInformation.JobInformationTimeStart,
                 JobInformationId = jobInformation.JobInformationId,
+
+                CompanyName = recuiter.CompanyName,
+                email = user.Email,
+                SDT = user.PhoneNumber,
             };
             return JobInformationItem;
         }

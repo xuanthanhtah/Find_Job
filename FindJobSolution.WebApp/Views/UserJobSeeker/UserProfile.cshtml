@@ -187,7 +187,7 @@
                                         <div class="col-lg-66">
                                             <div class="undefied roww">
                                                 <span class="undefied col-44" style="grid-column: span 5">Tên công ty</span>
-                                                @*<div class="col-88 text-truncate fw-6">@knntv.TenCongTy</div>*@
+                                                <div class="col-88 text-truncate fw-6">@Html.DisplayFor(model => model.CompanyName)</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-66">
@@ -196,8 +196,8 @@
                                                     <div class="col-44" style="grid-column: span 5">
                                                         <span>Chức danh</span>
                                                     </div>
-                                                    <div class="col-88">
-                                                        @*<span class="fw-6">@knntv.ChucDanh</span>*@
+                                                    <div class="col-88 text-truncate fw-6">                                                     
+                                                        @Html.DisplayFor(model => model.JobTitle)
                                                     </div>
                                                 </div>
                                             </div>
@@ -209,8 +209,8 @@
                                                 <div class="col-44" style="grid-column: span 6">
                                                     <span>Thời gian làm việc</span>
                                                 </div>
-                                                <div class="col-88">
-                                                    @*<span class="fw-6">@knntv.ThoiGianLamViec</span>*@
+                                                <div class="col-88 text-truncate fw-6">
+                                                    @Html.DisplayFor(model => model.WorkingTime)
                                                 </div>
                                             </div>
                                         </div>
@@ -221,14 +221,14 @@
                                                 <div class="col-44" style="grid-column: span 9">
                                                     <span>Mô tả kinh nghiệm làm việc</span>
                                                 </div>
-                                                <div class="col-88">
-                                                    @*<div class="fw-6 text-truncate">@knntv.MotaKinhNghiemLamViec</div>*@
+                                                <div class="col-88 text-truncate fw-6">
+                                                    @Html.DisplayFor(model => model.WorkExperience)
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row" style="margin-left:1px">
-                                        <a href="@Url.Action("UserJobExperienceEdit", "UserJS")" class="btn btn-primary">Chỉnh sửa</a>
+                                        <a href="@Url.Action("UserOldCompanyEdit", "UserJobSeeker" , new {id = Model.jobseekerId})" class="btn btn-primary">Chỉnh sửa</a>
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +237,7 @@
                 </div>
                 <div class="Block_Block__1rMJ_">
                     <div class="ContactInformation_contactInformationComponent__2Rwzr">
-                        <h2 class="ContactInformation_blockTitle__VfSNg">Trình độ học vấn</h2>
+                        <h2 class="ContactInformation_blockTitle__VfSNg">Kỹ năng cá nhân</h2>
                         <div>
                             <div class="ContactInfoView_viewSectionWrapper__2SQdc">
                                 <div class="native-grid">

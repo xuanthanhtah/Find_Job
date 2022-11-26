@@ -4,9 +4,37 @@
     ViewData["Title"] = "JobDetail";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<main>
-    <!-- job post company Start -->
-    <div class="job-post-company pt-120 pb-120">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<style>
+    .shade {
+        background-color: aqua;
+    }
+
+    .body-container {
+        /*remove the container default padding  attribute*/
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        /*increase width as per your need*/
+        max-width: 100%;
+    }
+</style>
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeout('slow');
+        }, 2000);
+    </script>
+}
+    <main>
+        <!-- job post company Start -->
+        <div class="job-post-company pt-120 pb-120">
+        @if (TempData != null)
+        {
+            <div id="msgAlert" class="alert alert-light" role="alert">
+                @TempData["result"]
+            </div>
+        }
         <div class="container">
             <div class="row justify-content-between">
                 <!-- Left Content -->
@@ -17,7 +45,7 @@
                             <div class="job-items">
                                 <div class="company-img company-img-details">
                                     <a href="#">
-                                    @*{
+                                        @*{
                                     var imgsrc = "";
                                     var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
                                     imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
@@ -46,7 +74,7 @@
                                 </div>
                                 <p>@Html.Raw(Model.Description)</p>
                             </div>
-                            
+
                         </div>
                     </div>
                     <!-- Right Content -->
@@ -82,12 +110,12 @@
                             <div class="small-section-tittle">
                                 <h4>Thông tin công ty</h4>
                             </div>
-                            <span>@Model.CompanyName</span>
+                            @*<span>@Model.CompanyName</span>*@
                             <p>@*Model.SoLuocCongTy*@</p>
                             <ul>
-                                <li>Name: <span>@Model.CompanyName </span></li>
-                                <li>Web : <span> colorlib.com</span></li>
-                                <li>Email: <span>carrier.colorlib@gmail.com</span></li>
+                                <li>Name: <span>@Model.CompanyName</span></li>
+                                <li>SĐT: <span>@Model.SDT</span></li>
+                                <li>Email: <span>@Model.email</span></li>
                             </ul>
                         </div>
                     </div>
