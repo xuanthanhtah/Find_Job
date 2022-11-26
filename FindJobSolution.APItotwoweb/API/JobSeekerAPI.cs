@@ -64,6 +64,28 @@ namespace FindJobSolution.APItotwoweb.API
 
             var requestContent = new MultipartFormDataContent();
 
+            if (request.ThumbnailCv != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ThumbnailCv.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ThumbnailCv.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "ThumbnailCv", request.ThumbnailCv.FileName);
+            }
+            if (request.ThumbnailAvatar != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.ThumbnailAvatar.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.ThumbnailAvatar.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "ThumbnailAvatar", request.ThumbnailAvatar.FileName);
+            }
+            requestContent.Add(
+            new StringContent(string.IsNullOrEmpty(request.Name.ToString()) ? "" : request.Name.ToString()), "Name");
             requestContent.Add(
             new StringContent(string.IsNullOrEmpty(request.DesiredSalary.ToString()) ? "" : request.DesiredSalary.ToString()), "DesiredSalary");
             requestContent.Add(
@@ -78,6 +100,10 @@ namespace FindJobSolution.APItotwoweb.API
             new StringContent(string.IsNullOrEmpty(request.Dob.ToString()) ? "" : request.Dob.ToString()), "Dob");
             requestContent.Add(
             new StringContent(string.IsNullOrEmpty(request.Email.ToString()) ? "" : request.Email.ToString()), "Email");
+            requestContent.Add(
+           new StringContent(string.IsNullOrEmpty(request.nameCv.ToString()) ? "" : request.nameCv.ToString()), "nameCv");
+            requestContent.Add(
+           new StringContent(string.IsNullOrEmpty(request.nameAvatar.ToString()) ? "" : request.nameAvatar.ToString()), "nameAvatar");
             //requestContent.Add(
             //new StringContent(string.IsNullOrEmpty(request.Name.ToString()) ? "" : request.Name.ToString()), "Name");
 

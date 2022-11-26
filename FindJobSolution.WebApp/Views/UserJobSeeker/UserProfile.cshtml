@@ -46,6 +46,15 @@
                                     <div class="roww">
                                         <div class="col-lg-66">
                                             <div class="undefied roww">
+                                                <span class="undefied col-44">Tên</span>
+                                                <div class="col-88 text-truncate fw-6">@Html.DisplayFor(model => model.Name)</div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="roww">
+                                        <div class="col-lg-66">
+                                            <div class="undefied roww">
                                                 <span class="undefied col-44">Email</span>
                                                 <div class="col-88 text-truncate fw-6">@Html.DisplayFor(model => model.Email)</div>
                                             </div>
@@ -98,47 +107,64 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="roww">
-                                        <div class="undefied col-22" style="grid-column: span 8;">
-                                            <div class="roww">
-                                                <span class="undefied col-44">Ngành nghề</span>
-                                                <div class="col-88">
-                                                    <span class="fw-6" style="margin-left: -25px;">@ViewBag.JobNamed</span>
-                                                </div>
-                                                <div class="col-88">
-                                                    @*@if (HttpContextAccessor.HttpContext.Session.GetString("Email") != null)
-                                                    {
-                                                        var email = HttpContextAccessor.HttpContext.Session.GetString("Email");
-                                                        QLTDContext context = new QLTDContext();
-                                                        NguoiTimViec ntv = context.NguoiTimViecs.SingleOrDefault(p => p.Email == email);
-                                                        NganhNghe nn = context.NganhNghes.SingleOrDefault(p => p.Id == ntv.MaNganhNghe);
-                                                        <span class="fw-6" style="margin-left: -25px;">
-                                                            @nn.TenNganhNghe
-                                                        </span>
-                                                    }*@
+                                        <div class="col-lg-66">
+                                            <div>
+                                                <div class="roww">
+                                                    <div class="col-44">
+                                                        <span class="undefied col-44">Ngành nghề</span>
+                                                        </div>
+                                                    <div class="col-88">
+                                                        <span class="fw-6">@ViewBag.JobNamed</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="roww">
-                                        <div class="undefied col-22" style="grid-column: span 8;">
-                                            <div class="roww">
-                                                <span class="undefied col-44">Lương mong muốn</span>
-                                                <div class="col-88">
-                                                    <span class="fw-6" style="margin-left: -25px;">@Html.DisplayFor(model => model.DesiredSalary)$</span>
+                                        <div class="col-lg-66">
+                                            <div>
+                                                <div class="roww">
+                                                    <span class="undefied col-44">Lương mong muốn</span>
+                                                    <div class="col-88">
+                                                        <span class="fw-6" style="margin-left: -25px;">@Html.DisplayFor(model => model.DesiredSalary)$</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-66">
+                                            <div>
+                                                <div class="roww">
+                                                    <div class="col-44">
+                                                        <span>Địa chỉ</span>
+                                                    </div>
+                                                    <div class="col-88">
+                                                        <div class="fw-6 text-truncate">@Html.DisplayFor(model => model.Address)</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="roww">
+                                        <div class="col-lg-66">
+                                            <div>
+                                                <div class="roww">
+                                                    <span class="undefied col-44">Ảnh đại diện</span>
+                                                    <div class="col-88">
+                                                        <img src="http://localhost:2001/@Html.DisplayFor(model => model.Avatar)" alt="image" style="width: 150px" />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="roww">
-                                        <div class="undefied col-22">
-                                            <div class="roww">
-                                                <div class="col-44">
-                                                    <span>Địa chỉ</span>
-                                                </div>
-                                                <div class="col-88">
-                                                    <div class="fw-6 text-truncate">@Html.DisplayFor(model => model.Address)</div>
+                                        <div class="col-lg-66">
+                                            <div>
+                                                <div class="roww">
+                                                    <span class="undefied col-44">CV</span>
+                                                    <div class="col-88">
+                                                        <img src="http://localhost:2001/@Html.DisplayFor(model => model.ThumbnailCv)" alt="image" style="width: 200px"/>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

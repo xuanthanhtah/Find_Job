@@ -10,13 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using FindJobSolution.APItotwoweb.API;
-using FindJobSolution.ViewModels.System.UsersRecruiter;
-using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
-using System.Drawing.Printing;
-using FindJobSolution.Data.Entities;
-using FindJobSolution.ViewModels.Catalog.JobInformations;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
-using FindJobSolution.ViewModels.Catalog.Recruiters;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
 
 namespace FindJobSolution.WebApp.Controllers
@@ -167,7 +161,7 @@ namespace FindJobSolution.WebApp.Controllers
                     DesiredSalary = user.DesiredSalary,
                     Dob = user.Dob,
                     Gender = user.Gender,
-                    //Name = user.Name ,
+                    Name = user.Name ,
                     National = user.National ,
                     
                     Address = user.Address ,
@@ -199,7 +193,8 @@ namespace FindJobSolution.WebApp.Controllers
 
         public async Task<IActionResult> UserJob()
         {
-            var all = await _applyJobAPI.GetAll();
+            var id = User.Identity.Name;
+            var all = await _applyJobAPI.GetAll(id);
             return View(all);
         }
 

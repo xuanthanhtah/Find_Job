@@ -138,7 +138,6 @@ namespace FindJobSolution.Application.Catalog
                             DesiredSalary = j.DesiredSalary != null ? j.DesiredSalary : 0,
                             ThumbnailCv = i.FilePath != null ? i.FilePath : "",
                             Avatar = a.FilePath != null ? a.FilePath : "",
-
                         };
 
             if (!string.IsNullOrEmpty(request.keyword))
@@ -186,6 +185,11 @@ namespace FindJobSolution.Application.Catalog
 
             var jobSeeker = await _context.JobSeekers.FindAsync(JobSeekerId);
 
+            var thumCv = _context.Cvs.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
+            if (thumCv == null) { return null; }
+            var avatar = _context.Avatars.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
+            if (thumCv == null) { return null; }
+
             var user = _context.Users.FirstOrDefault(p => p.Id == jobSeeker.UserId);
 
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
@@ -200,7 +204,9 @@ namespace FindJobSolution.Application.Catalog
                 Name = jobSeeker.Name,
                 National = jobSeeker.National,
                 DesiredSalary = jobSeeker.DesiredSalary,
-                ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
+
+                ThumbnailCv = thumCv.FilePath,
+                Avatar = avatar.FilePath,
 
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -219,6 +225,12 @@ namespace FindJobSolution.Application.Catalog
 
             var user = _context.Users.FirstOrDefault(p => p.Id == jobSeeker.UserId);
 
+            var thumCv = _context.Cvs.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
+            if (thumCv == null) { return null; }
+
+            var avatar = _context.Avatars.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
+            if (thumCv == null) { return null; }
+
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
             var jobItem = new JobSeekerViewModel()
             {
@@ -231,7 +243,8 @@ namespace FindJobSolution.Application.Catalog
                 Name = jobSeeker.Name,
                 National = jobSeeker.National,
                 DesiredSalary = jobSeeker.DesiredSalary,
-                ThumbnailCv = query.Select(i => i.i.FilePath).FirstOrDefault(),
+                ThumbnailCv = thumCv.FilePath,
+                Avatar = avatar.FilePath,
 
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
@@ -312,7 +325,7 @@ namespace FindJobSolution.Application.Catalog
             //JobSeeker.JobId = request.JobId;
             JobSeeker.Address = request.Address;
             JobSeeker.Gender = request.Gender;
-            //JobSeeker.Name = request.Name;
+            JobSeeker.Name = request.Name;
 
             JobSeeker.National = request.National;
             JobSeeker.DesiredSalary = request.DesiredSalary;
@@ -321,59 +334,58 @@ namespace FindJobSolution.Application.Catalog
             //User.UserName = request.Name;
             User.PhoneNumber = request.PhoneNumber;
             User.Email = request.Email;
-            
 
-            //if (request.ThumbnailCv != null)
-            //{
-            //    var thumbnailCv = await _context.Cvs.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == request.JobSeekerId);
-            //    if (thumbnailCv != null)
-            //    {
-            //        thumbnailCv.Caption = request.nameCv;
-            //        thumbnailCv.FileSize = request.ThumbnailCv.Length;
-            //        thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailCv);
-            //        _context.Cvs.Update(thumbnailCv);
-            //    }
-            //    else
-            //    {
-            //        JobSeeker.Cvs = new List<Cv>()
-            //        {
-            //            new Cv()
-            //            {
-            //                Caption = request.nameCv,
-            //                Timespan = DateTime.Now,
-            //                FileSize = request.ThumbnailCv.Length,
-            //                FilePath = await this.SaveFile(request.ThumbnailCv),
-            //                IsDefault = true,
-            //                SortOrder = 1,
-            //            }
-            //        };
-            //        _context.Cvs.AddRange(JobSeeker.Cvs);
-            //    }
-            //}
-            //if (request.ThumbnailAvatar != null)
-            //{
-            //    var thumbnailCv = await _context.Avatars.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == request.JobSeekerId);
-            //    if (thumbnailCv != null)
-            //    {
-            //        thumbnailCv.Caption = request.nameAvatar;
-            //        thumbnailCv.FileSize = request.ThumbnailAvatar.Length;
-            //        thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailAvatar);
-            //        _context.Avatars.Update(thumbnailCv);
-            //    }
-            //    else
-            //    {
-            //        JobSeeker.Avatar = new Avatar()
-            //        {
-            //            Caption = request.nameAvatar,
-            //            Timespan = DateTime.Now,
-            //            FileSize = request.ThumbnailAvatar.Length,
-            //            FilePath = await this.SaveFile(request.ThumbnailAvatar),
-            //            IsDefault = true,
-            //            SortOrder = 1,
-            //        };
-            //        _context.Avatars.AddRange(JobSeeker.Avatar);
-            //    }
-            //}
+            if (request.ThumbnailCv != null)
+            {
+                var thumbnailCv = await _context.Cvs.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == id);
+                if (thumbnailCv != null)
+                {
+                    thumbnailCv.Caption = request.nameCv;
+                    thumbnailCv.FileSize = request.ThumbnailCv.Length;
+                    thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailCv);
+                    _context.Cvs.Update(thumbnailCv);
+                }
+                else
+                {
+                    JobSeeker.Cvs = new List<Cv>()
+                    {
+                        new Cv()
+                        {
+                            Caption = request.nameCv,
+                            Timespan = DateTime.Now,
+                            FileSize = request.ThumbnailCv.Length,
+                            FilePath = await this.SaveFile(request.ThumbnailCv),
+                            IsDefault = true,
+                            SortOrder = 1,
+                        }
+                    };
+                    _context.Cvs.AddRange(JobSeeker.Cvs);
+                }
+            }
+            if (request.ThumbnailAvatar != null)
+            {
+                var thumbnailCv = await _context.Avatars.FirstOrDefaultAsync(i => i.IsDefault == true && i.JobSeekerId == id);
+                if (thumbnailCv != null)
+                {
+                    thumbnailCv.Caption = request.nameAvatar;
+                    thumbnailCv.FileSize = request.ThumbnailAvatar.Length;
+                    thumbnailCv.FilePath = await this.SaveFile(request.ThumbnailAvatar);
+                    _context.Avatars.Update(thumbnailCv);
+                }
+                else
+                {
+                    JobSeeker.Avatar = new Avatar()
+                    {
+                        Caption = request.nameAvatar,
+                        Timespan = DateTime.Now,
+                        FileSize = request.ThumbnailAvatar.Length,
+                        FilePath = await this.SaveFile(request.ThumbnailAvatar),
+                        IsDefault = true,
+                        SortOrder = 1,
+                    };
+                    _context.Avatars.AddRange(JobSeeker.Avatar);
+                }
+            }
 
             await _context.SaveChangesAsync();
             return true;
