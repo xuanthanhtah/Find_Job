@@ -50,15 +50,17 @@ namespace FindJobSolution.API.Controllers
 
             return CreatedAtAction(nameof(GetById), new { id = result }, jobSeekerOldCompany);
         }
-        [HttpPut("Update")]
-        public async Task<IActionResult> Update([FromForm] JobSeekerOldCompanyUpdateRequest request)
+
+        [HttpPut("Update/{id}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update(int id, [FromForm] JobSeekerOldCompanyUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var result = await _jobSeekerOldCompanyService.Update(request);
-            if (result == 0)
+            var result = await _jobSeekerOldCompanyService.Update(id, request);
+            if (result == false)
             {
                 return BadRequest();
             }

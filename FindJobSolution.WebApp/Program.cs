@@ -23,6 +23,7 @@ builder.Services.AddTransient<IJobAPI, JobAPI>();
 builder.Services.AddTransient<IJobSeekerAPI, JobSeekerAPI>();
 builder.Services.AddTransient<IApplyJobAPI, ApplyJobAPI>();
 builder.Services.AddTransient<ISaveJobAPI, SaveJobAPI>();
+builder.Services.AddTransient<IJobSeekerOldCompanyAPI, JobSeekerOldCompanyAPI>();
 //builder.Services.AddTransient<IMessageAPI, MessageAPI>();
 
 builder.Services.AddSession(options =>
