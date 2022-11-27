@@ -4,66 +4,94 @@
     ViewData["Title"] = "JobSeekerApply";
     Layout = "~/Views/Shared/_Layout3.cshtml";
 }
+<!doctype html>
+<html lang="en">
+<head>
 
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Danh sách công việc</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Danh sách công việc</li>
-    </ol>
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <a class="btn btn-success" asp-action="Create" asp-controller="JobInformation">Thêm công việc mới</a>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                người ứng tuyển
-                            </th>
-                            <th>
-                                mã công việc
-                            </th>
-                            <th>
-                                Trạng thái
-                            </th>
-                            <th>
-                                Thời gian ứng tuyển
-                            </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.JobSeekerId)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.JobInformationId)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Status)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TimeApply)
-                                </td>
-                                <td>
-                                <td>
-                                        @Html.ActionLink("sửa trạng thái", "EditStatus", new {  JobSeekerId=item.JobSeekerId, JobInformationId= item.JobInformationId } , new { @class = "btn btn-success" }) 
-                                        @Html.ActionLink("Chi tiết người tìm việc", "ProfileJobSeeker", new { id=item.JobSeekerId  }, new { @class = "btn btn-success"  })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+        body {
+            background: #eee;
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
 
+    </style>
+</head>
+
+<body>
+    <div id="content" style="z-index:1">
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Danh sách công việc</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+                <li class="breadcrumb-item active">Danh sách công việc</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="JobInformation">Thêm công việc mới</a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        người ứng tuyển
+                                    </th>
+                                    <th>
+                                        mã công việc
+                                    </th>
+                                    <th>
+                                        Trạng thái
+                                    </th>
+                                    <th>
+                                        Thời gian ứng tuyển
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.JobSeekerId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.JobInformationId)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Status)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TimeApply)
+                                        </td>
+                                        <td>
+                                        <td>
+                                                @Html.ActionLink("sửa trạng thái", "EditStatus", new {  JobSeekerId=item.JobSeekerId, JobInformationId= item.JobInformationId } , new { @class = "btn btn-success" })
+                                                @Html.ActionLink("Chi tiết người tìm việc", "ProfileJobSeeker", new { id=item.JobSeekerId  }, new { @class = "btn btn-success"  })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
             </div>
-
         </div>
     </div>
-</div>
+    
+</body>
+</html>
