@@ -52,5 +52,8 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
         [Display(Name = "Thời gian kết thúc tuyển")]
         public DateTime JobInformationTimeEnd { get; set; }
 
+
+        public string SDT { get; set; }
+        public string email { get; set; }
     }
 }

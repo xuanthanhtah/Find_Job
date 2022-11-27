@@ -22,6 +22,6 @@ namespace FindJobSolution.ViewModels.Catalog.SaveJob
 
         public string CompanyName { get; set; }
 
-        public string FilePath { get; set; }
+        public string Avatar { get; set; }
     }
 }

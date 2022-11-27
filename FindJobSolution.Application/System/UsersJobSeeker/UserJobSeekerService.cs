@@ -92,6 +92,18 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             await _context.AddAsync(JobSeeker);
             await _context.SaveChangesAsync();
 
+            var OldCompany = new JobSeekerOldCompany()
+            {
+                JobSeekerId = JobSeeker.JobSeekerId,
+                CompanyName = "",
+                JobTitle = "",
+                WorkExperience = "",
+                WorkingTime = "" ,
+            };
+
+            await _context.AddAsync(OldCompany);
+            await _context.SaveChangesAsync();
+
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "JobSeeker");

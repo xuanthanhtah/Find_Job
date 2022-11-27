@@ -1,9 +1,11 @@
 ﻿@using FindJobSolution.ViewModels.System.User
+@using System.Security.Claims
 @model FindJobSolution.ViewModels.Catalog.Recruiters.RecruiterVM
 
 @{
     ViewData["Title"] = "IndexRecuiter2";
     Layout = "~/Views/Shared/_Layout3.cshtml";
+    var role = User.IsInRole("Recuiter");
 }
 
 <!doctype html>
@@ -69,11 +71,11 @@
 
 </head>
 <body style="overflow-x: hidden">
-    <div class="wrapper d-flex align-items-stretch">
+    @*<div class="wrapper d-flex align-items-stretch">
         <nav id="sidebar" class="order-last img active" style="background-image: url(../sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem">
             <div class="custom-menu">
             </div>
-            @if (User.Identity.IsAuthenticated)
+            @if (User.Identity.IsAuthenticated && role)
             {
                 <div class="">
                     <h1><span><img src="~/assets/img/icon/profile-icon-white-22.jpg" style="height: 30px; margin-left:24px; font-size: 30px;"></span><a href="index.html" class="logo" style="display:inline-grid ;padding:10px 30px"> <span style="font-size: 25px;">@User.Identity.Name</span> </a></h1>
@@ -102,7 +104,7 @@
                     </div>
                 </div>
             }
-        </nav>
+        </nav>*@
 
         <!-- Page Content  -->
         <div id="content" style="z-index:1">
@@ -164,7 +166,7 @@
         </div>
     </div>
 
-    <div id="content" style="z-index:1; min-height:800px">
+    @*<div id="content" style="z-index:1; min-height:800px">
         <section class="" style="background-color: #f5f5f5; margin-top: 80px">
             <div class="" style="padding: 95px 5%; width: 100%; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; height: 500px">
                 <div class="" style="margin-right: -15px; margin-left: -15px; overflow: hidden;">
@@ -204,7 +206,7 @@
                 </div>
             </div>
         </section>
-    </div>
+    </div>*@
 
     <script src="../sidebar/js/jquery.min.js"></script>
     <script src="../sidebar/js/popper.js"></script>
@@ -229,7 +231,6 @@
             },
         });
     </script>
-
 </body>
 </html>
 

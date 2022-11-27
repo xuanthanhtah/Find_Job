@@ -1,0 +1,129 @@
+﻿@model FindJobSolution.ViewModels.Catalog.JobSeekerOldCompany.JobSeekerOldCompanyUpdateRequest
+
+@{
+    ViewData["Title"] = "UserOldCompanyEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-action="UserOldCompanyEdit" enctype="multipart/form-data" method="post">
+    <main>
+        <div class="master_layout_container master_layout_background">
+            <div class="master_layout_row">
+                <div class="master_layout_col_3h2 master_layout_col_13">
+                    <div class="vnwBox">
+                        <p class="title border-bottom">
+                            Nghề nghiệp của tôi
+                            <ul class="sidebarMenu">
+                                <li class="sidebarMenuItem">
+                                    <a href="@Url.Action("UserProfile", "UserJobSeeker")">
+                                        <span class="navIcon">
+                                            <img src="~/assets/img/icon/person1.png" alt="">
+                                        </span>
+                                        <span class="textLabel">Hồ sơ của tôi</span>
+                                    </a>
+
+                                </li>
+                                <li class="sidebarMenuItem">
+                                    <a href="@Url.Action("UserJob", "UserJobSeeker")">
+                                        <span class="navIcon">
+                                            <img src="~/assets/img/icon/briefcase1.png" alt="">
+                                        </span>
+                                        <span class="textLabel">Việc làm của tôi</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+                <div class="master_layout_col_3h2 master_layout_col_2">
+                    <div class="vnwBox vnwBoxSmall">
+                        <span class="headerTitle">Hồ sơ của tôi</span>
+                    </div>
+                    <div class="Block_Block__1rMJ_">
+                        <div class="ContactInformation_contactInformationComponent__2Rwzr">
+                            <h2 class="ContactInformation_blockTitle__VfSNg">Thông tin công ty</h2>
+                            <div>
+                                <div class="ContactInfoView_viewSectionWrapper__2SQdc">
+                                    <div class="native-grid">
+                                        <div class="roww">
+                                            <div class="col-lg-66">
+                                                <div>
+                                                    <span class="contact-info-edit">Tên công ty</span>
+                                                    <div>
+                                                        <div style="position:relative">
+                                                            <input asp-for="CompanyName" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="roww">
+                                            <div class="col-lg-66">
+                                                <div>
+                                                    <span class="contact-info-edit">Thời gian làm việc</span>
+                                                    <div>
+                                                        <div style="position:relative">
+                                                            <input asp-for="WorkingTime" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-66">
+                                                <div>
+                                                    <span class="contact-info-edit">Kinh nghiệm làm việc</span>
+                                                    <div>
+                                                        <div style="position:relative">
+                                                            <input asp-for="WorkExperience" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="roww">
+                                            <div class="col-lg-66">
+                                                <div>
+                                                    <span class="contact-info-edit">Chức danh</span>
+                                                    <div>
+                                                        <div style="position:relative">
+                                                            <input asp-for="JobTitle" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                                          
+                                        </div>                                      
+                                        <div class="row" style="margin-left:1px">
+                                            <form asp-action="UserOldCompanyEdit">
+                                                <input type="submit" value="Lưu" class="btn btn-primary" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="master_layout_col_3h2 master_layout_col_13">
+                    <div class="vnwBox" style="display:block">
+                        <p class="title border-bottom">Việc làm bạn sẽ thích</p>
+                        <div class="roww" style="margin:0px;">
+                            <div class="vnmBox1" style="display:block">
+                                <div class="joblove">
+                                    <div class="joblove-row">
+                                        <div class="khung">
+                                            <div class="logobox">
+                                                <img class="logo" src="~/assets/img/logo/logo.png">
+                                            </div>
+                                        </div>
+                                        <div class="khung2">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</form>
+

@@ -181,7 +181,7 @@ namespace FindJobSolution.Application.Catalog
             var query = from j in _context.JobSeekers
                         join i in _context.Cvs on j.JobSeekerId equals i.JobSeekerId
                         where i.IsDefault == true
-                        select new { j, i };
+                        select new { j, i};
 
             var jobSeeker = await _context.JobSeekers.FindAsync(JobSeekerId);
 
@@ -191,6 +191,7 @@ namespace FindJobSolution.Application.Catalog
             if (thumCv == null) { return null; }
 
             var user = _context.Users.FirstOrDefault(p => p.Id == jobSeeker.UserId);
+            var jobSeekerOldCompany = _context.JobSeekerOldCompanies.FirstOrDefault(p => p.JobSeekerId == jobSeeker.JobSeekerId);
 
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
             var jobItem = new JobSeekerViewModel()
@@ -210,6 +211,11 @@ namespace FindJobSolution.Application.Catalog
 
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
+
+                CompanyName = jobSeekerOldCompany.CompanyName,
+                WorkExperience = jobSeekerOldCompany.WorkExperience,
+                WorkingTime = jobSeekerOldCompany.WorkingTime,
+                JobTitle = jobSeekerOldCompany.JobTitle,
             };
             return jobItem;
         }
@@ -229,7 +235,8 @@ namespace FindJobSolution.Application.Catalog
             if (thumCv == null) { return null; }
 
             var avatar = _context.Avatars.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
-            if (thumCv == null) { return null; }
+            var jobSeekerOldCompany = _context.JobSeekerOldCompanies.FirstOrDefault(p => p.JobSeekerId == jobSeeker.JobSeekerId);
+            var skill = _context.JobSeekerSkills.FirstOrDefault(p => p.JobSeekerId == jobSeeker.JobSeekerId);
 
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
             var jobItem = new JobSeekerViewModel()
@@ -243,11 +250,20 @@ namespace FindJobSolution.Application.Catalog
                 Name = jobSeeker.Name,
                 National = jobSeeker.National,
                 DesiredSalary = jobSeeker.DesiredSalary,
+
                 ThumbnailCv = thumCv.FilePath,
                 Avatar = avatar.FilePath,
 
                 Email = user.Email,
                 PhoneNumber = user.PhoneNumber,
+
+                CompanyName = jobSeekerOldCompany.CompanyName,
+                WorkExperience = jobSeekerOldCompany.WorkExperience,
+                WorkingTime = jobSeekerOldCompany.WorkingTime,
+                JobTitle = jobSeekerOldCompany.JobTitle,
+
+                //SkillExperience = skill.Skill.Experience,
+                //Skillname = skill.Skill.Name,
             };
             return jobItem;
         }

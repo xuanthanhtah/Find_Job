@@ -15,7 +15,7 @@ namespace FindJobSolution.ViewModels.Catalog.JobSeekerOldCompany
             RuleFor(x => x.WorkExperience).NotEmpty().WithMessage("WorkExperience is required");
             RuleFor(x => x.WorkingTime).NotEmpty().WithMessage("WorkingTime is required");
             RuleFor(x => x.CompanyName).NotEmpty().WithMessage("CompanyName is required");
-            RuleFor(x => x.JobSeekerOldCompanyId).NotEmpty().WithMessage("JobSeekerOldCompanyId is required");
+            //RuleFor(x => x.JobSeekerOldCompanyId).NotEmpty().WithMessage("JobSeekerOldCompanyId is required");
         }
     }
 }

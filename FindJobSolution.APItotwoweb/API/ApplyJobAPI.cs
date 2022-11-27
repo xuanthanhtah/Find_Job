@@ -51,6 +51,12 @@ namespace FindJobSolution.APItotwoweb.API
             //Hàm lấy api từ backend xử lý 
             var response = await client.PostAsync($"/api/ApplyJob/JobInfomationId={id}", httpContent);
             //trả về thành công 200 hay thất bại 400 > 500
+
+            var result = response.IsSuccessStatusCode;
+            if(!result)
+            {
+                return false;
+            }
             var body = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<bool>(body);
             return user;
