@@ -104,6 +104,20 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             await _context.AddAsync(OldCompany);
             await _context.SaveChangesAsync();
 
+            var Avatar = new Avatar()
+            {
+                Caption = "logo",
+                FilePath = "/assets/img/logo/user-logo.png",
+                FileSize = 1146,
+                Timespan = DateTime.Now,
+                JobSeekerId = JobSeeker.JobSeekerId,
+                IsDefault = true,
+                SortOrder = 1
+            };
+
+            await _context.AddAsync(Avatar);
+            await _context.SaveChangesAsync();
+
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "JobSeeker");
