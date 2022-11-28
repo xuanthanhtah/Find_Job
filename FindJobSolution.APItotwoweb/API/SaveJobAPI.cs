@@ -47,10 +47,10 @@ namespace FindJobSolution.APItotwoweb.API
             //Hàm lấy api từ backend xử lý đăng ký tài khoản
             var response = await client.PostAsync($"/api/SaveJob/JobInfomationId={id}", httpContent);
             //trả về thành công 200 hay thất bại 400 > 500
-            var body = await response.Content.ReadAsStringAsync();
-            var user = JsonConvert.DeserializeObject<bool>(body);
+            //var body = await response.Content.ReadAsStringAsync();
+            //var user = JsonConvert.DeserializeObject<bool>(body);
 
-            return user;
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> Delete(int jobseekerid, int jobinfomationid)
