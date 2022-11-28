@@ -109,13 +109,11 @@
                                             {
                                                 <div style="display: flex; border-bottom: 1px solid #EBEBEB; padding: 16px 0;margin-left: -5px; margin-right: -5px;">
                                                     <div style="margin-right: 12px;box-sizing: border-box;display:flex">
-                                                        @*<div class="col-lg-2" style="margin-right: 12px;">
-                                            {
-                                            var imgsrc = "";
-                                            var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
-                                            imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                                            <img src='@item.' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
-                                            }*@
+                                                        <div class="col-lg-2" style="margin-right: 12px;">
+                                                            {
+                                                            <img src="http://localhost:2001/@item.Avatar" style="display: block; width: 100px; height: auto;vertical-align: middle;" />
+                                                            }
+                                                        </div>
                                                         <div class="col-lg-7" style="float:left;margin-left: 45px;">
                                                             <div>
                                                                 <a href="~/Home/JobDetail/@item.JobInformationId" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => item.JobType)</a>
@@ -126,8 +124,8 @@
                                                         </div>
                                                         <div class="col-lg-3" style="display: flex; align-content: center;justify-content: center; align-items: center;">
                                                             <div style="display: flex; align-items: center;">
-                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" 
-                                                                   onclick="location.href='@Url.Action("CancelSaveJob", new { jobinfoid = item.JobInformationId, jobseekerid = item.JobSeekerId })'">Hủy bỏ</a>
+                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;"
+                                                           onclick="location.href='@Url.Action("CancelSaveJob", new { jobinfoid = item.JobInformationId, jobseekerid = item.JobSeekerId })'">Hủy bỏ</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -165,14 +163,11 @@
                                             {
                                                 <div style="display: flex; border-bottom: 1px solid #EBEBEB; padding: 16px 0;margin-left: -5px; margin-right: -5px;">
                                                     <div style="margin-right: 12px;box-sizing: border-box;display:flex">
-                                                       @*<div class="col-lg-2" style="margin-right: 12px;">
+                                                        <div class="col-lg-2" style="margin-right: 12px;">
                                                             {
-                                                                var imgsrc = "";
-                                                                var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
-                                                                imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                                                                <img src='@item.' style="display: block; width: 100px; height: auto;vertical-align: middle;" />
+                                                            <img src="http://localhost:2001/@item.Avatar" style="display: block; width: 100px; height: auto;vertical-align: middle;" />
                                                             }
-                                                        </div>*@
+                                                        </div>
                                                         <div class="col-lg-7" style="float:left;margin-left: 45px;">
                                                             <div>
                                                                 <a href="~/Home/JobDetail/@item.JobInformationId" style="color: #333; font-weight: 600;font-size: 14px;">@Html.DisplayFor(modelItem => item.JobType)</a>
@@ -199,8 +194,8 @@
                                                             }
 
                                                             <div style="display: flex; align-items: center;">
-                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;" 
-                                                                   onclick="location.href='@Url.Action("CancelApplyJob", new { jobinfoid = item.JobInformationId, jobseekerid = item.JobSeekerId })'">Hủy bỏ</a>
+                                                                <a style="cursor:pointer;color: rgba(247,148,29,1); background-color: #ffffff;border: 1px solid rgba(247,148,29,1);font-size: 12px; height: 28px; line-height: 28px;font-weight: 600;padding: 0 16px;width: max-content;"
+                                                           onclick="location.href='@Url.Action("CancelApplyJob", new { jobinfoid = item.JobInformationId, jobseekerid = item.JobSeekerId })'">Hủy bỏ</a>
                                                             </div>
                                                         </div>
                                                     </div>

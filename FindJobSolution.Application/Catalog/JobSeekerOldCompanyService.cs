@@ -20,7 +20,7 @@ namespace FindJobSolution.Application.Catalog
     {
         Task<int> Create(JobSeekerOldCompanyCreateRequest request);
 
-        Task<int> Update(JobSeekerOldCompanyUpdateRequest request);
+        Task<bool> Update(int id, JobSeekerOldCompanyUpdateRequest request);
 
         Task<int> Delete(int JobSeekerOldCompanyId);
 
@@ -119,7 +119,7 @@ public class JobSeekerOldCompanyService : IJobSeekerOldCompanyService
 
     public async Task<JobSeekerOldCompanyViewmodel> GetbyId(int JobSeekerOldCompanyId)
     {
-        var job = await _context.JobSeekerOldCompanies.FindAsync(JobSeekerOldCompanyId);
+        var job = await _context.JobSeekerOldCompanies.FirstOrDefaultAsync(p => p.JobSeekerId == JobSeekerOldCompanyId);
         if (job == null) { throw new FindJobException($"cannot find a job: {JobSeekerOldCompanyId}"); }
         var JobSeekerOldCompanyItem = new JobSeekerOldCompanyViewmodel()
         {
@@ -133,16 +133,18 @@ public class JobSeekerOldCompanyService : IJobSeekerOldCompanyService
         return JobSeekerOldCompanyItem;
     }
 
-    public async Task<int> Update(JobSeekerOldCompanyUpdateRequest request)
+    public async Task<bool> Update(int id, JobSeekerOldCompanyUpdateRequest request)
     {
-        var JobSeekerOldCompanyItem = await _context.JobSeekerOldCompanies.FindAsync(request.JobSeekerOldCompanyId);
+        var JobSeekerOldCompanyItem = await _context.JobSeekerOldCompanies.FirstOrDefaultAsync(p => p.JobSeekerId == id);
 
-        if (JobSeekerOldCompanyItem == null) { throw new FindJobException($"cannot find a job: {request.JobSeekerOldCompanyId}"); }
+        if (JobSeekerOldCompanyItem == null) { throw new FindJobException($"cannot find a job: {JobSeekerOldCompanyItem}"); }
 
         JobSeekerOldCompanyItem.WorkExperience = request.WorkExperience;
         JobSeekerOldCompanyItem.CompanyName = request.CompanyName;
         JobSeekerOldCompanyItem.JobTitle = request.JobTitle;
         JobSeekerOldCompanyItem.WorkingTime = request.WorkingTime;
-        return await _context.SaveChangesAsync();
+
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

@@ -1,5 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @using FindJobSolution.Data.EF;
+@using System.Security.Claims;
+
+@{
+    var role = User.IsInRole("JobSeeker");
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -85,8 +91,8 @@
                                         <a href="~/Home/LoginJobSeeker" class="btn head-btn2">Đăng nhập</a>
                                     </div>
                                 }*@
-                                <div class="header-btn d-none f-right d-lg-block">
-                                    @if(User.Identity.IsAuthenticated) {
+                                <div class="header-btn d-none f-right d-lg-block">                              
+                                    @if(User.Identity.IsAuthenticated && role) {
                                         <div class="nice-select">
                                             Hello
                                             @User.Identity.Name
