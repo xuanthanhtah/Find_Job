@@ -34,6 +34,12 @@ namespace FindJobSolution.Application.Catalog
             var getid = await _context.Users.FirstOrDefaultAsync(p => p.UserName == request.UserIdentityName);
             var getjsid = await _context.JobSeekers.FirstOrDefaultAsync(p => p.UserId == getid.Id);
 
+            var available = await _context.SaveJobs.FirstOrDefaultAsync(p => p.JobSeekerId == getjsid.JobSeekerId && p.JobInformationId == id);
+            if (available != null)
+            {
+                return 0;
+            }
+
             var SaveJob = new SaveJob()
             {
                 JobInformationId = id,
@@ -41,6 +47,7 @@ namespace FindJobSolution.Application.Catalog
                 Status = Data.Enums.Status.Inprogress,
                 TimeSave = request.TimeSave,
             };
+
 
             _context.SaveJobs.Add(SaveJob);
             await _context.SaveChangesAsync();
