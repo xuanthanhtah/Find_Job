@@ -105,7 +105,7 @@ namespace FindJobSolution.API.Controllers
         public async Task<IActionResult> GetbyRecuiterIdPageRecuiter(int id)
         {
             var jobSeeker = await _jobInformationService.GetbyRecuiterIdPageRecuiter(id);
-            if (jobSeeker == null) return BadRequest(ModelState);
+            if (jobSeeker == null) return BadRequest(false);
             return Ok(jobSeeker);
         }
     }

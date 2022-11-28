@@ -10,7 +10,7 @@ namespace FindJobSolution.Application.Catalog
 {
     public interface IApplyJobService
     {
-        Task<int> Create(int id, ApplyJobCreateRequestNew request);
+        Task<bool> Create(int id, ApplyJobCreateRequestNew request);
 
         Task<int> Delete(int JobSeekerId, int JobInfomationId);
 
@@ -32,15 +32,15 @@ namespace FindJobSolution.Application.Catalog
             _context = context;
         }
 
-        public async Task<int> Create(int id, ApplyJobCreateRequestNew request)
+        public async Task<bool> Create(int id, ApplyJobCreateRequestNew request)
         {
             var getid = await _context.Users.FirstOrDefaultAsync(p => p.UserName == request.UserIdentityName);
             var getjsid = await _context.JobSeekers.FirstOrDefaultAsync(p => p.UserId == getid.Id);
 
-            var available = await _context.SaveJobs.FirstOrDefaultAsync(p => p.JobSeekerId == getjsid.JobSeekerId && p.JobInformationId == id);
+            var available = await _context.ApplyJobs.FirstOrDefaultAsync(p => p.JobSeekerId == getjsid.JobSeekerId && p.JobInformationId == id);
             if (available != null)
             {
-                return 0;
+                return false;
             }
 
             var ApplyJob = new ApplyJob()
@@ -51,9 +51,13 @@ namespace FindJobSolution.Application.Catalog
                 TimeApply = request.TimeApply,
             };
 
-            _context.ApplyJobs.Add(ApplyJob);
-            await _context.SaveChangesAsync();
-            return ApplyJob.JobSeekerId;
+            var result = _context.ApplyJobs.Add(ApplyJob);
+            if (result != null)
+            {
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         public async Task<int> Delete(int JobSeekerId, int JobInfomationId)

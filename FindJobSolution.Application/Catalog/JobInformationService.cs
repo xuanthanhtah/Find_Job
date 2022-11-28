@@ -251,7 +251,7 @@ namespace FindJobSolution.Application.Catalog
         public async Task<List<JobInformationViewModel>> GetbyRecuiterIdPageRecuiter(int Id)
         {
             var recuiter = await _context.JobInformations.FirstOrDefaultAsync(x => x.RecruiterId == Id);
-            if (recuiter == null) { throw new FindJobException($"cannot find a recuiter: {Id}"); }
+            if (recuiter == null) { return null; }
 
             var query = from j in _context.JobInformations
                         where j.RecruiterId == Id
