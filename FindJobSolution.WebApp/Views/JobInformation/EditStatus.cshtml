@@ -5,46 +5,64 @@
     Layout = "~/Views/Shared/_Layout3.cshtml";
 }
 
-<h1>EditStatus</h1>
+<div class="container-fluid px-4">
+    <form asp-action="EditStatus">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <div class="roww">
+            <div class="col-md-4">
+                <div class="col-lg-66">
+                    <span class="undefied col-44">
+                        <label asp-for="JobSeekerId" class="control-label"></label>
+                    </span>
+                </div>
+                <div class="col-88 text-truncate fw-6">
+                    <input asp-for="JobSeekerId" class="form-control" readonly />
+                    <span asp-validation-for="JobSeekerId" class="text-danger"></span>
+                </div>
+                <hr>
+                <div class="col-lg-66">
+                    <span class="undefied col-44">
+                        <label asp-for="JobInformationId" class="control-label"></label>
+                    </span>
+                </div>
+                <div class="col-88 text-truncate fw-6">
+                    <input asp-for="JobInformationId" class="form-control" readonly />
+                    <span asp-validation-for="JobInformationId" class="text-danger"></span>
+                </div>
+                <hr>
+                <div class="col-lg-66">
+                    <span class="undefied col-44">
+                        <label asp-for="Status" class="control-label"></label>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <select asp-for="Status">
+                        <option>Active</option>
+                        <option>NoActive</option>
+                        <option>Inprogress</option>
+                    </select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="col-88 text-truncate fw-6"></div>
 
-<h4>ApplyJobUpdateRequest</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditStatus">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="JobSeekerId" class="control-label"></label>
-                <input asp-for="JobSeekerId" class="form-control" readonly/>
-                <span asp-validation-for="JobSeekerId" class="text-danger"></span>
+                <hr style="margin-top: 2rem">
+                <div class="col-lg-66">
+                    <span class="undefied col-44">
+                        <label asp-for="TimeApply" class="control-label"></label>
+                    </span>
+                </div>
+                <div class="col-88 text-truncate fw-6">
+                    <input asp-for="TimeApply" class="form-control" readonly />
+                    <span asp-validation-for="TimeApply" class="text-danger"></span>
+                </div>
+                <div class="col-lg-66" style="margin-top: 2rem">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="JobInformationId" class="control-label"></label>
-                <input asp-for="JobInformationId" class="form-control" readonly/>
-                <span asp-validation-for="JobInformationId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status">
-                    <option>Active</option>
-                    <option>NoActive</option>
-                    <option>Inprogress</option>
-                </select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TimeApply" class="control-label"></label>
-                <input asp-for="TimeApply" class="form-control" readonly/>
-                <span asp-validation-for="TimeApply" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
+        </div>
+    </form>
 </div>
 
