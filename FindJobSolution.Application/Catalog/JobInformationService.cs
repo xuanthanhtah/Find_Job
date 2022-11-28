@@ -108,6 +108,7 @@ namespace FindJobSolution.Application.Catalog
             var query = from j in _context.JobInformations
                         join j1 in _context.Recruiters on j.RecruiterId equals j1.RecruiterId
                         join j2 in _context.Jobs on j.JobId equals j2.JobId
+                        join j3 in _context.RecruiterImages on j1.RecruiterId equals j3.RecruiterId
                         where j.Status == Data.Enums.Status.Active
                         select new
                         {
@@ -123,6 +124,7 @@ namespace FindJobSolution.Application.Catalog
                             Status = j.Status,
                             JobId = j.JobId,
                             RecruiterId = j.RecruiterId,
+                            Avatar = j3.FilePath,
 
                             CompanyName = j1.CompanyName,
                             JobInformationTimeEnd = j.JobInformationTimeEnd,
@@ -162,6 +164,7 @@ namespace FindJobSolution.Application.Catalog
                     Status = p.Status,
                     JobId = p.JobId,
                     RecruiterId = p.RecruiterId,
+                    Avatar = p.Avatar,
 
                     CompanyName = p.CompanyName,
                     JobInformationTimeEnd = p.JobInformationTimeEnd,

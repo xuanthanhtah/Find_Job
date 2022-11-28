@@ -99,12 +99,12 @@
                                     <h4>Danh sách ngành nghề</h4>
                                 </div>
                                 <!-- Select job items start -->
-                                <form asp-action="JobList" method="get" >
-                                <div class="select-job-items2">
+                                <form asp-action="JobList" method="get">
+                                    <div class="select-job-items2">
                                         <select name="JobId" asp-items="@ViewBag.Job" onchange="this.form.submit()">
-                                        <option>Chọn danh mục</option>
-                                    </select>
-                                </div>
+                                            <option>Chọn danh mục</option>
+                                        </select>
+                                    </div>
                                 </form>
                                 <!--  Select job items End-->
                                 <!-- select-Categories start -->
@@ -219,12 +219,7 @@
                                         <div class="job-items">
                                             <div class="company-img">
                                                 <a href="~/Home/JobDetail/@item.JobInformationId">
-                                                    @*@{
-                                                        var imgsrc = "";
-                                                        var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
-                                                        imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                                                        <img src='@imgsrc' style="max-width:100px;max-height:100px" />
-                                                    }*@
+                                                    <img src="http://localhost:2001/@item.Avatar" style="display: block; width: 100px; height: auto;vertical-align: middle;" />
                                                 </a>
                                             </div>
                                             <div class="job-tittle job-tittle2">
@@ -235,12 +230,12 @@
                                                     <li>@Html.DisplayFor(modelItem => item.CompanyName)</li>
                                                     <li>@Html.DisplayFor(modelItem => item.JobLevel)</li>
                                                     <li><i class="fas fa-map-marker-alt"></i>@Html.DisplayFor(modelItem => item.WorkingLocation)</li>
-                                                        @{
+                                                    @{
                                                         var xmin = Decimal.ToInt32(item.MinSalary); var xmax = Decimal.ToInt32(item.MaxSalary);
                                                         <li class="myDIV" style="margin-right: 5px">@xmin</li>
                                                         <li style="margin-right: 5px">-</li>
                                                         <li class="myDIV">@xmax</li>
-                                                        }
+                                                    }
                                                 </ul>
                                             </div>
                                         </div>
@@ -261,22 +256,22 @@
         <!-- Job List Area End -->
         <!--Pagination Start  -->
         @*<div class="pagination-area pb-115 text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="single-wrap d-flex justify-content-center">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-start">
-                                    <li class="page-item active"><a class="page-link" href="#">01</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">02</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">03</a></li>
-                                    <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="container">
+        <div class="row">
+        <div class="col-xl-12">
+        <div class="single-wrap d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-start">
+        <li class="page-item active"><a class="page-link" href="#">01</a></li>
+        <li class="page-item"><a class="page-link" href="#">02</a></li>
+        <li class="page-item"><a class="page-link" href="#">03</a></li>
+        <li class="page-item"><a class="page-link" href="#"><span class="ti-angle-right"></span></a></li>
+        </ul>
+        </nav>
+        </div>
+        </div>
+        </div>
+        </div>
         </div>*@
         <!--Pagination End  -->
 
@@ -285,7 +280,7 @@
         let x = document.querySelectorAll(".myDIV");
         for (let i = 0, len = x.length; i < len; i++) {
             let num = Number(x[i].innerHTML)
-                      .toLocaleString('en');
+                .toLocaleString('en');
             x[i].innerHTML = num;
             x[i].classList.add("currSign");
         }
