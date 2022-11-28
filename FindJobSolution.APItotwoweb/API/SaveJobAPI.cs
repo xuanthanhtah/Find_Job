@@ -49,8 +49,8 @@ namespace FindJobSolution.APItotwoweb.API
             //trả về thành công 200 hay thất bại 400 > 500
             //var body = await response.Content.ReadAsStringAsync();
             //var user = JsonConvert.DeserializeObject<bool>(body);
-
             return true;
+
         }
 
         public async Task<bool> Delete(int jobseekerid, int jobinfomationid)

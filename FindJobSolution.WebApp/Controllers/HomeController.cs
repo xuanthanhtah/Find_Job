@@ -94,6 +94,10 @@ namespace FindJobSolution.WebApp.Controllers
         public async Task<IActionResult> SaveJob(int id)
         {
             var username = User.Identity.Name;
+            if(username == null)
+            {
+                return RedirectToAction("login", "UserJobSeeker");
+            }
             var saveJob = new SaveJobCreateRequestNew()
             {
                 TimeSave = DateTime.Now,
@@ -127,6 +131,11 @@ namespace FindJobSolution.WebApp.Controllers
         public async Task<IActionResult> ApplyJob(int id)
         {
             var username = User.Identity.Name;
+            if (username == null)
+            {
+                return RedirectToAction("Login", "UserJobSeeker");
+            }
+
             var applyjob = new ApplyJobCreateRequestNew()
             {
                 TimeApply = DateTime.Now,
