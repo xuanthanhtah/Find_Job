@@ -190,7 +190,7 @@ namespace FindJobSolution.WebApp.Controllers
             if (data)
             {
                 TempData["result"] = "Cập nhật người dùng thành công";
-                return RedirectToAction("UserProfile", "Home");
+                return RedirectToAction("UserProfile", "UserJobSeeker");
             }
 
             ModelState.AddModelError("", data.ToString());
@@ -230,7 +230,7 @@ namespace FindJobSolution.WebApp.Controllers
             if (data)
             {
                 TempData["result"] = "Cập nhật người dùng thành công";
-                return RedirectToAction("UserProfile", "Home");
+                return RedirectToAction("UserProfile", "UserJobSeeker");
             }
 
             ModelState.AddModelError("", data.ToString());
