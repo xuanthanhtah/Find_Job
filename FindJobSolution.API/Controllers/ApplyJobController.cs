@@ -39,9 +39,9 @@ namespace FindJobSolution.API.Controllers
         public async Task<IActionResult> Create(int jobInformationId, ApplyJobCreateRequestNew request)
         {
             var result = await _applyjobService.Create(jobInformationId, request);
-            if (result == 0)
+            if (result == false)
             {
-                return BadRequest();
+                return BadRequest(false);
             }
 
             return Ok(result);

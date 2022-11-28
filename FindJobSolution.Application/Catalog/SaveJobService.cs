@@ -45,7 +45,7 @@ namespace FindJobSolution.Application.Catalog
             var available = await _context.SaveJobs.FirstOrDefaultAsync(p => p.JobSeekerId == getjsid.JobSeekerId && p.JobInformationId == id);
             if (available != null)
             {
-                return 0;
+                return false;
             }
 
             var SaveJob = new SaveJob()
@@ -63,7 +63,6 @@ namespace FindJobSolution.Application.Catalog
                 return true;
             }
             return false;
-
         }
 
         public async Task<int> Delete(int JobSeekerId, int JobInfomationId)

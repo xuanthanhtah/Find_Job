@@ -40,7 +40,7 @@ namespace FindJobSolution.API.Controllers
             var result = await _savejobService.Create(jobInformationId, request);
             if (result == false)
             {
-                return BadRequest();
+                return BadRequest(false);
             }
             return Ok(result);
         }
