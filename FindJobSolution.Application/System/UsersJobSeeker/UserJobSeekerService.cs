@@ -35,12 +35,12 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
         public async Task<string> Authenticate(LoginRequest request)
         {
             var user = await _userManager.FindByNameAsync(request.UserName);
-            if (user == null) throw new FindJobException("Tài khoản không tồn tại");
+            if (user == null) return null;
 
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
             {
-                throw new FindJobException("Đăng nhập không đúng");
+                return null;
             }
             var roles = await _userManager.GetRolesAsync(user);
             var claims = new[]
@@ -98,7 +98,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
                 CompanyName = "",
                 JobTitle = "",
                 WorkExperience = "",
-                WorkingTime = "" ,
+                WorkingTime = "",
             };
 
             await _context.AddAsync(OldCompany);

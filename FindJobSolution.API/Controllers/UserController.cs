@@ -96,5 +96,50 @@ namespace FindJobSolution.API.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPost("change-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _UserService.ChangePassword(request);
+            if (result)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+        [HttpPost("reset-password-token/{userName}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPasswordToken(string userName)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _UserService.ResetPasswordToken(userName);
+            if (result != null)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
+        [HttpPost("reset-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _UserService.ResetPassword(request);
+            if (result)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
     }
 }

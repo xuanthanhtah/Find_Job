@@ -58,6 +58,10 @@ namespace FindJobSolution.WebApp.Controllers
             //    ModelState.AddModelError("", token);
             //    return View();
             //}
+            if (token == null)
+            {
+                return RedirectToAction("Login", "UserJobSeeker");
+            }
             var userPrincipal = this.ValidateToken(token);
 
             IEnumerable<Claim> claims = userPrincipal.Claims;
@@ -136,7 +140,7 @@ namespace FindJobSolution.WebApp.Controllers
 
         public async Task<IActionResult> UserProfile()
         {
-            if(User.Identity.Name == null)
+            if (User.Identity.Name == null)
                 return RedirectToAction("index", "Home");
 
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -147,7 +151,7 @@ namespace FindJobSolution.WebApp.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("index", "Home");
-           
+
             var data = await _jobSeekerAPI.GetByUserId(userId);
             return View(data);
         }
@@ -167,11 +171,11 @@ namespace FindJobSolution.WebApp.Controllers
                     DesiredSalary = user.DesiredSalary,
                     Dob = user.Dob,
                     Gender = user.Gender,
-                    Name = user.Name ,
-                    National = user.National ,
-                    
-                    Address = user.Address ,
-                    PhoneNumber = user.PhoneNumber ,
+                    Name = user.Name,
+                    National = user.National,
+
+                    Address = user.Address,
+                    PhoneNumber = user.PhoneNumber,
                     Email = user.Email,
                 };
                 return View(updateRequest);
@@ -201,7 +205,7 @@ namespace FindJobSolution.WebApp.Controllers
         public async Task<IActionResult> UserOldCompanyEdit(int id)
         {
             //if (!User.Identity.IsAuthenticated)
-            //    return RedirectToAction("index", "Home");          
+            //    return RedirectToAction("index", "Home");
             var result = await _jobSeekerOldCompanyAPI.GetById(id);
 
             if (result != null)
@@ -238,14 +242,12 @@ namespace FindJobSolution.WebApp.Controllers
         }
 
         [HttpGet]
-
         public async Task<IActionResult> UserJob()
         {
             var id = User.Identity.Name;
             var all = await _applyJobAPI.GetAll(id);
             return View(all);
         }
-
 
         public async Task<IActionResult> CancelSaveJob(int jobinfoid, int jobseekerid)
         {
@@ -286,6 +288,43 @@ namespace FindJobSolution.WebApp.Controllers
                 return RedirectToAction("index");
             }
             return RedirectToAction("UserJob", "UserJobSeeker");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword(int id)
+        {
+            //if (!User.Identity.IsAuthenticated)
+            //    return RedirectToAction("index", "Home");
+
+            var userName = User.Identity.Name;
+
+            var result = await _jobSeekerAPI.GetById(id);
+            if (result != null)
+            {
+                var updateRequest = new ChangePasswordModel()
+                {
+                    UserName = userName,
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var data = await _userAPI.ChangePassword(request);
+            if (data)
+            {
+                TempData["result"] = "Cập nhật mật khẩu thành công";
+                return RedirectToAction("UserProfile", "UserJobSeeker");
+            }
+
+            ModelState.AddModelError("", data.ToString());
+            return View(request);
         }
     }
 }

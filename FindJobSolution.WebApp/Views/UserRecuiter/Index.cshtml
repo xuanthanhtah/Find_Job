@@ -38,7 +38,8 @@
 
             <div class="card mb-4">
                 <div class="card-header">
-                    @Html.ActionLink("Sửa thông tin", "Edit", new {  id = Model.RecruiterId  }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Cập nhật thông tin", "Edit", new {  id = Model.RecruiterId  }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("Đổi mật khẩu", "ChangePassword", new {  id = Model.RecruiterId  }, new { @class = "btn btn-success" })
                 </div>
                 <div class="card-body">
                     <hr />
