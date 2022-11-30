@@ -27,6 +27,12 @@ namespace FindJobSolution.Application.System
         Task<bool> Delete(Guid id);
 
         Task<bool> RoleAssign(Guid id, RoleAssignRequest request);
+
+        Task<bool> ChangePassword(ChangePasswordModel request);
+
+        Task<string> ResetPasswordToken(string userName);
+
+        Task<bool> ResetPassword(ResetPasswordModel request);
     }
 
     public class UserService : IUserService
@@ -220,6 +226,61 @@ namespace FindJobSolution.Application.System
             }
 
             return true;
+        }
+
+        public Task<bool> ChangePassword(ChangePasswordModel request)
+        {
+            var user = _userManager.FindByNameAsync(request.UserName);
+            if (user == null)
+            {
+                return Task.FromResult(false);
+            }
+            if (request.NewPassword != request.ConfirmNewPassword)
+            {
+                return Task.FromResult(false); 
+            }
+            var result = _userManager.ChangePasswordAsync(user.Result, request.CurrentPassword, request.NewPassword);
+            if (!result.Result.Succeeded)
+            {
+                return Task.FromResult(false);
+            }
+            return Task.FromResult(true);
+        }
+
+        public Task<string> ResetPasswordToken(string userName)
+        {
+            var user = _userManager.FindByNameAsync(userName);
+            if (user == null)
+            {
+                return null;
+            }
+            var token = _userManager.GeneratePasswordResetTokenAsync(user.Result);
+            return token;
+        }
+
+        public Task<bool> ResetPassword(ResetPasswordModel request)
+        {
+            var user = _userManager.FindByNameAsync(request.UserName);
+            if (user == null)
+            {
+                return Task.FromResult(false);
+            }
+            if (request.NewPassword != request.ConfirmNewPassword)
+            {
+                return Task.FromResult(false);
+            }
+
+            if (string.IsNullOrEmpty(request.Token))
+            {
+                return Task.FromResult(false);
+            }
+
+            var result = _userManager.ResetPasswordAsync(user.Result, request.Token, request.NewPassword);
+            if (!result.Result.Succeeded)
+            {
+                return Task.FromResult(false);
+            }
+            return Task.FromResult(true);
         }
     }
 }
