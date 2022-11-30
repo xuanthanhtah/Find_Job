@@ -244,20 +244,8 @@
                                     <div class="roww">
                                         <div class="col-lg-66">
                                             <div class="undefied roww">
-                                                <span class="undefied col-44" style="grid-column: span 5">Chuyên ngành</span>
-                                                @*<div class="col-88 text-truncate fw-6">@knntv.ChuyenNganh</div>*@
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-66">
-                                            <div>
-                                                <div class="roww">
-                                                    <div class="col-44" style="grid-column: span 5">
-                                                        <span>Trường</span>
-                                                    </div>
-                                                    <div class="col-88">
-                                                        @*<span class="fw-6">@knntv.Truong</span>*@
-                                                    </div>
-                                                </div>
+                                                <span class="undefied col-44" style="grid-column: span 5">Tên kỹ năng</span>
+                                                <div class="col-88 text-truncate fw-6">@Model.Skillname</div>
                                             </div>
                                         </div>
                                     </div>
@@ -265,28 +253,16 @@
                                         <div class="col-lg-66">
                                             <div class="roww">
                                                 <div class="col-44" style="grid-column: span 6">
-                                                    <span>Bằng cấp</span>
+                                                    <span>kinh nghiệm</span>
                                                 </div>
                                                 <div class="col-88">
-                                                    @*<span class="fw-6">@knntv.BangCap</span>*@
+                                                    <span class="fw-6">@Model.SkillExperience</span>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="roww">
-                                        <div class="undefied col-22">
-                                            <div class="roww">
-                                                <div class="col-44" style="grid-column: span 9">
-                                                    <span>Thành tựu</span>
-                                                </div>
-                                                <div class="col-88">
-                                                    @*<div class="fw-6 text-truncate">@knntv.ThanhTuu</div>*@
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                                   
                                     <div class="row" style="margin-left:1px">
-                                        <a href="@Url.Action("UserJobEducationEdit", "UserJS")" class="btn btn-primary">Chỉnh sửa</a>
+                                        <a href="@Url.Action("UserSkillEdit", "UserJobSeeker")" class="btn btn-primary">Chỉnh sửa</a>
                                     </div>
                                 </div>
                             </div>

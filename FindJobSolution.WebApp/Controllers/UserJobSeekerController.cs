@@ -25,6 +25,7 @@ namespace FindJobSolution.WebApp.Controllers
         private readonly IApplyJobAPI _applyJobAPI;
         private readonly ISaveJobAPI _saveJobAPI;
         private readonly IJobSeekerOldCompanyAPI _jobSeekerOldCompanyAPI;
+        private readonly IJobSeekerSkillAPI _jobSeekerSkillAPI;
 
         public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobSeekerOldCompanyAPI jobSeekerOldCompanyAPI)
         {
@@ -222,6 +223,46 @@ namespace FindJobSolution.WebApp.Controllers
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UserOldCompanyEdit(int id, [FromForm] JobSeekerOldCompanyUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var data = await _jobSeekerOldCompanyAPI.Edit(id, request);
+            if (data)
+            {
+                TempData["result"] = "Cập nhật người dùng thành công";
+                return RedirectToAction("UserProfile", "Home");
+            }
+
+            ModelState.AddModelError("", data.ToString());
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserSkillEdit(int id)
+        {
+            //if (!User.Identity.IsAuthenticated)
+            //    return RedirectToAction("index", "Home");          
+            var result = await _jobSeekerOldCompanyAPI.GetById(id);
+
+            if (result != null)
+            {
+                var user = result;
+                var updateRequest = new JobSeekerOldCompanyUpdateRequest()
+                {
+                    CompanyName = user.CompanyName,
+                    JobTitle = user.JobTitle,
+                    WorkExperience = user.WorkExperience,
+                    WorkingTime = user.WorkingTime,
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UserSkillEdit(int id, [FromForm] JobSeekerOldCompanyUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return View();

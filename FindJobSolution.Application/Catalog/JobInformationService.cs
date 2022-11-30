@@ -191,6 +191,7 @@ namespace FindJobSolution.Application.Catalog
 
             var recuiter = await _context.Recruiters.FirstOrDefaultAsync(p => p.RecruiterId == jobInformation.RecruiterId);
             var user = await _context.Users.FirstOrDefaultAsync(p => p.Id == recuiter.UserId);
+            var image = await _context.RecruiterImages.FirstOrDefaultAsync(p => p.RecruiterId == recuiter.RecruiterId);
 
             var JobInformationItem = new JobInformationViewModel()
             {
@@ -212,6 +213,8 @@ namespace FindJobSolution.Application.Catalog
                 CompanyName = recuiter.CompanyName,
                 email = user.Email,
                 SDT = user.PhoneNumber,
+
+                Avatar = image.FilePath,
             };
             return JobInformationItem;
         }

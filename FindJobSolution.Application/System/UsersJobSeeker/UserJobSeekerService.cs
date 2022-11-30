@@ -107,7 +107,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             var Avatar = new Avatar()
             {
                 Caption = "logo",
-                FilePath = "/assets/img/logo/user-logo.png",
+                FilePath = "~/assets/img/logo/user-logo.png",
                 FileSize = 1146,
                 Timespan = DateTime.Now,
                 JobSeekerId = JobSeeker.JobSeekerId,
@@ -116,6 +116,15 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             };
 
             await _context.AddAsync(Avatar);
+            await _context.SaveChangesAsync();
+
+            var JobSeekerSkill = new JobSeekerSkill()
+            {
+                JobSeekerId = JobSeeker.JobSeekerId,
+                SkillId = 1,
+            };
+
+            await _context.AddAsync(JobSeekerSkill);
             await _context.SaveChangesAsync();
 
             if (result.Succeeded)

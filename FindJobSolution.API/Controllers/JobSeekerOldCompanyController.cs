@@ -16,6 +16,7 @@ namespace FindJobSolution.API.Controllers
         {
             this._jobSeekerOldCompanyService = jobSeekerOldCompanyService;
         }
+
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {

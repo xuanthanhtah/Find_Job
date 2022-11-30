@@ -18,6 +18,10 @@
         /*increase width as per your need*/
         max-width: 100%;
     }
+
+    .currSign:before {
+        content: '$';
+    }
 </style>
 @section Scripts{
     <script>
@@ -45,12 +49,7 @@
                             <div class="job-items">
                                 <div class="company-img company-img-details">
                                     <a href="#">
-                                        @*{
-                                    var imgsrc = "";
-                                    var base64 = Convert.ToBase64String(ntd.Logo.ToArray());
-                                    imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
-                                    <img src='@imgsrc' style="max-width:100px;max-height:100px" />
-                                    }*@
+                                        <img src="http://localhost:2001/@Model.Avatar" style="display: block; width: 100px; height: auto;vertical-align: middle; max-width:100px;max-height:100px" />
                                     </a>
                                 </div>
                                 <div class="job-tittle">
@@ -61,7 +60,13 @@
                                         <li>@Model.CompanyName</li>
                                         <li>@Html.DisplayFor(model => model.JobLevel)</li>
                                         <li><i class="fas fa-map-marker-alt"></i>@Html.DisplayFor(modelItem => Model.WorkingLocation)</li>
-                                        <li>$@Html.DisplayFor(modelItem => Model.MinSalary)</li>
+                                        @*<li>$@Html.DisplayFor(modelItem => Model.MinSalary)</li>*@
+                                        @{
+                                            var xmin = Decimal.ToInt32(Model.MinSalary); var xmax = Decimal.ToInt32(Model.MaxSalary);
+                                            <li class="myDIV" style="margin-right: 5px">@xmin</li>
+                                            <li style="margin-right: 5px">-</li>
+                                            <li class="myDIV">@xmax</li>
+                                        }
                                     </ul>
                                 </div>
                             </div>

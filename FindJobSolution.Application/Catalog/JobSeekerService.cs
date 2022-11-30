@@ -191,6 +191,10 @@ namespace FindJobSolution.Application.Catalog
             var user = _context.Users.FirstOrDefault(p => p.Id == jobSeeker.UserId);
             var jobSeekerOldCompany = _context.JobSeekerOldCompanies.FirstOrDefault(p => p.JobSeekerId == jobSeeker.JobSeekerId);
 
+            
+            var jsskill = _context.JobSeekerSkills.FirstOrDefault(p => p.JobSeekerId == jobSeeker.JobSeekerId);
+            var skill = _context.Skills.FirstOrDefault(p => p.SkillId == jsskill.SkillId);
+
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
             if (thumCv == null) 
             {
@@ -215,6 +219,9 @@ namespace FindJobSolution.Application.Catalog
                     WorkExperience = jobSeekerOldCompany.WorkExperience,
                     WorkingTime = jobSeekerOldCompany.WorkingTime,
                     JobTitle = jobSeekerOldCompany.JobTitle,
+
+                    Skillname = skill.Name,
+                    SkillExperience = skill.Experience,
                 };
                 return jobItem1;
             }
@@ -241,6 +248,9 @@ namespace FindJobSolution.Application.Catalog
                 WorkExperience = jobSeekerOldCompany.WorkExperience,
                 WorkingTime = jobSeekerOldCompany.WorkingTime,
                 JobTitle = jobSeekerOldCompany.JobTitle,
+
+                Skillname = skill.Name,
+                SkillExperience = skill.Experience,
             };
             return jobItem;
         }
@@ -259,7 +269,9 @@ namespace FindJobSolution.Application.Catalog
             var thumCv = _context.Cvs.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);          
             var avatar = _context.Avatars.FirstOrDefault(a => a.JobSeekerId == jobSeeker.JobSeekerId);
             var jobSeekerOldCompany = _context.JobSeekerOldCompanies.FirstOrDefault(p => p.JobSeekerId == jobSeeker.JobSeekerId);
-            var skill = _context.JobSeekerSkills.FirstOrDefault(p => p.JobSeekerId == jobSeeker.JobSeekerId);
+
+            var jsskill = _context.JobSeekerSkills.FirstOrDefault(p => p.JobSeekerId == jobSeeker.JobSeekerId);
+            var skill = _context.Skills.FirstOrDefault(p => p.SkillId == jsskill.SkillId);
 
             if (jobSeeker == null) { throw new FindJobException($"cannot find a jobseeker: {jobSeeker}"); }
             if (thumCv == null)
@@ -286,8 +298,8 @@ namespace FindJobSolution.Application.Catalog
                     WorkingTime = jobSeekerOldCompany.WorkingTime,
                     JobTitle = jobSeekerOldCompany.JobTitle,
 
-                    //SkillExperience = skill.Skill.Experience,
-                    //Skillname = skill.Skill.Name,
+                    Skillname = skill.Name,
+                    SkillExperience = skill.Experience,
                 };
                 return jobItem1;
             }
@@ -315,8 +327,8 @@ namespace FindJobSolution.Application.Catalog
                 WorkingTime = jobSeekerOldCompany.WorkingTime,
                 JobTitle = jobSeekerOldCompany.JobTitle,
 
-                //SkillExperience = skill.Skill.Experience,
-                //Skillname = skill.Skill.Name,
+                Skillname = skill.Name,
+                SkillExperience = skill.Experience,
             };
             return jobItem;
         }
