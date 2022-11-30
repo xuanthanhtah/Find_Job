@@ -94,21 +94,21 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "e020c450-fb51-4324-bae8-581b9a4a0325",
+                            ConcurrencyStamp = "d0a63e98-cd0c-438e-9d92-4ce7865f74f1",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
                             Id = new Guid("728d69ec-5ff4-4688-9107-d8906b264f79"),
-                            ConcurrencyStamp = "137845b2-0796-4874-a923-ea8675c8bba2",
+                            ConcurrencyStamp = "55305ac1-4249-45c1-8a97-4321b51b880d",
                             Name = "JobSeeker",
                             NormalizedName = "JobSeeker"
                         },
                         new
                         {
                             Id = new Guid("f91c93e9-5527-4162-b7c5-dd3cba713a49"),
-                            ConcurrencyStamp = "7c538477-22f5-4721-af57-8025c208e2d4",
+                            ConcurrencyStamp = "de414e80-ad3a-45d0-8e32-081b43839269",
                             Name = "Recuiter",
                             NormalizedName = "Recuiter"
                         });
@@ -552,13 +552,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2b632092-d7de-4167-88ea-e0a0964a0061",
+                            ConcurrencyStamp = "0399faaa-3e47-48a3-b3ba-beec46fb0d72",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN7SJHOBrtpt9G0myzD3GDNwpVj1lSWpLHD9dQ2YvR5xCsdqkL73WDsOnsHIJCNjYw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM5cqoK3UZojB+prGkduLocwp3HQ2KCsClZEmsLOFYWlKsefOwUVXUd+RETzf+4f7w==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

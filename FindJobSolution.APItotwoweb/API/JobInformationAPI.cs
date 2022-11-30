@@ -19,6 +19,7 @@ namespace FindJobSolution.APItotwoweb.API
         Task<PagedResult<JobInformationViewModel>> GetAllPaging(GetJobInformationPagingRequest request);
 
         Task<List<JobInformationViewModel>> GetPagingByRecuiterId(int id);
+
         Task<List<JobInformationViewModel>> GetPagingByRecuiterIdPage(int id);
 
         Task<bool> Create(int id, JobInformationCreateRequest request);
@@ -155,6 +156,12 @@ namespace FindJobSolution.APItotwoweb.API
 
             var response = await client.GetAsync($"/api/JobInformation/recuiter/{id}");
 
+            var code = response.IsSuccessStatusCode;
+
+            if (code == false)
+            {
+                return null;
+            }
             var body = await response.Content.ReadAsStringAsync();
             var jobSeeker = JsonConvert.DeserializeObject<List<JobInformationViewModel>>(body);
             return jobSeeker;

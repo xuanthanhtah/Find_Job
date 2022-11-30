@@ -2,14 +2,10 @@
 
 @{
     ViewData["Title"] = "UserProfile";
-    Layout = "~/Views/Shared/_Layout2.cshtml";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
 }
 
-<h1>UserProfile</h1>
-
-<div>
-    <h4>RecruiterVM</h4>
-    <hr />
+<div id="content" style="z-index:1">
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.id)

@@ -10,6 +10,7 @@ namespace FindJobSolution.API.Controllers
     public class SaveJobController : ControllerBase
     {
         private readonly ISaveJobService _savejobService;
+
         public SaveJobController(ISaveJobService SaveJobService)
         {
             _savejobService = SaveJobService;
@@ -37,9 +38,9 @@ namespace FindJobSolution.API.Controllers
         public async Task<IActionResult> Create(int jobInformationId, SaveJobCreateRequestNew request)
         {
             var result = await _savejobService.Create(jobInformationId, request);
-            if (result == 0)
+            if (result == false)
             {
-                return BadRequest();
+                return BadRequest(false);
             }
             return Ok(result);
         }
