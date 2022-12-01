@@ -326,5 +326,51 @@ namespace FindJobSolution.WebApp.Controllers
             ModelState.AddModelError("", data.ToString());
             return View(request);
         }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(SendMailModel request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _jobSeekerAPI.ForgotPassword(request.Email);
+            if (!result)
+            {
+                TempData["result"] = "Gửi mail không thành công";
+                return View();
+            }
+
+            return RedirectToAction("Login", "UserJobSeeker");
+        }
+
+        [HttpGet]
+        public IActionResult ChangePasswordWithToken()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePasswordWithToken(ResetPasswordVM request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _userAPI.ChangePasswordWithToken(request);
+            if (!result)
+            {
+                TempData["result"] = "Đổi mật khẩu không thành công";
+                return View();
+            }
+
+            return RedirectToAction("Login", "UserJobSeeker");
+        }
     }
 }

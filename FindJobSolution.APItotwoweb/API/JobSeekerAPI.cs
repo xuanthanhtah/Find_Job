@@ -26,6 +26,8 @@ namespace FindJobSolution.APItotwoweb.API
         Task<JobViewModel> GetJobIdByjobSeekerId(int Id);
 
         Task<bool> Edit(int id, JobSeekerUpdateRequest request);
+
+        Task<bool> ForgotPassword(string email);
     }
 
     public class JobSeekerAPI : IJobSeekerAPI
@@ -112,6 +114,24 @@ namespace FindJobSolution.APItotwoweb.API
             var result = response.IsSuccessStatusCode;
             if (response.IsSuccessStatusCode)
                 return true;
+            return false;
+        }
+
+        public async Task<bool> ForgotPassword(string email)
+        {
+            //tạo trang tạo tài khoản mới
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(email);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            //Hàm lấy api từ backend xử lý đăng ký tài khoản
+            var response = await client.PostAsync($"/api/User/ForgotPassword/{email}", httpContent);
+            //trả về thành công 200 hay thất bại 400 > 500
+            if (response.IsSuccessStatusCode == true)
+            {
+                return true;
+            }
             return false;
         }
 
