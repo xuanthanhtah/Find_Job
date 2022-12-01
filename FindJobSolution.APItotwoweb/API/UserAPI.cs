@@ -27,6 +27,8 @@ namespace FindJobSolution.APItotwoweb.API
         Task<bool> ResetPassword(ResetPasswordModel request);
 
         Task<bool> ChangePassword(ChangePasswordModel request);
+
+        Task<bool> ChangePasswordWithToken(ResetPasswordVM request);
     }
 
     public class UserAPI : IUserAPI
@@ -67,6 +69,24 @@ namespace FindJobSolution.APItotwoweb.API
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var response = await client.PostAsync($"/api/User/change-password", httpContent);
+
+            var code = response.IsSuccessStatusCode;
+            if (code == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> ChangePasswordWithToken(ResetPasswordVM request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.PostAsync($"/api/User/ResetPassword", httpContent);
 
             var code = response.IsSuccessStatusCode;
             if (code == false)

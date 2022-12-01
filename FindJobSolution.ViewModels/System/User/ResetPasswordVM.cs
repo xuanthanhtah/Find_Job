@@ -10,6 +10,12 @@ namespace FindJobSolution.ViewModels.System.User
 {
     public class ResetPasswordVM
     {
+        [Display(Name = "Token")]
+        public string Token { get; set; }
+
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
         [Display(Name = "Mật khẩu mới")]
         public string NewPassword { get; set; }
 
