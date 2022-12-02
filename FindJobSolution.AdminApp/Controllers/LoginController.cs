@@ -38,11 +38,11 @@ namespace FindJobSolution.AdminApp.Controllers
             }
 
             var token = await _userAPI.Authencate(request);
-            //if (token == null)
-            //{
-            //    ModelState.AddModelError("", token);
-            //    return View();
-            //}
+            if (token == null)
+            {
+                ModelState.AddModelError("", token);
+                return View();
+            }
             var userPrincipal = this.ValidateToken(token);
 
             IEnumerable<Claim> claims = userPrincipal.Claims;
