@@ -13,6 +13,7 @@ using FindJobSolution.APItotwoweb.API;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Catalog.JobSeekerOldCompany;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FindJobSolution.WebApp.Controllers
 {
@@ -25,8 +26,9 @@ namespace FindJobSolution.WebApp.Controllers
         private readonly IApplyJobAPI _applyJobAPI;
         private readonly ISaveJobAPI _saveJobAPI;
         private readonly IJobSeekerOldCompanyAPI _jobSeekerOldCompanyAPI;
+        private readonly IJobAPI _jobAPI;
 
-        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobSeekerOldCompanyAPI jobSeekerOldCompanyAPI)
+        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobSeekerOldCompanyAPI jobSeekerOldCompanyAPI, IJobAPI jobAPI)
         {
             _userAPI = userAPI;
             _configuration = configuration;
@@ -35,6 +37,7 @@ namespace FindJobSolution.WebApp.Controllers
             _applyJobAPI = applyJobAPI;
             _saveJobAPI = saveJobAPI;
             _jobSeekerOldCompanyAPI = jobSeekerOldCompanyAPI;
+            _jobAPI = jobAPI;
         }
 
         [HttpGet]
@@ -161,6 +164,12 @@ namespace FindJobSolution.WebApp.Controllers
         {
             //if (!User.Identity.IsAuthenticated)
             //    return RedirectToAction("index", "Home");
+            var jobName = await _jobAPI.GetAll();
+            ViewBag.JobName = jobName.Select(x => new SelectListItem()
+            {
+                Text = x.JobName,
+                Value = x.JobId.ToString()
+            }).ToList();
 
             var result = await _jobSeekerAPI.GetById(id);
             if (result != null)
