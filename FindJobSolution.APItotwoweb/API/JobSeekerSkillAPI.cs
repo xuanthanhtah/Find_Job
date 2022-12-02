@@ -1,6 +1,8 @@
 ﻿using FindJobSolution.ViewModels.Catalog.JobSeekerSkill;
+using FindJobSolution.ViewModels.Catalog.Skills;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,14 +34,30 @@ namespace FindJobSolution.APItotwoweb.API
             throw new NotImplementedException();
         }
 
-        public Task<bool> Edit(JobSeekerSkillUpdateRequest request)
+        public async Task<bool> Edit(JobSeekerSkillUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync($"/api/JobSeekerSkill/Update/{request.SkillId}", httpContent);
+            var result = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<bool>(result);
+            return JsonConvert.DeserializeObject<bool>(result);
         }
 
-        public Task<JobSeekerSkillViewModel> GetById(int jobseekerid, int skillid)
+        public async Task<JobSeekerSkillViewModel> GetById(int jobseekerid, int skillid)
         {
-            throw new NotImplementedException();
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/skill/Jobseekerid={jobseekerid}/SkillId={skillid}");
+            var body = await response.Content.ReadAsStringAsync();
+            var user = JsonConvert.DeserializeObject<JobSeekerSkillViewModel>(body);
+            return user;
         }
     }
 }

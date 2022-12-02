@@ -21,7 +21,7 @@ namespace FindJobSolution.API.Controllers
         [HttpGet("Jobseekerid={JobSeekerId}/SkillId={SkillId}")]
         public async Task<IActionResult> GetById(int JobSeekerId, int SkillId)
         {
-            var jobSeekerSkill = await _jobSeekerSkillService.GetbyId(JobSeekerId, SkillId);
+            var jobSeekerSkill = await _jobSeekerSkillService.GetbyId(JobSeekerId,SkillId);
             if (jobSeekerSkill == null)
                 return BadRequest("Cannot find JobSeekerSkill");
             return Ok(jobSeekerSkill);

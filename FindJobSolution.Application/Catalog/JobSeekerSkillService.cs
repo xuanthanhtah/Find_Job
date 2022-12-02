@@ -41,8 +41,8 @@ namespace FindJobSolution.Application.Catalog
 
         public async Task<JobSeekerSkillViewModel> GetbyId(int JobSeekerId, int SkillId)
         {
-            var JobSeekerSkill = await _context.JobSeekerSkills.FindAsync(SkillId, JobSeekerId);
-            if (JobSeekerSkill == null) { throw new FindJobException($"cannot find a SaveJob: {JobSeekerId}, {SkillId}"); }
+            var JobSeekerSkill = await _context.JobSeekerSkills.FindAsync(SkillId,JobSeekerId);
+            if (JobSeekerSkill == null) { throw new FindJobException($"cannot find a jobseeker skill: {JobSeekerId},{SkillId}"); }
 
             var JobSeekerSkillItem = new JobSeekerSkillViewModel()
             {
@@ -56,11 +56,18 @@ namespace FindJobSolution.Application.Catalog
         {
             var jobSeekerSkill = await _context.JobSeekerSkills.FirstOrDefaultAsync(p => p.JobSeekerId == id);
 
+            _context.JobSeekerSkills.Remove(jobSeekerSkill);
+
             if (jobSeekerSkill == null) { throw new FindJobException($"cannot find a jobseeker skill: {jobSeekerSkill}"); }
 
-            jobSeekerSkill.JobSeekerId = request.JobSeekerId;
-            jobSeekerSkill.SkillId = request.SkillId;
+            var jsskill = new JobSeekerSkill()
+            {
+                JobSeekerId = id,
+                SkillId = request.SkillId,
+                Experience = request.Experience,
+            };
 
+            _context.JobSeekerSkills.Add(jsskill);
             await _context.SaveChangesAsync();
             return true;
         }

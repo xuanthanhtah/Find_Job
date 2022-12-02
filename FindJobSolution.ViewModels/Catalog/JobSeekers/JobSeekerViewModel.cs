@@ -21,6 +21,7 @@
         public string JobTitle { get; set; }
         public string WorkExperience { get; set; }
 
+        public int SkillId { get; set; }
         public string Skillname { get; set; }
         public string SkillExperience { get; set; }
     }

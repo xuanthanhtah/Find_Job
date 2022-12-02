@@ -220,8 +220,9 @@ namespace FindJobSolution.Application.Catalog
                     WorkingTime = jobSeekerOldCompany.WorkingTime,
                     JobTitle = jobSeekerOldCompany.JobTitle,
 
+                    SkillId = jsskill.SkillId,
                     Skillname = skill.Name,
-                    SkillExperience = skill.Experience,
+                    SkillExperience = jsskill.Experience,
                 };
                 return jobItem1;
             }
@@ -249,8 +250,9 @@ namespace FindJobSolution.Application.Catalog
                 WorkingTime = jobSeekerOldCompany.WorkingTime,
                 JobTitle = jobSeekerOldCompany.JobTitle,
 
+                SkillId = jsskill.SkillId,
                 Skillname = skill.Name,
-                SkillExperience = skill.Experience,
+                SkillExperience = jsskill.Experience,
             };
             return jobItem;
         }
@@ -298,8 +300,9 @@ namespace FindJobSolution.Application.Catalog
                     WorkingTime = jobSeekerOldCompany.WorkingTime,
                     JobTitle = jobSeekerOldCompany.JobTitle,
 
+                    SkillId = jsskill.SkillId,
                     Skillname = skill.Name,
-                    SkillExperience = skill.Experience,
+                    SkillExperience = jsskill.Experience,
                 };
                 return jobItem1;
             }
@@ -327,8 +330,9 @@ namespace FindJobSolution.Application.Catalog
                 WorkingTime = jobSeekerOldCompany.WorkingTime,
                 JobTitle = jobSeekerOldCompany.JobTitle,
 
+                SkillId = jsskill.SkillId,
                 Skillname = skill.Name,
-                SkillExperience = skill.Experience,
+                SkillExperience = jsskill.Experience,
             };
             return jobItem;
         }

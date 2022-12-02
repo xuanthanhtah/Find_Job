@@ -262,7 +262,7 @@
                                         </div>
                                     </div>                                   
                                     <div class="row" style="margin-left:1px">
-                                        <a href="@Url.Action("UserSkillEdit", "UserJobSeeker")" class="btn btn-primary">Chỉnh sửa</a>
+                                        <a href="@Url.Action("UserSkillEdit", "UserJobSeeker" , new {id = Model.jobseekerId, skillid = Model.SkillId})" class="btn btn-primary">Chỉnh sửa</a>
                                     </div>
                                 </div>
                             </div>

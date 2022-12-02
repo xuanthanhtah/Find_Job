@@ -13,6 +13,7 @@ using FindJobSolution.APItotwoweb.API;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Catalog.JobSeekerOldCompany;
+using FindJobSolution.ViewModels.Catalog.JobSeekerSkill;
 
 namespace FindJobSolution.WebApp.Controllers
 {
@@ -239,21 +240,19 @@ namespace FindJobSolution.WebApp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UserSkillEdit(int id)
+        public async Task<IActionResult> UserSkillEdit(int id, int skillid)
         {
             //if (!User.Identity.IsAuthenticated)
             //    return RedirectToAction("index", "Home");          
-            var result = await _jobSeekerOldCompanyAPI.GetById(id);
+            var result = await _jobSeekerSkillAPI.GetById(id, skillid);
 
             if (result != null)
             {
                 var user = result;
-                var updateRequest = new JobSeekerOldCompanyUpdateRequest()
+                var updateRequest = new JobSeekerSkillUpdateRequest()
                 {
-                    CompanyName = user.CompanyName,
-                    JobTitle = user.JobTitle,
-                    WorkExperience = user.WorkExperience,
-                    WorkingTime = user.WorkingTime,
+                    Experience = user.Experience,
+                    SkillId = user.SkillId,
                 };
                 return View(updateRequest);
             }
@@ -262,12 +261,12 @@ namespace FindJobSolution.WebApp.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> UserSkillEdit(int id, [FromForm] JobSeekerOldCompanyUpdateRequest request)
+        public async Task<IActionResult> UserSkillEdit(int id, [FromForm] JobSeekerSkillUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var data = await _jobSeekerOldCompanyAPI.Edit(id, request);
+            var data = await _jobSeekerSkillAPI.Edit(request);
             if (data)
             {
                 TempData["result"] = "Cập nhật người dùng thành công";
@@ -277,6 +276,7 @@ namespace FindJobSolution.WebApp.Controllers
             ModelState.AddModelError("", data.ToString());
             return View(request);
         }
+
 
         [HttpGet]
 

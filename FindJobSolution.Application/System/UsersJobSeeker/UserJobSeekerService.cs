@@ -122,6 +122,7 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             {
                 JobSeekerId = JobSeeker.JobSeekerId,
                 SkillId = 1,
+                Experience = "0",
             };
 
             await _context.AddAsync(JobSeekerSkill);

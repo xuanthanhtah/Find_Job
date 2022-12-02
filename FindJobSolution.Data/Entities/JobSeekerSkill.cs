@@ -12,5 +12,7 @@ namespace FindJobSolution.Data.Entities
         public Skill Skill { get; set; }
         public int JobSeekerId { get; set; }
         public JobSeeker JobSeeker { get; set; }
+
+        public string Experience { get; set; }
     }
 }

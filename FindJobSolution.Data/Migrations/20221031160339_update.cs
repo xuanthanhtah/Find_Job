@@ -70,7 +70,6 @@ namespace FindJobSolution.Data.Migrations
                     SkillId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Experience = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -265,7 +264,8 @@ namespace FindJobSolution.Data.Migrations
                 columns: table => new
                 {
                     SkillId = table.Column<int>(type: "int", nullable: false),
-                    JobSeekerId = table.Column<int>(type: "int", nullable: false)
+                    JobSeekerId = table.Column<int>(type: "int", nullable: false),
+                    Experience = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {

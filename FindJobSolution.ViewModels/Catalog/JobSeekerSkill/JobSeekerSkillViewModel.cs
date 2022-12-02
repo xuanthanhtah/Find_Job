@@ -10,5 +10,7 @@ namespace FindJobSolution.ViewModels.Catalog.JobSeekerSkill
     {
         public int JobSeekerId { get; set; }
         public int SkillId { get; set; }
+
+        public string Experience { get; set; }
     }
 }
