@@ -98,6 +98,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPost("change-password")]
+        [AllowAnonymous]
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel request)
         {
             if (!ModelState.IsValid)
@@ -112,6 +113,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPost("reset-password-token/{userName}")]
+        [AllowAnonymous]
         public async Task<IActionResult> ResetPasswordToken(string userName)
         {
             if (!ModelState.IsValid)
@@ -126,6 +128,7 @@ namespace FindJobSolution.API.Controllers
         }
 
         [HttpPost("reset-password")]
+        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordModel request)
         {
             if (!ModelState.IsValid)

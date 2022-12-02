@@ -63,7 +63,7 @@
                                                     <span class="contact-info-edit">Email</span>
                                                     <div>
                                                         <div style="position:relative">
-                                                            <input asp-for="Email" class="form-control" />
+                                                            <input asp-for="Email" class="form-control" readonly/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -133,9 +133,10 @@
                                                 <div>
                                                     <span class="contact-info-edit">Ngành nghề</span>
                                                     <div>
-                                                        <div style="position:relative">
-                                                            @*<div>@Html.DropDownList("MaNganhNghe", new SelectList(Model.ListNganhNghe, "Id", "TenNganhNghe"), htmlAttributes: new { @class = "form-control" })</div>*@
-                                                        </div>
+                                                            <select asp-for="jobId" asp-items="@ViewBag.JobName">
+                                                                <option>--Chọn công việc--</option>
+                                                            </select>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
