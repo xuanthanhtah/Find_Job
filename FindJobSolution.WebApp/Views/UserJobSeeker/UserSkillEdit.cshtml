@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "UserSkillEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="Block_Block__1rMJ_">
+    <div class="ContactInformation_contactInformationComponent__2Rwzr">
+        <h2 class="ContactInformation_blockTitle__VfSNg">Kỹ năng cá nhân</h2>
+        <div>
+            <div class="ContactInfoView_viewSectionWrapper__2SQdc">
+                <div class="native-grid">
+                    <div class="roww">
+                        <div class="col-lg-66">
+                            <div class="undefied roww">
+                                <span class="undefied col-44" style="grid-column: span 5">Tên kỹ năng</span>
+                                <div class="col-88 text-truncate fw-6">@Model.Skillname</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="roww">
+                        <div class="col-lg-66">
+                            <div class="roww">
+                                <div class="col-44" style="grid-column: span 6">
+                                    <span>kinh nghiệm</span>
+                                </div>
+                                <div class="col-88">
+                                    <span class="fw-6">@Model.SkillExperience</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-left:1px">
+                        <form asp-action="UserSkillEdit">
+                            <input type="submit" value="Lưu" class="btn btn-primary" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

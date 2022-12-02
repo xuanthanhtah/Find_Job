@@ -12,7 +12,6 @@ namespace FindJobSolution.ViewModels.Catalog.Skills
         public SkillCreateRequestValidator()
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
-            RuleFor(x => x.Experience).NotEmpty().WithMessage("Experience is required");
         }
     }
 }

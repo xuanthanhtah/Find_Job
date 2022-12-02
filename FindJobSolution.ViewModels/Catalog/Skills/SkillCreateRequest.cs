@@ -9,6 +9,5 @@ namespace FindJobSolution.ViewModels.Catalog.Skills
     public class SkillCreateRequest
     {
         public string Name { get; set; }
-        public string Experience { get; set; }
     }
 }

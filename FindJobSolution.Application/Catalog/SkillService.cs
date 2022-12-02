@@ -36,7 +36,6 @@ namespace FindJobSolution.Application.Catalog
             var Skill = new Skill()
             {
                 Name = request.Name,
-                Experience = request.Experience,
             };
             _context.Skills.Add(Skill);
             await _context.SaveChangesAsync();
@@ -60,8 +59,8 @@ namespace FindJobSolution.Application.Catalog
             return await query
                .Select(p => new SkillViewModel()
                {
+                   Id = p.j.SkillId,
                    Name = p.j.Name,
-                   Experience = p.j.Experience,
                }).ToListAsync();
         }
 
@@ -84,7 +83,6 @@ namespace FindJobSolution.Application.Catalog
                 {
                     Id = p.j.SkillId,
                     Name = p.j.Name,
-                    Experience = p.j.Experience
                 }).ToListAsync();
 
             // in ra
@@ -105,8 +103,8 @@ namespace FindJobSolution.Application.Catalog
             if (skill == null) { throw new FindJobException($"cannot find a skill: {SkillId}"); }
             var skillItem = new SkillViewModel()
             {
+                Id = skill.SkillId,
                 Name = skill.Name,
-                Experience = skill.Experience,
             };
             return skillItem;
         }
@@ -118,7 +116,6 @@ namespace FindJobSolution.Application.Catalog
             if (skill == null) { throw new FindJobException($"cannot find a skill: {request.Id}"); }
 
             skill.Name = request.Name;
-            skill.Experience = request.Experience;
 
             await _context.SaveChangesAsync();
             return true;

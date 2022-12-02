@@ -15,5 +15,14 @@
         public string Avatar { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+
+        public string CompanyName { get; set; }
+        public string WorkingTime { get; set; }
+        public string JobTitle { get; set; }
+        public string WorkExperience { get; set; }
+
+        public int SkillId { get; set; }
+        public string Skillname { get; set; }
+        public string SkillExperience { get; set; }
     }
 }

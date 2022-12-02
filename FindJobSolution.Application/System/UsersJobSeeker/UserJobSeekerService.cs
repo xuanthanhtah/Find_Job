@@ -92,6 +92,42 @@ namespace FindJobSolution.Application.System.UsersJobSeeker
             await _context.AddAsync(JobSeeker);
             await _context.SaveChangesAsync();
 
+            var OldCompany = new JobSeekerOldCompany()
+            {
+                JobSeekerId = JobSeeker.JobSeekerId,
+                CompanyName = "",
+                JobTitle = "",
+                WorkExperience = "",
+                WorkingTime = "" ,
+            };
+
+            await _context.AddAsync(OldCompany);
+            await _context.SaveChangesAsync();
+
+            var Avatar = new Avatar()
+            {
+                Caption = "logo",
+                FilePath = "~/assets/img/logo/user-logo.png",
+                FileSize = 1146,
+                Timespan = DateTime.Now,
+                JobSeekerId = JobSeeker.JobSeekerId,
+                IsDefault = true,
+                SortOrder = 1
+            };
+
+            await _context.AddAsync(Avatar);
+            await _context.SaveChangesAsync();
+
+            var JobSeekerSkill = new JobSeekerSkill()
+            {
+                JobSeekerId = JobSeeker.JobSeekerId,
+                SkillId = 1,
+                Experience = "0",
+            };
+
+            await _context.AddAsync(JobSeekerSkill);
+            await _context.SaveChangesAsync();
+
             if (result.Succeeded)
             {
                 await _userManager.AddToRoleAsync(user, "JobSeeker");

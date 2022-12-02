@@ -108,6 +108,7 @@ namespace FindJobSolution.Application.Catalog
             var query = from j in _context.JobInformations
                         join j1 in _context.Recruiters on j.RecruiterId equals j1.RecruiterId
                         join j2 in _context.Jobs on j.JobId equals j2.JobId
+                        join j3 in _context.RecruiterImages on j1.RecruiterId equals j3.RecruiterId
                         where j.Status == Data.Enums.Status.Active
                         select new
                         {
@@ -123,6 +124,7 @@ namespace FindJobSolution.Application.Catalog
                             Status = j.Status,
                             JobId = j.JobId,
                             RecruiterId = j.RecruiterId,
+                            Avatar = j3.FilePath,
 
                             CompanyName = j1.CompanyName,
                             JobInformationTimeEnd = j.JobInformationTimeEnd,
@@ -162,10 +164,12 @@ namespace FindJobSolution.Application.Catalog
                     Status = p.Status,
                     JobId = p.JobId,
                     RecruiterId = p.RecruiterId,
+                    Avatar = p.Avatar,
 
                     CompanyName = p.CompanyName,
                     JobInformationTimeEnd = p.JobInformationTimeEnd,
-                    JobInformationTimeStart = p.JobInformationTimeStart
+                    JobInformationTimeStart = p.JobInformationTimeStart,
+
                 }).ToListAsync();
 
             // in ra
@@ -185,6 +189,10 @@ namespace FindJobSolution.Application.Catalog
             var jobInformation = await _context.JobInformations.FindAsync(JobInformationId);
             if (jobInformation == null) { throw new FindJobException($"cannot find a jobInformation: {JobInformationId}"); }
 
+            var recuiter = await _context.Recruiters.FirstOrDefaultAsync(p => p.RecruiterId == jobInformation.RecruiterId);
+            var user = await _context.Users.FirstOrDefaultAsync(p => p.Id == recuiter.UserId);
+            var image = await _context.RecruiterImages.FirstOrDefaultAsync(p => p.RecruiterId == recuiter.RecruiterId);
+
             var JobInformationItem = new JobInformationViewModel()
             {
                 JobTitle = jobInformation.JobTitle,
@@ -201,6 +209,12 @@ namespace FindJobSolution.Application.Catalog
                 JobInformationTimeEnd = jobInformation.JobInformationTimeEnd,
                 JobInformationTimeStart = jobInformation.JobInformationTimeStart,
                 JobInformationId = jobInformation.JobInformationId,
+
+                CompanyName = recuiter.CompanyName,
+                email = user.Email,
+                SDT = user.PhoneNumber,
+
+                Avatar = image.FilePath,
             };
             return JobInformationItem;
         }

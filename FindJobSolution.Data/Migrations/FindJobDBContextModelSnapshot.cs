@@ -94,21 +94,21 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "e020c450-fb51-4324-bae8-581b9a4a0325",
+                            ConcurrencyStamp = "4a4a9375-c7b6-43e8-aa7f-9a549cb0e769",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
                             Id = new Guid("728d69ec-5ff4-4688-9107-d8906b264f79"),
-                            ConcurrencyStamp = "137845b2-0796-4874-a923-ea8675c8bba2",
+                            ConcurrencyStamp = "c1385e93-e119-4b63-9c5a-93b5081684a3",
                             Name = "JobSeeker",
                             NormalizedName = "JobSeeker"
                         },
                         new
                         {
                             Id = new Guid("f91c93e9-5527-4162-b7c5-dd3cba713a49"),
-                            ConcurrencyStamp = "7c538477-22f5-4721-af57-8025c208e2d4",
+                            ConcurrencyStamp = "f67f18cf-a4a8-43da-8052-23d8b3be21fa",
                             Name = "Recuiter",
                             NormalizedName = "Recuiter"
                         });
@@ -382,6 +382,37 @@ namespace FindJobSolution.Data.Migrations
                     b.ToTable("JobSeekerSkills", (string)null);
                 });
 
+            modelBuilder.Entity("FindJobSolution.Data.Entities.Message", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("text")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<Guid>("userId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("userName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("userId");
+
+                    b.ToTable("Messages", (string)null);
+                });
+
             modelBuilder.Entity("FindJobSolution.Data.Entities.Recruiter", b =>
                 {
                     b.Property<int>("RecruiterId")
@@ -552,13 +583,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2b632092-d7de-4167-88ea-e0a0964a0061",
+                            ConcurrencyStamp = "b1ec94f3-6866-4c56-a846-81f9429062c3",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN7SJHOBrtpt9G0myzD3GDNwpVj1lSWpLHD9dQ2YvR5xCsdqkL73WDsOnsHIJCNjYw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFV/ZF707uTsv/V4Vpc/vNg1Xstp5drUoqe1YFHC/NKBUfRosCz/Ln1TZDX6c/psHA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
@@ -779,6 +810,17 @@ namespace FindJobSolution.Data.Migrations
                     b.Navigation("Skill");
                 });
 
+            modelBuilder.Entity("FindJobSolution.Data.Entities.Message", b =>
+                {
+                    b.HasOne("FindJobSolution.Data.Entities.User", "User")
+                        .WithMany("messages")
+                        .HasForeignKey("userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("FindJobSolution.Data.Entities.Recruiter", b =>
                 {
                     b.HasOne("FindJobSolution.Data.Entities.User", "Users")
@@ -869,6 +911,8 @@ namespace FindJobSolution.Data.Migrations
 
                     b.Navigation("Recruiter")
                         .IsRequired();
+
+                    b.Navigation("messages");
                 });
 #pragma warning restore 612, 618
         }

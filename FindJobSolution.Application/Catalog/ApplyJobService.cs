@@ -37,6 +37,12 @@ namespace FindJobSolution.Application.Catalog
             var getid = await _context.Users.FirstOrDefaultAsync(p => p.UserName == request.UserIdentityName);
             var getjsid = await _context.JobSeekers.FirstOrDefaultAsync(p => p.UserId == getid.Id);
 
+            var available = await _context.SaveJobs.FirstOrDefaultAsync(p => p.JobSeekerId == getjsid.JobSeekerId && p.JobInformationId == id);
+            if (available != null)
+            {
+                return 0;
+            }
+
             var ApplyJob = new ApplyJob()
             {
                 JobInformationId = id,
@@ -91,7 +97,7 @@ namespace FindJobSolution.Application.Catalog
                    MaxSalary = p.k.MaxSalary,
 
                    CompanyName = p.j2.CompanyName,
-                   FilePath = p.j3.FilePath,
+                   Avatar = p.j3.FilePath,
                }
                ).ToListAsync();
 
@@ -109,7 +115,7 @@ namespace FindJobSolution.Application.Catalog
                    MaxSalary = p.q.MaxSalary,
 
                    CompanyName = p.i2.CompanyName,
-                   FilePath = p.i3.FilePath,
+                   Avatar = p.i3.FilePath,
                }
                ).ToListAsync();
 

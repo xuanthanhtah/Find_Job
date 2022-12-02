@@ -12,6 +12,8 @@ using System.Text;
 using FindJobSolution.APItotwoweb.API;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
+using FindJobSolution.ViewModels.Catalog.JobSeekerOldCompany;
+using FindJobSolution.ViewModels.Catalog.JobSeekerSkill;
 
 namespace FindJobSolution.WebApp.Controllers
 {
@@ -23,8 +25,10 @@ namespace FindJobSolution.WebApp.Controllers
         private readonly IJobSeekerAPI _jobSeekerAPI;
         private readonly IApplyJobAPI _applyJobAPI;
         private readonly ISaveJobAPI _saveJobAPI;
+        private readonly IJobSeekerOldCompanyAPI _jobSeekerOldCompanyAPI;
+        private readonly IJobSeekerSkillAPI _jobSeekerSkillAPI;
 
-        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI)
+        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobSeekerOldCompanyAPI jobSeekerOldCompanyAPI)
         {
             _userAPI = userAPI;
             _configuration = configuration;
@@ -32,6 +36,7 @@ namespace FindJobSolution.WebApp.Controllers
             _jobSeekerAPI = jobSeekerAPI;
             _applyJobAPI = applyJobAPI;
             _saveJobAPI = saveJobAPI;
+            _jobSeekerOldCompanyAPI = jobSeekerOldCompanyAPI;
         }
 
         [HttpGet]
@@ -133,6 +138,9 @@ namespace FindJobSolution.WebApp.Controllers
 
         public async Task<IActionResult> UserProfile()
         {
+            if(User.Identity.Name == null)
+                return RedirectToAction("index", "Home");
+
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             var jobseerker = await _jobSeekerAPI.GetByUserId(userId);
@@ -184,12 +192,93 @@ namespace FindJobSolution.WebApp.Controllers
             if (data)
             {
                 TempData["result"] = "Cập nhật người dùng thành công";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("UserProfile", "Home");
             }
 
             ModelState.AddModelError("", data.ToString());
             return View(request);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> UserOldCompanyEdit(int id)
+        {
+            //if (!User.Identity.IsAuthenticated)
+            //    return RedirectToAction("index", "Home");          
+            var result = await _jobSeekerOldCompanyAPI.GetById(id);
+
+            if (result != null)
+            {
+                var user = result;
+                var updateRequest = new JobSeekerOldCompanyUpdateRequest()
+                {
+                    CompanyName = user.CompanyName,
+                    JobTitle = user.JobTitle,
+                    WorkExperience = user.WorkExperience,
+                    WorkingTime = user.WorkingTime,
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UserOldCompanyEdit(int id, [FromForm] JobSeekerOldCompanyUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var data = await _jobSeekerOldCompanyAPI.Edit(id, request);
+            if (data)
+            {
+                TempData["result"] = "Cập nhật người dùng thành công";
+                return RedirectToAction("UserProfile", "Home");
+            }
+
+            ModelState.AddModelError("", data.ToString());
+            return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserSkillEdit(int id, int skillid)
+        {
+            //if (!User.Identity.IsAuthenticated)
+            //    return RedirectToAction("index", "Home");          
+            var result = await _jobSeekerSkillAPI.GetById(id, skillid);
+
+            if (result != null)
+            {
+                var user = result;
+                var updateRequest = new JobSeekerSkillUpdateRequest()
+                {
+                    Experience = user.Experience,
+                    SkillId = user.SkillId,
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UserSkillEdit(int id, [FromForm] JobSeekerSkillUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var data = await _jobSeekerSkillAPI.Edit(request);
+            if (data)
+            {
+                TempData["result"] = "Cập nhật người dùng thành công";
+                return RedirectToAction("UserProfile", "Home");
+            }
+
+            ModelState.AddModelError("", data.ToString());
+            return View(request);
+        }
+
+
+        [HttpGet]
 
         public async Task<IActionResult> UserJob()
         {
