@@ -55,5 +55,7 @@ namespace FindJobSolution.ViewModels.Catalog.JobInformations
 
         public string SDT { get; set; }
         public string email { get; set; }
+
+        public string Avatar { get; set; }
     }
 }

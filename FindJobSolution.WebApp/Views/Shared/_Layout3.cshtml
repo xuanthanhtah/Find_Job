@@ -28,21 +28,31 @@
     <link rel="stylesheet" href="~/assets/css/slick.css">
     <link rel="stylesheet" href="~/assets/css/nice-select.css">
     <link rel="stylesheet" href="~/assets/css/style.css">
+
+    <title>Sidebar 04</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/sidebar/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
 </head>
 <body style="overflow-x: hidden">
     <!-- Preloader Start -->
     @*<div id="preloader-active">
-        <div class="preloader d-flex align-items-center justify-content-center">
-            <div class="preloader-inner position-relative">
-                <div class="preloader-circle"></div>
-                <div class="preloader-img pere-text">
-                    <img src="~/assets/img/logo/logo2.png" alt="">
-                </div>
-            </div>
-        </div>
+    <div class="preloader d-flex align-items-center justify-content-center">
+    <div class="preloader-inner position-relative">
+    <div class="preloader-circle"></div>
+    <div class="preloader-img pere-text">
+    <img src="~/assets/img/logo/logo2.png" alt="">
+    </div>
+    </div>
+    </div>
     </div>*@
     <!-- Preloader Start -->
-        <header>
+    <header>
         <!-- Header Start -->
         <div class="header-area header-transparrent">
             <div class="headder-top header-sticky" style="background-color:#010b1d">
@@ -51,7 +61,7 @@
                         <div class="col-lg-3 col-md-2">
                             <!-- Logo -->
                             <div class="logo">
-                                <a  href="~/Home/IndexRecuiter" ><img style="width: 200px" src="~/assets/img/logo/Logo_TicketToFuture2.png" alt=""></a>
+                                <a href="~/Home/IndexRecuiter"><img style="width: 200px" src="~/assets/img/logo/Logo_TicketToFuture2.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-lg-9 col-md-9" style="flex:0 0 50%; max-width: 75%">
@@ -64,11 +74,10 @@
                                             <li><a style="color: white;" asp-action="create" asp-controller="JobInformation">Đăng công việc</a></li>
                                             <li><a style="color: white;" asp-action="index" asp-controller="JobInformation">Công việc</a></li>
                                             <li><a style="color: white;" asp-action="Index" asp-controller="UserRecuiter">Quản lý tài khoản</a></li>
-                                            <li><a style="color: white;" href="~/Pages/Index">Cộng đồng</a></li>
                                         </ul>
                                     </nav>
                                 </div>
-                                
+
                                 <!-- Header-btn -->
                             </div>
                         </div>
@@ -79,15 +88,15 @@
                                 </button>
                             </div>
                         </div>
-                        </div>                 
                     </div>
-                    
                 </div>
+
             </div>
+        </div>
         <!-- Header End -->
     </header>
     <div class="wrapper d-flex align-items-stretch">
-        <nav id="sidebar" class="order-last img active" style="background-image: url(../sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem">
+        <nav id="sidebar" class="order-last img active" style="background-image: url(~/sidebar/images/bg_1.jpg); max-height:850px; overflow: hidden ;position:sticky; top:0rem">
             <div class="custom-menu">
             </div>
             @if (User.Identity.IsAuthenticated && role)
@@ -121,8 +130,8 @@
             }
         </nav>
         @RenderBody()
-        </div>
-    
+    </div>
+
     <footer>
         <!-- Footer Start-->
         <div class="footer-area footer-bg footer-padding">
@@ -297,10 +306,17 @@
     <script src="~/assets/js/plugins.js"></script>
     <script src="~/assets/js/main.js"></script>
 
-    <script src="js/jquery.min.js"></script>
+    @*<script src="js/jquery.min.js"></script>
     <script src="js/popper.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/main.js"></script>*@
+
+    <script src="~/sidebar/js/jquery.min.js"></script>
+    <script src="~/sidebar/js/popper.js"></script>
+    <script src="~/sidebar/js/bootstrap.min.js"></script>
+    <script src="~/sidebar/js/main.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

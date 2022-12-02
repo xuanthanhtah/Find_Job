@@ -64,8 +64,7 @@ namespace FindJobSolution.WebApp.Controllers
             var token = await _userAPI.Authencate(request);
             if (token == null)
             {
-                ModelState.AddModelError("", token);
-                return View();
+                return RedirectToAction("Login", "UserRecuiter");
             }
             var userPrincipal = this.ValidateToken(token);
 
@@ -192,6 +191,89 @@ namespace FindJobSolution.WebApp.Controllers
             };
             var data = await _recuiterAPI.GetAllPagingRecuiter(request);
             return View(data);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword(int id)
+        {
+            //if (!User.Identity.IsAuthenticated)
+            //    return RedirectToAction("index", "Home");
+
+            var userName = User.Identity.Name;
+
+            var result = await _recuiterAPI.GetById(id);
+            if (result != null)
+            {
+                var updateRequest = new ChangePasswordModel()
+                {
+                    UserName = userName,
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var data = await _userAPI.ChangePassword(request);
+            if (data)
+            {
+                TempData["result"] = "Cập nhật mật khẩu thành công";
+                return RedirectToAction("index", "UserRecuiter");
+            }
+
+            ModelState.AddModelError("", data.ToString());
+            return View(request);
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(SendMailModel request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _recuiterAPI.ForgotPassword(request.Email);
+            if (!result)
+            {
+                TempData["result"] = "Gửi mail không thành công";
+                return View();
+            }
+
+            return RedirectToAction("Login", "UserRecuiter");
+        }
+
+        [HttpGet]
+        public IActionResult ChangePasswordWithToken()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePasswordWithToken(ResetPasswordVM request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _userAPI.ChangePasswordWithToken(request);
+            if (!result)
+            {
+                TempData["result"] = "Đổi mật khẩu không thành công";
+                return View();
+            }
+
+            return RedirectToAction("Login", "UserRecuiter");
         }
     }
 }

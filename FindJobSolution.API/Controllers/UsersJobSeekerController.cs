@@ -27,7 +27,7 @@ namespace FindJobSolution.API.Controllers
             var resultToken = await _UserJobSeekerService.Authenticate(request);
             if (string.IsNullOrEmpty(resultToken))
             {
-                return BadRequest("Username or password is incorrect.");
+                return BadRequest(false);
             }
             return Ok(resultToken);
         }
