@@ -1,4 +1,7 @@
 ﻿using FindJobSolution.AdminApp.Models;
+using FindJobSolution.APItotwoweb.API;
+using FindJobSolution.ViewModels.Catalog.Jobs;
+using FindJobSolution.ViewModels.Catalog.Report;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -9,10 +12,12 @@ namespace FindJobSolution.AdminApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IReportAPI _reportAPI;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IReportAPI reportAPI)
         {
             _logger = logger;
+            _reportAPI = reportAPI;
         }
 
         public IActionResult Index()

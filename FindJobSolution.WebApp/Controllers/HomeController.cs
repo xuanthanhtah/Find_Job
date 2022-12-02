@@ -11,6 +11,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FindJobSolution.ViewModels.Catalog.Message;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using FindJobSolution.ViewModels.Catalog.Report;
 
 namespace FindJobSolution.WebApp.Controllers
 {
@@ -22,9 +23,10 @@ namespace FindJobSolution.WebApp.Controllers
         private readonly ISaveJobAPI _saveJobAPI;
         private readonly IApplyJobAPI _applyJobAPI;
         private readonly IJobAPI _jobAPI;
+        private readonly IReportAPI _reportAPI;
         //private readonly IMessageAPI _messageAPI;
 
-        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IJobInformationApi jobInformationApi, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobAPI jobAPI)
+        public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IJobInformationApi jobInformationApi, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobAPI jobAPI, IReportAPI reportAPI)
         {
             _logger = logger;
             _configuration = configuration;
@@ -32,6 +34,7 @@ namespace FindJobSolution.WebApp.Controllers
             _applyJobAPI = applyJobAPI;
             _saveJobAPI = saveJobAPI;
             _jobAPI = jobAPI;
+            _reportAPI = reportAPI;
             //_messageAPI = messageAPI;
         }
 
@@ -94,7 +97,7 @@ namespace FindJobSolution.WebApp.Controllers
         public async Task<IActionResult> SaveJob(int id)
         {
             var username = User.Identity.Name;
-            if(username == null)
+            if (username == null)
             {
                 return RedirectToAction("login", "UserJobSeeker");
             }
@@ -160,6 +163,28 @@ namespace FindJobSolution.WebApp.Controllers
                     id = id,
                 });
             }
+        }
+
+        [HttpGet]
+        public IActionResult Report()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Report(ReportCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _reportAPI.Create(request);
+            if (result)
+            {
+                TempData["result"] = "Phản hồi thành công";
+                return RedirectToAction("Report", "Home");
+            }
+            return View(request);
         }
     }
 }

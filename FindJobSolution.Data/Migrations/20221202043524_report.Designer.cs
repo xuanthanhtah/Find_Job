@@ -4,6 +4,7 @@ using FindJobSolution.Data.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FindJobSolution.Data.Migrations
 {
     [DbContext(typeof(FindJobDBContext))]
-    partial class FindJobDBContextModelSnapshot : ModelSnapshot
+    [Migration("20221202043524_report")]
+    partial class report
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,21 +96,21 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "72698436-a03a-4ad6-9ebe-ac98c0002f39",
+                            ConcurrencyStamp = "745c632e-06be-4880-8d81-887f89a8c5db",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
                             Id = new Guid("728d69ec-5ff4-4688-9107-d8906b264f79"),
-                            ConcurrencyStamp = "acecfeb8-b639-4660-aac7-b70aef1f073f",
+                            ConcurrencyStamp = "a407d56f-5032-4d2b-a4f4-9b571a0d4325",
                             Name = "JobSeeker",
                             NormalizedName = "JobSeeker"
                         },
                         new
                         {
                             Id = new Guid("f91c93e9-5527-4162-b7c5-dd3cba713a49"),
-                            ConcurrencyStamp = "b003ec6f-72fb-45ed-bd49-e5e7a65647ab",
+                            ConcurrencyStamp = "295e7c8f-4a00-4a3c-a70e-8da9c1f8970f",
                             Name = "Recuiter",
                             NormalizedName = "Recuiter"
                         });
@@ -576,13 +578,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "799d3db8-35fe-4a51-9467-dc50a9a2cb87",
+                            ConcurrencyStamp = "a59a4f53-4f86-464a-8e11-bdb75184363a",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG5xGHHrUxW1jmaznULbqxoKVJTRyjxV7BPkffh1i/MbeNf/EqT2QoDcsejb7w9GZA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECb/46YbJQDWfzQQnDM+DTo4EKLhP4q5aDLsNwdRLKlONNnva6f3ovMUAFteLikI2Q==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,
