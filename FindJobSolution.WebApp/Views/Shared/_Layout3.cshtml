@@ -74,6 +74,8 @@
                                             <li><a style="color: white;" asp-action="create" asp-controller="JobInformation">Đăng công việc</a></li>
                                             <li><a style="color: white;" asp-action="index" asp-controller="JobInformation">Công việc</a></li>
                                             <li><a style="color: white;" asp-action="Index" asp-controller="UserRecuiter">Quản lý tài khoản</a></li>
+                                            <li><a style="color: white;" href="~/Pages/Index">Cộng đồng</a></li>
+                                            
                                         </ul>
                                     </nav>
                                 </div>
@@ -106,6 +108,9 @@
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
                             <a href="@Url.Action("index", "UserRecuiter")"><span class="fa fa-user mr-3"></span>Quản lý tài khoản</a>
+                        </li>
+                        <li class="active">
+                            <a href="@Url.Action("report", "Home")"><span class="fa fa-user mr-3"></span>Phản hồi</a>
                         </li>
                         <li>
                             <form method="post" asp-controller="UserRecuiter" asp-action="Logout">

@@ -25,6 +25,7 @@ namespace FindJobSolution.APItotwoweb.API
         Task<bool> Register(RegisterRecuiterRequest request);
 
         Task<bool> Edit(int id, RecruiterUpdateRequest request);
+        Task<bool> ForgotPassword(string email);
     }
 
     public class RecuiterAPI : IRecuiterAPI
@@ -91,6 +92,24 @@ namespace FindJobSolution.APItotwoweb.API
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(result);
             return JsonConvert.DeserializeObject<bool>(result);
+        }
+
+        public async Task<bool> ForgotPassword(string email)
+        {
+            //tạo trang tạo tài khoản mới
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var json = JsonConvert.SerializeObject(email);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            //Hàm lấy api từ backend xử lý đăng ký tài khoản
+            var response = await client.PostAsync($"/api/User/ForgotPassword/recuiter/{email}", httpContent);
+            //trả về thành công 200 hay thất bại 400 > 500
+            if (response.IsSuccessStatusCode == true)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<PagedResult<RecruiterVM>> GetAllPagingRecuiter(GetRecuiterPagingRequest request)

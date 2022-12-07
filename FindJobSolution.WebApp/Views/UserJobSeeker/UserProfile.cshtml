@@ -151,7 +151,7 @@
                                                 <div class="roww">
                                                     <span class="undefied col-44">Ảnh đại diện</span>
                                                     <div class="col-88">
-                                                        <img src="http://localhost:2001/@Html.DisplayFor(model => model.Avatar)" alt="image" style="width: 150px" />
+                                                        <img src="http://127.0.0.1:2001/@Html.DisplayFor(model => model.Avatar)" alt="image" style="width: 150px" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,14 +163,15 @@
                                                 <div class="roww">
                                                     <span class="undefied col-44">CV</span>
                                                     <div class="col-88">
-                                                        <img src="http://localhost:2001/@Html.DisplayFor(model => model.ThumbnailCv)" alt="image" style="width: 200px"/>
+                                                        <a target="_blank" href="http://127.0.0.1:2001/@Html.DisplayFor(model => model.ThumbnailCv)" style="color: black;">Xem cv tại đây</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" style="margin-left:1px">
+                                    <div class="row" style="margin-right:10px;margin-left:10px; display: flex; justify-content: space-between;">
                                         <a href="@Url.Action("UserProfileEdit", "UserJobSeeker", new {id = Model.jobseekerId})" class="btn btn-primary">Chỉnh sửa</a>
+                                        <a href="@Url.Action("ChangePassword", "UserJobSeeker", new {id = Model.jobseekerId})" class="btn btn-primary">Đổi mật khẩu</a>
                                     </div>
                                 </div>
                             </div>
@@ -296,14 +297,17 @@
             </div>
             <div class="master_layout_col_3h2 master_layout_col_13">
                 <div class="vnwBox" style="display:block">
-                    <p class="title border-bottom">Việc làm bạn sẽ thích</p>
+                    <p class="title border-bottom">Phản hồi về chúng tôi</p>
                     <div class="roww" style="margin:0px;">
                         <div class="vnmBox1" style="display:block">
                             <div class="joblove">
                                 <div class="joblove-row">
                                     <div class="khung">
                                         <div class="logobox">
-                                            <img class="logo" src="~/assets/img/logo/logo.png">
+                                            <a href="~/Home/Report">
+                                                <img  class="logo" src="~/assets/img/logo/logo.png">
+                                                </a>
+                                            
                                         </div>
                                     </div>
                                     <div class="khung2">

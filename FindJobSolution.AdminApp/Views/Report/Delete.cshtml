@@ -1,0 +1,28 @@
+﻿@model FindJobSolution.ViewModels.Catalog.Report.ReportDeleteVM
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Xóa phản hồi từ người dùng</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Bạn có chắc muốn xóa phản hồi này?</li>
+    </ol>
+
+    <div class="card mb-4">
+        @*<div class="card-header">
+        <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo người dùng mới</a>
+        </div>*@
+        <div class="card-body">
+            <div class="table-responsive">
+
+                <form asp-action="Delete">
+                    <input type="submit" value="Xóa" class="btn btn-danger" /> |
+                    <a class="btn btn-success" asp-action="index" asp-controller="jobseeker">Trở lại danh sách</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

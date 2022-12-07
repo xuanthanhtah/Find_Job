@@ -94,21 +94,21 @@ namespace FindJobSolution.Data.Migrations
                         new
                         {
                             Id = new Guid("70e7a246-e168-45e9-b78c-6f66b23f4633"),
-                            ConcurrencyStamp = "d0a63e98-cd0c-438e-9d92-4ce7865f74f1",
+                            ConcurrencyStamp = "72698436-a03a-4ad6-9ebe-ac98c0002f39",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
                             Id = new Guid("728d69ec-5ff4-4688-9107-d8906b264f79"),
-                            ConcurrencyStamp = "55305ac1-4249-45c1-8a97-4321b51b880d",
+                            ConcurrencyStamp = "acecfeb8-b639-4660-aac7-b70aef1f073f",
                             Name = "JobSeeker",
                             NormalizedName = "JobSeeker"
                         },
                         new
                         {
                             Id = new Guid("f91c93e9-5527-4162-b7c5-dd3cba713a49"),
-                            ConcurrencyStamp = "de414e80-ad3a-45d0-8e32-081b43839269",
+                            ConcurrencyStamp = "b003ec6f-72fb-45ed-bd49-e5e7a65647ab",
                             Name = "Recuiter",
                             NormalizedName = "Recuiter"
                         });
@@ -451,6 +451,30 @@ namespace FindJobSolution.Data.Migrations
                     b.ToTable("RecruiterImages", (string)null);
                 });
 
+            modelBuilder.Entity("FindJobSolution.Data.Entities.Report", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Reports", (string)null);
+                });
+
             modelBuilder.Entity("FindJobSolution.Data.Entities.SaveJob", b =>
                 {
                     b.Property<int>("JobSeekerId")
@@ -552,13 +576,13 @@ namespace FindJobSolution.Data.Migrations
                         {
                             Id = new Guid("d1a052be-b2e2-4dbf-8778-da82a7bbcb98"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0399faaa-3e47-48a3-b3ba-beec46fb0d72",
+                            ConcurrencyStamp = "799d3db8-35fe-4a51-9467-dc50a9a2cb87",
                             Email = "thanh26092000@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "thanh26092000@gmail.com",
                             NormalizedUserName = "Lxthanh",
-                            PasswordHash = "AQAAAAEAACcQAAAAEM5cqoK3UZojB+prGkduLocwp3HQ2KCsClZEmsLOFYWlKsefOwUVXUd+RETzf+4f7w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG5xGHHrUxW1jmaznULbqxoKVJTRyjxV7BPkffh1i/MbeNf/EqT2QoDcsejb7w9GZA==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             TwoFactorEnabled = false,

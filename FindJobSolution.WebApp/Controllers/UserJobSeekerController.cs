@@ -13,6 +13,7 @@ using FindJobSolution.APItotwoweb.API;
 using FindJobSolution.ViewModels.Catalog.SaveJob;
 using FindJobSolution.ViewModels.Catalog.JobSeekers;
 using FindJobSolution.ViewModels.Catalog.JobSeekerOldCompany;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FindJobSolution.WebApp.Controllers
 {
@@ -25,8 +26,9 @@ namespace FindJobSolution.WebApp.Controllers
         private readonly IApplyJobAPI _applyJobAPI;
         private readonly ISaveJobAPI _saveJobAPI;
         private readonly IJobSeekerOldCompanyAPI _jobSeekerOldCompanyAPI;
+        private readonly IJobAPI _jobAPI;
 
-        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobSeekerOldCompanyAPI jobSeekerOldCompanyAPI)
+        public UserJobSeekerController(IUserAPI userAPI, IConfiguration configuration, IHttpContextAccessor httpContextAccessor, IJobSeekerAPI jobSeekerAPI, IApplyJobAPI applyJobAPI, ISaveJobAPI saveJobAPI, IJobSeekerOldCompanyAPI jobSeekerOldCompanyAPI, IJobAPI jobAPI)
         {
             _userAPI = userAPI;
             _configuration = configuration;
@@ -35,6 +37,7 @@ namespace FindJobSolution.WebApp.Controllers
             _applyJobAPI = applyJobAPI;
             _saveJobAPI = saveJobAPI;
             _jobSeekerOldCompanyAPI = jobSeekerOldCompanyAPI;
+            _jobAPI = jobAPI;
         }
 
         [HttpGet]
@@ -58,6 +61,10 @@ namespace FindJobSolution.WebApp.Controllers
             //    ModelState.AddModelError("", token);
             //    return View();
             //}
+            if (token == null)
+            {
+                return RedirectToAction("Login", "UserJobSeeker");
+            }
             var userPrincipal = this.ValidateToken(token);
 
             IEnumerable<Claim> claims = userPrincipal.Claims;
@@ -136,7 +143,7 @@ namespace FindJobSolution.WebApp.Controllers
 
         public async Task<IActionResult> UserProfile()
         {
-            if(User.Identity.Name == null)
+            if (User.Identity.Name == null)
                 return RedirectToAction("index", "Home");
 
             var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -147,7 +154,7 @@ namespace FindJobSolution.WebApp.Controllers
 
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("index", "Home");
-           
+
             var data = await _jobSeekerAPI.GetByUserId(userId);
             return View(data);
         }
@@ -157,6 +164,12 @@ namespace FindJobSolution.WebApp.Controllers
         {
             //if (!User.Identity.IsAuthenticated)
             //    return RedirectToAction("index", "Home");
+            var jobName = await _jobAPI.GetAll();
+            ViewBag.JobName = jobName.Select(x => new SelectListItem()
+            {
+                Text = x.JobName,
+                Value = x.JobId.ToString()
+            }).ToList();
 
             var result = await _jobSeekerAPI.GetById(id);
             if (result != null)
@@ -167,11 +180,11 @@ namespace FindJobSolution.WebApp.Controllers
                     DesiredSalary = user.DesiredSalary,
                     Dob = user.Dob,
                     Gender = user.Gender,
-                    Name = user.Name ,
-                    National = user.National ,
-                    
-                    Address = user.Address ,
-                    PhoneNumber = user.PhoneNumber ,
+                    Name = user.Name,
+                    National = user.National,
+
+                    Address = user.Address,
+                    PhoneNumber = user.PhoneNumber,
                     Email = user.Email,
                 };
                 return View(updateRequest);
@@ -201,7 +214,7 @@ namespace FindJobSolution.WebApp.Controllers
         public async Task<IActionResult> UserOldCompanyEdit(int id)
         {
             //if (!User.Identity.IsAuthenticated)
-            //    return RedirectToAction("index", "Home");          
+            //    return RedirectToAction("index", "Home");
             var result = await _jobSeekerOldCompanyAPI.GetById(id);
 
             if (result != null)
@@ -238,14 +251,12 @@ namespace FindJobSolution.WebApp.Controllers
         }
 
         [HttpGet]
-
         public async Task<IActionResult> UserJob()
         {
             var id = User.Identity.Name;
             var all = await _applyJobAPI.GetAll(id);
             return View(all);
         }
-
 
         public async Task<IActionResult> CancelSaveJob(int jobinfoid, int jobseekerid)
         {
@@ -286,6 +297,89 @@ namespace FindJobSolution.WebApp.Controllers
                 return RedirectToAction("index");
             }
             return RedirectToAction("UserJob", "UserJobSeeker");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ChangePassword(int id)
+        {
+            //if (!User.Identity.IsAuthenticated)
+            //    return RedirectToAction("index", "Home");
+
+            var userName = User.Identity.Name;
+
+            var result = await _jobSeekerAPI.GetById(id);
+            if (result != null)
+            {
+                var updateRequest = new ChangePasswordModel()
+                {
+                    UserName = userName,
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel request)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var data = await _userAPI.ChangePassword(request);
+            if (data)
+            {
+                TempData["result"] = "Cập nhật mật khẩu thành công";
+                return RedirectToAction("UserProfile", "UserJobSeeker");
+            }
+
+            ModelState.AddModelError("", data.ToString());
+            return View(request);
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(SendMailModel request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _jobSeekerAPI.ForgotPassword(request.Email);
+            if (!result)
+            {
+                TempData["result"] = "Gửi mail không thành công";
+                return View();
+            }
+
+            return RedirectToAction("Login", "UserJobSeeker");
+        }
+
+        [HttpGet]
+        public IActionResult ChangePasswordWithToken()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePasswordWithToken(ResetPasswordVM request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var result = await _userAPI.ChangePasswordWithToken(request);
+            if (!result)
+            {
+                TempData["result"] = "Đổi mật khẩu không thành công";
+                return View();
+            }
+
+            return RedirectToAction("Login", "UserJobSeeker");
         }
     }
 }

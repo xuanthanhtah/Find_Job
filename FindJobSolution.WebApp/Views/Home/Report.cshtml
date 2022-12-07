@@ -1,0 +1,40 @@
+﻿@model FindJobSolution.ViewModels.Catalog.Report.ReportCreateRequest
+
+@{
+    ViewData["Title"] = "Report";
+    Layout = "~/Views/Shared/_Layoutchat.cshtml";
+}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Phản hồi về chúng tôi</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Phản hồi về chúng tôi</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <hr />
+            <div class="row">
+                <div class="col-md-4">
+                    <form asp-action="Report">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Content" class="control-label"></label>
+                            <input asp-for="Content" class="form-control" />
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Lưu" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

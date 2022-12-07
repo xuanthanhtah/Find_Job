@@ -22,6 +22,7 @@ using FindJobSolution.ViewModels.System.UsersRecruiter;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -44,6 +45,8 @@ builder.Services.AddTransient<IRecruiterService, RecruiterService>();
 builder.Services.AddTransient<ISkillService, SkillService>();
 builder.Services.AddTransient<IApplyJobService, ApplyJobService>();
 builder.Services.AddTransient<ISaveJobService, SaveJobService>();
+builder.Services.AddTransient<IReportService, ReportService>();
+builder.Services.AddTransient<IAdminService, AdminService>();
 //builder.Services.AddTransient<IMessageService, MessageService>();
 
 builder.Services.AddTransient<UserManager<User>, UserManager<User>>();
@@ -165,6 +168,12 @@ builder.Services.AddAuthentication(opt =>
             IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
         };
     });
+
+builder.Services.Configure<DataProtectionTokenProviderOptions>(Options =>
+{
+    //reset token valid for 3 hours
+    Options.TokenLifespan = TimeSpan.FromHours(3);
+});
 
 //Configure
 // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940

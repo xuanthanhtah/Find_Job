@@ -1,0 +1,82 @@
+﻿@model IEnumerable<FindJobSolution.ViewModels.Catalog.JobInformations.JobInformationViewModel>
+
+@{
+    ViewData["Title"] = "OverDue";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Danh sách công việc</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home/index">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách công việc</li>
+    </ol>
+
+    <div class="card mb-4">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Mã công việc
+                            </th>
+                            <th>
+                                Tên công việc
+                            </th>
+                            <th>
+                                Trình độ
+                            </th>
+                            <th>
+                                Hình thức
+                            </th>
+
+                            <th>
+                                Trạng thái
+                            </th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.JobInformationId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.JobTitle)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.JobLevel)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.JobType)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Status)
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink("sửa", "Edit", new {  id=item.JobInformationId  }, new { @class = "btn btn-success" })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <p>Bạn chưa có công việc nào cả, thêm công việc mới nào!!!</p>
+                            <a class="btn btn-success" asp-action="Create" asp-controller="JobInformation">Thêm công việc mới</a>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

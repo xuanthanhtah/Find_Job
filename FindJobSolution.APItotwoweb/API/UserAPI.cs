@@ -21,6 +21,14 @@ namespace FindJobSolution.APItotwoweb.API
         Task<bool> Delete(Guid id);
 
         Task<bool> RoleAssign(Guid id, RoleAssignRequest request);
+
+        Task<string> ResetPasswordToken(string userName);
+
+        Task<bool> ResetPassword(ResetPasswordModel request);
+
+        Task<bool> ChangePassword(ChangePasswordModel request);
+
+        Task<bool> ChangePasswordWithToken(ResetPasswordVM request);
     }
 
     public class UserAPI : IUserAPI
@@ -42,8 +50,51 @@ namespace FindJobSolution.APItotwoweb.API
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
             var response = await client.PostAsync("/api/User/authenticate", httpContent);
+
+            var code = response.IsSuccessStatusCode;
+            if (code == false)
+            {
+                return null;
+            }
+
             var token = await response.Content.ReadAsStringAsync();
             return token;
+        }
+
+        public async Task<bool> ChangePassword(ChangePasswordModel request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.PostAsync($"/api/User/change-password", httpContent);
+
+            var code = response.IsSuccessStatusCode;
+            if (code == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<bool> ChangePasswordWithToken(ResetPasswordVM request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.PostAsync($"/api/User/ResetPassword", httpContent);
+
+            var code = response.IsSuccessStatusCode;
+            if (code == false)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public async Task<bool> Delete(Guid id)
@@ -96,6 +147,43 @@ namespace FindJobSolution.APItotwoweb.API
             var response = await client.PostAsync($"/api/User/register", httpContent);
             //trả về thành công 200 hay thất bại 400 > 500
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> ResetPassword(ResetPasswordModel request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.PostAsync($"/api/User/reset-password", httpContent);
+
+            var code = response.IsSuccessStatusCode;
+            if (code == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public async Task<string> ResetPasswordToken(string userName)
+        {
+            var json = JsonConvert.SerializeObject(userName);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.PostAsync($"/api/User/reset-password-token/{userName}", httpContent);
+
+            var code = response.IsSuccessStatusCode;
+            if (code == false)
+            {
+                return null;
+            }
+
+            var token = await response.Content.ReadAsStringAsync();
+            return token;
         }
 
         public async Task<bool> RoleAssign(Guid id, RoleAssignRequest request)

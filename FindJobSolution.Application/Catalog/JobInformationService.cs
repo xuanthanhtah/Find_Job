@@ -23,6 +23,7 @@ namespace FindJobSolution.Application.Catalog
         Task<List<JobInformationViewModel>> GetbyRecuiterId(int Id);
 
         Task<List<JobInformationViewModel>> GetbyRecuiterIdPageRecuiter(int Id);
+        Task<List<JobInformationViewModel>> GetJobInforByRecuiterIdOverdue(int Id);
 
         Task AddViewcount(int JobInformationId);
 
@@ -109,7 +110,7 @@ namespace FindJobSolution.Application.Catalog
                         join j1 in _context.Recruiters on j.RecruiterId equals j1.RecruiterId
                         join j2 in _context.Jobs on j.JobId equals j2.JobId
                         join j3 in _context.RecruiterImages on j1.RecruiterId equals j3.RecruiterId
-                        where j.Status == Data.Enums.Status.Active
+                        where j.Status == Data.Enums.Status.Active && j.JobInformationTimeEnd >= DateTime.Now
                         select new
                         {
                             JobInformationId = j.JobInformationId,
@@ -169,7 +170,6 @@ namespace FindJobSolution.Application.Catalog
                     CompanyName = p.CompanyName,
                     JobInformationTimeEnd = p.JobInformationTimeEnd,
                     JobInformationTimeStart = p.JobInformationTimeStart,
-
                 }).ToListAsync();
 
             // in ra
@@ -254,7 +254,7 @@ namespace FindJobSolution.Application.Catalog
             if (recuiter == null) { return null; }
 
             var query = from j in _context.JobInformations
-                        where j.RecruiterId == Id
+                        where j.RecruiterId == Id && j.JobInformationTimeEnd > DateTime.Now
                         select new { j };
 
             //get list jobInformation by recuiterId
@@ -271,6 +271,38 @@ namespace FindJobSolution.Application.Catalog
                    WorkingLocation = p.j.WorkingLocation,
                    ViewCount = p.j.ViewCount,
                    Status = p.j.Status,
+                   JobId = p.j.JobId,
+                   RecruiterId = p.j.RecruiterId,
+                   JobInformationTimeEnd = p.j.JobInformationTimeEnd,
+                   JobInformationTimeStart = p.j.JobInformationTimeStart
+               }).ToListAsync();
+
+            return jobinfor.ToList();
+        }
+
+        public async Task<List<JobInformationViewModel>> GetJobInforByRecuiterIdOverdue(int Id)
+        {
+            var recuiter = await _context.JobInformations.FirstOrDefaultAsync(x => x.RecruiterId == Id);
+            if (recuiter == null) { return null; }
+
+            var query = from j in _context.JobInformations
+                        where j.RecruiterId == Id && j.JobInformationTimeEnd < DateTime.Now
+                        select new { j };
+
+            //get list jobInformation by recuiterId
+            var jobinfor = await query
+               .Select(p => new JobInformationViewModel()
+               {
+                   JobInformationId = p.j.JobInformationId,
+                   JobLevel = p.j.JobLevel,
+                   JobTitle = p.j.JobTitle,
+                   JobType = p.j.JobType,
+                   Description = p.j.Description,
+                   MaxSalary = p.j.MaxSalary,
+                   MinSalary = p.j.MinSalary,
+                   WorkingLocation = p.j.WorkingLocation,
+                   ViewCount = p.j.ViewCount,
+                   Status = Data.Enums.Status.NoActive,
                    JobId = p.j.JobId,
                    RecruiterId = p.j.RecruiterId,
                    JobInformationTimeEnd = p.j.JobInformationTimeEnd,

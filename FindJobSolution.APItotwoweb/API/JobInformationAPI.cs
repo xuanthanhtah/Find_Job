@@ -21,6 +21,7 @@ namespace FindJobSolution.APItotwoweb.API
         Task<List<JobInformationViewModel>> GetPagingByRecuiterId(int id);
 
         Task<List<JobInformationViewModel>> GetPagingByRecuiterIdPage(int id);
+        Task<List<JobInformationViewModel>> GetPagingByRecuiterIdPageOverDue(int id);
 
         Task<bool> Create(int id, JobInformationCreateRequest request);
 
@@ -178,6 +179,24 @@ namespace FindJobSolution.APItotwoweb.API
             var body = await response.Content.ReadAsStringAsync();
             var user = JsonConvert.DeserializeObject<JobInformationViewModel>(body);
             return user;
+        }
+
+        public async Task<List<JobInformationViewModel>> GetPagingByRecuiterIdPageOverDue(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/api/JobInformation/recuiter-overdue/{id}");
+
+            var code = response.IsSuccessStatusCode;
+
+            if (code == false)
+            {
+                return null;
+            }
+            var body = await response.Content.ReadAsStringAsync();
+            var jobSeeker = JsonConvert.DeserializeObject<List<JobInformationViewModel>>(body);
+            return jobSeeker;
         }
     }
 }
