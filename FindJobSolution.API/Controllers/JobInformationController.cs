@@ -108,5 +108,13 @@ namespace FindJobSolution.API.Controllers
             if (jobSeeker == null) return BadRequest(false);
             return Ok(jobSeeker);
         }
+
+        [HttpGet("recuiter-overdue/{id}")]
+        public async Task<IActionResult> GetJobInforByRecuiterIdOverdue (int id)
+        {
+            var jobSeeker = await _jobInformationService.GetJobInforByRecuiterIdOverdue(id);
+            if (jobSeeker == null) return BadRequest(false);
+            return Ok(jobSeeker);
+        }
     }
 }

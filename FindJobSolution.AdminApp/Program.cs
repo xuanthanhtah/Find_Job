@@ -15,6 +15,7 @@ builder.Services.AddTransient<ISkillAPI, SkillAPI>();
 builder.Services.AddTransient<IRoleApi, RoleAPI>();
 builder.Services.AddTransient<IJobAPI, JobAPI>();
 builder.Services.AddTransient<IReportAPI, ReportAPI>();
+builder.Services.AddTransient<IAdminAPI, AdminAPI>();
 // Add services to the container.
 builder.Services.AddHttpClient();
 

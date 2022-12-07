@@ -1,4 +1,5 @@
-﻿@{
+﻿@model FindJobSolution.ViewModels.System.ReportDataVM
+@{
     ViewData["Title"] = "Trang chủ";
 }
 
@@ -10,59 +11,160 @@
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Người dùng</div>
+                                    <div class="card-body">
+                    <a style="font-weight: bold; font-size: 40px;">@Html.DisplayFor(model =>  model.TotalJobSeeker)</a>
+                                        <a>Người ứng tuyển</a>
+                                    </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="~/User">Xem chi tiết</a>
+                    <a class="small text-white stretched-link" href="~/User">Chi tiết người tìm việc</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                <div class="card-body">Nhà tuyển dụng</div>
+                                <div class="card-body">
+                                    <a style="font-weight: bold; font-size: 40px;">@Html.DisplayFor(model =>  model.TotalRecuiter)</a>
+                                    <a>Nhà tuyển dụng</>
+                                </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="~/Recuiter">Xem chi tiết</a>
+                    <a class="small text-white stretched-link" href="~/Recuiter">Chi tiết công ty</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-success text-white mb-4">
-                                    <div class="card-body">Công việc</div>
+                                    <div class="card-body">
+                                        <a style="font-weight: bold; font-size: 40px;"> @Html.DisplayFor(model =>  model.TotalJobInformation)</a>
+                                        <a>Công việc đang tuyển</a>
+                                       </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="~/Job">Xem chi tiết</a>
+                        <a class="small text-white stretched-link" href="~/">Chi tiết các công việc đang tuyển</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-danger text-white mb-4">
-                <div class="card-body">Kỹ năng</div>
+                                <div class="card-body">
+                    <a style ="font-weight: bold; font-size: 40px;">@Html.DisplayFor(model =>  model.TotalJobApply)</a>
+                                    <a>Cv ứng tuyển</a>
+                                    </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="~/Skill">Xem chi tiết</a>
+                    <a class="small text-white stretched-link" href="~/">Chi tiết CV đã đang ứng tuyển</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                                     </div>
                                 </div>
                             </div>
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-danger text-white mb-4">
+                <div class="card-body">
+                    <a style="font-weight: bold; font-size: 40px;">@Html.DisplayFor(model =>  model.TotalCv)</a>
+                    <a>Cv trong website</a>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="~/">Chi tiết CV đã đang ứng tuyển</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-success text-white mb-4">
+                <div class="card-body">
+                    <a style="font-weight: bold; font-size: 40px;"> @Html.DisplayFor(model =>  model.TotalJob)</a>
+                    <a>Ngành nghề</a>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="~/Job">Chi tiết các ngành nghề</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-warning text-white mb-4">
+                <div class="card-body">
+                    <a style="font-weight: bold; font-size: 40px;">@Html.DisplayFor(model =>  model.TotalReport)</a>
+                    <a>Báo cáo từ người dùng</>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="~/Report">Chi tiết báo cáo</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+       
+        <div class="col-xl-3 col-md-6">
+            <div class="card bg-primary text-white mb-4">
+                <div class="card-body">
+                    <a style="font-weight: bold; font-size: 40px;">@Html.DisplayFor(model =>  model.TotalSkill)</a>
+                    <a>Kỹ năng</a>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small text-white stretched-link" href="~/Skill">Chi tiết kỹ năng</a>
+                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                </div>
+            </div>
+        </div>
+        
                         </div>
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
+                                        Công việc có lương cao nhất
                                     </div>
-                                    <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        Bar Chart Example
+                                    <div class="single-job-items mb-30">
+                                        <div class="job-items">
+                                            <div class="company-img">
+                                            </div>
+                                            <div class="job-tittle job-tittle2">
+                                                <a>
+                                                    <h4> @Html.DisplayFor(model =>  model.JobTitle)</h4>
+                                                </a>
+                                                <a>
+                                                    <h4>@Html.DisplayFor(model =>  model.JobType)</h4>
+                                                </a>
+                                                <ul>
+                                                    <li>@Html.DisplayFor(model => model.JobLevel)</li>
+                                                    @{
+                                                        <li class="myDIV" style="margin-right: 5px">@Html.DisplayFor(model =>  model.MaxSalary)$</li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-chart-area me-1"></i>
+                    Công việc có được ứng tuyển nhiều nhất
+                </div>
+                <div class="single-job-items mb-30">
+                    <div class="job-items">
+                        <div class="company-img">
+                        </div>
+                        <div class="job-tittle job-tittle2">
+                            <a>
+                                <h4> @Html.DisplayFor(model =>  model.JobTitleApply)</h4>
+                            </a>
+                            <a>
+                                <h4>@Html.DisplayFor(model =>  model.JobTypeApply)</h4>
+                            </a>
+                            <ul>
+                                <li>@Html.DisplayFor(model => model.JobLevelApply)</li>
+                                @{
+                                    <li class="myDIV" style="margin-right: 5px">@Html.DisplayFor(model =>  model.MaxSalaryApply)$</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
                             </div>
                         </div>
                      @*   <div class="card mb-4">
