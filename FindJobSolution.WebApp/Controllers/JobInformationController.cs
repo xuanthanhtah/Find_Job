@@ -48,6 +48,21 @@ namespace FindJobSolution.WebApp.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> OverDue()
+        {
+            var userId = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var recuiterId = await _jobInformationApi.GetRecuiterIdByUserId(userId);
+
+            var result = await _jobInformationApi.GetPagingByRecuiterIdPageOverDue(recuiterId.RecruiterId);
+            if (result == null)
+            {
+                return View("index");
+            }
+            return View(result);
+        }
+
+
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
             var jobName = await _jobAPI.GetAll();
