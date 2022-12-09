@@ -61,6 +61,12 @@ namespace FindJobSolution.Application.Catalog
                 .Select(x => x.Key)
                 .FirstOrDefaultAsync();
 
+            var CounttopJobApply = await _context.ApplyJobs
+                .GroupBy(x => x.JobInformationId)
+                .OrderByDescending(x => x.Count())
+                .Select(x => x.Count())
+                .FirstOrDefaultAsync();
+
             if (topJobApply != null)
             {
                 var job = await _context.JobInformations.FindAsync(topJobApply);
@@ -68,6 +74,7 @@ namespace FindJobSolution.Application.Catalog
                 reportData.JobLevelApply = job.JobLevel;
                 reportData.JobTypeApply = job.JobType;
                 reportData.MaxSalaryApply = job.MaxSalary;
+                reportData.countJobApplyMax = CounttopJobApply;
             }
             else
             {
@@ -75,6 +82,7 @@ namespace FindJobSolution.Application.Catalog
                 reportData.JobLevelApply = "";
                 reportData.JobTypeApply = "";
                 reportData.MaxSalaryApply = 0;
+                reportData.countJobApplyMax = 0;
             }
 
             return reportData;

@@ -13,7 +13,7 @@
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">
                     <a style="font-weight: bold; font-size: 40px;">@Html.DisplayFor(model =>  model.TotalJobSeeker)</a>
-                                        <a>Người ứng tuyển</a>
+                                        <a>Người tìm việc</a>
                                     </div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                     <a class="small text-white stretched-link" href="~/User">Chi tiết người tìm việc</a>
@@ -142,7 +142,7 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-chart-area me-1"></i>
-                    Công việc có được ứng tuyển nhiều nhất
+                    Công việc được ứng tuyển nhiều nhất 
                 </div>
                 <div class="single-job-items mb-30">
                     <div class="job-items">
@@ -161,6 +161,9 @@
                                     <li class="myDIV" style="margin-right: 5px">@Html.DisplayFor(model =>  model.MaxSalaryApply)$</li>
                                 }
                             </ul>
+                            <a>
+                                <h4> @Html.DisplayFor(model =>  model.countJobApplyMax) người ứng tuyển</h4>
+                            </a>
                         </div>
                     </div>
                 </div>
