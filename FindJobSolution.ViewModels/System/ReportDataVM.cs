@@ -43,5 +43,7 @@ namespace FindJobSolution.ViewModels.System
 
         [Display(Name = "Lương tối đa")]
         public decimal MaxSalaryApply { get; set; }
+
+        public int countJobApplyMax { get; set; }
     }
 }
