@@ -1,6 +1,7 @@
 # TICKET TO FUTURE
 <br>
-App: [Mobile app using Flutter](https://github.com/xuanthanhtah/Find_Job_App)
+App: [Mobile app using Flutter]([https://github.com/xuanthanhtah/Find_Job_App](https://github.com/xuanthanhtah/Find_Job_App))
+
 <br>
 ## Technologies
 - ASP.NET 6
